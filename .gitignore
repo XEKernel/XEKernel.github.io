@@ -1,6 +1,7 @@
 .workbuddy/
 node_modules/
 *.py
+!build_novel.py
 *.pyc
 __pycache__/
 .DS_Store
