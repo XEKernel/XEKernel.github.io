@@ -434,6 +434,9 @@ function updateStats({ repoCount, experienceYears, totalStars, followers, recent
     updateStatElement('totalStars', totalStars);
     updateStatElement('followerCount', followers);
     
+    // Trigger counter animation for updated stats
+    animateStatsIfVisible();
+    
     console.log(`GitHub Stats: ${experienceYears}年经验, ${repoCount}个仓库, ${totalStars}星标, ${followers}关注者, 近期${recentPushEvents}次Push`);
 }
 
@@ -442,6 +445,28 @@ function updateStatElement(id, value) {
     const el = document.getElementById(id);
     if (el) {
         el.setAttribute('data-target', value);
+        el.classList.remove('counted'); // allow re-animation
+        el.textContent = '0'; // reset display
+    }
+}
+
+// 对可见的未计数统计数字执行动画
+function animateStatsIfVisible() {
+    const statsContainer = document.querySelector('.stats-container');
+    if (!statsContainer) return;
+    const rect = statsContainer.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+        document.querySelectorAll('.stat-item .stat-number').forEach(el => {
+            const target = parseInt(el.getAttribute('data-target'));
+            if (target > 0 && !el.classList.contains('counted')) {
+                el.classList.add('counted');
+                animateCounter(el, target);
+            } else if (target === 0 && !el.classList.contains('counted')) {
+                // Even if target is 0, mark as counted to avoid leaving 0 display
+                el.classList.add('counted');
+                el.textContent = '0';
+            }
+        });
     }
 }
 
