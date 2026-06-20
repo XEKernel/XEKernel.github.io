@@ -157,39 +157,39 @@
             <div class="github-stats-section">
                 <h3 class="stats-section-title"><i class="fas fa-chart-bar"></i> GitHub 数据统计</h3>
                 <p class="stats-section-desc">数据实时同步自 GitHub，通过 camo.githubusercontent.com 加速</p>
-                <div class="github-stats-grid">
+                <div class="github-stats-grid" id="githubStatsGrid">
                     <div class="github-stat-card">
                         <div class="stat-card-header">
                             <i class="fab fa-github"></i>
                             <span>综合统计</span>
                         </div>
-                        <img 
-                            src="https://github-readme-stats.vercel.app/api?username=XEKernel&show_icons=true&theme=default&hide_border=true&count_private=true&include_all_commits=true&custom_title=XEKernel+GitHub+Stats"
-                            alt="GitHub Stats"
-                            class="stat-card-img"
-                        >
+                        <div class="stat-card-body" id="statsOverview">
+                            <div class="stat-row"><span class="stat-k">仓库</span><span class="stat-v">—</span></div>
+                            <div class="stat-row"><span class="stat-k">星标</span><span class="stat-v">—</span></div>
+                            <div class="stat-row"><span class="stat-k">关注者</span><span class="stat-v">—</span></div>
+                            <div class="stat-row"><span class="stat-k">经验</span><span class="stat-v">—</span></div>
+                        </div>
                     </div>
                     <div class="github-stat-card">
                         <div class="stat-card-header">
                             <i class="fas fa-code"></i>
                             <span>常用语言</span>
                         </div>
-                        <img 
-                            src="https://github-readme-stats.vercel.app/api/top-langs/?username=XEKernel&layout=compact&theme=default&hide_border=true&langs_count=8"
-                            alt="Top Languages"
-                            class="stat-card-img"
-                        >
+                        <div class="stat-card-body" id="statsLangs">
+                            <div class="lang-bars" id="langBars"></div>
+                        </div>
                     </div>
                     <div class="github-stat-card">
                         <div class="stat-card-header">
                             <i class="fas fa-fire"></i>
-                            <span>连续贡献</span>
+                            <span>近期活跃</span>
                         </div>
-                        <img 
-                            src="https://github-readme-streak-stats.herokuapp.com/?user=XEKernel&theme=default&hide_border=true"
-                            alt="GitHub Streak"
-                            class="stat-card-img"
-                        >
+                        <div class="stat-card-body" id="statsActivity">
+                            <div class="stat-row"><span class="stat-k">近期 Push</span><span class="stat-v">—</span></div>
+                            <div class="stat-row"><span class="stat-k">创建 Issues</span><span class="stat-v">—</span></div>
+                            <div class="stat-row"><span class="stat-k">合并 PR</span><span class="stat-v">—</span></div>
+                            <div class="stat-row"><span class="stat-k">代码审查</span><span class="stat-v">—</span></div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -380,10 +380,14 @@ async function fetchGitHubStats() {
             totalStars = repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
         }
         
-        // 从最近公开事件中统计 PushEvent 数量（反映近期提交活跃度）
-        const recentPushEvents = Array.isArray(events)
-            ? events.filter(e => e.type === 'PushEvent').length
-            : 0;
+        // 从最近公开事件中统计活动类型
+        let recentPush = 0, recentIssues = 0, recentPRs = 0, recentReviews = 0;
+        if (Array.isArray(events)) {
+            recentPush = events.filter(e => e.type === 'PushEvent').length;
+            recentIssues = events.filter(e => e.type === 'IssuesEvent').length;
+            recentPRs = events.filter(e => e.type === 'PullRequestEvent').length;
+            recentReviews = events.filter(e => e.type === 'PullRequestReviewEvent').length;
+        }
         
         const experienceYears = calculateExperienceYears(userData.created_at);
         const repoCount = userData.public_repos || 0;
@@ -392,7 +396,7 @@ async function fetchGitHubStats() {
         // 更新 GitHub 头像
         updateAvatar(userData.avatar_url);
         
-        updateStats({ repoCount, experienceYears, totalStars, followers, recentPushEvents });
+        updateStats({ repoCount, experienceYears, totalStars, followers, recentPush, recentIssues, recentPRs, recentReviews });
         
     } catch (error) {
         console.error('Error fetching GitHub stats:', error);
@@ -428,16 +432,20 @@ function calculateExperienceYears(createdAt) {
 }
 
 // 更新统计数据显示
-function updateStats({ repoCount, experienceYears, totalStars, followers, recentPushEvents }) {
+function updateStats({ repoCount, experienceYears, totalStars, followers, recentPush, recentIssues, recentPRs, recentReviews }) {
     updateStatElement('experienceYears', experienceYears);
     updateStatElement('repoCount', repoCount);
     updateStatElement('totalStars', totalStars);
     updateStatElement('followerCount', followers);
     
+    // 更新内联统计卡片
+    updateStatsOverview({ repoCount, totalStars, followers, experienceYears });
+    updateStatsActivity({ recentPush, recentIssues, recentPRs, recentReviews });
+    
     // Trigger counter animation for updated stats
     animateStatsIfVisible();
     
-    console.log(`GitHub Stats: ${experienceYears}年经验, ${repoCount}个仓库, ${totalStars}星标, ${followers}关注者, 近期${recentPushEvents}次Push`);
+    console.log(`GitHub Stats: ${experienceYears}年经验, ${repoCount}个仓库, ${totalStars}星标, ${followers}关注者`);
 }
 
 // 辅助：更新单个统计元素
@@ -468,6 +476,30 @@ function animateStatsIfVisible() {
             }
         });
     }
+}
+
+// 更新综合统计卡片
+function updateStatsOverview({ repoCount, totalStars, followers, experienceYears }) {
+    const el = document.getElementById('statsOverview');
+    if (!el) return;
+    el.innerHTML = `
+        <div class="stat-row"><span class="stat-k">仓库</span><span class="stat-v">${repoCount}</span></div>
+        <div class="stat-row"><span class="stat-k">星标</span><span class="stat-v">${totalStars}</span></div>
+        <div class="stat-row"><span class="stat-k">关注者</span><span class="stat-v">${followers}</span></div>
+        <div class="stat-row"><span class="stat-k">经验</span><span class="stat-v">${experienceYears} 年</span></div>
+    `;
+}
+
+// 更新近期活跃卡片
+function updateStatsActivity({ recentPush, recentIssues, recentPRs, recentReviews }) {
+    const el = document.getElementById('statsActivity');
+    if (!el) return;
+    el.innerHTML = `
+        <div class="stat-row"><span class="stat-k">近期 Push</span><span class="stat-v">${recentPush} 次</span></div>
+        <div class="stat-row"><span class="stat-k">创建 Issues</span><span class="stat-v">${recentIssues} 个</span></div>
+        <div class="stat-row"><span class="stat-k">合并 PR</span><span class="stat-v">${recentPRs} 个</span></div>
+        <div class="stat-row"><span class="stat-k">代码审查</span><span class="stat-v">${recentReviews} 次</span></div>
+    `;
 }
 
 // 从 GitHub API 更新头像
@@ -854,8 +886,9 @@ function generateDonutChart(languageStats, totalProjects) {
     // 更新总项目数
     animateCounter(totalProjectsElement, totalProjects, 1500);
     
-    // 更新技术栈标签
+    // 更新技术栈标签 + 语言条形图
     updateTechStackTags(languageStats);
+    updateLangBars(languageStats, totalProjects);
 }
 
 // 动态更新技术栈标签
@@ -883,6 +916,35 @@ function updateTechStackTags(languageStats) {
         container.style.transition = 'opacity 0.5s ease';
         container.style.opacity = '1';
     }, 100);
+}
+
+// 更新语言条形图
+function updateLangBars(languageStats, totalProjects) {
+    const el = document.getElementById('langBars');
+    if (!el || totalProjects === 0) return;
+    
+    const languageColors = {
+        'Python': '#3776AB', 'C#': '#9B4DCA', 'JavaScript': '#F7DF1E',
+        'HTML': '#E34F26', 'CSS': '#1572B6', 'HTML/CSS': '#E34F26',
+        'TypeScript': '#3178C6', 'Java': '#007396', 'Go': '#00ADD8',
+        'Rust': '#000000', 'PHP': '#777BB4', 'C++': '#00599C',
+        'C': '#A8B9CC', 'Shell': '#89E051', 'Vue': '#4FC08D',
+        'Dart': '#0175C2', 'Kotlin': '#A97BFF', 'Swift': '#F05138',
+    };
+    
+    const sorted = Object.entries(languageStats).sort((a, b) => b[1] - a[1]).slice(0, 6);
+    
+    let html = '';
+    for (const [lang, count] of sorted) {
+        const pct = ((count / totalProjects) * 100).toFixed(1);
+        const color = languageColors[lang] || '#6b7280';
+        html += `<div class="lang-bar-item">
+            <span class="lang-bar-name">${lang}</span>
+            <div class="lang-bar-track"><div class="lang-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+            <span class="lang-bar-pct">${pct}%</span>
+        </div>`;
+    }
+    el.innerHTML = html;
 }
 
 // 视差滚动效果

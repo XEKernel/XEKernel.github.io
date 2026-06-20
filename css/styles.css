@@ -214,6 +214,25 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
 .stat-card-header span { font-size: 0.9rem; font-weight: 600; color: var(--tx); }
 .stat-card-img { width: 100%; display: block; border-radius: var(--r); min-height: 60px; }
 
+/* Inline stats body */
+.stat-card-body { padding: 8px 0; }
+.stat-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid var(--ln);
+    font-size: 0.9rem;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-k { color: var(--tx2); }
+.stat-v { font-weight: 700; color: var(--tx); font-variant-numeric: tabular-nums; }
+
+/* Language bars */
+.lang-bars { display: flex; flex-direction: column; gap: 8px; }
+.lang-bar-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; }
+.lang-bar-name { width: 70px; flex-shrink: 0; color: var(--tx2); text-align: right; }
+.lang-bar-track { flex: 1; height: 8px; background: var(--ln); border-radius: 4px; overflow: hidden; }
+.lang-bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+.lang-bar-pct { width: 36px; flex-shrink: 0; color: var(--tx3); font-size: 0.78rem; text-align: right; }
+
 .github-contribution-section { margin-top: 24px; }
 .contribution-card { background: var(--bg); border: 1px solid var(--ln); border-radius: var(--r2); padding: 18px; transition: all var(--e); }
 .contribution-card:hover { border-color: var(--bl); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
