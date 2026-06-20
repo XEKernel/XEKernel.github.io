@@ -355,6 +355,106 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
 [data-theme="dark"] #particles-js { opacity: 0.04; }
 .bg-decoration { display: none; }
 
+/* ═══ Animations ═══ */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes slideLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Scroll reveal — elements get .reveal class via JS IntersectionObserver */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered children — nth-child delays */
+.stat-item.reveal { transition-delay: calc(var(--i, 0) * 0.08s); }
+.project-card.reveal { transition-delay: calc(var(--i, 0) * 0.06s); }
+.tool-card.reveal { transition-delay: calc(var(--i, 0) * 0.06s); }
+.contact-card.reveal { transition-delay: calc(var(--i, 0) * 0.06s); }
+.github-stat-card.reveal { transition-delay: calc(var(--i, 0) * 0.08s); }
+.update-section.reveal { transition-delay: calc(var(--i, 0) * 0.05s); }
+
+/* Hero entrance — elements animate in on load */
+.hero-badge { animation: fadeUp 0.6s ease 0.1s both; }
+.hero-title { animation: fadeUp 0.6s ease 0.2s both; }
+.hero-description { animation: fadeUp 0.6s ease 0.3s both; }
+.hero-buttons { animation: fadeUp 0.6s ease 0.4s both; }
+.hero-visual { animation: scaleIn 0.7s ease 0.2s both; }
+.profilePic { animation: float 4s ease-in-out infinite; animation-delay: 1s; }
+.profilePic:hover { animation: none; }
+
+/* Typing cursor */
+#cursor { animation: cursorBlink 1s step-end infinite; }
+
+/* Card hover animations */
+.project-card, .tool-card, .contact-card, .github-stat-card, .contribution-card, .update-section {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+/* Section headers — subtle underline reveal */
+.section-header h2 {
+    position: relative;
+    display: inline-block;
+}
+.section-header h2::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%) scaleX(0);
+    width: 40px; height: 2px; background: var(--bl); border-radius: 1px;
+    transition: transform 0.3s ease;
+}
+section:hover .section-header h2::after,
+.section-header h2:hover::after { transform: translateX(-50%) scaleX(1); }
+
+/* Stat numbers — pop on hover */
+.stat-item { transition: transform 0.25s ease; }
+.stat-item:hover { transform: translateY(-3px); }
+.stat-number { transition: color 0.3s ease; }
+
+/* Tools icon — rotate on hover */
+.tool-icon { transition: transform 0.3s ease, background 0.3s ease; }
+.tool-card:hover .tool-icon { transform: scale(1.1) rotate(-5deg); }
+
+/* Contact icon — pulse on hover */
+.contact-icon { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.contact-card:hover .contact-icon { transform: scale(1.1); box-shadow: 0 0 0 6px var(--bl3); }
+
+/* Loading skeleton shimmer */
+.stat-card-img { background: linear-gradient(90deg, var(--bg3) 25%, var(--bg2) 50%, var(--bg3) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+
 /* ═══ Responsive ═══ */
 @media (max-width: 900px) {
     .homeContent { grid-template-columns: 1fr; gap: 48px; text-align: center; }

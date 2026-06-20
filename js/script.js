@@ -542,40 +542,34 @@ function animateCounter(element, target, duration = 2000) {
 // 观察者模式：元素进入视口时触发动画
 function setupScrollAnimations() {
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -30px 0px'
     };
     
-    let statsAnimated = false; // 标记统计数字是否已动画
+    let statsAnimated = false;
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Add visible class for .reveal elements
+                if (entry.target.classList.contains('reveal')) {
+                    entry.target.classList.add('visible');
+                }
                 entry.target.classList.add('animate');
                 
-                // 如果是统计项，同时启动所有统计数字的计数动画
+                // Stats counter animation — trigger once
                 if (entry.target.classList.contains('stat-item') && !statsAnimated) {
                     statsAnimated = true;
-                    const allStatNumbers = document.querySelectorAll('.stat-item .stat-number');
-                    allStatNumbers.forEach(statNumber => {
-                        const target = parseInt(statNumber.getAttribute('data-target'));
-                        if (target && !statNumber.classList.contains('counted')) {
-                            statNumber.classList.add('counted');
-                            animateCounter(statNumber, target);
+                    document.querySelectorAll('.stat-item .stat-number').forEach(el => {
+                        const target = parseInt(el.getAttribute('data-target'));
+                        if (target && !el.classList.contains('counted')) {
+                            el.classList.add('counted');
+                            animateCounter(el, target);
                         }
                     });
                 }
                 
-                // 如果是技能条，启动进度动画
-                const skillProgress = entry.target.querySelectorAll('.skill-progress');
-                skillProgress.forEach(progress => {
-                    const progressValue = progress.getAttribute('data-progress');
-                    if (progressValue) {
-                        progress.style.width = progressValue + '%';
-                    }
-                });
-                
-                // 如果是语言圆环图，启动动画
+                // Language donut — load when about-skills enters view
                 if (entry.target.classList.contains('about-skills') && !entry.target.classList.contains('loaded')) {
                     entry.target.classList.add('loaded');
                     fetchLanguageDistribution();
@@ -584,8 +578,8 @@ function setupScrollAnimations() {
         });
     }, observerOptions);
     
-    // 观察所有需要动画的元素
-    const animatedElements = document.querySelectorAll('.stat-item, .skill-item, .tool-card, .contact-card, .project-card, .about-skills');
+    // Observe all animated elements
+    const animatedElements = document.querySelectorAll('.stat-item, .tool-card, .contact-card, .project-card, .about-skills, .github-stat-card, .contribution-card');
     animatedElements.forEach(el => observer.observe(el));
 }
 
@@ -1072,6 +1066,7 @@ function initAll() {
     setupPerformanceMonitoring();
     setupErrorHandling();
     setupBeforeUnload();
+    initRevealElements();
     
     // 延迟从GitHub获取统计数据，避免速率限制
     if (document.getElementById('repoCount') || document.getElementById('totalStars') || document.getElementById('followerCount')) {
@@ -1095,6 +1090,31 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initAll);
 } else {
     initAll();
+}
+
+// ── Reveal animation setup ──
+function initRevealElements() {
+    // Add .reveal class to grid children for scroll-triggered animations
+    const grids = {
+        '.projects-grid .project-card': 'project-card',
+        '.tools-grid .tool-card': 'tool-card',
+        '.contact-grid .contact-card': 'contact-card',
+        '.github-stats-grid .github-stat-card': 'github-stat-card',
+        '.stats-container .stat-item': 'stat-item',
+    };
+    
+    for (const [selector, cls] of Object.entries(grids)) {
+        document.querySelectorAll(selector).forEach((el, i) => {
+            el.classList.add('reveal', cls);
+            el.style.setProperty('--i', i);
+        });
+    }
+    
+    // Also add reveal to .update-section elements
+    document.querySelectorAll('.update-section').forEach((el, i) => {
+        el.classList.add('reveal', 'update-section');
+        el.style.setProperty('--i', i);
+    });
 }
 
 // ── Theme toggle ──
