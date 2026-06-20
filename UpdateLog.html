@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站更新日志 - SYSTEM-MEMZ-XEK</title>
+    <link rel="icon" href="images/profile.jpg">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* 更新日志页面专用样式 */
+        .update-section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(12, 12, 30, 0.8) 100%);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 35px;
+            margin: 25px 0;
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        
+        .update-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        
+        .update-section:hover::before {
+            opacity: 1;
+        }
+        
+        .update-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 
+                var(--glow-primary);
+            border-color: var(--primary-color);
+        }
+        
+        .update-date {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 18px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+        
+        .update-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .update-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+        
+        .update-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+        }
+        
+        .update-type {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 35px;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .back-link:hover {
+            color: var(--accent-color);
+            transform: translateX(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--border-glow);
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景容器 -->
+    <div id="particles-js"></div>
+
+    <!-- 动态背景装饰 -->
+    <div class="bg-decoration">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-atom"></i>
+                <span>XEKernel</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="navLink"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="index.html#github" class="navLink"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="index.html#tools" class="navLink"><i class="fas fa-tools"></i> 工具</a></li>
+                <li><a href="index.html#contact" class="navLink"><i class="fas fa-address-card"></i> 联系</a></li>
+                <li><a href="UpdateLog.html" class="navLink active"><i class="fas fa-history"></i> 日志</a></li>
+                <li><a href="services/serve.html" class="navLink"><i class="fas fa-cogs"></i> 服务</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 返回首页链接 -->
+    <section style="padding-top: 50px;">
+        <div class="section-content" style="max-width: 800px;">
+            <h1><i class="fas fa-history"></i> 网站更新日志</h1>
+
+            <div class="update-section">
+                <div class="update-date"><i class="far fa-calendar-alt"></i> 2026年6月20日</div>
+                <div class="update-type"><i class="fas fa-trash-alt"></i> 主页重构</div>
+                <ul class="update-list">
+                    <li><i class="fas fa-minus-circle"></i> 移除作品集板块（B站视频），精简主页结构</li>
+                    <li><i class="fas fa-chart-bar"></i> 新增 GitHub 统计卡片（综合统计 / 常用语言 / 连续贡献）</li>
+                    <li><i class="fas fa-calendar-check"></i> 新增 GitHub 贡献日历热力图</li>
+                    <li><i class="fas fa-star"></i> Hero 区统计数据改为真实 API 数据：总星标 + 关注者</li>
+                    <li><i class="fas fa-paint-brush"></i> 重构 CSS 样式，优化导航栏命名</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date"><i class="far fa-calendar-alt"></i> 2026年6月14日</div>
+                <div class="update-type"><i class="fas fa-code"></i> 重命名仓库</div>
+                <ul class="update-list">
+                    <li><i class="fas fa-tags"></i> 将所有SYSTEM-MEMZ-XEK字段改为XEKernel</li>
+                </ul>
+            </div>
+            
+            <div class="update-section">
+                <div class="update-date"><i class="far fa-calendar-alt"></i> 2026年3月1日</div>
+                <div class="update-type"><i class="fas fa-code"></i> 功能优化与动态数据</div>
+                <ul class="update-list">
+                    <li><i class="fas fa-tags"></i> 技术栈标签改为通过 GitHub API 动态获取，自动展示项目使用的编程语言</li>
+                    <li><i class="fas fa-robot"></i> 添加个性标签 "I'm not a robot, I just code like one." 在头像下方</li>
+                    <li><i class="fas fa-chart-bar"></i> 优化统计数字动画，三个数据（编程经验、开源项目、代码提交）同时显示</li>
+                    <li><i class="fas fa-bolt"></i> 欢迎文字打字效果提前触发，无需等待页面完全加载</li>
+                    <li><i class="fas fa-quote-right"></i> 格言立即显示第一条，不再等待6秒后才出现</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date"><i class="far fa-calendar-alt"></i> 2026年2月14日</div>
+                <div class="update-type"><i class="fas fa-rocket"></i> 全站重构与功能增强</div>
+                <ul class="update-list">
+                    <li><i class="fas fa-palette"></i> 重新设计主页界面，增加更多交互元素和动画效果</li>
+                    <li><i class="fas fa-magic"></i> 添加30+种新的CSS动画效果（3D旋转、弹性缩放、脉冲发光等）</li>
+                    <li><i class="fas fa-chart-pie"></i> 将技能条改为动态圆环图，自动从GitHub获取语言分布</li>
+                    <li><i class="fas fa-database"></i> 通过GitHub API动态获取统计数据（仓库数、编程经验、提交数）</li>
+                    <li><i class="fas fa-code-branch"></i> 创建统一的项目展示页面，整合所有语言的开源项目</li>
+                    <li><i class="fas fa-filter"></i> 添加语言筛选器和搜索功能，支持动态筛选项目</li>
+                    <li><i class="fas fa-layer-group"></i> 统一所有页面风格（除heart.html）为霓虹风格</li>
+                    <li><i class="fas fa-atom"></i> 添加动态背景装饰（5个浮动形状）和粒子效果</li>
+                    <li><i class="fas fa-mobile-alt"></i> 优化移动端响应式布局，改进小屏幕显示效果</li>
+                    <li><i class="fas fa-sync"></i> 更新统计数字为真实GitHub数据（编程经验基于注册时间计算）</li>
+                    <li><i class="fas fa-shield-alt"></i> 增强GitHub API错误处理，添加备用机制和速率限制检测</li>
+                    <li><i class="fas fa-arrow-up"></i> 添加返回顶部按钮和滚动导航高亮功能</li>
+                    <li><i class="fas fa-bars"></i> 添加移动端汉堡菜单支持</li>
+                    <li><i class="fas fa-link"></i> 修复所有页面导航链接，确保跳转正常</li>
+                    <li><i class="fas fa-pointer"></i> 修复页面元素点击问题，确保所有按钮和卡片可交互</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date"><i class="far fa-calendar-alt"></i> 2026年2月13日</div>
+                <div class="update-type"><i class="fas fa-sync-alt"></i> 全站视觉风格重新设计</div>
+                <ul class="update-list">
+                    <li><i class="fas fa-palette"></i> 重新设计了全站视觉风格，采用现代霓虹配色方案</li>
+                    <li><i class="fas fa-fill-drip"></i> 更新配色方案：青色霓虹(#00F5FF)、紫罗兰(#7B68EE)、粉红(#FF6B9D)</li>
+                    <li><i class="fas fa-atom"></i> 添加霓虹发光效果，包括边框、按钮、卡片悬停时的发光动画</li>
+                    <li><i class="fas fa-water"></i> 优化玻璃态设计，增强毛玻璃效果和透明度</li>
+                    <li><i class="fas fa-border-style"></i> 添加流光边框动画，内容区域自动变换颜色</li>
+                    <li><i class="fas fa-sparkles"></i> 优化粒子背景效果，增加粒子数量和多种颜色</li>
+                    <li><i class="fas fa-magic"></i> 改进卡片悬停动画，添加上浮、缩放和径向渐变效果</li>
+                    <li><i class="fas fa-font"></i> 优化字体显示，添加文字阴影和发光效果</li>
+                    <li><i class="fas fa-tint"></i> 自定义滚动条样式，使其更符合霓虹主题</li>
+                    <li><i class="fas fa-adjust"></i> 优化颜色对比度，提升可读性</li>
+                    <li><i class="fas fa-server"></i> 更新Font Awesome CDN源为国内镜像(cdn.bootcdn.net)</li>
+                    <li><i class="fas fa-shield-alt"></i> 添加多重CDN备用机制，确保资源加载稳定</li>
+                    <li><i class="fas fa-bolt"></i> 优化粒子效果库加载，添加递归重试机制</li>
+                    <li><i class="fas fa-clock"></i> 优化打字动画速度，添加随机变化更自然</li>
+                    <li><i class="fas fa-arrows-alt-v"></i> 优化导航栏滚动检测阈值(80px触发)</li>
+                    <li><i class="fas fa-arrow-up"></i> 调整返回顶部按钮显示阈值(400px)</li>
+                    <li><i class="fas fa-sync"></i> 优化格言轮播间隔(6秒)</li>
+                    <li><i class="fas fa-mouse-pointer"></i> 改进鼠标悬停交互效果，添加更流畅的过渡动画</li>
+                    <li><i class="fas fa-mobile-alt"></i> 优化移动端响应式布局，改进小屏幕显示效果</li>
+                    <li><i class="fas fa-check-circle"></i> 修复CDN资源加载问题，提升页面加载稳定性</li>
+                    <li><i class="fas fa-home"></i> 重新设计主页，应用新的霓虹风格</li>
+                    <li><i class="fas fa-history"></i> 重新设计更新日志页面，优化卡片样式</li>
+                    <li><i class="fas fa-cogs"></i> 重新设计服务总览页面，改进服务卡片效果</li>
+                    <li><i class="fas fa-desktop"></i> 重新设计专业装机页面，优化价格显示</li>
+                    <li><i class="fab fa-microsoft"></i> 重新设计C#项目页面，改进项目卡片</li>
+                    <li><i class="fab fa-python"></i> 重新设计Python项目页面，统一风格</li>
+                    <li><i class="fas fa-globe"></i> 重新设计网页项目页面，优化搜索框样式</li>
+                    <li><i class="fas fa-link"></i> 更新所有页面导航链接，确保跳转正常</li>
+                    <li><i class="fas fa-layer-group"></i> 统一所有页面样式，保持视觉一致性</li>
+                    <li><i class="fas fa-heart"></i> 保留heart.html原有风格，按需求未修改</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2025年11月8日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>修复了一些BUG，其他忘力。</li>
+                    <li>站主有点懒，日志不知道该写啥了。</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2025年5月24日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>在主页增加了浏览量</li>
+                    <li>删除了部分屎山代码</li>
+                    <li>使用了Cloudflare Pages进行网站托管</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2025年4月30日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>删除了文档页面，增加了"可提供的服务"页面，目前可提供网页开发，C#开发，Python开发</li>
+                    <li>增加了格言</li>
+                    <li>每个网页底部增加了"copyright© 2024-2025 SYSTEM-MEMZ-XEK. 保留所有权利"</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2025年3月9日</div>
+                <div class="update-type">新增和修改功能</div>
+                <ul class="update-list">
+                    <li>删除了音乐播放器</li>
+                    <li>修改了主页的界面，界面改成毛玻璃界面。</li>
+                    <li>删除了游戏界面，并修改了文档</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2025年2月9日</div>
+                <div class="update-type">新增和修改功能</div>
+                <ul class="update-list">
+                    <li>网页增加了音乐播放器，已上线部分音乐。</li>
+                    <li>"工具"板块删除了在线Photoshop编辑器和奖状生成器。</li>
+                    <li>删去"工具分享"页面</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2024年11月23日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>修改了作品集板块，调用哔哩哔哩外链播放器，可以直接在线观看我在B站的视频。</li>
+                    <li>上线了"文档"页面，待上线的文档有：《如何在GitHub上创建个人网站》</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2024年11月3日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>增加了游戏页面，已经上线的游戏有：俄罗斯方块，贪吃蛇，以及一些未上线的游戏，后续将陆续增加更多的游戏。</li>
+                    <li>增加了俄罗斯方块的难度选择，可以选择简单、中等、困难；贪吃蛇也是可以选择简单、中等、困难。</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2024年10月31日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>增加了游戏页面，已经上线的游戏有：俄罗斯方块，后续将陆续增加更多的游戏。</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2024年10月19日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>增加了工具分享页面，已经上线的工具有：Movie To GIF、NSudoLG、HEU_KMS_Activator_30.2.0、ResHacker这些工具，后续将陆续增加更多的工具。</li>
+                    <li>首页部分"工具"板块增加了"工具分享"，并调整了布局。</li>
+                    <li>"工具"板块更换了在线函数绘制工具，科学计算器的链接，并增加了在线图片处理工具。</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2024年10月13日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>增加了函数绘制工具。</li>
+                    <li>将工具栏目按钮横向排列。</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2024年10月12日</div>
+                <div class="update-type">新增功能</div>
+                <ul class="update-list">
+                    <li>增加了网站更新日志页面。</li>
+                    <li>改进了页面的外观和交互。</li>
+                    <li>修复了在线Photoshop无法访问的问题。</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
+                <div class="update-date">2024年10月7日</div>
+                <div class="update-type">初始发布</div>
+                <ul class="update-list">
+                    <li>发布了网站的基础版本，包括主页、关于我、作品集，联系我们等页面。</li>
+                    <li>提供了一些工具，如在线奖状生成器。</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 粒子效果库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
+    <script src="js/script.js"></script>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p><i class="fas fa-copyright"></i> Copyright &copy; 2024-2026 XEKernel. 保留所有权利</p>
+            <p><i class="fas fa-code"></i> 本网站由 XEKernel 设计与开发</p>
+            <div class="footer-links">
+                <a href="index.html"><i class="fas fa-home"></i> 返回首页</a>
+                <a href="services/serve.html"><i class="fas fa-cogs"></i> 服务</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

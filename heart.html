@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多彩烟花告白</title>
+    <link rel="stylesheet" href="css/heart.css">
+</head>
+<body>
+    <div class="input-box">
+        <input type="text" id="name" placeholder="请输入你的名字" autocomplete="off" aria-label="你的名字">
+        <button id="launchBtn">💖 点击开启浪漫之旅 💖</button>
+    </div>
+    <div class="message" id="message" aria-live="polite"></div>
+    <canvas id="canvas"></canvas>
+    <div id="letter" role="dialog" aria-labelledby="letter-title" aria-modal="true"></div>
+    <button class="sound-toggle" id="soundToggle" aria-label="切换音效">🔊</button>
+
+    <script src="js/heart.js"></script>
+                setTimeout(() => {
+                    letterEl.classList.add('open');
+                }, 100);
+            },
+
+            renderLetterPage(name, letterEl) {
+                const isLastPage = this.currentPage === this.totalPages - 1;
+                
+                letterEl.innerHTML = `
+                    <div class="letter-content">
+                        <h2 id="letter-title">给${name}的情书 ${this.currentPage + 1}/${this.totalPages}</h2>
+                        <p id="paragraph">
+                            <span class="text-container" id="text-container"></span>
+                        </p>
+                        <div class="letter-nav">
+                            <button class="nav-btn" id="prevBtn" ${this.currentPage === 0 ? 'disabled' : ''}>上一页</button>
+                            ${isLastPage ? 
+                                '<div class="action-buttons">' +
+                                '<button class="response-btn accept">🥰 我愿意</button>' +
+                                '<button class="response-btn reject">😭 再考虑</button>' +
+                                '</div>' : 
+                                '<button class="nav-btn" id="nextBtn">下一页</button>'
+                            }
+                        </div>
+                    </div>
+                `;
+
+                // 添加逐字淡入效果
+                this.typeText(this.letterContent[this.currentPage], true);
+
+                // 添加导航事件
+                if (this.currentPage > 0) {
+                    document.getElementById('prevBtn').addEventListener('click', () => {
+                        if (this.isAnimating) return;
+                        this.navigateToPage(name, letterEl, -1);
+                    });
+                }
+
+                if (!isLastPage) {
+                    document.getElementById('nextBtn').addEventListener('click', () => {
+                        if (this.isAnimating) return;
+                        this.navigateToPage(name, letterEl, 1);
+                    });
+                }
+
+                // 添加选择按钮事件
+                if (isLastPage) {
+                    document.querySelectorAll('.response-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const response = e.target.classList.contains('accept') ?
+                                '❤️ 余生请多指教！' : '💔 我会继续努力！';
+                            
+                            // 先关闭情书
+                            letterEl.classList.remove('open');
+                            letterEl.classList.add('close');
+                            
+                            // 等待关闭动画完成后显示响应消息
+                            setTimeout(() => {
+                                this.showResponseMessage(response);
+                                this.createRippleEffect(letterEl);
+                                setTimeout(() => letterEl.remove(), 2000);
+                            }, 1000);
+                        });
+                    });
+                }
+            },
+
+            // 逐字淡入淡出效果
+            typeText(text, isFadeIn) {
+                const textContainer = document.getElementById('text-container');
+                textContainer.innerHTML = '';
+                
+                // 将文本拆分为字符
+                const chars = text.split('');
+                
+                chars.forEach((char, index) => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char;
+                    
+                    // 设置每个字符的延迟
+                    const delay = index * 30; // 每个字符延迟30ms（加快速度）
+                    
+                    if (isFadeIn) {
+                        // 淡入效果
+                        setTimeout(() => {
+                            span.classList.add('show');
+                        }, delay);
+                    } else {
+                        // 淡出效果
+                        span.classList.add('show');
+                        setTimeout(() => {
+                            span.classList.remove('show');
+                            span.classList.add('hide');
+                        }, delay);
+                    }
+                    
+                    textContainer.appendChild(span);
+                });
+            },
+
+            navigateToPage(name, letterEl, direction) {
+                this.isAnimating = true;
+                
+                // 先淡出当前文本
+                this.typeText(this.letterContent[this.currentPage], false);
+                
+                // 计算淡出完成的时间（加快速度）
+                const textLength = this.letterContent[this.currentPage].length;
+                const fadeOutTime = textLength * 30 + 200; // 淡出总时间 + 额外缓冲
+                
+                // 在淡出进行到一半时开始淡入下一页
+                setTimeout(() => {
+                    // 更新页面
+                    this.currentPage += direction;
+                    
+                    // 更新页面内容但不立即显示
+                    const isLastPage = this.currentPage === this.totalPages - 1;
+                    
+                    letterEl.innerHTML = `
+                        <div class="letter-content">
+                            <h2 id="letter-title">给${name}的情书 ${this.currentPage + 1}/${this.totalPages}</h2>
+                            <p id="paragraph">
+                                <span class="text-container" id="text-container"></span>
+                            </p>
+                            <div class="letter-nav">
+                                <button class="nav-btn" id="prevBtn" ${this.currentPage === 0 ? 'disabled' : ''}>上一页</button>
+                                ${isLastPage ? 
+                                    '<div class="action-buttons">' +
+                                    '<button class="response-btn accept">🥰 我愿意</button>' +
+                                    '<button class="response-btn reject">😭 再考虑</button>' +
+                                    '</div>' : 
+                                    '<button class="nav-btn" id="nextBtn">下一页</button>'
+                                }
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 添加导航事件
+                    if (this.currentPage > 0) {
+                        document.getElementById('prevBtn').addEventListener('click', () => {
+                            if (this.isAnimating) return;
+                            this.navigateToPage(name, letterEl, -1);
+                        });
+                    }
+                    
+                    if (!isLastPage) {
+                        document.getElementById('nextBtn').addEventListener('click', () => {
+                            if (this.isAnimating) return;
+                            this.navigateToPage(name, letterEl, 1);
+                        });
+                    }
+                    
+                    // 添加选择按钮事件
+                    if (isLastPage) {
+                        document.querySelectorAll('.response-btn').forEach(btn => {
+                            btn.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                const response = e.target.classList.contains('accept') ?
+                                    '❤️ 余生请多指教！' : '💔 我会继续努力！';
+                                
+                                // 先关闭情书
+                                letterEl.classList.remove('open');
+                                letterEl.classList.add('close');
+                                
+                                // 等待关闭动画完成后显示响应消息
+                                setTimeout(() => {
+                                    this.showResponseMessage(response);
+                                    this.createRippleEffect(letterEl);
+                                    setTimeout(() => letterEl.remove(), 2000);
+                                }, 1000);
+                            });
+                        });
+                    }
+                    
+                    // 开始淡入新文本
+                    this.typeText(this.letterContent[this.currentPage], true);
+                    
+                    // 播放翻页音效
+                    soundSystem.playPageTurn();
+                    
+                    // 重置动画状态
+                    setTimeout(() => {
+                        this.isAnimating = false;
+                    }, textLength * 30 + 200); // 等待新文本淡入完成
+                }, fadeOutTime / 2); // 在淡出进行到一半时开始淡入
+            },
+
+            showResponseMessage(text) {
+                const el = document.createElement('div');
+                el.className = 'message';
+                el.textContent = text;
+                document.body.appendChild(el);
+                el.style.opacity = 1;
+                
+                // 播放相应音效
+                if (text.includes('余生')) {
+                    soundSystem.playSuccess();
+                }
+                
+                setTimeout(() => {
+                    el.style.opacity = 0;
+                    setTimeout(() => el.remove(), 1000);
+                }, 2000);
+            },
+
+            createRippleEffect(target) {
+                const ripple = document.createElement('div');
+                ripple.className = 'ripple';
+                ripple.style.left = `${target.offsetLeft + target.offsetWidth/2}px`;
+                ripple.style.top = `${target.offsetTop + target.offsetHeight/2}px`;
+                document.body.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 1500);
+            }
+        };
+
+        // 初始化系统
+        const soundSystem = new SoundSystem();
+        const starBackground = new StarBackground();
+        const fireworkSystem = new FireworkSystem();
+        const heartParticleSystem = new HeartParticleSystem();
+        eventHandler.init();
+        animate();
+    </script>
+</body>
+</html>

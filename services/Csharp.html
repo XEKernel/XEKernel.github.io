@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C# 开源项目集 - SYSTEM-MEMZ-XEK</title>
+    <link rel="icon" href="../images/profile.jpg">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* 项目列表页面专用样式 */
+        .back-link {
+            display: inline-block;
+            margin-bottom: 35px;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .back-link:hover {
+            color: var(--accent-color);
+            transform: translateX(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--border-glow);
+        }
+        
+        .search-container {
+            margin: 35px 0;
+        }
+        
+        #searchInput {
+            padding: 15px 28px;
+            font-size: 1rem;
+            border-radius: 35px;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            background: rgba(12, 12, 30, 0.8);
+            color: var(--text-light);
+            width: 100%;
+            max-width: 500px;
+            backdrop-filter: blur(15px);
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        #searchInput:focus {
+            box-shadow: var(--glow-primary);
+            border-color: var(--primary-color);
+        }
+        
+        .project-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(12, 12, 30, 0.8) 100%);
+            border-radius: 25px;
+            padding: 28px;
+            transition: var(--transition);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        
+        .project-card:hover::before {
+            opacity: 1;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 
+                var(--glow-primary);
+            border-color: var(--primary-color);
+        }
+        
+        .project-card h3 {
+            margin-bottom: 18px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+        
+        .project-card p {
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            color: var(--text-muted);
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        .project-meta span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .project-meta i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .language-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+            box-shadow: 0 2px 10px rgba(0, 245, 255, 0.4);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        
+        .github-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 12px 24px;
+            border-radius: 28px;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 245, 255, 0.4);
+        }
+        
+        .github-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 245, 255, 0.6),
+                var(--glow-primary);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+        
+        .download-button {
+            background: linear-gradient(135deg, #238636, #2ea043);
+        }
+        
+        .download-button:hover {
+            box-shadow: 0 6px 20px rgba(35, 134, 54, 0.6),
+                0 0 20px rgba(35, 134, 54, 0.4);
+        }
+        
+        .download-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.3rem;
+        }
+        
+        .loading i {
+            font-size: 2.5rem;
+            margin-bottom: 18px;
+            color: var(--primary-color);
+            filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.5));
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景容器 -->
+    <div id="particles-js"></div>
+
+    <!-- 动态背景装饰 -->
+    <div class="bg-decoration">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-atom"></i>
+                <span>XEKernel</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="navLink"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="../index.html#github" class="navLink"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="../index.html#tools" class="navLink"><i class="fas fa-tools"></i> 工具</a></li>
+                <li><a href="../index.html#contact" class="navLink"><i class="fas fa-address-card"></i> 联系</a></li>
+                <li><a href="../UpdateLog.html" class="navLink"><i class="fas fa-history"></i> 日志</a></li>
+                <li><a href="serve.html" class="navLink"><i class="fas fa-cogs"></i> 服务</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 返回服务列表链接 -->
+    <section style="padding-top: 50px;">
+        <div class="section-content">
+            <a href="serve.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回服务列表</a>
+            <h1><i class="fab fa-microsoft"></i> C# 开源项目集</h1>
+            
+            <div class="search-container">
+                <input type="text" 
+                       id="searchInput" 
+                       placeholder="搜索项目名称..."
+                       onkeyup="filterProjects()">
+            </div>
+            
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>正在加载项目信息...</p>
+            </div>
+            <div class="projects-grid" id="projects"></div>
+        </div>
+    </section>
+    
+    <!-- 粒子效果库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
+    <script src="../js/script.js"></script>
+    <script>
+        const GITHUB_USER = 'SYSTEM-MEMZ-XEK';
+        const LANGUAGE_FILTER = 'C#';
+
+        async function fetchProjects() {
+            try {
+                const response = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos`);
+                const repos = await response.json();
+                
+                // 获取每个仓库的最新release
+                const reposWithReleases = await Promise.all(
+                    repos.map(async repo => {
+                        try {
+                            const releaseRes = await fetch(repo.releases_url.replace('{/id}', ''));
+                            const releases = await releaseRes.json();
+                            return {
+                                ...repo,
+                                latestRelease: releases[0] || null
+                            };
+                        } catch {
+                            return { ...repo, latestRelease: null };
+                        }
+                    })
+                );
+
+                const filteredRepos = reposWithReleases.filter(repo => 
+                    repo.language === LANGUAGE_FILTER && 
+                    !repo.archived && 
+                    !repo.fork
+                );
+
+                displayProjects(filteredRepos);
+            } catch (error) {
+                document.getElementById('loading').innerHTML = 
+                    '<p style="color: var(--accent-color)">无法获取项目信息，请刷新重试</p>';
+            }
+        }
+
+        function displayProjects(repos) {
+            const container = document.getElementById('projects');
+            container.innerHTML = '';
+            
+            if (repos.length === 0) {
+                container.innerHTML = '<p style="text-align: center;">暂无C#开源项目</p>';
+                return;
+            }
+
+            repos.forEach(repo => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <h3>${repo.name}</h3>
+                    <p>${repo.description || '暂无项目描述'}</p>
+                    <div class="project-meta">
+                        <span>
+                            <i class="fas fa-code"></i>
+                            <span class="language-tag">${repo.language || '未指定'}</span>
+                        </span>
+                        <span>
+                            <i class="far fa-star"></i> ${repo.stargazers_count}
+                        </span>
+                    </div>
+                    <div class="button-group">
+                        <a href="${repo.html_url}" class="github-button" target="_blank">
+                            查看仓库
+                        </a>
+                        ${repo.latestRelease 
+                            ? `<a href="${repo.latestRelease.zipball_url}" 
+                                class="github-button download-button"
+                                download="${repo.name}-${repo.latestRelease.tag_name}.zip">
+                                下载 (${repo.latestRelease.tag_name})
+                              </a>`
+                            : '<button class="github-button download-button" disabled>暂无发布版本</button>'}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // 项目搜索功能
+        function filterProjects() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const cards = document.getElementsByClassName('project-card');
+
+            Array.from(cards).forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = title.includes(filter) ? 'block' : 'none';
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchProjects);
+    </script>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p><i class="fas fa-copyright"></i> Copyright &copy; 2024-2026 XEKernel. 保留所有权利</p>
+            <p><i class="fas fa-code"></i> 本网站由 XEKernel 设计与开发</p>
+            <div class="footer-links">
+                <a href="../index.html"><i class="fas fa-home"></i> 返回首页</a>
+                <a href="serve.html"><i class="fas fa-cogs"></i> 服务列表</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

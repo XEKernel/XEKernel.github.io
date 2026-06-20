@@ -1,0 +1,7 @@
+.workbuddy/
+node_modules/
+*.py
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db

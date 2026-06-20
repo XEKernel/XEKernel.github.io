@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XEKernel的个人网站</title>
+    <link rel="icon" href="images/profile.jpg">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- 粒子背景容器 -->
+    <div id="particles-js"></div>
+    
+    <!-- 动态背景装饰 -->
+    <div class="bg-decoration">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-atom"></i>
+                <span>XEKernel</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="navLink active" onclick="scrollToSection('home')"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="#github" class="navLink" onclick="scrollToSection('github')"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="#tools" class="navLink" onclick="scrollToSection('tools')"><i class="fas fa-tools"></i> 工具</a></li>
+                <li><a href="#contact" class="navLink" onclick="scrollToSection('contact')"><i class="fas fa-address-card"></i> 联系</a></li>
+                <li><a href="UpdateLog.html" class="navLink" target="_blank"><i class="fas fa-history"></i> 日志</a></li>
+                <li><a href="services/serve.html" class="navLink" target="_blank"><i class="fas fa-cogs"></i> 服务</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页部分 -->
+    <section id="home" class="hero-section">
+        <div class="section-content homeContent">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-sparkles"></i>
+                    <span>欢迎来到我的个人空间</span>
+                </div>
+                
+                <h1 id="typingContainer" class="hero-title">
+                    <span id="typingEffect"></span>
+                    <span id="cursor"></span>
+                </h1>
+                
+                <p class="hero-description">
+                    <i class="fas fa-user-circle"></i> 在这里你可以了解更多关于我、我的技能以及我的工作内容。
+                    <br><br>
+                    <span class="highlight-text">高中生</span> • <span class="highlight-text">编程爱好者</span> • <span class="highlight-text">技术探索者</span>
+                </p>
+                
+                <div class="hero-buttons">
+                    <button class="button primary-btn" onclick="scrollToSection('contact')">
+                        <i class="fas fa-envelope"></i>
+                        联系我
+                    </button>
+                    <button class="button secondary-btn" onclick="scrollToSection('github')">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="profile-container">
+                    <img src="images/profile.jpg" alt="我的头像" class="profilePic">
+                    <div class="profile-ring"></div>
+                    <div class="profile-glow"></div>
+                </div>
+                
+                <p class="personal-tag"><i class="fas fa-robot"></i> "I'm not a robot, I just code like one."</p>
+                
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number" id="experienceYears" data-target="3">0</div>
+                        <div class="stat-label">年编程经验</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="repoCount" data-target="0">0</div>
+                        <div class="stat-label">开源项目</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalStars" data-target="0">0</div>
+                        <div class="stat-label">获得星标</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="followerCount" data-target="0">0</div>
+                        <div class="stat-label">关注者</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote-section">
+                <h2><i class="fas fa-quote-left"></i> 格言 <i class="fas fa-quote-right"></i></h2>
+                <div id="quoteDisplay" class="quote-box"></div>
+            </div>
+            
+            <div class="about-section">
+                <h2><i class="fas fa-user"></i> 关于我</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>我的名字是 <span class="accent-text">XEKernel</span>，我是一位高中生，目前就读于炳辉中学。我热爱编程与计算机，喜欢研究新技术，学习新知识。我希望通过我的技能和经验为更多的人提供帮助。</p>
+                        <p>我的技术栈包括 <span id="techStackTags"><span class="tech-tag">Python</span>、<span class="tech-tag">C#</span>、<span class="tech-tag">JavaScript</span>、<span class="tech-tag">HTML/CSS</span></span> 等。我正在不断学习和探索新的技术领域。</p>
+                    </div>
+                    <div class="about-skills">
+                                        <div class="language-donut-chart">
+                                            <svg class="donut-svg" viewBox="0 0 200 200">
+                                                <!-- 背景圆环 -->
+                                                <circle class="donut-bg" cx="100" cy="100" r="80"></circle>
+                                                <!-- 语言占比将通过JavaScript动态生成 -->
+                                                <g id="languageSegments"></g>
+                                            </svg>
+                                            <div class="donut-center">
+                                                <div class="center-label">项目语言</div>
+                                                <div class="center-count" id="totalProjects">0</div>
+                                                <div class="center-sub">个项目</div>
+                                            </div>
+                                        </div>
+                                        <div class="language-legend" id="languageLegend">
+                                            <!-- 语言图例将通过JavaScript动态生成 -->
+                                        </div>
+                                    </div>               
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub项目部分 -->
+    <section id="github">
+        <div class="section-content">
+            <div class="section-header">
+                <h2><i class="fab fa-github"></i> GitHub项目</h2>
+                <p><i class="fas fa-code-branch"></i> 以下是我在GitHub上的一些开源项目</p>
+            </div>
+            <div id="projects-container" class="projects-grid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>正在加载项目...</p>
+                </div>
+            </div>
+            <!-- GitHub 统计卡片 -->
+            <div class="github-stats-section">
+                <h3 class="stats-section-title"><i class="fas fa-chart-bar"></i> GitHub 数据统计</h3>
+                <p class="stats-section-desc">数据实时同步自 GitHub，通过 camo.githubusercontent.com 加速</p>
+                <div class="github-stats-grid">
+                    <div class="github-stat-card">
+                        <div class="stat-card-header">
+                            <i class="fab fa-github"></i>
+                            <span>综合统计</span>
+                        </div>
+                        <img 
+                            src="https://github-readme-stats.vercel.app/api?username=SYSTEM-MEMZ-XEK&show_icons=true&theme=tokyonight&hide_border=true&count_private=true&include_all_commits=true&custom_title=XEKernel%20GitHub%20Stats"
+                            alt="GitHub Stats"
+                            class="stat-card-img"
+                            loading="lazy"
+                            onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22495%22 height=%22195%22><rect fill=%22%231a1b27%22 width=%22495%22 height=%22195%22 rx=%2210%22/><text fill=%22%2370a5fd%22 x=%2220%22 y=%22100%22 font-size=%2218%22>GitHub Stats 加载中...</text></svg>'"
+                        >
+                    </div>
+                    <div class="github-stat-card">
+                        <div class="stat-card-header">
+                            <i class="fas fa-code"></i>
+                            <span>常用语言</span>
+                        </div>
+                        <img 
+                            src="https://github-readme-stats.vercel.app/api/top-langs/?username=SYSTEM-MEMZ-XEK&layout=compact&theme=tokyonight&hide_border=true&langs_count=8"
+                            alt="Top Languages"
+                            class="stat-card-img"
+                            loading="lazy"
+                            onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22495%22 height=%22195%22><rect fill=%22%231a1b27%22 width=%22495%22 height=%22195%22 rx=%2210%22/><text fill=%22%2370a5fd%22 x=%2220%22 y=%22100%22 font-size=%2218%22>Language Stats 加载中...</text></svg>'"
+                        >
+                    </div>
+                    <div class="github-stat-card">
+                        <div class="stat-card-header">
+                            <i class="fas fa-fire"></i>
+                            <span>连续贡献</span>
+                        </div>
+                        <img 
+                            src="https://github-readme-streak-stats.herokuapp.com/?user=SYSTEM-MEMZ-XEK&theme=tokyonight&hide_border=true"
+                            alt="GitHub Streak"
+                            class="stat-card-img"
+                            loading="lazy"
+                            onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22495%22 height=%22195%22><rect fill=%22%231a1b27%22 width=%22495%22 height=%22195%22 rx=%2210%22/><text fill=%22%2370a5fd%22 x=%2220%22 y=%22100%22 font-size=%2218%22>Streak Stats 加载中...</text></svg>'"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub 贡献日历 -->
+            <div class="github-contribution-section">
+                <h3 class="stats-section-title"><i class="fas fa-calendar-check"></i> 贡献日历</h3>
+                <p class="stats-section-desc">过去一年的代码贡献记录</p>
+                <div class="contribution-card">
+                    <img 
+                        src="https://ghchart.rshah.org/00F5FF/SYSTEM-MEMZ-XEK"
+                        alt="GitHub Contribution Graph"
+                        class="contribution-img"
+                        loading="lazy"
+                        onerror="this.parentElement.style.display='none'"
+                    >
+                </div>
+            </div>
+
+            <div class="cta-container">
+                <button class="button primary-btn" onclick="window.location.href='https://github.com/SYSTEM-MEMZ-XEK'">
+                    <i class="fab fa-github"></i> 访问我的GitHub主页
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 工具部分 -->   
+    <section id="tools">
+        <div class="section-content">
+            <div class="section-header">
+                <h2><i class="fas fa-tools"></i> 工具网站</h2>
+                <p><i class="fas fa-link"></i> 这里是我收藏的工具网站，你可以点击按钮来访问</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>在线图片处理工具</h3>
+                    <p>快速去除图片背景，编辑图片效果</p>
+                    <button class="button" onclick="window.location.href='https://www.remove.bg/zh'">
+                        <i class="fas fa-external-link-alt"></i> 访问网站
+                    </button>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>函数绘制工具</h3>
+                    <p>可视化函数图像，辅助数学学习</p>
+                    <button class="button" onclick="window.location.href='https://www.geogebra.org/graphing?lang=zh_CN'">
+                        <i class="fas fa-external-link-alt"></i> 访问网站
+                    </button>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>数学计算器</h3>
+                    <p>强大的科学计算器，支持复杂运算</p>
+                    <button class="button" onclick="window.location.href='https://www.desmos.com/scientific?lang=zh-CN'">
+                        <i class="fas fa-external-link-alt"></i> 访问网站
+                    </button>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI工具</h3>
+                    <p>各种人工智能工具和资源</p>
+                    <button class="button" onclick="window.location.href='https://openi.cn/#term-8151'">
+                        <i class="fas fa-external-link-alt"></i> 访问网站
+                    </button>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3>音乐下载</h3>
+                    <p>高品质音乐搜索和下载</p>
+                    <button class="button" onclick="window.location.href='https://www.gequbao.com/'">
+                        <i class="fas fa-external-link-alt"></i> 访问网站
+                    </button>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>星空下的表白</h3>
+                    <p>浪漫的表白页面，分享你的心意</p>
+                    <button class="button" onclick="window.location.href='heart.html'">
+                        <i class="fas fa-heart"></i> 体验一下
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 联系方式部分 -->
+    <section id="contact">
+        <div class="section-content">
+            <div class="section-header">
+                <h2><i class="fas fa-address-card"></i> 联系方式</h2>
+                <p><i class="fas fa-envelope-open-text"></i> 你可以通过以下方式联系我</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>邮箱</h3>
+                    <p>XEK20090428@163.com</p>
+                    <button class="button" onclick="window.location.href='mailto:XEK20090428@163.com'">
+                        <i class="fas fa-paper-plane"></i> 发送邮件
+                    </button>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-qq"></i>
+                    </div>
+                    <h3>QQ</h3>
+                    <p>1635075096 或 3956978117(小号)</p>
+                    <button class="button" onclick="copyToClipboard('1635075096')">
+                        <i class="fas fa-copy"></i> 复制QQ号
+                    </button>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-bilibili"></i>
+                    </div>
+                    <h3>哔哩哔哩</h3>
+                    <p>关注我的B站主页</p>
+                    <button class="button" onclick="window.location.href='https://space.bilibili.com/3493115711196019'">
+                        <i class="fab fa-bilibili"></i> 访问主页
+                    </button>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3>GitHub</h3>
+                    <p>查看我的开源项目</p>
+                    <button class="button" onclick="window.location.href='https://github.com/SYSTEM-MEMZ-XEK'">
+                        <i class="fab fa-github"></i> 访问主页
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 返回顶部按钮 -->
+    <div id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p><i class="fas fa-copyright"></i> Copyright &copy; 2024-2026 XEKernel. 保留所有权利</p>
+            <p><i class="fas fa-code"></i> 本网站由 XEKernel 设计与开发</p>
+            <div class="footer-links">
+                <a href="UpdateLog.html" target="_blank"><i class="fas fa-history"></i> 更新日志</a>
+                <a href="services/serve.html" target="_blank"><i class="fas fa-cogs"></i> 服务</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 粒子效果库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // DOM加载完成后立即开始打字效果，不需要等待所有资源加载
+        document.addEventListener('DOMContentLoaded', () => {
+            const text = "欢迎来到我的个人网站";
+            const typingElement = document.getElementById('typingEffect');
+            const cursorElement = document.getElementById('cursor');
+
+            cursorElement.style.visibility = 'hidden';
+
+            setTimeout(() => {
+                typeWriter(text, typingElement, cursorElement, 70);
+            }, 200);
+        });
+    </script>
+</body>
+</html>

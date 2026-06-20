@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专业装机与系统安装 - SYSTEM-MEMZ-XEK</title>
+    <link rel="icon" href="../images/profile.jpg">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* 服务页面专用样式 */
+        .service-section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(12, 12, 30, 0.8) 100%);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 35px;
+            margin: 25px 0;
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        
+        .service-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        
+        .service-section:hover::before {
+            opacity: 1;
+        }
+        
+        .service-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 
+                var(--glow-primary);
+            border-color: var(--primary-color);
+        }
+        
+        .service-price {
+            font-size: 2.8rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin: 18px 0;
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+        }
+        
+        .service-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .service-list li {
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+            color: var(--text-muted);
+        }
+        
+        .service-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 35px;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .back-link:hover {
+            color: var(--accent-color);
+            transform: translateX(-5px);
+            border-color: var(--primary-color);
+            box-shadow: var(--border-glow);
+        }
+        
+        .service-time {
+            text-align: center;
+            font-size: 1.3rem;
+            margin: 35px 0;
+            color: var(--primary-color);
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1) 0%, rgba(123, 104, 238, 0.1) 100%);
+            border-radius: 18px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            text-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+        }
+        
+        .disclaimer-box {
+            background: linear-gradient(135deg, rgba(255, 100, 100, 0.1) 0%, rgba(255, 100, 100, 0.05) 100%);
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            border-radius: 22px;
+            padding: 35px;
+            margin: 35px 0;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.2);
+        }
+        
+        .disclaimer-box h3 {
+            color: var(--accent-color);
+            margin-bottom: 22px;
+            text-shadow: 0 0 15px rgba(255, 107, 157, 0.4);
+        }
+        
+        .disclaimer-box p {
+            margin-bottom: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景容器 -->
+    <div id="particles-js"></div>
+
+    <!-- 动态背景装饰 -->
+    <div class="bg-decoration">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-atom"></i>
+                <span>XEKernel</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html" class="navLink"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="../index.html#github" class="navLink"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="../index.html#tools" class="navLink"><i class="fas fa-tools"></i> 工具</a></li>
+                <li><a href="../index.html#contact" class="navLink"><i class="fas fa-address-card"></i> 联系</a></li>
+                <li><a href="../UpdateLog.html" class="navLink"><i class="fas fa-history"></i> 日志</a></li>
+                <li><a href="serve.html" class="navLink"><i class="fas fa-cogs"></i> 服务</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 返回服务列表链接 -->
+    <section style="padding-top: 50px;">
+        <div class="section-content" style="max-width: 800px;">
+            <a href="serve.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回服务列表</a>
+            <h1><i class="fas fa-desktop"></i> 专业装机与系统安装</h1>
+            <p style="text-align: center; font-size: 1.3rem; margin-bottom: 30px;"><i class="fas fa-bolt"></i> 专业配置 | 快速装机 | 系统优化</p>
+            
+            <div class="service-section">
+                <h2><i class="fas fa-cogs"></i> 硬件配置方案</h2>
+                <div class="service-price">¥20</div>
+                <p>根据需求定制最佳硬件配置方案，包含：</p>
+                <ul class="service-list">
+                    <li>电脑硬件推荐</li>
+                    <li>推荐性价比硬件</li>
+                    <li>有常规配置（推荐）垃圾佬配置（慎选）</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2><i class="fas fa-toolbox"></i> 专业装机服务</h2>
+                <div class="service-price">¥60</div>
+                <p>包含：</p>
+                <ul class="service-list">
+                    <li>硬件安装</li>
+                    <li>上门服务</li>
+                    <li>硬件升级</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2><i class="fas fa-download"></i> 系统安装服务</h2>
+                <div class="service-price">¥50</div>
+                <p>包含：</p>
+                <ul class="service-list">
+                    <li>Windows 7/8/10/11 安装</li>
+                    <li>全套硬件驱动安装</li>
+                    <li>基础系统优化</li>
+                </ul>
+            </div>
+
+            <div class="service-section">
+                <h2><i class="fas fa-box"></i> 软件代安装</h2>
+                <div class="service-price">¥5/个</div>
+                <p>支持：</p>
+                <ul class="service-list">
+                    <li>常用软件安装</li>
+                    <li>游戏安装</li>
+                    <li>办公软件安装</li>
+                </ul>
+            </div>
+            
+            <div class="service-time">
+                <i class="fas fa-clock"></i> 服务时间：每周六、日 9:00-21:00
+            </div>
+            
+            <div class="disclaimer-box">
+                <h3><i class="fas fa-exclamation-triangle"></i> 服务须知</h3>
+                <p>若您需要装机服务，请先付款，并且根据配置单购买相应的硬件，请勿擅自修改配置。</p>
+                <p>若您擅自操作设备导致故障，本人不负责，在服务后1年的时间里可以提供免费维修服务，超过1年的故障需要您另行支付维修费用20元/次。</p>
+                <p>禁止使用侮辱性语言攻击技术人员，否则终止服务。</p>
+                <p>若您对硬件配置、软件安装、系统优化等有任何疑问，请及时联系我，如果你自己不懂电脑，请不要以你自己以为的来对服务过程指指点点，否则终止服务。</p>
+                <p>不接受装机完成后的主观感受退货，但可以更改配置。</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 粒子效果库 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
+    <script src="../js/script.js"></script>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p><i class="fas fa-copyright"></i> Copyright &copy; 2024-2026 XEKernel. 保留所有权利</p>
+            <p><i class="fas fa-code"></i> 本网站由 XEKernel 设计与开发</p>
+            <div class="footer-links">
+                <a href="../index.html"><i class="fas fa-home"></i> 返回首页</a>
+                <a href="serve.html"><i class="fas fa-cogs"></i> 服务列表</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
