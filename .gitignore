@@ -5,3 +5,8 @@ node_modules/
 __pycache__/
 .DS_Store
 Thumbs.db
+.batch*.json
+.push_*.json
+.test_*.json
+.file_list.json
+.gitignore_content.txt
