@@ -389,6 +389,9 @@ async function fetchGitHubStats() {
         const repoCount = userData.public_repos || 0;
         const followers = userData.followers || 0;
         
+        // 更新 GitHub 头像
+        updateAvatar(userData.avatar_url);
+        
         updateStats({ repoCount, experienceYears, totalStars, followers, recentPushEvents });
         
     } catch (error) {
@@ -440,6 +443,19 @@ function updateStatElement(id, value) {
     if (el) {
         el.setAttribute('data-target', value);
     }
+}
+
+// 从 GitHub API 更新头像
+function updateAvatar(avatarUrl) {
+    if (!avatarUrl) return;
+    const profilePics = document.querySelectorAll('.profilePic');
+    profilePics.forEach(pic => {
+        pic.src = avatarUrl;
+        pic.onerror = null; // 不回退，保留现有
+    });
+    // 更新 favicon
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) favicon.href = avatarUrl;
 }
 
 // 获取GitHub项目列表
