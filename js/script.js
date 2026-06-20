@@ -333,7 +333,7 @@ function copyToClipboard(text) {
 // GitHub API调用
 // 获取GitHub用户统计数据
 async function fetchGitHubStats() {
-    const username = 'SYSTEM-MEMZ-XEK';
+    const username = 'XEKernel';
     const userApiUrl = `https://api.github.com/users/${username}`;
     
     try {
@@ -444,7 +444,7 @@ function updateStatElement(id, value) {
 
 // 获取GitHub项目列表
 async function fetchGitHubProjects() {
-    const username = 'SYSTEM-MEMZ-XEK';
+    const username = 'XEKernel';
     const apiUrl = `https://api.github.com/users/${username}/repos?sort=updated&per_page=6`;
     
     try {
@@ -602,7 +602,7 @@ function animateSkillRing(ring) {
 
 // 从GitHub获取语言分布并生成圆环图
 async function fetchLanguageDistribution() {
-    const username = 'SYSTEM-MEMZ-XEK';
+    const username = 'XEKernel';
     
     try {
         // 获取所有仓库
