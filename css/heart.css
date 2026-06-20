@@ -1,144 +1,95 @@
-/* heart.css - 星空告白页面 */
+/* heart.css — 星空告白 */
 
-:root {
-    --primary-color: #ec4899;
-    --secondary-color: #f472b6;
-    --bg-opacity: 0.85;
-}
+:root { --p: #ec4899; --p2: #f472b6; }
 
 * { box-sizing: border-box; }
 
 body {
-    margin: 0; overflow: hidden; background: #09090b;
-    font-family: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    margin: 0; overflow: hidden; background: #0a0a0a;
+    font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
     touch-action: manipulation; -webkit-tap-highlight-color: transparent;
 }
 
-#canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+#canvas { position: fixed; inset: 0; }
 
-/* ── Input ── */
-.input-box {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    z-index: 100; text-align: center; transition: opacity 0.8s ease;
-    width: 90%; max-width: 460px;
-}
+/* Input */
+.input-box { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 100; text-align: center; width: 90%; max-width: 420px; transition: opacity 0.7s; }
 .input-box input {
-    padding: 14px 24px; font-size: 18px; border-radius: 100px;
-    border: 2px solid var(--primary-color);
-    background: rgba(9,9,11,0.85); color: #fff; outline: none;
-    margin-bottom: 16px; width: 100%;
-    transition: all 0.3s; backdrop-filter: blur(8px);
+    width: 100%; padding: 13px 22px; font-size: 17px; border-radius: 100px;
+    border: 2px solid var(--p); background: rgba(10,10,10,0.85); color: #fff;
+    outline: none; margin-bottom: 14px; transition: all 0.3s; backdrop-filter: blur(8px);
 }
-.input-box input:focus { box-shadow: 0 0 24px rgba(236,72,153,0.3); border-color: var(--secondary-color); }
-.input-box input::placeholder { color: rgba(255,255,255,0.35); }
+.input-box input:focus { box-shadow: 0 0 20px rgba(236,72,153,0.25); }
+.input-box input::placeholder { color: rgba(255,255,255,0.3); }
 
 #launchBtn {
-    padding: 12px 40px; font-size: 17px; border-radius: 100px;
-    border: none; background: var(--primary-color); color: #fff;
-    cursor: pointer; transition: all 0.3s; font-weight: 600;
-    letter-spacing: 0.5px;
+    padding: 11px 36px; font-size: 16px; border-radius: 100px; border: none;
+    background: var(--p); color: #fff; cursor: pointer; font-weight: 600; transition: all 0.2s;
 }
 #launchBtn:disabled { opacity: 0.5; cursor: not-allowed; }
-#launchBtn:hover:not(:disabled) {
-    background: var(--secondary-color); transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(236,72,153,0.3);
-}
+#launchBtn:hover:not(:disabled) { background: var(--p2); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(236,72,153,0.3); }
 
-/* ── Message ── */
+/* Message */
 .message {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    color: var(--primary-color); font-size: 36px; opacity: 0;
-    transition: opacity 2.5s ease; text-shadow: 0 0 20px rgba(236,72,153,0.4);
-    pointer-events: none; text-align: center; z-index: 150;
-    width: 90%; max-width: 700px;
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    color: var(--p); font-size: 34px; opacity: 0; transition: opacity 2.5s;
+    text-shadow: 0 0 18px rgba(236,72,153,0.35); pointer-events: none;
+    text-align: center; z-index: 150; width: 90%; max-width: 700px;
 }
 
-/* ── Letter ── */
+/* Letter */
 #letter {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
-    z-index: 200; background: #fff; padding: 24px; border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3); opacity: 0;
-    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    max-width: 560px; width: 85%; min-height: 380px;
-    border: 3px solid var(--primary-color); cursor: pointer;
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0);
+    z-index: 200; background: #fff; padding: 20px; border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25); opacity: 0;
+    transition: all 0.7s cubic-bezier(0.34,1.56,0.64,1);
+    max-width: 520px; width: 85%; min-height: 360px; border: 3px solid var(--p); cursor: pointer;
 }
-#letter.open { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-#letter.close { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+#letter.open { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+#letter.close { transform: translate(-50%,-50%) scale(0); opacity: 0; }
 
-.letter-content {
-    padding: 24px; font-size: 1.1em; line-height: 1.7;
-    color: #374151; text-align: center;
-    display: flex; flex-direction: column; justify-content: space-between; height: 100%;
-}
-.letter-content h2 { color: var(--primary-color); margin: 0 0 12px; font-size: 1.3em; }
-.letter-content p {
-    margin-bottom: 16px; flex-grow: 1;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2em; min-height: 120px;
-}
+.letter-content { padding: 20px; font-size: 1.05em; line-height: 1.7; color: #333; text-align: center; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+.letter-content h2 { color: var(--p); margin: 0 0 10px; font-size: 1.25em; }
+.letter-content p { margin-bottom: 14px; flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 1.15em; min-height: 100px; }
 
-.letter-content .char { opacity: 0; display: inline-block; transition: opacity 0.25s ease; }
+.letter-content .char { opacity: 0; display: inline-block; transition: opacity 0.2s; }
 .letter-content .char.show { opacity: 1; }
 .letter-content .char.hide { opacity: 0; }
 
-.letter-nav { display: flex; justify-content: space-between; margin-top: 16px; gap: 12px; }
-.nav-btn {
-    padding: 8px 20px; border-radius: 100px; border: none; cursor: pointer;
-    font-size: 15px; font-weight: 600; transition: all 0.2s;
-    background: var(--primary-color); color: #fff; min-width: 90px;
-}
-.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(236,72,153,0.3); }
+.letter-nav { display: flex; justify-content: space-between; margin-top: 14px; gap: 10px; }
+.nav-btn { padding: 7px 18px; border-radius: 100px; border: none; cursor: pointer; font-size: 14px; font-weight: 600; background: var(--p); color: #fff; min-width: 80px; transition: all 0.2s; }
+.nav-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(236,72,153,0.3); }
 .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-.action-buttons { text-align: center; margin-top: 24px; display: flex; justify-content: center; gap: 12px; }
-
-.response-btn {
-    padding: 10px 24px; border-radius: 100px; border: none; cursor: pointer;
-    font-size: 15px; font-weight: 600; transition: all 0.2s;
-    min-width: 110px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-.response-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
-.accept { background: var(--primary-color); color: #fff; }
-.reject { background: #9ca3af; color: #fff; }
+.action-buttons { text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 10px; }
+.response-btn { padding: 9px 22px; border-radius: 100px; border: none; cursor: pointer; font-size: 14px; font-weight: 600; min-width: 100px; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.response-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.accept { background: var(--p); color: #fff; }
+.reject { background: #888; color: #fff; }
 
 .sound-toggle {
-    position: fixed; top: 20px; right: 20px; z-index: 300;
-    background: rgba(9,9,11,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 50%; width: 44px; height: 44px; cursor: pointer;
-    font-size: 18px; backdrop-filter: blur(8px); transition: all 0.2s;
+    position: fixed; top: 18px; right: 18px; z-index: 300;
+    background: rgba(10,10,10,0.7); color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50%; width: 40px; height: 40px; cursor: pointer;
+    font-size: 16px; backdrop-filter: blur(8px); transition: all 0.2s;
 }
-.sound-toggle:hover { background: var(--primary-color); transform: scale(1.1); }
+.sound-toggle:hover { background: var(--p); }
 
 .hidden { opacity: 0 !important; pointer-events: none !important; }
 
-/* ── Animations ── */
-.ripple {
-    position: absolute; border: 2px solid var(--primary-color);
-    border-radius: 50%; animation: ripple 1.5s ease-out; pointer-events: none;
-}
-@keyframes ripple {
-    from { transform: scale(0); opacity: 1; }
-    to { transform: scale(8); opacity: 0; }
-}
-.loading {
-    display: inline-block; width: 18px; height: 18px;
-    border: 3px solid rgba(255,255,255,.3); border-radius: 50%;
-    border-top-color: #fff; animation: spin 0.8s linear infinite; margin-right: 8px;
-}
+/* Animations */
+.ripple { position: absolute; border: 2px solid var(--p); border-radius: 50%; animation: ripple 1.4s ease-out; pointer-events: none; }
+@keyframes ripple { from { transform: scale(0); opacity: 1; } to { transform: scale(8); opacity: 0; } }
+.loading { display: inline-block; width: 16px; height: 16px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.7s linear infinite; margin-right: 8px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Responsive ── */
+/* Responsive */
 @media (max-width: 768px) {
-    .input-box input { font-size: 16px; padding: 12px 20px; }
-    #launchBtn { padding: 10px 30px; font-size: 15px; }
+    .input-box input { font-size: 15px; padding: 11px 18px; }
+    #launchBtn { padding: 10px 28px; font-size: 14px; }
     .message { font-size: 24px; }
-    #letter { width: 90%; min-height: 320px; }
-    .letter-content { padding: 16px; font-size: 1em; }
-    .response-btn { padding: 8px 18px; font-size: 14px; min-width: 90px; }
-    .nav-btn { padding: 6px 14px; font-size: 14px; min-width: 70px; }
+    #letter { width: 90%; min-height: 300px; }
+    .letter-content { padding: 16px; font-size: 0.95em; }
+    .response-btn { padding: 8px 16px; font-size: 13px; min-width: 80px; }
 }
-
-@media (max-width: 480px) {
-    .message { font-size: 20px; }
-    .input-box { width: 95%; }
-}
+@media (max-width: 480px) { .message { font-size: 20px; } .input-box { width: 95%; } }
