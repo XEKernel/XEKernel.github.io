@@ -7,249 +7,6 @@
     <link rel="icon" href="../images/profile.jpg">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.css">
-    <style>
-        /* 服务页面专用样式 */
-        .back-link {
-            display: inline-block;
-            margin-bottom: 35px;
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 1.1rem;
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            padding: 10px 20px;
-            border-radius: 25px;
-        }
-        
-        .back-link:hover {
-            color: var(--accent-color);
-            transform: translateX(-5px);
-            border-color: var(--primary-color);
-            box-shadow: var(--border-glow);
-        }
-        
-        .service-card {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(12, 12, 30, 0.8) 100%);
-            border-radius: 25px;
-            padding: 30px;
-            text-align: center;
-            transition: var(--transition);
-            border: 2px solid rgba(0, 245, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-        }
-        
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.6s;
-        }
-        
-        .service-card:hover::before {
-            opacity: 1;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 
-                var(--glow-primary);
-            border-color: var(--primary-color);
-        }
-        
-        .service-card i {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 18px;
-            filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.3));
-        }
-        
-        .service-card h3 {
-            margin-bottom: 18px;
-            font-size: 1.4rem;
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.2);
-        }
-        
-        .service-card p {
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            color: var(--text-muted);
-        }
-        
-        .price-tag {
-            font-size: 2.8rem;
-            color: var(--accent-color);
-            font-weight: bold;
-            margin: 18px 0;
-            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 6px 18px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 22px;
-            font-size: 0.85rem;
-            margin-bottom: 18px;
-            box-shadow: 0 2px 10px rgba(0, 245, 255, 0.4);
-        }
-        
-        .service-button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 245, 255, 0.4),
-                var(--border-glow);
-            border: 1px solid rgba(0, 245, 255, 0.3);
-        }
-        
-        .service-button:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(0, 245, 255, 0.6), 
-                var(--glow-primary);
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
-            border-color: var(--primary-color);
-        }
-        
-        .disclaimer {
-            background: linear-gradient(135deg, rgba(255, 100, 100, 0.1) 0%, rgba(255, 100, 100, 0.05) 100%);
-            border: 2px solid rgba(255, 107, 157, 0.3);
-            border-radius: 22px;
-            padding: 35px;
-            margin: 35px 0;
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.2);
-        }
-        
-        .disclaimer h3 {
-            color: var(--accent-color);
-            margin-bottom: 22px;
-            text-shadow: 0 0 15px rgba(255, 107, 157, 0.4);
-        }
-        
-        .disclaimer-list {
-            padding-left: 22px;
-            margin: 18px 0;
-        }
-        
-        .disclaimer-list li {
-            margin: 12px 0;
-            line-height: 1.7;
-            color: var(--text-muted);
-        }
-        
-        .contact-section {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(12, 12, 30, 0.8) 100%);
-            border-radius: 22px;
-            padding: 35px;
-            margin: 35px 0;
-            border: 2px solid rgba(0, 245, 255, 0.2);
-        }
-        
-        .contact-section h3 {
-            color: var(--primary-color);
-            margin-bottom: 22px;
-            text-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
-        }
-        
-        .contact-card {
-            background: rgba(0, 245, 255, 0.08);
-            border-radius: 15px;
-            padding: 22px;
-            margin: 18px 0;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            border: 1px solid rgba(0, 245, 255, 0.2);
-            transition: var(--transition);
-        }
-        
-        .contact-card:hover {
-            transform: translateX(5px);
-            border-color: var(--primary-color);
-            box-shadow: var(--border-glow);
-        }
-        
-        .contact-card i {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.3));
-        }
-        
-        .copy-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border: none;
-            padding: 10px 22px;
-            border-radius: 22px;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(0, 245, 255, 0.4);
-        }
-        
-        .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 245, 255, 0.6);
-        }
-        
-        /* 模态框样式 */
-        .announcement-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 9999;
-        }
-        
-        .announcement-content {
-            position: relative;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, rgba(12, 12, 30, 0.95) 0%, rgba(12, 12, 30, 0.98) 100%);
-            padding: 40px;
-            border-radius: 25px;
-            max-width: 550px;
-            text-align: center;
-            border: 2px solid rgba(0, 245, 255, 0.3);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
-                var(--glow-primary);
-        }
-        
-        .close-btn {
-            position: absolute;
-            right: 18px;
-            top: 12px;
-            cursor: pointer;
-            font-size: 28px;
-            color: var(--text-light);
-            transition: var(--transition);
-        }
-        
-        .close-btn:hover {
-            color: var(--accent-color);
-            transform: rotate(90deg);
-        }
-    </style>
 </head>
 <body>
     <!-- 粒子背景容器 -->
@@ -279,6 +36,7 @@
                 <li><a href="../UpdateLog.html" class="navLink"><i class="fas fa-history"></i> 日志</a></li>
                 <li><a href="serve.html" class="navLink active"><i class="fas fa-cogs"></i> 服务</a></li>
             </ul>
+            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换深色/浅色模式">◐</button>
             <div class="menu-toggle" id="mobileMenu">
                 <span></span>
                 <span></span>
@@ -288,30 +46,30 @@
     </nav>
     
     <!-- 公告模态框 -->
-    <div class="announcement-modal" id="announcementModal">
-        <div class="announcement-content">
-            <span class="close-btn" onclick="closeAnnouncement()">&times;</span>
+    <div class="modal" id="announcementModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="document.getElementById('announcementModal').classList.remove('open')">&times;</span>
             <h3>公告</h3>
             <p>由于目前不支持微信支付，只支持现金支付，所以目前除了专业装机与系统安装项目可以在天长市市区服务之外，其他项目服务范围均在天长市炳辉中学高中部范围内，敬请谅解。</p>
-            <button class="service-button" onclick="closeAnnouncement()">知道了</button>
+            <button class="button primary-btn" onclick="document.getElementById('announcementModal').classList.remove('open')">知道了</button>
         </div>
     </div>
     
     <!-- 服务列表 -->
-    <section style="padding-top: 50px;">
+    <section>
         <div class="section-content">
             <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回首页</a>
             <h1><i class="fas fa-cogs"></i> 可提供的服务</h1>
-            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 30px;"><i class="fas fa-info-circle"></i> 初学者，有风险，请谨慎选择</p>
+            <p><i class="fas fa-info-circle"></i> 初学者，有风险，请谨慎选择</p>
             
             <div class="tools-grid">
-                <div class="service-card">
+                <div class="service-section">
                     <i class="fas fa-code"></i>
                     <h3>网页开发</h3>
                     <div class="badge">技术较成熟，放心食用</div>
                     <div class="price-tag">￥40起步</div>
                     <p>根据需求定制网页</p>
-                    <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
+                    <ul>
                         <li>静态网页制作</li>
                         <li>基础响应式设计</li>
                         <li>部署上线支持</li>
@@ -319,13 +77,13 @@
                     <a href="projects.html" class="service-button">查看开源项目</a>
                 </div>
 
-                <div class="service-card">
+                <div class="service-section">
                     <i class="fab fa-microsoft"></i>
                     <h3>C# 开发</h3>
                     <div class="badge">技术较成熟，较复杂项目可能有BUG</div>
                     <div class="price-tag">￥70起步</div>
                     <p>Windows应用开发</p>
-                    <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
+                    <ul>
                         <li>Windows应用开发(NET Framework)</li>
                         <li>简单应用</li>
                         <li>维护与调试</li>
@@ -333,26 +91,26 @@
                     <a href="projects.html" class="service-button">查看开源项目</a>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-section">
                     <i class="fab fa-python"></i>
                     <h3>Python开发</h3>
                     <div class="badge">技术不太成熟，有风险，三思而后行</div>
                     <div class="price-tag">￥20起步</div>
                     <p>数据处理与自动化</p>
-                    <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
+                    <ul>
                         <li>数据抓取处理</li>
                         <li>简单应用</li>
                     </ul>
                     <a href="projects.html" class="service-button">查看开源项目</a>
                 </div>
                 
-                <div class="service-card">
+                <div class="service-section">
                     <i class="fas fa-desktop"></i>
                     <h3>专业装机与系统安装</h3>
                     <div class="badge">专业配置 | 快速装机 | 系统优化</div>
                     <div class="price-tag">￥130起</div>
                     <p>一站式电脑服务</p>
-                    <ul style="list-style: none; padding: 0; margin-bottom: 20px;">
+                    <ul>
                         <li>硬件配置</li>
                         <li>系统安装</li>
                         <li>软件代安装</li>
@@ -361,7 +119,7 @@
                 </div>
             </div>
             
-            <div class="disclaimer">
+            <div class="disclaimer-box">
                 <h3><i class="fas fa-exclamation-triangle"></i> 重要声明</h3>
                 <p>在委托服务前，请仔细阅读以下条款：</p>
                 <ul class="disclaimer-list">
@@ -379,19 +137,19 @@
             <div class="contact-section">
                 <h3><i class="fas fa-address-card"></i> 立即联系</h3>
                 <div class="contact-card">
-                    <i class="fab fa-weixin" style="color: #2aae67;"></i>
+                    <i class="fab fa-weixin"></i>
                     <div>
-                        <p style="margin: 0;"><strong>微信联系</strong></p>
-                        <p style="margin: 5px 0;">微信号：xek114514</p>
+                        <p><strong>微信联系</strong></p>
+                        <p>微信号：xek114514</p>
                     </div>
                     <button class="copy-btn" onclick="copyText('xek114514')">复制</button>
                 </div>
                 
                 <div class="contact-card">
-                    <i class="fab fa-qq" style="color: #1296db;"></i>
+                    <i class="fab fa-qq"></i>
                     <div>
-                        <p style="margin: 0;"><strong>QQ联系</strong></p>
-                        <p style="margin: 5px 0;">QQ号：1635075096</p>
+                        <p><strong>QQ联系</strong></p>
+                        <p>QQ号：1635075096</p>
                     </div>
                     <button class="copy-btn" onclick="copyText('1635075096')">复制</button>
                 </div>
@@ -405,21 +163,34 @@
     <script>
         // 页面加载完成后显示公告
         window.onload = function() {
-            document.getElementById('announcementModal').style.display = 'block';
+            document.getElementById('announcementModal').classList.add('open');
         };
         
         function closeAnnouncement() {
-            document.getElementById('announcementModal').style.display = 'none';
+            document.getElementById('announcementModal').classList.remove('open');
         }
         
         // 通用复制函数
         function copyText(text) {
-            navigator.clipboard.writeText(text).then(() => {
+            navigator.clipboard.writeText(text).then(function() {
                 alert('已复制到剪贴板：' + text);
-            }).catch(() => {
+            }).catch(function() {
                 prompt('无法自动复制，请手动复制：', text);
             });
         }
+    </script>
+    <script>
+        function toggleTheme() {
+            var h = document.documentElement;
+            var c = h.getAttribute('data-theme');
+            var n = c === 'dark' ? null : 'dark';
+            if (n) h.setAttribute('data-theme', n);
+            else h.removeAttribute('data-theme');
+            localStorage.setItem('theme', n || 'light');
+        }
+        (function() {
+            if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        })();
     </script>
     
     <footer class="footer">

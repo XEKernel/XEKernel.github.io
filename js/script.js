@@ -1081,6 +1081,20 @@ if (document.readyState === 'loading') {
     initAll();
 }
 
+// ── Theme toggle ──
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? null : 'dark';
+    if (next) html.setAttribute('data-theme', next);
+    else html.removeAttribute('data-theme');
+    localStorage.setItem('theme', next || 'light');
+}
+(function() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+})();
+
 // 页面可见性变化处理
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {

@@ -7,183 +7,6 @@
     <link rel="icon" href="../images/profile.jpg">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.css">
-    <style>
-        /* 项目列表页面专用样式 */
-        .back-link {
-            display: inline-block;
-            margin-bottom: 35px;
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 1.1rem;
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            padding: 10px 20px;
-            border-radius: 25px;
-        }
-        
-        .back-link:hover {
-            color: var(--accent-color);
-            transform: translateX(-5px);
-            border-color: var(--primary-color);
-            box-shadow: var(--border-glow);
-        }
-        
-        .search-container {
-            margin: 35px 0;
-        }
-        
-        #searchInput {
-            padding: 15px 28px;
-            font-size: 1rem;
-            border-radius: 35px;
-            border: 2px solid rgba(0, 245, 255, 0.3);
-            background: rgba(12, 12, 30, 0.8);
-            color: var(--text-light);
-            width: 100%;
-            max-width: 500px;
-            backdrop-filter: blur(15px);
-            outline: none;
-            transition: var(--transition);
-        }
-        
-        #searchInput:focus {
-            box-shadow: var(--glow-primary);
-            border-color: var(--primary-color);
-        }
-        
-        .project-card {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(12, 12, 30, 0.8) 100%);
-            border-radius: 25px;
-            padding: 28px;
-            transition: var(--transition);
-            border: 2px solid rgba(0, 245, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-        }
-        
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.6s;
-        }
-        
-        .project-card:hover::before {
-            opacity: 1;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 
-                var(--glow-primary);
-            border-color: var(--primary-color);
-        }
-        
-        .project-card h3 {
-            margin-bottom: 18px;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
-        }
-        
-        .project-card p {
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            flex-grow: 1;
-            color: var(--text-muted);
-        }
-        
-        .project-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-top: auto;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-        
-        .project-meta span {
-            display: flex;
-            align-items: center;
-        }
-        
-        .project-meta i {
-            margin-right: 8px;
-            color: var(--primary-color);
-        }
-        
-        .language-tag {
-            display: inline-block;
-            padding: 6px 14px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: 15px;
-            font-size: 0.8rem;
-            margin-right: 8px;
-            box-shadow: 0 2px 10px rgba(0, 245, 255, 0.4);
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 18px;
-        }
-        
-        .github-button {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 12px 24px;
-            border-radius: 28px;
-            text-decoration: none;
-            display: inline-block;
-            transition: var(--transition);
-            font-size: 0.9rem;
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 245, 255, 0.4);
-        }
-        
-        .github-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 245, 255, 0.6),
-                var(--glow-primary);
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-        }
-        
-        .download-button {
-            background: linear-gradient(135deg, #238636, #2ea043);
-        }
-        
-        .download-button:hover {
-            box-shadow: 0 6px 20px rgba(35, 134, 54, 0.6),
-                0 0 20px rgba(35, 134, 54, 0.4);
-        }
-        
-        .download-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 50px;
-            font-size: 1.3rem;
-        }
-        
-        .loading i {
-            font-size: 2.5rem;
-            margin-bottom: 18px;
-            color: var(--primary-color);
-            filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.5));
-        }
-    </style>
 </head>
 <body>
     <!-- 粒子背景容器 -->
@@ -213,6 +36,7 @@
                 <li><a href="../UpdateLog.html" class="navLink"><i class="fas fa-history"></i> 日志</a></li>
                 <li><a href="serve.html" class="navLink"><i class="fas fa-cogs"></i> 服务</a></li>
             </ul>
+            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换深色/浅色模式">◐</button>
             <div class="menu-toggle" id="mobileMenu">
                 <span></span>
                 <span></span>
@@ -222,7 +46,7 @@
     </nav>
     
     <!-- 返回服务列表链接 -->
-    <section style="padding-top: 50px;">
+    <section>
         <div class="section-content">
             <a href="serve.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回服务列表</a>
             <h1><i class="fab fa-python"></i> Python 开源项目集</h1>
@@ -279,7 +103,7 @@
                 displayProjects(filteredRepos);
             } catch (error) {
                 document.getElementById('loading').innerHTML = 
-                    '<p style="color: var(--accent-color)">无法获取项目信息，请刷新重试</p>';
+                    '<p>无法获取项目信息，请刷新重试</p>';
             }
         }
 
@@ -288,7 +112,7 @@
             container.innerHTML = '';
             
             if (repos.length === 0) {
-                container.innerHTML = '<p style="text-align: center;">暂无Python开源项目</p>';
+                container.innerHTML = '<p>暂无Python开源项目</p>';
                 return;
             }
 
@@ -351,5 +175,18 @@
             </div>
         </div>
     </footer>
+    <script>
+    function toggleTheme() {
+        var h = document.documentElement;
+        var c = h.getAttribute('data-theme');
+        var n = c === 'dark' ? null : 'dark';
+        if (n) h.setAttribute('data-theme', n);
+        else h.removeAttribute('data-theme');
+        localStorage.setItem('theme', n || 'light');
+    }
+    (function() {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+    </script>
 </body>
 </html>

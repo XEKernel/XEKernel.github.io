@@ -7,100 +7,6 @@
     <link rel="icon" href="images/profile.jpg">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* 更新日志页面专用样式 */
-        .update-section {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(12, 12, 30, 0.8) 100%);
-            backdrop-filter: blur(25px);
-            border-radius: 25px;
-            padding: 35px;
-            margin: 25px 0;
-            border: 2px solid rgba(0, 245, 255, 0.2);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-        }
-        
-        .update-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.6s;
-        }
-        
-        .update-section:hover::before {
-            opacity: 1;
-        }
-        
-        .update-section:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 
-                var(--glow-primary);
-            border-color: var(--primary-color);
-        }
-        
-        .update-date {
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            margin-bottom: 18px;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
-        }
-        
-        .update-list {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .update-list li {
-            padding: 12px 0;
-            padding-left: 30px;
-            position: relative;
-            line-height: 1.8;
-            color: var(--text-muted);
-        }
-        
-        .update-list li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-            font-size: 1.3rem;
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
-        }
-        
-        .update-type {
-            font-weight: bold;
-            color: var(--accent-color);
-            margin-bottom: 12px;
-            text-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
-        }
-        
-        .back-link {
-            display: inline-block;
-            margin-bottom: 35px;
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 1.1rem;
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            padding: 10px 20px;
-            border-radius: 25px;
-        }
-        
-        .back-link:hover {
-            color: var(--accent-color);
-            transform: translateX(-5px);
-            border-color: var(--primary-color);
-            box-shadow: var(--border-glow);
-        }
-    </style>
 </head>
 <body>
     <!-- 粒子背景容器 -->
@@ -130,6 +36,7 @@
                 <li><a href="UpdateLog.html" class="navLink active"><i class="fas fa-history"></i> 日志</a></li>
                 <li><a href="services/serve.html" class="navLink"><i class="fas fa-cogs"></i> 服务</a></li>
             </ul>
+            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换深色/浅色模式">◐</button>
             <div class="menu-toggle" id="mobileMenu">
                 <span></span>
                 <span></span>
@@ -139,8 +46,8 @@
     </nav>
     
     <!-- 返回首页链接 -->
-    <section style="padding-top: 50px;">
-        <div class="section-content" style="max-width: 800px;">
+    <section>
+        <div class="section-content">
             <h1><i class="fas fa-history"></i> 网站更新日志</h1>
 
             <div class="update-section">
@@ -363,5 +270,19 @@
             </div>
         </div>
     </footer>
+
+    <script>
+    function toggleTheme() {
+        var h = document.documentElement;
+        var c = h.getAttribute('data-theme');
+        var n = c === 'dark' ? null : 'dark';
+        if (n) h.setAttribute('data-theme', n);
+        else h.removeAttribute('data-theme');
+        localStorage.setItem('theme', n || 'light');
+    }
+    (function() {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+    </script>
 </body>
 </html>
