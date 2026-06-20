@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python 开源项目集 - XEKernel</title>
-    <link rel="icon" href="../images/profile.jpg">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
@@ -188,5 +188,21 @@
         if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
     })();
     </script>
+
+    <script>
+    // 从 GitHub API 获取头像
+    (function() {
+        fetch('https://api.github.com/users/XEKernel')
+            .then(r => r.json())
+            .then(d => {
+                if (d.avatar_url) {
+                    var f = document.querySelector('link[rel="icon"]');
+                    if (f) f.href = d.avatar_url;
+                }
+            })
+            .catch(function(){});
+    })();
+    </script>
+
 </body>
 </html>
