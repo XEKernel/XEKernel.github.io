@@ -11,3 +11,4 @@ Thumbs.db
 .test_*.json
 .file_list.json
 .gitignore_content.txt
+build_novel.py
