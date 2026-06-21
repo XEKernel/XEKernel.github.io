@@ -636,7 +636,7 @@ function setupScrollAnimations() {
     }, observerOptions);
     
     // Observe all animated elements
-    const animatedElements = document.querySelectorAll('.stat-item, .tool-card, .contact-card, .project-card, .about-skills, .github-stat-card, .contribution-card');
+    const animatedElements = document.querySelectorAll('.stat-item, .tool-card, .contact-card, .project-card, .about-skills, .github-stat-card, .contribution-card, .update-section');
     animatedElements.forEach(el => observer.observe(el));
 }
 

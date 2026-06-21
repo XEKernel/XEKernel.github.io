@@ -265,9 +265,10 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
 
 /* ═══ Footer ═══ */
 .footer { text-align: center; padding: 48px 24px; border-top: 1px solid var(--ln); background: var(--bg); }
+.footer-content { max-width: 600px; margin: 0 auto; }
 .footer p { font-size: 0.85rem; color: var(--tx3); margin-bottom: 4px; }
-.footer-links { margin-top: 12px; display: flex; gap: 14px; justify-content: center; }
-.footer-links a { font-size: 0.85rem; color: var(--tx2); font-weight: 500; }
+.footer-links { margin-top: 12px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.footer-links a { font-size: 0.85rem; color: var(--tx2); font-weight: 500; transition: all var(--e); }
 .footer-links a:hover { color: var(--bl); }
 
 /* ═══ Back to Top ═══ */
@@ -369,10 +370,57 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
 .modal-content h3 { font-size: 1.2rem; color: var(--tx); margin-bottom: 16px; }
 .modal-content p { font-size: 0.9rem; color: var(--tx2); line-height: 1.7; margin-bottom: 10px; }
 
+/* Badge (serve page) */
+.badge {
+    display: inline-block; padding: 4px 12px; border-radius: 100px;
+    font-size: 0.78rem; font-weight: 600;
+    background: var(--bl3); color: var(--bl);
+}
+
+/* Service time */
+.service-time { font-size: 0.9rem; color: var(--tx2); padding: 8px 16px; background: var(--am); color: #fff; border-radius: var(--r); display: inline-block; }
+.service-time i { margin-right: 5px; }
+
+/* Disclaimer */
+.disclaimer-box { padding: 16px 20px; border-radius: var(--r2); background: var(--am); color: #fff; font-size: 0.85rem; margin-top: 16px; }
+.disclaimer-box i { margin-right: 5px; }
+.disclaimer-list { list-style: none; padding: 0; font-size: 0.85rem; color: var(--tx2); }
+.disclaimer-list li { padding: 4px 0; }
+.disclaimer-list li::before { content: '• '; color: var(--bl); }
+
+/* Contact section (serve page) */
+.contact-section { padding: 20px; background: var(--bl3); border-radius: var(--r2); }
+.contact-section p { margin: 6px 0; color: var(--tx2); font-size: 0.9rem; }
+
+/* Copy button */
+.copy-btn { background: var(--bl3); color: var(--bl); border: 1px solid var(--ln); padding: 6px 14px; border-radius: 100px; cursor: pointer; font-size: 0.82rem; transition: all var(--e); }
+.copy-btn:hover { background: var(--bl); color: #fff; border-color: var(--bl); }
+
+/* Close button (modal) */
+.close-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--tx3); padding: 4px 8px; border-radius: var(--r); transition: all var(--e); }
+.close-btn:hover { color: var(--tx); background: var(--ln); }
+
+/* No results */
+.no-results { text-align: center; padding: 48px 0; color: var(--tx3); font-size: 0.95rem; }
+
 /* ═══ Background ═══ */
-#particles-js { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.08; }
-[data-theme="dark"] #particles-js { opacity: 0.04; }
-.bg-decoration { display: none; }
+#particles-js { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.06; }
+[data-theme="dark"] #particles-js { opacity: 0.03; }
+
+/* Floating decorative shapes */
+.bg-decoration { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.floating-shape { position: absolute; border-radius: 50%; opacity: 0.03; filter: blur(80px); }
+.shape-1 { width: 500px; height: 500px; background: var(--bl); top: -10%; left: -5%; animation: floatShape 25s ease-in-out infinite; }
+.shape-2 { width: 400px; height: 400px; background: var(--gn); top: 60%; right: -8%; animation: floatShape 30s ease-in-out infinite reverse; }
+.shape-3 { width: 350px; height: 350px; background: #8b5cf6; bottom: -10%; left: 20%; animation: floatShape 20s ease-in-out infinite; }
+.shape-4 { width: 300px; height: 300px; background: var(--bl); top: 30%; right: 30%; animation: floatShape 28s ease-in-out infinite reverse; }
+.shape-5 { width: 250px; height: 250px; background: var(--am); top: 70%; left: 50%; animation: floatShape 22s ease-in-out infinite; }
+
+@keyframes floatShape {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+}
 
 /* ═══ Animations ═══ */
 @keyframes fadeUp {
@@ -473,6 +521,60 @@ section:hover .section-header h2::after,
 
 /* Loading skeleton shimmer */
 .stat-card-img { background: linear-gradient(90deg, var(--bg3) 25%, var(--bg2) 50%, var(--bg3) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+
+/* Page load fade */
+body { animation: fadeIn 0.5s ease; }
+
+/* Nav link underline animation */
+.nav-links .navLink {
+    position: relative;
+}
+.nav-links .navLink::after {
+    content: ''; position: absolute; bottom: 2px; left: 14px; right: 14px;
+    height: 2px; background: var(--bl); border-radius: 1px;
+    transform: scaleX(0); transition: transform 0.2s ease;
+}
+.nav-links .navLink:hover::after,
+.nav-links .navLink.active::after { transform: scaleX(1); }
+
+/* Button pulse on click */
+.button:active, .primary-btn:active, .secondary-btn:active { transform: scale(0.95); }
+
+/* Service section hover */
+.service-section { transition: all var(--e); }
+.service-section:hover { border-color: var(--bl); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+
+/* Filter button active transition */
+.filter-btn { transition: all 0.25s ease; }
+
+/* Stats bar entrance */
+.stats-bar { animation: fadeUp 0.5s ease both; }
+
+/* Lang bar fill — already has width transition, add delay */
+.lang-bar-item:nth-child(1) .lang-bar-fill { transition-delay: 0.1s; }
+.lang-bar-item:nth-child(2) .lang-bar-fill { transition-delay: 0.2s; }
+.lang-bar-item:nth-child(3) .lang-bar-fill { transition-delay: 0.3s; }
+.lang-bar-item:nth-child(4) .lang-bar-fill { transition-delay: 0.4s; }
+.lang-bar-item:nth-child(5) .lang-bar-fill { transition-delay: 0.5s; }
+.lang-bar-item:nth-child(6) .lang-bar-fill { transition-delay: 0.6s; }
+
+/* Price tag pop */
+.price-tag { transition: transform 0.2s ease; }
+.price-tag:hover { transform: scale(1.08); }
+
+/* Back link arrow slide */
+.back-link i { transition: transform 0.2s ease; }
+.back-link:hover i { transform: translateX(-3px); }
+
+/* Donut segment entrance */
+.donut-segment { animation: fadeIn 0.4s ease both; }
+
+/* Update log list item hover */
+.update-list li { transition: padding-left 0.2s ease, color 0.2s ease; }
+.update-list li:hover { padding-left: 6px; color: var(--tx); }
+
+/* Service time badge */
+.service-time { animation: fadeUp 0.5s ease both; }
 
 /* ═══ Responsive ═══ */
 @media (max-width: 900px) {
