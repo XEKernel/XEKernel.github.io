@@ -348,27 +348,14 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
     transition: all var(--e); font-family: inherit; margin-top: 12px;
 }
 .service-button:hover { background: var(--bl); color: #fff; border-color: var(--bl); }
+.service-button[disabled] { opacity: 0.5; cursor: not-allowed; }
+.service-button[disabled]:hover { background: var(--bg); color: var(--tx3); border-color: var(--ln); }
 
 /* Price tag */
 .price-tag {
     display: inline-block; padding: 4px 14px; border-radius: 100px;
     background: var(--gn2); color: var(--gn); font-weight: 700; font-size: 1.1rem;
 }
-
-/* Modal */
-.modal {
-    display: none; position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
-    align-items: center; justify-content: center;
-}
-.modal.open { display: flex; }
-.modal-content {
-    background: var(--bg); border: 1px solid var(--ln); border-radius: var(--r3);
-    padding: 32px; max-width: 480px; width: 90%; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-    text-align: center;
-}
-.modal-content h3 { font-size: 1.2rem; color: var(--tx); margin-bottom: 16px; }
-.modal-content p { font-size: 0.9rem; color: var(--tx2); line-height: 1.7; margin-bottom: 10px; }
 
 /* Badge (serve page) */
 .badge {
@@ -382,24 +369,32 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
 .service-time i { margin-right: 5px; }
 
 /* Disclaimer */
-.disclaimer-box { padding: 16px 20px; border-radius: var(--r2); background: var(--am); color: #fff; font-size: 0.85rem; margin-top: 16px; }
-.disclaimer-box i { margin-right: 5px; }
-.disclaimer-list { list-style: none; padding: 0; font-size: 0.85rem; color: var(--tx2); }
-.disclaimer-list li { padding: 4px 0; }
-.disclaimer-list li::before { content: '• '; color: var(--bl); }
+.disclaimer-box {
+    border: 1px solid var(--ln); border-radius: var(--r2); padding: 24px;
+    border-left: 4px solid var(--am); margin-top: 24px;
+}
+.disclaimer-box h3 { font-size: 1rem; font-weight: 700; color: var(--tx); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.disclaimer-box h3 i { color: var(--am); }
+.disclaimer-box > p { font-size: 0.88rem; color: var(--tx2); margin-bottom: 8px; line-height: 1.7; }
+.disclaimer-list { list-style: none; padding: 0; font-size: 0.85rem; }
+.disclaimer-list li { padding: 6px 0; color: var(--tx2); display: flex; align-items: baseline; gap: 8px; }
+.disclaimer-list li::before { content: '\f12a'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--am); font-size: 0.75rem; }
 
 /* Contact section (serve page) */
-.contact-section { padding: 20px; background: var(--bl3); border-radius: var(--r2); }
-.contact-section p { margin: 6px 0; color: var(--tx2); font-size: 0.9rem; }
+.contact-section { margin-top: 28px; }
+.contact-section h3 { font-size: 1.1rem; font-weight: 700; color: var(--tx); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.contact-section h3 i { color: var(--bl); }
+.contact-section .contact-card { text-align: left; flex-direction: row; align-items: center; justify-content: space-between; }
+.contact-section .contact-card > div { flex: 1; }
+.contact-section .contact-card > div p { margin: 2px 0; color: var(--tx2); font-size: 0.88rem; }
+.contact-section .contact-card > div p:first-child { font-weight: 600; color: var(--tx); }
+.contact-section .contact-card i:first-child { font-size: 1.5rem; color: var(--bl); }
 
 /* Copy button */
 .copy-btn { background: var(--bl3); color: var(--bl); border: 1px solid var(--ln); padding: 6px 14px; border-radius: 100px; cursor: pointer; font-size: 0.82rem; transition: all var(--e); }
 .copy-btn:hover { background: var(--bl); color: #fff; border-color: var(--bl); }
 
 /* Close button (modal) */
-.close-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--tx3); padding: 4px 8px; border-radius: var(--r); transition: all var(--e); }
-.close-btn:hover { color: var(--tx); background: var(--ln); }
-
 /* No results */
 .no-results { text-align: center; padding: 48px 0; color: var(--tx3); font-size: 0.95rem; }
 
@@ -562,6 +557,16 @@ body { animation: fadeIn 0.5s ease; }
 .price-tag { transition: transform 0.2s ease; }
 .price-tag:hover { transform: scale(1.08); }
 
+/* Button group for service cards */
+.button-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.button-group .service-button { margin-top: 0; }
+
+/* Service list inside tool-card */
+.tool-card .service-list { list-style: none; text-align: left; width: 100%; padding: 0; font-size: 0.85rem; color: var(--tx2); }
+.tool-card .service-list li { padding: 4px 0; border-bottom: 1px solid var(--ln); }
+.tool-card .service-list li:last-child { border-bottom: none; }
+.tool-card .service-list li::before { content: '✓ '; color: var(--gn); font-weight: 700; }
+
 /* Back link arrow slide */
 .back-link i { transition: transform 0.2s ease; }
 .back-link:hover i { transform: translateX(-3px); }
@@ -572,6 +577,9 @@ body { animation: fadeIn 0.5s ease; }
 /* Update log list item hover */
 .update-list li { transition: padding-left 0.2s ease, color 0.2s ease; }
 .update-list li:hover { padding-left: 6px; color: var(--tx); }
+
+/* Service grid (same as tools-grid but without reveal animation) */
+.service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
 
 /* Service time badge */
 .service-time { animation: fadeUp 0.5s ease both; }

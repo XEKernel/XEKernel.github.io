@@ -69,6 +69,7 @@
     <!-- 粒子效果库 -->
     <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
     <script src="../js/script.js"></script>
+    <script src="../js/common.js"></script>
     <script>
         const GITHUB_USER = 'XEKernel';
         const WEB_LANGUAGES = ['HTML', 'CSS', 'JavaScript', 'Javascript'];
@@ -132,16 +133,16 @@
                         </span>
                     </div>
                     <div class="button-group">
-                        <a href="${repo.html_url}" class="github-button" target="_blank">
-                            查看仓库
+                        <a href="${repo.html_url}" class="service-button" target="_blank">
+                            <i class="fab fa-github"></i> 查看仓库
                         </a>
                         ${repo.latestRelease 
                             ? `<a href="${repo.latestRelease.zipball_url}" 
-                                class="github-button download-button"
+                                class="service-button"
                                 download="${repo.name}-${repo.latestRelease.tag_name}.zip">
-                                下载 (${repo.latestRelease.tag_name})
+                                <i class="fas fa-download"></i> 下载 (${repo.latestRelease.tag_name})
                               </a>`
-                            : '<button class="github-button download-button" disabled>暂无发布版本</button>'}
+                            : '<button class="service-button" disabled>暂无发布版本</button>'}
                     </div>
                 `;
                 container.appendChild(card);
@@ -175,34 +176,5 @@
             </div>
         </div>
     </footer>
-    <script>
-    function toggleTheme() {
-        var h = document.documentElement;
-        var c = h.getAttribute('data-theme');
-        var n = c === 'dark' ? null : 'dark';
-        if (n) h.setAttribute('data-theme', n);
-        else h.removeAttribute('data-theme');
-        localStorage.setItem('theme', n || 'light');
-    }
-    (function() {
-        if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-    })();
-    </script>
-
-    <script>
-    // 从 GitHub API 获取头像
-    (function() {
-        fetch('https://api.github.com/users/XEKernel')
-            .then(r => r.json())
-            .then(d => {
-                if (d.avatar_url) {
-                    var f = document.querySelector('link[rel="icon"]');
-                    if (f) f.href = d.avatar_url;
-                }
-            })
-            .catch(function(){});
-    })();
-    </script>
-
 </body>
 </html>

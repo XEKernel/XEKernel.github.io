@@ -45,16 +45,6 @@
         </div>
     </nav>
     
-    <!-- 公告模态框 -->
-    <div class="modal" id="announcementModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="document.getElementById('announcementModal').classList.remove('open')">&times;</span>
-            <h3>公告</h3>
-            <p>由于目前不支持微信支付，只支持现金支付，所以目前除了专业装机与系统安装项目可以在天长市市区服务之外，其他项目服务范围均在天长市炳辉中学高中部范围内，敬请谅解。</p>
-            <button class="button primary-btn" onclick="document.getElementById('announcementModal').classList.remove('open')">知道了</button>
-        </div>
-    </div>
-    
     <!-- 服务列表 -->
     <section>
         <div class="section-content">
@@ -74,7 +64,10 @@
                         <li>基础响应式设计</li>
                         <li>部署上线支持</li>
                     </ul>
-                    <a href="projects.html" class="service-button">查看开源项目</a>
+                    <div class="button-group">
+                        <a href="web.html" class="service-button"><i class="fas fa-folder-open"></i> 网页项目</a>
+                        <a href="projects.html" class="service-button"><i class="fab fa-github"></i> 全部项目</a>
+                    </div>
                 </div>
 
                 <div class="service-section">
@@ -88,7 +81,10 @@
                         <li>简单应用</li>
                         <li>维护与调试</li>
                     </ul>
-                    <a href="projects.html" class="service-button">查看开源项目</a>
+                    <div class="button-group">
+                        <a href="Csharp.html" class="service-button"><i class="fas fa-folder-open"></i> C#项目</a>
+                        <a href="projects.html" class="service-button"><i class="fab fa-github"></i> 全部项目</a>
+                    </div>
                 </div>
                 
                 <div class="service-section">
@@ -101,7 +97,10 @@
                         <li>数据抓取处理</li>
                         <li>简单应用</li>
                     </ul>
-                    <a href="projects.html" class="service-button">查看开源项目</a>
+                    <div class="button-group">
+                        <a href="Python.html" class="service-button"><i class="fas fa-folder-open"></i> Python项目</a>
+                        <a href="projects.html" class="service-button"><i class="fab fa-github"></i> 全部项目</a>
+                    </div>
                 </div>
                 
                 <div class="service-section">
@@ -115,7 +114,7 @@
                         <li>系统安装</li>
                         <li>软件代安装</li>
                     </ul>
-                    <a href="computer-serve.html" class="service-button">查看专业装机服务</a>
+                    <a href="computer-serve.html" class="service-button"><i class="fas fa-wrench"></i> 查看详情</a>
                 </div>
             </div>
             
@@ -126,11 +125,11 @@
                     <li>所有服务均以「现状」提供，不提供任何形式的明示或暗示保证</li>
                     <li>开发者不对因程序缺陷导致的间接损失承担责任</li>
                     <li>客户需自行验证程序的适用性和安全性</li>
-                    <li>服务价格:起步价+项目代码量*10%，项目代码量指项目中所有代码行数之和</li>
+                    <li>服务价格：起步价 + 项目代码量 × 10%</li>
                     <li>最终交付时间可能因需求变更适当调整</li>
                     <li>验收后7日内提出缺陷报告有效</li>
                     <li>不接受涉及违法内容的开发需求</li>
-                    <li>如果您对硬件配置、软件安装、系统优化等有任何疑问，请及时联系</li>
+                    <li>如有任何疑问，请及时联系</li>
                 </ul>
             </div>
             
@@ -142,7 +141,7 @@
                         <p><strong>微信联系</strong></p>
                         <p>微信号：xek114514</p>
                     </div>
-                    <button class="copy-btn" onclick="copyText('xek114514')">复制</button>
+                    <button class="copy-btn" onclick="copyToClipboard('xek114514')">复制</button>
                 </div>
                 
                 <div class="contact-card">
@@ -151,7 +150,7 @@
                         <p><strong>QQ联系</strong></p>
                         <p>QQ号：1635075096</p>
                     </div>
-                    <button class="copy-btn" onclick="copyText('1635075096')">复制</button>
+                    <button class="copy-btn" onclick="copyToClipboard('1635075096')">复制</button>
                 </div>
             </div>
         </div>
@@ -160,38 +159,7 @@
     <!-- 粒子效果库 -->
     <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
     <script src="../js/script.js"></script>
-    <script>
-        // 页面加载完成后显示公告
-        window.onload = function() {
-            document.getElementById('announcementModal').classList.add('open');
-        };
-        
-        function closeAnnouncement() {
-            document.getElementById('announcementModal').classList.remove('open');
-        }
-        
-        // 通用复制函数
-        function copyText(text) {
-            navigator.clipboard.writeText(text).then(function() {
-                alert('已复制到剪贴板：' + text);
-            }).catch(function() {
-                prompt('无法自动复制，请手动复制：', text);
-            });
-        }
-    </script>
-    <script>
-        function toggleTheme() {
-            var h = document.documentElement;
-            var c = h.getAttribute('data-theme');
-            var n = c === 'dark' ? null : 'dark';
-            if (n) h.setAttribute('data-theme', n);
-            else h.removeAttribute('data-theme');
-            localStorage.setItem('theme', n || 'light');
-        }
-        (function() {
-            if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-        })();
-    </script>
+    <script src="../js/common.js"></script>
     
     <footer class="footer">
         <div class="footer-content">
@@ -203,21 +171,6 @@
             </div>
         </div>
     </footer>
-
-    <script>
-    // 从 GitHub API 获取头像
-    (function() {
-        fetch('https://api.github.com/users/XEKernel')
-            .then(r => r.json())
-            .then(d => {
-                if (d.avatar_url) {
-                    var f = document.querySelector('link[rel="icon"]');
-                    if (f) f.href = d.avatar_url;
-                }
-            })
-            .catch(function(){});
-    })();
-    </script>
 
 </body>
 </html>
