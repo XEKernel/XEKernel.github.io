@@ -306,101 +306,109 @@ function setupMobileMenu() {
     });
 }
 
+// Toast 通知
+function showToast(msg) {
+    var el = document.createElement('div');
+    el.textContent = msg;
+    Object.assign(el.style, {
+        position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)',
+        background: 'var(--tx)', color: 'var(--bg)', padding: '10px 24px',
+        borderRadius: '100px', fontSize: '0.88rem', zIndex: '999',
+        opacity: '0', transition: 'opacity 0.3s', pointerEvents: 'none',
+        fontFamily: 'inherit'
+    });
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.style.opacity = '1');
+    setTimeout(() => {
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 300);
+    }, 2000);
+}
+
 // 复制到剪贴板功能
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert('QQ号已复制到剪贴板: ' + text);
-    }).catch(err => {
-        // 备用方案：使用传统方法复制
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        
+        showToast('已复制到剪贴板');
+    }).catch(function() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
         try {
             document.execCommand('copy');
-            alert('QQ号已复制到剪贴板: ' + text);
+            showToast('已复制到剪贴板');
         } catch (e) {
             prompt('无法自动复制，请手动复制:', text);
         }
-        
-        document.body.removeChild(textarea);
+        document.body.removeChild(ta);
     });
 }
 
-// GitHub API调用
+// GitHub API调用（带 localStorage 缓存）
+const CACHE_TTL = 10 * 60 * 1000; // 10分钟
+
+function getCache(key) {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    try {
+        const { data, time } = JSON.parse(raw);
+        return Date.now() - time < CACHE_TTL ? data : null;
+    } catch { return null; }
+}
+
+function setCache(key, data) {
+    try { localStorage.setItem(key, JSON.stringify({ data, time: Date.now() })); } catch {}
+}
+
 // 获取GitHub用户统计数据
 async function fetchGitHubStats() {
+    const cached = getCache('gh_stats');
+    if (cached) {
+        updateAvatar(cached.avatar);
+        updateStats(cached);
+        return;
+    }
+
     const username = 'XEKernel';
-    const userApiUrl = `https://api.github.com/users/${username}`;
     
     try {
-        // 获取用户基本信息（包含仓库数量、注册日期、followers等）
-        const userResponse = await fetch(userApiUrl);
-        
-        if (!userResponse.ok) {
-            if (userResponse.status === 403) {
-                console.warn('GitHub API速率限制，使用默认数据');
-                throw new Error('GitHub API速率限制');
-            } else if (userResponse.status === 404) {
-                console.warn('用户不存在，使用默认数据');
-                throw new Error('用户不存在');
-            } else {
-                console.warn(`GitHub API错误: ${userResponse.status}，使用默认数据`);
-                throw new Error(`GitHub API错误: ${userResponse.status}`);
-            }
-        }
-        
-        const userData = await userResponse.json();
-        
-        // 并行获取仓库列表和公共活动事件
-        const reposApiUrl = `https://api.github.com/users/${username}/repos?per_page=100&type=owner`;
-        const eventsApiUrl = `https://api.github.com/users/${username}/events/public?per_page=100`;
-        
-        const [reposResponse, eventsResponse] = await Promise.all([
-            fetch(reposApiUrl),
-            fetch(eventsApiUrl)
+        const [userResponse, reposResponse] = await Promise.all([
+            fetch(`https://api.github.com/users/${username}`),
+            fetch(`https://api.github.com/users/${username}/repos?per_page=100&type=owner`)
         ]);
         
+        if (!userResponse.ok) throw new Error('GitHub API error');
+        
+        const userData = await userResponse.json();
         let repos = [];
-        if (reposResponse.ok) {
-            repos = await reposResponse.json();
-        }
+        if (reposResponse.ok) repos = await reposResponse.json();
         
-        let events = [];
-        if (eventsResponse.ok) {
-            events = await eventsResponse.json();
-        }
-        
-        // 计算总星标数
-        let totalStars = 0;
-        if (Array.isArray(repos)) {
-            totalStars = repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
-        }
-        
-        // 从最近公开事件中统计活动类型
-        let recentPush = 0, recentIssues = 0, recentPRs = 0, recentReviews = 0;
-        if (Array.isArray(events)) {
-            recentPush = events.filter(e => e.type === 'PushEvent').length;
-            recentIssues = events.filter(e => e.type === 'IssuesEvent').length;
-            recentPRs = events.filter(e => e.type === 'PullRequestEvent').length;
-            recentReviews = events.filter(e => e.type === 'PullRequestReviewEvent').length;
-        }
-        
+        const totalStars = repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
         const experienceYears = calculateExperienceYears(userData.created_at);
-        const repoCount = userData.public_repos || 0;
-        const followers = userData.followers || 0;
         
-        // 更新 GitHub 头像
-        updateAvatar(userData.avatar_url);
+        const stats = {
+            repoCount: userData.public_repos || 0,
+            experienceYears,
+            totalStars,
+            followers: userData.followers || 0,
+            avatar: userData.avatar_url
+        };
         
-        updateStats({ repoCount, experienceYears, totalStars, followers, recentPush, recentIssues, recentPRs, recentReviews });
+        updateAvatar(stats.avatar);
+        updateStats(stats);
+        setCache('gh_stats', stats);
         
     } catch (error) {
         console.error('Error fetching GitHub stats:', error);
-        updateStats({ repoCount: 0, experienceYears: 3, totalStars: 0, followers: 0, recentPushEvents: 0 });
+        const fallback = getCache('gh_stats');
+        if (fallback) {
+            updateAvatar(fallback.avatar);
+            updateStats(fallback);
+        } else {
+            updateStats({ repoCount: 0, experienceYears: 3, totalStars: 0, followers: 0 });
+        }
     }
 }
 
@@ -432,20 +440,24 @@ function calculateExperienceYears(createdAt) {
 }
 
 // 更新统计数据显示
-function updateStats({ repoCount, experienceYears, totalStars, followers, recentPush, recentIssues, recentPRs, recentReviews }) {
+function updateStats({ repoCount, experienceYears, totalStars, followers, avatar }) {
     updateStatElement('experienceYears', experienceYears);
     updateStatElement('repoCount', repoCount);
     updateStatElement('totalStars', totalStars);
     updateStatElement('followerCount', followers);
     
     // 更新内联统计卡片
-    updateStatsOverview({ repoCount, totalStars, followers, experienceYears });
-    updateStatsActivity({ recentPush, recentIssues, recentPRs, recentReviews });
+    const overview = document.getElementById('statsOverview');
+    if (overview) {
+        overview.innerHTML = `
+            <div class="stat-row"><span class="stat-k">仓库</span><span class="stat-v">${repoCount}</span></div>
+            <div class="stat-row"><span class="stat-k">星标</span><span class="stat-v">${totalStars}</span></div>
+            <div class="stat-row"><span class="stat-k">关注者</span><span class="stat-v">${followers}</span></div>
+            <div class="stat-row"><span class="stat-k">经验</span><span class="stat-v">${experienceYears} 年</span></div>
+        `;
+    }
     
-    // Trigger counter animation for updated stats
     animateStatsIfVisible();
-    
-    console.log(`GitHub Stats: ${experienceYears}年经验, ${repoCount}个仓库, ${totalStars}星标, ${followers}关注者`);
 }
 
 // 辅助：更新单个统计元素
@@ -476,30 +488,6 @@ function animateStatsIfVisible() {
             }
         });
     }
-}
-
-// 更新综合统计卡片
-function updateStatsOverview({ repoCount, totalStars, followers, experienceYears }) {
-    const el = document.getElementById('statsOverview');
-    if (!el) return;
-    el.innerHTML = `
-        <div class="stat-row"><span class="stat-k">仓库</span><span class="stat-v">${repoCount}</span></div>
-        <div class="stat-row"><span class="stat-k">星标</span><span class="stat-v">${totalStars}</span></div>
-        <div class="stat-row"><span class="stat-k">关注者</span><span class="stat-v">${followers}</span></div>
-        <div class="stat-row"><span class="stat-k">经验</span><span class="stat-v">${experienceYears} 年</span></div>
-    `;
-}
-
-// 更新近期活跃卡片
-function updateStatsActivity({ recentPush, recentIssues, recentPRs, recentReviews }) {
-    const el = document.getElementById('statsActivity');
-    if (!el) return;
-    el.innerHTML = `
-        <div class="stat-row"><span class="stat-k">近期 Push</span><span class="stat-v">${recentPush} 次</span></div>
-        <div class="stat-row"><span class="stat-k">创建 Issues</span><span class="stat-v">${recentIssues} 个</span></div>
-        <div class="stat-row"><span class="stat-k">合并 PR</span><span class="stat-v">${recentPRs} 个</span></div>
-        <div class="stat-row"><span class="stat-k">代码审查</span><span class="stat-v">${recentReviews} 次</span></div>
-    `;
 }
 
 // 从 GitHub API 更新头像
@@ -638,33 +626,6 @@ function setupScrollAnimations() {
     // Observe all animated elements
     const animatedElements = document.querySelectorAll('.stat-item, .tool-card, .contact-card, .project-card, .about-skills, .github-stat-card, .contribution-card, .update-section');
     animatedElements.forEach(el => observer.observe(el));
-}
-
-// 圆环进度条动画
-function animateSkillRing(ring) {
-    const percentage = parseInt(ring.getAttribute('data-percentage'));
-    const color = ring.getAttribute('data-color');
-    const progressCircle = ring.querySelector('.ring-progress');
-    const percentageText = ring.querySelector('.skill-percentage');
-    
-    if (!progressCircle || !percentageText) return;
-    
-    // 设置圆环颜色
-    progressCircle.style.stroke = color;
-    
-    // 计算圆周长（2 * π * r，其中 r=45）
-    const circumference = 2 * Math.PI * 45;
-    
-    // 计算进度值
-    const progress = (percentage / 100) * circumference;
-    
-    // 动画圆环
-    setTimeout(() => {
-        progressCircle.style.strokeDasharray = `${progress} ${circumference}`;
-    }, 100);
-    
-    // 动画数字
-    animateCounter(percentageText, percentage, 2000);
 }
 
 // 从GitHub获取语言分布并生成圆环图
@@ -1030,19 +991,6 @@ function setupPageLoadAnimation() {
     });
 }
 
-// 防抖函数
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
 // 节流函数
 function throttle(func, limit) {
     let inThrottle;
@@ -1064,31 +1012,6 @@ function setupOptimizedScroll() {
     window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
-// 添加触摸滑动支持
-function setupTouchSwipe() {
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    document.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    document.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-        
-        if (Math.abs(diff) > swipeThreshold) {
-            // 可以在这里添加滑动导航逻辑
-            console.log('Swipe detected:', diff > 0 ? 'left' : 'right');
-        }
-    }
-}
-
 // 添加键盘导航
 function setupKeyboardNavigation() {
     document.addEventListener('keydown', (e) => {
@@ -1102,19 +1025,6 @@ function setupKeyboardNavigation() {
     });
 }
 
-// 性能监控（开发环境）
-function setupPerformanceMonitoring() {
-    if (window.performance && window.performance.timing) {
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const timing = window.performance.timing;
-                const pageLoadTime = timing.loadEventEnd - timing.navigationStart;
-                console.log(`页面加载时间: ${pageLoadTime}ms`);
-            }, 0);
-        });
-    }
-}
-
 // 错误处理
 function setupErrorHandling() {
     window.addEventListener('error', (e) => {
@@ -1123,15 +1033,6 @@ function setupErrorHandling() {
     
     window.addEventListener('unhandledrejection', (e) => {
         console.error('未处理的Promise拒绝:', e.reason);
-    });
-}
-
-// 页面离开提示
-function setupBeforeUnload() {
-    window.addEventListener('beforeunload', (e) => {
-        // 如果有未保存的内容，可以添加提示
-        // e.preventDefault();
-        // e.returnValue = '';
     });
 }
 
@@ -1148,11 +1049,8 @@ function initAll() {
     setupSmoothScroll();
     setupPageLoadAnimation();
     setupOptimizedScroll();
-    setupTouchSwipe();
     setupKeyboardNavigation();
-    setupPerformanceMonitoring();
     setupErrorHandling();
-    setupBeforeUnload();
     initRevealElements();
     
     // 延迟从GitHub获取统计数据，避免速率限制
@@ -1216,6 +1114,28 @@ function toggleTheme() {
 (function() {
     const saved = localStorage.getItem('theme');
     if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+})();
+
+// 服务页面头像获取
+(function() {
+    var path = window.location.pathname;
+    if (path.indexOf('/services/') !== -1 || path.indexOf('UpdateLog') !== -1) {
+        var cached = getCache('gh_stats');
+        if (cached && cached.avatar) {
+            var f = document.querySelector('link[rel="icon"]');
+            if (f) f.href = cached.avatar;
+        } else {
+            fetch('https://api.github.com/users/XEKernel')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.avatar_url) {
+                        var f = document.querySelector('link[rel="icon"]');
+                        if (f) f.href = d.avatar_url;
+                    }
+                })
+                .catch(function(){});
+        }
+    }
 })();
 
 // 页面可见性变化处理

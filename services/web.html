@@ -45,6 +45,7 @@
         </div>
     </nav>
     
+    <main>
     <!-- 返回服务列表链接 -->
     <section>
         <div class="section-content">
@@ -65,11 +66,11 @@
             <div class="projects-grid" id="projects"></div>
         </div>
     </section>
+    </main>
     
     <!-- 粒子效果库 -->
     <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
     <script src="../js/script.js"></script>
-    <script src="../js/common.js"></script>
     <script>
         const GITHUB_USER = 'XEKernel';
         const WEB_LANGUAGES = ['HTML', 'CSS', 'JavaScript', 'Javascript'];
@@ -78,24 +79,8 @@
             try {
                 const response = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos`);
                 const repos = await response.json();
-                
-                // 获取每个仓库的最新release
-                const reposWithReleases = await Promise.all(
-                    repos.map(async repo => {
-                        try {
-                            const releaseRes = await fetch(repo.releases_url.replace('{/id}', ''));
-                            const releases = await releaseRes.json();
-                            return {
-                                ...repo,
-                                latestRelease: releases[0] || null
-                            };
-                        } catch {
-                            return { ...repo, latestRelease: null };
-                        }
-                    })
-                );
 
-                const filteredRepos = reposWithReleases.filter(repo => 
+                const filteredRepos = repos.filter(repo => 
                     WEB_LANGUAGES.includes(repo.language) && 
                     !repo.archived && 
                     !repo.fork
@@ -132,18 +117,9 @@
                             <i class="far fa-star"></i> ${repo.stargazers_count}
                         </span>
                     </div>
-                    <div class="button-group">
-                        <a href="${repo.html_url}" class="service-button" target="_blank">
-                            <i class="fab fa-github"></i> 查看仓库
-                        </a>
-                        ${repo.latestRelease 
-                            ? `<a href="${repo.latestRelease.zipball_url}" 
-                                class="service-button"
-                                download="${repo.name}-${repo.latestRelease.tag_name}.zip">
-                                <i class="fas fa-download"></i> 下载 (${repo.latestRelease.tag_name})
-                              </a>`
-                            : '<button class="service-button" disabled>暂无发布版本</button>'}
-                    </div>
+                    <a href="${repo.html_url}" class="service-button" target="_blank">
+                        <i class="fab fa-github"></i> 查看仓库
+                    </a>
                 `;
                 container.appendChild(card);
             });

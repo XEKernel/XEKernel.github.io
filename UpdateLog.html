@@ -45,6 +45,7 @@
         </div>
     </nav>
     
+    <main>
     <!-- 返回首页链接 -->
     <section>
         <div class="section-content">
@@ -255,6 +256,7 @@
             </div>
         </div>
     </section>
+    </main>
     
     <!-- 粒子效果库 -->
     <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
@@ -270,20 +272,6 @@
             </div>
         </div>
     </footer>
-
-    <script>
-    function toggleTheme() {
-        var h = document.documentElement;
-        var c = h.getAttribute('data-theme');
-        var n = c === 'dark' ? null : 'dark';
-        if (n) h.setAttribute('data-theme', n);
-        else h.removeAttribute('data-theme');
-        localStorage.setItem('theme', n || 'light');
-    }
-    (function() {
-        if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-    })();
-    </script>
 
     <script>
     // 从 GitHub API 获取头像

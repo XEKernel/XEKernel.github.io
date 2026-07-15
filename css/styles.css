@@ -125,7 +125,6 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
 .hero-visual { display: flex; flex-direction: column; align-items: center; gap: 28px; }
 .profile-container { position: relative; }
 .profilePic { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 4px solid var(--ln); position: relative; z-index: 2; }
-.profile-ring,.profile-glow { display: none; }
 .personal-tag { font-size: 0.88rem; color: var(--tx3); font-style: italic; }
 .personal-tag i { color: var(--bl); margin-right: 5px; }
 
@@ -212,8 +211,6 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
 .stat-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--ln); }
 .stat-card-header i { color: var(--bl); font-size: 1rem; }
 .stat-card-header span { font-size: 0.9rem; font-weight: 600; color: var(--tx); }
-.stat-card-img { width: 100%; display: block; border-radius: var(--r); min-height: 60px; }
-
 /* Inline stats body */
 .stat-card-body { padding: 8px 0; }
 .stat-row {
@@ -513,9 +510,6 @@ section:hover .section-header h2::after,
 /* Contact icon — pulse on hover */
 .contact-icon { transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .contact-card:hover .contact-icon { transform: scale(1.1); box-shadow: 0 0 0 6px var(--bl3); }
-
-/* Loading skeleton shimmer */
-.stat-card-img { background: linear-gradient(90deg, var(--bg3) 25%, var(--bg2) 50%, var(--bg3) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
 
 /* Page load fade */
 body { animation: fadeIn 0.5s ease; }
