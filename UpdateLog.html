@@ -52,6 +52,28 @@
             <h1><i class="fas fa-history"></i> 网站更新日志</h1>
 
             <div class="update-section">
+                <div class="update-date"><i class="far fa-calendar-alt"></i> 2026年7月15日</div>
+                <div class="update-type"><i class="fas fa-wrench"></i> 全站代码质量优化</div>
+                <ul class="update-list">
+                    <li><i class="fas fa-bolt"></i> 服务页面重构：统一卡片网格布局，移除冗余内联 JS</li>
+                    <li><i class="fas fa-link"></i> 修复服务页面导航：serve.html 现在正确链接到各语言项目页</li>
+                    <li><i class="fas fa-trash-alt"></i> heart.html 清理：删除 225 行语法错误的重复内联脚本（与 heart.js 冲突）</li>
+                    <li><i class="fas fa-home"></i> heart.html 添加返回首页按钮</li>
+                    <li><i class="fas fa-image"></i> 修复首页头像空 src 导致显示破损图片的问题</li>
+                    <li><i class="fas fa-copy"></i> 复制按钮从 alert 弹窗改为 Toast 非侵入式提示</li>
+                    <li><i class="fas fa-book"></i> 首页工具板块添加「长情机器」小说入口链接</li>
+                    <li><i class="fas fa-database"></i> GitHub API 添加 localStorage 缓存（10 分钟 TTL），降低限速风险</li>
+                    <li><i class="fas fa-tachometer-alt"></i> 移除低效的 releases API 重复调用（每仓库单独请求 → 一次批量获取）</li>
+                    <li><i class="fas fa-eraser"></i> 清理死代码：animateSkillRing、setupTouchSwipe、debounce 等未使用函数</li>
+                    <li><i class="fas fa-tags"></i> CSS 清理：移除未使用的 .profile-ring、.profile-glow、.stat-card-img</li>
+                    <li><i class="fas fa-code"></i> 所有页面添加 &lt;main&gt; 语义标签，改善无障碍访问</li>
+                    <li><i class="fas fa-window-close"></i> 移除 serve.html 公告模态框及相关样式</li>
+                    <li><i class="fas fa-external-link-alt"></i> 统一导航栏链接行为：移除不一致的 target="_blank"</li>
+                    <li><i class="fas fa-file-alt"></i> 修复 .gitignore 中 build_novel.py 被双重排除的问题</li>
+                </ul>
+            </div>
+
+            <div class="update-section">
                 <div class="update-date"><i class="far fa-calendar-alt"></i> 2026年6月20日</div>
                 <div class="update-type"><i class="fas fa-trash-alt"></i> 主页重构</div>
                 <ul class="update-list">

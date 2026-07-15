@@ -2,6 +2,15 @@
 
 ## 更新日志
 
+### 2026年7月15日 - 全站代码质量优化
+- 服务页面重构：统一卡片网格布局，移除大量冗余内联 JS
+- heart.html 清理：删除 225 行语法错误的重复内联脚本，添加返回首页按钮
+- 修复首页头像空 src 导致显示破损图片的问题
+- GitHub API 添加 localStorage 缓存（10 分钟 TTL），移除低效的 releases 重复调用
+- 复制按钮从 alert 弹窗改为 Toast 非侵入式提示
+- 清理死代码、未使用 CSS，所有页面添加 `<main>` 语义标签
+- 导航栏统一移除 target="_blank"，修复 .gitignore
+
 ### 2026年6月14日 - 重命名仓库
 - 将SYSTEM-MEMZ-XEK重命名为XEKernel
 
