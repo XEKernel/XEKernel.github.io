@@ -158,7 +158,7 @@
     /** 加载文章元数据索引 */
     async function loadArticles() {
         try {
-            const resp = await fetch('articles/index.json?_t=' + Date.now());
+            const resp = await fetch('/articles/index.json?_t=' + Date.now());
             articlesData = await resp.json();
             renderArticleList();
         } catch (e) {
@@ -234,7 +234,7 @@
         contentDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>正在加载文章...</p></div>';
         
         try {
-            const resp = await fetch('articles/' + slug + '.md?_t=' + Date.now());
+            const resp = await fetch('/articles/' + slug + '.md?_t=' + Date.now());
             if (!resp.ok) throw new Error('文章不存在');
             const mdContent = await resp.text();
             
