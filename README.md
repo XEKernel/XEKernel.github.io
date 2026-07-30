@@ -2,6 +2,17 @@
 
 ## 更新日志
 
+### 2026年7月30日 - 新增文章系统
+- 新增 **articles.html** 文章页面，支持 Markdown 文章发布与在线阅读
+- 文章存储在 `articles/` 目录，使用 `.md` 格式 + frontmatter 元数据
+- 使用 marked.js 客户端渲染 Markdown，highlight.js 代码语法高亮
+- 配置 GitHub Actions 工作流：推送 `.md` 文件后自动构建 `articles/index.json`
+- 文章列表 + 阅读器双视图，支持 URL hash 定位（`#/article/文章名`）
+- 文章卡片与 Markdown 正文样式适配暗色/亮色主题
+- 所有页面导航栏新增「文章」入口
+- 添加 `.nojekyll` 确保 `.md` 文件在 GitHub Pages 上可访问
+- 修复 `.gitignore` 屏蔽 `build_articles.py` 的问题
+
 ### 2026年7月15日 - 全站代码质量优化
 - 服务页面重构：统一卡片网格布局，移除大量冗余内联 JS
 - heart.html 清理：删除 225 行语法错误的重复内联脚本，添加返回首页按钮
