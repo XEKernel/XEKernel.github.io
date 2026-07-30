@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HandWrite Generator · 开源手写字生成器</title>
+<meta name="description" content="使用 C++ 编写的手写字生成器，提供丰富的参数设置与 GUI/CLI 双模式，支持纸张纹理、墨水洇染、文字变形、锚点校准等特性。">
+<link rel="icon" href="image/app.ico">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="../../css/styles.css">
+<style>
+  /* ── HandWrite 专属覆写 ── */
+  .hw-section { background: var(--bg2); }
+  .hw-section-alt { background: var(--bg); }
+  .hw-hero {
+    padding: 140px 28px 80px;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--bl) 20%, transparent) 0%, transparent 70%);
+  }
+  .hw-hero .section-content {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hw-hero .hero-title { font-size: clamp(32px, 4.5vw, 48px); }
+  .hw-screenshot {
+    background: var(--bg); border: 1px solid var(--ln); border-radius: var(--r2);
+    overflow: hidden; transform: perspective(1000px) rotateY(-3deg) rotateX(2deg);
+    transition: transform .4s ease;
+  }
+  .hw-screenshot:hover { transform: perspective(1000px) rotateY(0) rotateX(0); }
+  .hw-screenshot img { display: block; width: 100%; height: auto; background: #fff; }
+
+  /* 特性网格 */
+  .hw-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .hw-card {
+    background: var(--bg); border: 1px solid var(--ln);
+    border-radius: var(--r2); padding: 24px;
+    transition: all var(--e);
+  }
+  .hw-card:hover { border-color: var(--bl); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+  .hw-card .icon {
+    width: 42px; height: 42px; border-radius: var(--r2);
+    display: grid; place-items: center; font-size: 1.3rem;
+    background: var(--bl3); color: var(--bl);
+    margin-bottom: 14px;
+  }
+  .hw-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .hw-card p { font-size: 0.88rem; color: var(--tx2); line-height: 1.6; }
+
+  /* 对比展示 */
+  .hw-compare {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    align-items: start;
+  }
+  .hw-compare-card {
+    background: var(--bg); border: 1px solid var(--ln); border-radius: var(--r2);
+    overflow: hidden;
+  }
+  .hw-compare-card img { display: block; width: 100%; height: auto; background: #fff; }
+  .hw-compare-label {
+    padding: 10px 16px; font-size: 0.88rem; font-weight: 600;
+    text-align: center; border-top: 1px solid var(--ln); color: var(--tx2);
+    background: var(--bg2);
+  }
+  .hw-compare-card:first-child .hw-compare-label { color: var(--bl); }
+
+  /* 步骤 */
+  .hw-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .hw-step {
+    background: var(--bg); border: 1px solid var(--ln); border-radius: var(--r2);
+    padding: 24px; position: relative;
+  }
+  .hw-step .num {
+    position: absolute; top: -12px; left: 20px;
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--bl); color: #fff;
+    display: grid; place-items: center;
+    font-weight: 700; font-size: 0.8rem;
+  }
+  .hw-step h3 { font-size: 0.95rem; font-weight: 700; margin: 10px 0 6px; }
+  .hw-step p { font-size: 0.85rem; color: var(--tx2); margin: 0; }
+
+  /* CLI 代码 */
+  .hw-code-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .hw-code-card {
+    background: #1a1a2e; border: 1px solid #2a2a44; border-radius: var(--r2);
+    overflow: hidden;
+  }
+  .hw-code-head {
+    padding: 10px 16px; background: #141428;
+    border-bottom: 1px solid #2a2a44;
+    display: flex; justify-content: space-between;
+    font-size: 0.82rem; color: #8892b0;
+  }
+  .hw-code-head .tag { color: #7c6fdc; font-family: ui-monospace, monospace; }
+  .hw-code-card pre {
+    margin: 0; padding: 18px 16px; overflow-x: auto;
+    font-family: ui-monospace, "SF Mono", "Fira Code", monospace;
+    font-size: 0.82rem; line-height: 1.65; color: #cbd5e1;
+  }
+  .hw-code-card pre .c { color: #5a647d; font-style: italic; }
+  .hw-code-card pre .k { color: #c084fc; }
+  .hw-code-card pre .s { color: #86efac; }
+  .hw-code-card pre .n { color: #fbbf24; }
+
+  /* 下载 */
+  .hw-download {
+    text-align: center;
+    padding: 48px; border-radius: var(--r3);
+    background: var(--bl3); border: 1px solid var(--ln);
+  }
+  .hw-download .version-badge {
+    display: inline-block; padding: 4px 14px; border-radius: 100px;
+    background: var(--gn2); color: var(--gn);
+    font-size: 0.85rem; font-weight: 600; margin-bottom: 12px;
+  }
+  .hw-download h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+  .hw-download p { color: var(--tx2); margin-bottom: 24px; font-size: 0.95rem; }
+  .hw-download .buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  @media (max-width: 900px) {
+    .hw-hero .section-content { grid-template-columns: 1fr; gap: 40px; }
+    .hw-screenshot { transform: none; }
+    .hw-grid { grid-template-columns: repeat(2, 1fr); }
+    .hw-steps { grid-template-columns: repeat(2, 1fr); }
+    .hw-code-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .hw-grid { grid-template-columns: 1fr; }
+    .hw-steps { grid-template-columns: 1fr; }
+    .hw-compare { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav id="mainNav">
+  <div class="nav-container">
+    <div class="nav-logo">
+      <i class="fas fa-atom"></i>
+      <span>XEKernel</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="../../index.html" class="navLink"><i class="fas fa-home"></i> 首页</a></li>
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="navLink dropdown-toggle" onclick="event.stopPropagation();this.parentElement.classList.toggle('active')">
+          <i class="fas fa-folder"></i> 项目 <i class="fas fa-chevron-down"></i>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="." class="current"><i class="fas fa-feather-alt"></i> HandWrite-CPP</a></li>
+          <li><a href="https://github.com/XEKernel/InstallerMaker" target="_blank" rel="noopener"><i class="fas fa-box"></i> InstallerMaker</a></li>
+          <li><a href="https://github.com/XEKernel/school-forum" target="_blank" rel="noopener"><i class="fas fa-comments"></i> school-forum</a></li>
+        </ul>
+      </li>
+      <li><a href="../../index.html#github" class="navLink"><i class="fab fa-github"></i> GitHub</a></li>
+      <li><a href="../../index.html#tools" class="navLink"><i class="fas fa-tools"></i> 工具</a></li>
+      <li><a href="../../index.html#contact" class="navLink"><i class="fas fa-address-card"></i> 联系</a></li>
+      <li><a href="../../UpdateLog.html" class="navLink"><i class="fas fa-history"></i> 日志</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换深色/浅色模式">◐</button>
+    <div class="menu-toggle" id="mobileMenu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══ Hero ═══ -->
+<section class="hw-hero">
+  <div class="section-content">
+    <div>
+      <div class="hero-badge">
+        <i class="fas fa-feather-alt"></i>
+        <span class="vre">v2.6.1</span> · 开源 · 跨平台
+      </div>
+      <h1 class="hero-title">把文字变成<br>真实的手写字</h1>
+      <p class="hero-description">
+        使用 C++ 编写的手写字生成器，提供丰富的参数设置与 GUI/CLI 双模式。<br>
+        旨在让任何人都能快速生成以假乱真的手写文档。
+      </p>
+      <div class="hero-buttons" style="margin-bottom:32px;">
+        <a href="#download" class="button primary-btn"><i class="fas fa-download"></i> 立即下载</a>
+        <a href="https://github.com/XEKernel/HandWrite-CPP" class="button secondary-btn" target="_blank" rel="noopener"><i class="fab fa-github"></i> 查看源码</a>
+      </div>
+      <div style="display:flex;gap:28px;flex-wrap:wrap;">
+        <div><div style="font-size:1.5rem;font-weight:800;color:var(--bl);">C++17</div><div style="font-size:0.82rem;color:var(--tx3);">高性能</div></div>
+        <div><div style="font-size:1.5rem;font-weight:800;color:var(--bl);">Qt 6</div><div style="font-size:0.82rem;color:var(--tx3);">原生体验</div></div>
+        <div><div style="font-size:1.5rem;font-weight:800;color:var(--bl);">3 格式</div><div style="font-size:0.82rem;color:var(--tx3);">PNG / PDF / SVG</div></div>
+        <div><div style="font-size:1.5rem;font-weight:800;color:var(--bl);">GUI+CLI</div><div style="font-size:0.82rem;color:var(--tx3);">双模式</div></div>
+      </div>
+    </div>
+    <div class="hw-screenshot">
+      <img src="image/image.png" alt="HandWrite 软件主界面" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 特性 ═══ -->
+<section>
+  <div class="section-content">
+    <div class="section-header" style="text-align:center;">
+      <h2><i class="fas fa-star"></i> 核心特性</h2>
+      <p>12+ 项参数随意组合，让每一次输出都更像真迹</p>
+    </div>
+    <div class="hw-grid">
+      <div class="hw-card">
+        <div class="icon">🖋️</div>
+        <h3>多字体混合</h3>
+        <p>支持自定义 TTF 字库，可叠加多套字体模拟混写效果，自动随机切换增加真实感。</p>
+      </div>
+      <div class="hw-card">
+        <div class="icon">📄</div>
+        <h3>纸张纹理</h3>
+        <p>内置横线纸、田字格、方格纸、点阵纸等多种纸张模板，可自定义纹理透明度。</p>
+      </div>
+      <div class="hw-card">
+        <div class="icon">🎯</div>
+        <h3>锚点校准</h3>
+        <p>支持任意背景图片作为纸面，可拖拽网格锚点贴合弯曲纸面，生成透视变形效果。</p>
+      </div>
+      <div class="hw-card">
+        <div class="icon">〰️</div>
+        <h3>字符扰动</h3>
+        <p>每个字符独立加入随机抖动 —— 大小、位置、旋转，模拟真实手写不规律。</p>
+      </div>
+      <div class="hw-card">
+        <div class="icon">💧</div>
+        <h3>墨水洇染</h3>
+        <p>对笔划边缘应用可分离最大值滤波，模拟墨水在纸上轻微洇开的视觉效果。</p>
+      </div>
+      <div class="hw-card">
+        <div class="icon">📐</div>
+        <h3>文字变形</h3>
+        <p>弧形 / 波浪 / 环形三种文字变形模板，让长段落自然弯曲，避免过于规整。</p>
+      </div>
+      <div class="hw-card">
+        <div class="icon">↔️</div>
+        <h3>横竖排切换</h3>
+        <p>支持横排 / 竖排两种排版方向，古文、诗词等场景一键切换。</p>
+      </div>
+      <div class="hw-card">
+        <div class="icon">🗑️</div>
+        <h3>涂改模拟</h3>
+        <p>可配置划线删除概率与笔划粗细抖动，让作业看起来真的"写过又改过"。</p>
+      </div>
+      <div class="hw-card">
+        <div class="icon">📦</div>
+        <h3>批量处理</h3>
+        <p>CLI 提供批处理模式，从文件读取多段文本一次生成，自动跳过异常行。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 输出效果 ═══ -->
+<section class="hw-section">
+  <div class="section-content">
+    <div class="section-header" style="text-align:center;">
+      <h2><i class="fas fa-image"></i> 输出效果</h2>
+      <p>同样的文字，从白纸到画报</p>
+    </div>
+    <div class="hw-compare">
+      <div class="hw-compare-card">
+        <img src="image/output1.png" alt="默认 A4 纸输出效果" loading="lazy">
+        <div class="hw-compare-label">默认 A4 横线纸输出</div>
+      </div>
+      <div class="hw-compare-card">
+        <img src="image/output2.png" alt="自定义背景图片 + 锚点校准输出" loading="lazy">
+        <div class="hw-compare-label">自定义图片 + 锚点校准输出</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 锚点校准 ═══ -->
+<section class="hw-section-alt">
+  <div class="section-content">
+    <div class="section-header" style="text-align:center;">
+      <h2><i class="fas fa-vector-square"></i> 锚点校准</h2>
+      <p>四角定位 + 精细微调，让文字完美适配任意背景纸面</p>
+    </div>
+    <div class="hw-compare">
+      <div class="hw-compare-card">
+        <img src="image/%E5%9B%9B%E8%A7%92%E6%A8%A1%E5%BC%8F.png" alt="四角模式" loading="lazy">
+        <div class="hw-compare-label">四角模式：仅拖动 4 个绿色角点，内部自动插值</div>
+      </div>
+      <div class="hw-compare-card">
+        <img src="image/%E7%B2%BE%E7%BB%86%E8%B0%83%E6%95%B4.png" alt="精细调整模式" loading="lazy">
+        <div class="hw-compare-label">精细调整：切换到全网格逐点微调</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 使用流程 ═══ -->
+<section class="hw-section">
+  <div class="section-content">
+    <div class="section-header" style="text-align:center;">
+      <h2><i class="fas fa-list-ol"></i> 使用流程</h2>
+      <p>四步完成一次生成：从文本到纸张</p>
+    </div>
+    <div class="hw-steps">
+      <div class="hw-step">
+        <div class="num">1</div>
+        <h3>选择字体</h3>
+        <p>从 ttf_library 加载喜欢的字体或自定义 TTF 文件。</p>
+      </div>
+      <div class="hw-step">
+        <div class="num">2</div>
+        <h3>调整参数</h3>
+        <p>纸张、字号、扰动、纹理、墨水等参数自由组合。</p>
+      </div>
+      <div class="hw-step">
+        <div class="num">3</div>
+        <h3>预览效果</h3>
+        <p>实时预览渲染结果，反复微调直到满意。</p>
+      </div>
+      <div class="hw-step">
+        <div class="num">4</div>
+        <h3>导出文件</h3>
+        <p>一键导出为 PNG、PDF 或 SVG 格式。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLI ═══ -->
+<section class="hw-section-alt">
+  <div class="section-content">
+    <div class="section-header" style="text-align:center;">
+      <h2><i class="fas fa-terminal"></i> GUI 之外，CLI 更直接</h2>
+      <p>适合批处理、脚本自动化、远程服务器</p>
+    </div>
+    <div class="hw-code-grid">
+      <div class="hw-code-card">
+        <div class="hw-code-head"><span>基本用法</span><span class="tag">bash</span></div>
+<pre><span class="c"># 从命令行参数生成 PNG</span>
+handwrite-cli \
+  <span class="k">-t</span> <span class="s">"今天天气真好。"</span> \
+  <span class="k">-o</span> <span class="s">"F:/out"</span> \
+  <span class="k">-f</span> png \
+  <span class="k">-r</span> 2
+
+<span class="c"># 输出 PDF / SVG</span>
+handwrite-cli <span class="k">-t</span> <span class="s">"..."</span> <span class="k">-o</span> out <span class="k">-f</span> pdf</pre>
+      </div>
+      <div class="hw-code-card">
+        <div class="hw-code-head"><span>批量与预设</span><span class="tag">bash</span></div>
+<pre><span class="c"># 加载预设参数（字体、扰动、纹理等）</span>
+handwrite-cli <span class="k">-i</span> essay.txt <span class="k">-p</span> my.conf
+
+<span class="c"># 从文件读取待生成文本列表</span>
+handwrite-cli <span class="k">--batch</span> batch.txt
+
+<span class="c"># 支持从剪贴板读取</span>
+handwrite-cli <span class="k">--clipboard</span> <span class="k">-o</span> out</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 下载 ═══ -->
+<section id="download" class="hw-section">
+  <div class="section-content">
+    <div class="hw-download">
+      <div class="version-badge">最新版本 <span class="vre">v2.6.1</span></div>
+      <h3>立即开始生成你的手写文档</h3>
+      <p>Windows 64-bit · 解压即用 · 包含 Qt 运行时与字体库</p>
+      <div class="buttons">
+        <a class="button primary-btn" href="https://github.com/XEKernel/HandWrite-CPP/releases/latest" target="_blank" rel="noopener">
+          <i class="fas fa-download"></i> 下载 <span class="vre">v2.6.1</span>
+        </a>
+        <a class="button secondary-btn" href="https://github.com/XEKernel/HandWrite-CPP" target="_blank" rel="noopener">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>© 2026 HandWrite Generator · MIT License</p>
+    <div class="footer-links">
+      <a href="https://github.com/XEKernel/HandWrite-CPP" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/XEKernel/HandWrite-CPP/releases" target="_blank" rel="noopener">Releases</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// 动态版本号
+fetch('https://api.github.com/repos/XEKernel/HandWrite-CPP/releases/latest')
+  .then(r => r.json())
+  .then(d => { document.querySelectorAll('.vre').forEach(el => { el.textContent = d.tag_name; }); })
+  .catch(() => {});
+
+// 主题切换
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('themeBtn').textContent = next === 'dark' ? '◐' : '◑';
+}
+const saved = localStorage.getItem('theme');
+if (saved) {
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('themeBtn').textContent = saved === 'dark' ? '◐' : '◑';
+}
+
+// 导航滚动阴影
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// 移动端菜单
+document.getElementById('mobileMenu').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.querySelector('.nav-links').classList.toggle('active');
+});
+</script>
+
+</body>
+</html>

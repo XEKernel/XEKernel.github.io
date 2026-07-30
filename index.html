@@ -30,6 +30,14 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#home" class="navLink active" onclick="scrollToSection('home')"><i class="fas fa-home"></i> 首页</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="navLink dropdown-toggle" onclick="event.stopPropagation();this.parentElement.classList.toggle('active')"><i class="fas fa-folder"></i> 项目 <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="projects/handwrite/" class="current"><i class="fas fa-feather-alt"></i> HandWrite-CPP</a></li>
+                        <li><a href="https://github.com/XEKernel/InstallerMaker" target="_blank" rel="noopener"><i class="fas fa-box"></i> InstallerMaker</a></li>
+                        <li><a href="https://github.com/XEKernel/school-forum" target="_blank" rel="noopener"><i class="fas fa-comments"></i> school-forum</a></li>
+                    </ul>
+                </li>
                 <li><a href="#github" class="navLink" onclick="scrollToSection('github')"><i class="fab fa-github"></i> GitHub</a></li>
                 <li><a href="#tools" class="navLink" onclick="scrollToSection('tools')"><i class="fas fa-tools"></i> 工具</a></li>
                 <li><a href="#contact" class="navLink" onclick="scrollToSection('contact')"><i class="fas fa-address-card"></i> 联系</a></li>

@@ -526,6 +526,46 @@ body { animation: fadeIn 0.5s ease; }
 .nav-links .navLink:hover::after,
 .nav-links .navLink.active::after { transform: scaleX(1); }
 
+/* ═══ Dropdown ═══ */
+.nav-links li.dropdown { position: relative; }
+.dropdown-toggle { cursor: pointer; }
+.dropdown-toggle .fa-chevron-down { font-size: 0.6rem; transition: transform var(--e); margin-left: 2px; }
+li.dropdown:hover .dropdown-toggle .fa-chevron-down { transform: rotate(180deg); }
+.dropdown-menu {
+    position: absolute; top: calc(100% + 6px); left: 4px;
+    min-width: 200px; background: var(--bg);
+    border: 1px solid var(--ln); border-radius: var(--r2);
+    padding: 6px; display: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    z-index: 101;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+@media (hover: hover) { li.dropdown:hover .dropdown-menu { display: block; } }
+@media (hover: none) { li.dropdown.active .dropdown-menu { display: block; } }
+.dropdown-menu li { list-style: none; }
+.dropdown-menu a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px; font-size: 0.85rem; font-weight: 500;
+    color: var(--tx2); border-radius: var(--r);
+    transition: all var(--e); white-space: nowrap;
+}
+.dropdown-menu a:hover { color: var(--bl); background: var(--bl3); }
+.dropdown-menu a i { font-size: 0.82rem; width: 18px; color: var(--tx3); }
+.dropdown-menu a:hover i { color: var(--bl); }
+.dropdown-menu .current { color: var(--bl); font-weight: 600; }
+.dropdown-menu .current i { color: var(--bl); }
+.dropdown-divider { height: 1px; background: var(--ln); margin: 4px 8px; border: none; }
+
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: static; box-shadow: none; border: none;
+        padding-left: 24px; background: transparent; backdrop-filter: none;
+        display: none;
+    }
+    li.dropdown.active .dropdown-menu { display: block; }
+    li.dropdown:hover .dropdown-menu { display: block; }
+}
+
 /* Button pulse on click */
 .button:active, .primary-btn:active, .secondary-btn:active { transform: scale(0.95); }
 
