@@ -1,0 +1,45 @@
+name: Build Article Index
+
+# 触发条件：只要 articles/ 下的 .md 文件有变更（新增/修改）
+on:
+  push:
+    paths:
+      - 'articles/*.md'
+  # 也支持手动触发，方便调试
+  workflow_dispatch:
+
+# 赋予 GITHUB_TOKEN 写入仓库的权限
+permissions:
+  contents: write
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # 需要拉取全部历史，后面 commit 时才能正确推送到同一分支
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build article index
+        run: python build_articles.py
+
+      - name: Commit and push if index.json changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add articles/index.json
+          # 如果有变更才 commit + push
+          if git diff --cached --quiet; then
+            echo "✅ index.json 无变化，跳过提交"
+          else
+            git commit -m "🤖 自动更新文章索引 [skip ci]"
+            git push
+            echo "✅ index.json 已更新并推送"
+          fi

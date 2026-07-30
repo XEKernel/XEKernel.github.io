@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章 — XEKernel</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- highlight.js 代码高亮 (默认为暗色主题, JS 会根据站点主题切换) -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/github-dark.min.css" crossorigin="anonymous" id="hljs-theme">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+    
+    <!-- 背景装饰 -->
+    <div class="bg-decoration">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav id="mainNav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-atom"></i>
+                <span>XEKernel</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="navLink"><i class="fas fa-home"></i> 首页</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="navLink dropdown-toggle" onclick="event.stopPropagation();this.parentElement.classList.toggle('active')"><i class="fas fa-folder"></i> 项目 <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="projects/handwrite/"><i class="fas fa-feather-alt"></i> HandWrite-CPP</a></li>
+                        <li><a href="https://github.com/XEKernel/InstallerMaker" target="_blank" rel="noopener"><i class="fas fa-box"></i> InstallerMaker</a></li>
+                        <li><a href="https://github.com/XEKernel/school-forum" target="_blank" rel="noopener"><i class="fas fa-comments"></i> school-forum</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#github" class="navLink"><i class="fab fa-github"></i> GitHub</a></li>
+                <li><a href="articles.html" class="navLink active"><i class="fas fa-pen-fancy"></i> 文章</a></li>
+                <li><a href="index.html#tools" class="navLink"><i class="fas fa-tools"></i> 工具</a></li>
+                <li><a href="index.html#contact" class="navLink"><i class="fas fa-address-card"></i> 联系</a></li>
+                <li><a href="UpdateLog.html" class="navLink"><i class="fas fa-history"></i> 日志</a></li>
+                <li><a href="services/serve.html" class="navLink"><i class="fas fa-cogs"></i> 服务</a></li>
+            </ul>
+            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换深色/浅色模式">◐</button>
+            <div class="menu-toggle" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ===== 文章列表视图 ===== -->
+        <section id="article-list" class="article-section">
+            <div class="section-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-pen-fancy"></i> 文章</h2>
+                    <p><i class="fas fa-feather-alt"></i> 分享技术、思考与日常</p>
+                </div>
+                <div class="articles-stats" id="articlesStats">
+                    <span><i class="fas fa-file-alt"></i> 共 <strong id="articleCount">0</strong> 篇文章</span>
+                </div>
+                <div id="articlesContainer" class="articles-grid">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>正在加载文章...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== 文章阅读器视图 ===== -->
+        <section id="article-reader" class="article-section" style="display:none;">
+            <div class="section-content">
+                <div class="article-nav">
+                    <button class="back-link" onclick="showArticleList()">
+                        <i class="fas fa-arrow-left"></i> 返回文章列表
+                    </button>
+                </div>
+                <article class="article-detail">
+                    <div class="article-detail-header" id="articleDetailHeader">
+                        <h1 id="articleDetailTitle"></h1>
+                        <div class="article-detail-meta" id="articleDetailMeta"></div>
+                    </div>
+                    <div class="article-content markdown-body" id="articleContent">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>正在加载文章...</p>
+                        </div>
+                    </div>
+                </article>
+                <div class="article-nav article-nav-bottom">
+                    <button class="back-link" onclick="showArticleList()">
+                        <i class="fas fa-arrow-left"></i> 返回文章列表
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 返回顶部 -->
+    <div id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p><i class="fas fa-copyright"></i> Copyright &copy; 2024-2026 XEKernel. 保留所有权利</p>
+            <p><i class="fas fa-code"></i> 本网站由 XEKernel 设计与开发</p>
+            <div class="footer-links">
+                <a href="UpdateLog.html"><i class="fas fa-history"></i> 更新日志</a>
+                <a href="services/serve.html"><i class="fas fa-cogs"></i> 服务</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 脚本 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/marked/12.0.1/marked.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/highlight.min.js" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+    <script>
+    /* ═══════════════════════════════════════
+       文章系统 — JavaScript
+       ═══════════════════════════════════════ */
+    
+    let articlesData = [];
+    const articlesContainer = document.getElementById('articlesContainer');
+    const articleListSection = document.getElementById('article-list');
+    const articleReaderSection = document.getElementById('article-reader');
+
+    // 配置 marked
+    document.addEventListener('DOMContentLoaded', async () => {
+        if (typeof marked !== 'undefined') {
+            marked.setOptions({
+                gfm: true,
+                breaks: false
+            });
+        }
+
+        // 加载文章列表
+        await loadArticles();
+        
+        // 检查 URL hash 定位到某篇文章
+        checkHash();
+        
+        // 监听 hash 变化
+        window.addEventListener('hashchange', checkHash);
+    });
+
+    /** 加载文章元数据索引 */
+    async function loadArticles() {
+        try {
+            const resp = await fetch('articles/index.json?_t=' + Date.now());
+            articlesData = await resp.json();
+            renderArticleList();
+        } catch (e) {
+            console.error('加载文章索引失败:', e);
+            articlesContainer.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:12px;"></i>
+                    <p>暂无文章，敬请期待</p>
+                </div>
+            `;
+        }
+    }
+
+    /** 渲染文章列表 */
+    function renderArticleList() {
+        if (!articlesData || articlesData.length === 0) {
+            articlesContainer.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-book-open" style="font-size:2rem;display:block;margin-bottom:12px;"></i>
+                    <p>暂无文章，敬请期待</p>
+                </div>
+            `;
+            document.getElementById('articleCount').textContent = '0';
+            return;
+        }
+
+        document.getElementById('articleCount').textContent = articlesData.length;
+        
+        // 按日期降序排列
+        articlesData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        let html = '';
+        articlesData.forEach((article, i) => {
+            const tagsHtml = (article.tags || []).map(t => 
+                `<span class="article-tag">${t}</span>`
+            ).join('');
+            
+            html += `
+                <div class="article-card reveal" style="animation-delay:${i * 0.06}s" onclick="openArticle('${article.slug}')">
+                    <div class="article-card-body">
+                        <h3 class="article-card-title">${escapeHtml(article.title)}</h3>
+                        <div class="article-card-meta">
+                            <span class="article-date"><i class="far fa-calendar-alt"></i> ${article.date}</span>
+                            ${article.tags && article.tags.length ? `<span class="article-tags">${tagsHtml}</span>` : ''}
+                        </div>
+                        <p class="article-card-summary">${escapeHtml(article.summary || '')}</p>
+                    </div>
+                    <div class="article-card-footer">
+                        <span class="article-read-more">阅读全文 <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            `;
+        });
+        articlesContainer.innerHTML = html;
+
+        // 触发滚动揭示动画
+        if (typeof setupScrollAnimations === 'function') {
+            setupScrollAnimations();
+        }
+    }
+
+    /** 打开文章阅读器 */
+    async function openArticle(slug) {
+        // 更新 URL hash
+        history.pushState(null, '', '#/article/' + slug);
+        
+        // 切换视图
+        articleListSection.style.display = 'none';
+        articleReaderSection.style.display = 'block';
+        
+        // 加载文章内容
+        const contentDiv = document.getElementById('articleContent');
+        contentDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>正在加载文章...</p></div>';
+        
+        try {
+            const resp = await fetch('articles/' + slug + '.md?_t=' + Date.now());
+            if (!resp.ok) throw new Error('文章不存在');
+            const mdContent = await resp.text();
+            
+            // 解析 frontmatter 和正文
+            const { metadata, body } = parseFrontmatter(mdContent);
+            
+            // 更新文章头部信息
+            document.getElementById('articleDetailTitle').textContent = metadata.title || slug;
+            
+            let metaHtml = `<span class="article-date"><i class="far fa-calendar-alt"></i> ${metadata.date || ''}</span>`;
+            if (metadata.tags && metadata.tags.length) {
+                metaHtml += `<span class="article-tags">${metadata.tags.map(t => `<span class="article-tag">${t}</span>`).join('')}</span>`;
+            }
+            document.getElementById('articleDetailMeta').innerHTML = metaHtml;
+            
+            // 渲染 Markdown
+            if (typeof marked !== 'undefined') {
+                contentDiv.innerHTML = marked.parse(body);
+            } else {
+                contentDiv.innerHTML = `<pre>${escapeHtml(body)}</pre>`;
+            }
+            
+            // 代码高亮
+            if (typeof hljs !== 'undefined') {
+                contentDiv.querySelectorAll('pre code').forEach(block => {
+                    hljs.highlightElement(block);
+                });
+            }
+            
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+        } catch (e) {
+            console.error('加载文章失败:', e);
+            contentDiv.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-exclamation-triangle" style="font-size:2rem;display:block;margin-bottom:12px;color:var(--am);"></i>
+                    <p>文章加载失败，请稍后重试</p>
+                </div>
+            `;
+        }
+    }
+
+    /** 显示文章列表 */
+    function showArticleList() {
+        history.pushState(null, '', 'articles.html');
+        articleReaderSection.style.display = 'none';
+        articleListSection.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /** 检查 URL hash 并打开对应文章 */
+    function checkHash() {
+        const hash = window.location.hash;
+        const match = hash.match(/^#\/article\/(.+)$/);
+        if (match) {
+            openArticle(match[1]);
+        }
+    }
+
+    /** 解析 Frontmatter (YAML 简单解析) */
+    function parseFrontmatter(text) {
+        const match = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+        if (!match) {
+            return { metadata: {}, body: text };
+        }
+        
+        const yamlBlock = match[1];
+        const body = match[2];
+        const metadata = {};
+        
+        // 简单的 YAML 行解析
+        yamlBlock.split('\n').forEach(line => {
+            const kvMatch = line.match(/^\s*(\w+)\s*:\s*(.+)\s*$/);
+            if (kvMatch) {
+                let key = kvMatch[1].trim();
+                let value = kvMatch[2].trim();
+                // 处理数组: [tag1, tag2]
+                if (value.startsWith('[') && value.endsWith(']')) {
+                    value = value.slice(1, -1).split(',').map(s => s.trim().replace(/^['"]|['"]$/g, ''));
+                }
+                // 移除引号
+                if (typeof value === 'string') {
+                    value = value.replace(/^['"]|['"]$/g, '');
+                }
+                metadata[key] = value;
+            }
+        });
+        
+        return { metadata, body };
+    }
+
+    /** HTML 转义 */
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // 处理浏览器后退按钮
+    window.addEventListener('popstate', () => {
+        const hash = window.location.hash;
+        if (!hash || !hash.startsWith('#/article/')) {
+            articleReaderSection.style.display = 'none';
+            articleListSection.style.display = 'block';
+        }
+    });
+
+    /** 监听主题切换，同步 highlight.js 主题 */
+    function syncHljsTheme() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const link = document.getElementById('hljs-theme');
+        if (!link) return;
+        if (theme === 'dark') {
+            link.href = 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/github-dark.min.css';
+        } else {
+            link.href = 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/github.min.css';
+        }
+    }
+    // 初始化触发
+    setTimeout(syncHljsTheme, 100);
+    // 劫持全局 toggleTheme (由 script.js 定义) 来联动
+    if (typeof window._origToggleTheme === 'undefined') {
+        window._origToggleTheme = window.toggleTheme || function(){};
+        window.toggleTheme = function() {
+            window._origToggleTheme();
+            setTimeout(syncHljsTheme, 50);
+        };
+    }
+    </script>
+</body>
+</html>

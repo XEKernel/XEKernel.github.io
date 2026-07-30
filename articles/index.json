@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "markdown-guide",
+    "title": "Markdown 写作指南",
+    "date": "2026-07-30",
+    "tags": [
+      "教程",
+      "Markdown"
+    ],
+    "summary": "一篇全面的 Markdown 语法参考，包含常用格式、代码块、表格、数学公式等。"
+  },
+  {
+    "slug": "hello-world",
+    "title": "Hello World — 我的第一篇文章",
+    "date": "2026-07-30",
+    "tags": [
+      "随笔",
+      "建站"
+    ],
+    "summary": "这是我的个人网站第一篇博客文章，介绍一下这个博客系统的诞生和使用方式。"
+  }
+]
