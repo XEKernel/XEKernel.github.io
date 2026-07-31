@@ -257,7 +257,7 @@ section:first-of-type { padding-top: 140px; background: var(--bg); }
 }
 .contact-card:hover { border-color: var(--bl); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
 .contact-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--bl3); color: var(--bl); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
-.contact-icon .brand-icon { width: 0.85em; height: 0.85em; }
+.contact-icon .brand-icon { width: 15px; height: 15px; }
 .brand-icon {
     width: 1em; height: 1em;
     display: inline-block;
