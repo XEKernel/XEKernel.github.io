@@ -4,11 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XEKernel的个人网站</title>
+    <meta name="description" content="XEKernel 的个人网站 —— 高中生 · 编程爱好者 · 技术探索者。这里有关于我、我的技能、开源项目与技术文章。">
+    <meta property="og:title" content="XEKernel的个人网站">
+    <meta property="og:description" content="高中生 · 编程爱好者 · 技术探索者。我的技能、开源项目与技术文章。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xekernel.github.io/">
+    <meta name="theme-color" content="#2563eb">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- 顶部滚动进度条 -->
+    <div id="scrollProgress" aria-hidden="true"></div>
+    
     <!-- 粒子背景容器 -->
     <div id="particles-js"></div>
     
@@ -38,8 +47,8 @@
                 <li><a href="UpdateLog.html" class="navLink"><i class="fas fa-history"></i> 日志</a></li>
                 <li><a href="services/serve.html" class="navLink"><i class="fas fa-cogs"></i> 服务</a></li>
             </ul>
-            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换深色/浅色模式">◐</button>
-            <div class="menu-toggle" id="mobileMenu">
+            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换深色/浅色模式" aria-label="切换深色/浅色模式">◐</button>
+            <div class="menu-toggle" id="mobileMenu" role="button" tabindex="0" aria-label="打开导航菜单" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -57,9 +66,9 @@
                     <span>欢迎来到我的个人空间</span>
                 </div>
                 
-                <h1 id="typingContainer" class="hero-title">
-                    <span id="typingEffect"></span>
-                    <span id="cursor"></span>
+                <h1 id="typingContainer" class="hero-title" aria-label="欢迎来到我的个人网站">
+                    <span id="typingEffect" aria-hidden="true"></span>
+                    <span id="cursor" aria-hidden="true"></span>
                 </h1>
                 
                 <p class="hero-description">
@@ -194,6 +203,8 @@
                         src="https://ghchart.rshah.org/2563eb/XEKernel"
                         alt="GitHub Contribution Graph"
                         class="contribution-img"
+                        loading="lazy"
+                        onerror="this.style.display='none';var p=document.createElement('p');p.style.cssText='padding:28px;text-align:center;color:var(--tx3);font-size:.88rem';p.innerHTML='贡献日历服务暂不可用，可前往 <a href=\'https://github.com/XEKernel\' target=\'_blank\' rel=\'noopener\'>GitHub 主页</a> 查看实时贡献';this.parentNode.appendChild(p);"
                     >
                 </div>
             </div>
@@ -363,7 +374,7 @@
     </main>
 
     <!-- 返回顶部按钮 -->
-    <div id="backToTop">
+    <div id="backToTop" role="button" tabindex="0" aria-label="返回顶部">
         <i class="fas fa-arrow-up"></i>
     </div>
 

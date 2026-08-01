@@ -911,41 +911,47 @@ function updateLangBars(languageStats, totalProjects) {
 // 视差滚动效果
 function setupParallaxEffect() {
     const shapes = document.querySelectorAll('.floating-shape');
-    
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        
-        shapes.forEach((shape, index) => {
-            const speed = (index + 1) * 0.1;
-            shape.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.05}deg)`;
-        });
-    });
-}
+    if (!shapes.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-// 鼠标跟随效果（可选，仅在桌面端启用）
-function setupMouseFollowEffect() {
+    const state = { scroll: 0, mx: 0, my: 0, ticking: false };
+
+    // 滚动偏移 + 鼠标偏移统一合并计算，避免两个监听器互相覆盖 transform
+    const apply = () => {
+        state.ticking = false;
+        shapes.forEach((shape, index) => {
+            const sp = (index + 1) * 0.1;
+            const msp = (index + 1) * 20;
+            const tx = state.mx * msp;
+            const ty = state.scroll * sp + state.my * msp;
+            shape.style.transform = `translate3d(${tx}px, ${ty}px, 0) rotate(${state.scroll * 0.05}deg)`;
+        });
+    };
+    const schedule = () => {
+        if (!state.ticking) { state.ticking = true; requestAnimationFrame(apply); }
+    };
+
+    window.addEventListener('scroll', () => { state.scroll = window.pageYOffset || 0; schedule(); }, { passive: true });
+
+    // 鼠标跟随（仅桌面端）
     if (window.innerWidth > 768) {
         const heroSection = document.querySelector('.hero-section');
-        if (!heroSection) return;
-        
-        heroSection.addEventListener('mousemove', (e) => {
-            const shapes = document.querySelectorAll('.floating-shape');
-            const rect = heroSection.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            
-            shapes.forEach((shape, index) => {
-                const speed = (index + 1) * 20;
-                shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+        if (heroSection) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = heroSection.getBoundingClientRect();
+                state.mx = (e.clientX - rect.left) / rect.width - 0.5;
+                state.my = (e.clientY - rect.top) / rect.height - 0.5;
+                schedule();
             });
-        });
+        }
     }
 }
 
 // 元素滚动进入动画
 function setupScrollReveal() {
     const revealElements = document.querySelectorAll('.section-content, .hero-content, .hero-visual');
-    
+    if (!revealElements.length) return;
+
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -955,7 +961,7 @@ function setupScrollReveal() {
     }, {
         threshold: 0.1
     });
-    
+
     revealElements.forEach(el => revealObserver.observe(el));
 }
 
@@ -981,14 +987,21 @@ function setupSmoothScroll() {
     });
 }
 
-// 添加页面加载动画
+// 添加页面加载动画（带兜底：无论 load 是否触发，页面都会在超时后显示）
 function setupPageLoadAnimation() {
     document.body.style.opacity = '0';
-    
-    window.addEventListener('load', () => {
+
+    const finish = () => {
         document.body.style.transition = 'opacity 0.8s ease-in-out';
         document.body.style.opacity = '1';
-    });
+    };
+
+    // 若脚本执行时页面已加载完成（如服务端渲染/缓存命中），直接显示
+    if (document.readyState === 'complete') { finish(); return; }
+
+    // 3 秒兜底：CDN 资源卡住时 load 不触发，也不能让页面一直透明
+    const fallback = setTimeout(finish, 3000);
+    window.addEventListener('load', () => { clearTimeout(fallback); finish(); }, { once: true });
 }
 
 // 节流函数
@@ -1044,7 +1057,6 @@ function initAll() {
     setupMobileMenu();
     setupScrollAnimations();
     setupParallaxEffect();
-    setupMouseFollowEffect();
     setupScrollReveal();
     setupSmoothScroll();
     setupPageLoadAnimation();
@@ -1052,7 +1064,11 @@ function initAll() {
     setupKeyboardNavigation();
     setupErrorHandling();
     initRevealElements();
-    
+
+    // 2026-08 新增动画与优化
+    setupScrollProgress();
+    setupCardTilt();
+
     // 延迟从GitHub获取统计数据，避免速率限制
     if (document.getElementById('repoCount') || document.getElementById('totalStars') || document.getElementById('followerCount')) {
         setTimeout(() => {
@@ -1066,8 +1082,6 @@ function initAll() {
             fetchGitHubProjects();
         }, 1000);
     }
-    
-    console.log('All features initialized successfully');
 }
 
 // DOM加载完成后初始化
@@ -1138,14 +1152,12 @@ function toggleTheme() {
     }
 })();
 
-// 页面可见性变化处理
+// 页面可见性变化处理：页面不可见时暂停粒子动画，省电省资源
 document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-        console.log('页面变为可见');
-        // 可以在这里恢复某些动画或功能
-    } else {
-        console.log('页面变为不可见');
-        // 可以在这里暂停某些动画以节省资源
+    const canvas = document.querySelector('#particles-js canvas');
+    if (canvas) {
+        if (document.visibilityState === 'visible') canvas.style.animationPlayState = 'running';
+        else canvas.style.animationPlayState = 'paused';
     }
 });
 
@@ -1154,7 +1166,61 @@ let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-        console.log('页面大小已改变');
-        // 可以在这里重新计算某些布局或动画
+        // 屏幕旋转/缩放后重新评估是否启用卡片倾斜
+        setupCardTilt();
     }, 250);
 });
+
+/* ═══════════════════════════════════════════════════
+   2026-08 · 新增动画交互
+   ═══════════════════════════════════════════════════ */
+
+// 顶部滚动进度条
+function setupScrollProgress() {
+    const bar = document.getElementById('scrollProgress');
+    if (!bar) return;
+    const update = () => {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - doc.clientHeight;
+        const pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
+        bar.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+}
+
+// 卡片 3D 倾斜 + 光晕跟随（桌面端，respect reduced-motion）
+function setupCardTilt() {
+    if (window.innerWidth <= 768) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const cards = document.querySelectorAll(
+        '.project-card, .tool-card, .contact-card, .github-stat-card, .update-section'
+    );
+    cards.forEach(card => {
+        card.classList.add('spotlight');
+        // 已绑定过的事件不再重复绑定（resize 时会再次调用）
+        if (card.dataset.tiltBound) return;
+        card.dataset.tiltBound = '1';
+
+        card.addEventListener('mouseenter', () => card.classList.add('tilt-card'));
+        card.addEventListener('mousemove', (e) => {
+            const r = card.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width;
+            const py = (e.clientY - r.top) / r.height;
+            card.style.setProperty('--rx', ((0.5 - py) * 8).toFixed(2) + 'deg');
+            card.style.setProperty('--ry', ((px - 0.5) * 10).toFixed(2) + 'deg');
+            card.style.setProperty('--ty', '-3px');
+            card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+            card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+        });
+        card.addEventListener('mouseleave', () => {
+            card.classList.remove('tilt-card');
+            card.style.setProperty('--rx', '0deg');
+            card.style.setProperty('--ry', '0deg');
+            card.style.setProperty('--ty', '0px');
+        });
+    });
+}
+
+// 导航栏滚动投影（原有 setupNavScroll 已负责 .scrolled 类，此处仅补充 CSS 增强，不重复逻辑）

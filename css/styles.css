@@ -899,3 +899,78 @@ li.dropdown:hover .dropdown-toggle .fa-chevron-down { transform: rotate(180deg);
     .article-card-body { padding: 18px 18px 10px; }
     .article-card-footer { padding: 8px 18px 14px; }
 }
+
+/* ═══════════════════════════════════════════════════
+   2026-08 · 动画增强 & 细节优化
+   ═══════════════════════════════════════════════════ */
+
+/* ── 顶部滚动进度条（配合 js setupScrollProgress）── */
+#scrollProgress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--bl), #8b5cf6, var(--am));
+    border-radius: 0 3px 3px 0;
+    box-shadow: 0 0 10px rgba(37, 99, 235, .35);
+    z-index: 1000; pointer-events: none;
+    transition: width .08s linear;
+}
+
+/* ── 按钮扫光效果 ── */
+.button { position: relative; overflow: hidden; }
+.button::after {
+    content: ''; position: absolute; top: 0; left: -85%;
+    width: 45%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .5), transparent);
+    transform: skewX(-20deg);
+    transition: left .55s ease;
+    pointer-events: none;
+}
+.button:hover::after { left: 135%; }
+[data-theme="dark"] .button::after { background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .16), transparent); }
+
+/* ── 卡片 3D 倾斜（js 设置 --rx/--ry/--ty）── */
+.tilt-card {
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--ty, 0px));
+    transform-style: preserve-3d;
+    transition: transform .18s ease-out, box-shadow .25s ease, border-color .25s ease;
+    will-change: transform;
+}
+.tilt-card:hover { box-shadow: 0 18px 40px rgba(37, 99, 235, .12); }
+
+/* ── 卡片光晕跟随（js 设置 --mx/--my）── */
+.spotlight { position: relative; }
+.spotlight::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(37, 99, 235, .12), transparent 45%);
+    opacity: 0; transition: opacity .3s ease; pointer-events: none;
+}
+.spotlight:hover::before { opacity: 1; }
+
+/* ── 头像 hover ── */
+.profilePic { transition: transform .4s ease, filter .4s ease; }
+.profilePic:hover { transform: scale(1.06) rotate(-2deg); filter: saturate(1.15); }
+
+/* ── 导航栏滚动后投影（js 添加 .scrolled）── */
+#mainNav { transition: box-shadow .3s ease, background .3s ease; }
+#mainNav.scrolled { box-shadow: 0 2px 18px rgba(0, 0, 0, .07); }
+[data-theme="dark"] #mainNav.scrolled { box-shadow: 0 2px 18px rgba(0, 0, 0, .5); }
+
+/* ── 返回顶部按钮 hover ── */
+#backToTop { transition: transform .25s ease, opacity .3s ease, background .25s ease; }
+#backToTop:hover { transform: translateY(-3px) scale(1.06); }
+
+/* ── 格言卡片呼吸 ── */
+.quote-box { animation: quoteBreath 8s ease-in-out infinite; }
+@keyframes quoteBreath {
+    0%, 100% { box-shadow: 0 2px 12px rgba(0, 0, 0, .04); }
+    50% { box-shadow: 0 6px 24px rgba(37, 99, 235, .09); }
+}
+
+/* ── 尊重系统「减少动态效果」设置 ── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
