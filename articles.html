@@ -1,68 +1,309 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章 — XEKernel</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- highlight.js 代码高亮 (默认为暗色主题, JS 会根据站点主题切换) -->
-    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/github-dark.min.css" crossorigin="anonymous" id="hljs-theme">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文章 — XEKernel</title>
+<meta name="description" content="XEKernel 的技术文章：关于编程、AI、开源项目与日常折腾的记录。">
+<meta name="theme-color" content="#08080a">
+<script>document.documentElement.className+=' js';</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2308080a'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='16' font-weight='700' fill='%23d4ff3f'%3EXE%3C/text%3E%3C/svg%3E">
+<style>
+/* ── 01 设计令牌 ─────────────────────────────────────────── */
+:root{
+  --bg:#08080a; --tx:#f1f1ee; --tx2:#6d6d70; --tx3:#3a3a3e;
+  --line:#1c1c20; --ac:#d4ff3f; --ac-ink:#08080a; --radius:2px;
+  /* 旧版别名，保证历史内联样式里的 var() 继续可用 */
+  --bl:var(--ac); --am:#d4ff3f; --ok:#d4ff3f;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono","Courier New",monospace;
+  --nav-h:58px;
+  --gut:clamp(18px,4.4vw,44px);
+  --maxw:1180px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+:root[data-theme="light"]{
+  --bg:#f2f2ee; --tx:#08080a; --tx2:#6d6d70; --tx3:#b4b4ae;
+  --line:#dcdcd4; --ac:#5c7600; --ac-ink:#f7ffdd;
+}
+/* ── 02 重置 ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;border-radius:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--sans);
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,p,figure,blockquote{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+img{max-width:100%;display:block;border-radius:var(--radius)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;border-radius:var(--radius)}
+::selection{background:var(--ac);color:var(--ac-ink)}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+:focus:not(:focus-visible){outline:none}
+.skip{position:fixed;top:-100px;left:12px;z-index:999;background:var(--ac);color:var(--ac-ink);
+  padding:10px 16px;font:600 13px/1 var(--mono);border-radius:var(--radius);transition:top .18s var(--ease)}
+.skip:focus{top:12px}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx2)}
+/* ── 03 图标精灵 ─────────────────────────────────────────── */
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.i{width:1em;height:1em;flex:none;fill:currentColor;display:block}
+.i-s{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:square}
+.i-lg{width:24px;height:24px}
+/* ── 04 骨架 ─────────────────────────────────────────────── */
+.wrap,.section-content{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gut);position:relative;z-index:1}
+main{position:relative;z-index:1}
+.sec-head,.section-header{margin-bottom:clamp(30px,4.6vw,52px)}
+.sec-head h2,.section-header h2{font-size:clamp(1.5rem,4.2vw,2.15rem);font-weight:800;letter-spacing:-.02em;line-height:1.14}
+.sec-head .kicker{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sec-head .kicker::after{content:"";flex:1;height:1px;background:var(--line)}
+.sec-head .lead,.section-header p{margin-top:10px;color:var(--tx2);font-size:.94rem;max-width:62ch}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--tx2);margin-bottom:26px;transition:color .2s;
+  background:none;border:0;padding:0;cursor:pointer}
+.back-link:hover{color:var(--ac)}
+/* ── 05 按钮 ─────────────────────────────────────────────── */
+.btn,.button,.service-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:11px 19px;border:1px solid var(--line);border-radius:var(--radius);font-size:.86rem;
+  font-weight:600;color:var(--tx);cursor:pointer;transition:background .22s var(--ease),color .22s var(--ease),border-color .22s var(--ease)}
+.btn:hover,.button:hover,.service-button:hover{border-color:var(--ac);color:var(--ac)}
+.btn-solid,.primary-btn,.button.primary-btn{background:var(--ac);color:var(--ac-ink);border-color:var(--ac)}
+.btn-solid:hover,.primary-btn:hover,.button.primary-btn:hover{background:transparent;color:var(--ac)}
+.buttons,.button-group{display:flex;flex-wrap:wrap;gap:10px}
+/* ── 06 行列表 ───────────────────────────────────────────── */
+.rows{border-top:1px solid var(--line)}
+.row{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:baseline;
+  gap:clamp(12px,3vw,30px);padding:20px 16px 20px 18px;border-bottom:1px solid var(--line);
+  transition:background .24s var(--ease),color .24s var(--ease),padding-left .24s var(--ease)}
+.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ac);
+  transform:scaleY(0);transition:transform .3s var(--ease)}
+.row:hover,.row:focus-visible{background:var(--ac);color:var(--ac-ink);padding-left:26px}
+.row:hover::before,.row:focus-visible::before{transform:scaleY(1)}
+.row:hover .r-meta,.row:hover .r-idx{color:var(--ac-ink);opacity:.72}
+.row:hover .r-tit::after{transform:scaleX(1)}
+.row:hover .r-arw{opacity:1;transform:none}
+.r-idx{font-family:var(--mono);font-size:11.5px;color:var(--tx3);transition:color .24s}
+.r-main{display:block;min-width:0}
+.r-tit{font-size:1.15rem;font-weight:700;letter-spacing:-.015em;display:inline-block;position:relative}
+.r-tit::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;
+  transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.r-desc{display:block;color:var(--tx2);font-size:.875rem;margin-top:7px;transition:color .24s;max-width:64ch}
+.r-meta{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--tx3);text-align:right;
+  white-space:nowrap;transition:color .24s}
+.r-arw{font-family:var(--mono);opacity:0;transform:translate(-6px,6px);display:inline;
+  transition:opacity .26s var(--ease),transform .26s var(--ease)}
+/* ── 07 覆盖层 ───────────────────────────────────────────── */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--ac);z-index:80;pointer-events:none}
+#particles-js{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
+:root[data-theme="light"] #particles-js{opacity:.3}
+#particles-js canvas{display:block;width:100%;height:100%}
+.bg-deco{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-deco span{position:absolute;display:block;border:1px solid var(--line)}
+.bg-deco span:nth-child(1){width:190px;height:190px;top:14%;left:6%}
+.bg-deco span:nth-child(2){width:120px;height:120px;top:58%;left:12%;border-color:var(--tx3)}
+.bg-deco span:nth-child(3){width:250px;height:250px;top:24%;right:5%}
+.bg-deco span:nth-child(4){width:90px;height:90px;top:74%;right:14%;border-color:var(--ac);opacity:.45}
+.bg-deco span:nth-child(5){width:150px;height:150px;bottom:8%;left:44%;border-color:var(--tx3)}
+.xhair{position:fixed;inset:0;z-index:70;pointer-events:none;display:none}
+.xhair b{position:absolute;background:var(--ac);opacity:.22;display:block}
+.xhair b:nth-child(1){width:1px;height:100vh;top:0;left:0}
+.xhair b:nth-child(2){height:1px;width:100vw;left:0;top:0}
+.hud{position:fixed;left:var(--gut);bottom:22px;z-index:70;display:none;font-family:var(--mono);
+  font-size:11px;letter-spacing:.1em;color:var(--tx3);border-left:2px solid var(--ac);
+  padding-left:9px;line-height:1.5;pointer-events:none}
+.hud i{font-style:normal;color:var(--tx2)}
+@media (hover:hover) and (min-width:1024px){.xhair.on,.hud.on{display:block}}
+/* ── 08 导航 ─────────────────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:90;height:var(--nav-h);border-bottom:1px solid transparent;
+  transition:background .3s var(--ease),border-color .3s var(--ease)}
+.nav.scrolled{background:color-mix(in srgb,var(--bg) 86%,transparent);border-bottom-color:var(--line);
+  backdrop-filter:saturate(140%) blur(12px)}
+.nav-in{height:100%;display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.02em;font-size:1.02rem;flex:none}
+.brand em{font-style:normal;width:11px;height:11px;background:var(--ac);display:block;border-radius:50%}
+.nav-links{display:flex;align-items:center;gap:2px;margin-left:auto}
+.nav-links a{position:relative;display:block;padding:7px 11px;font-size:.855rem;color:var(--tx2);
+  font-weight:500;transition:color .2s var(--ease);white-space:nowrap}
+.nav-links a::after{content:"";position:absolute;left:11px;right:11px;bottom:3px;height:1px;
+  background:var(--ac);transform:scaleX(0);transform-origin:left;transition:transform .28s var(--ease)}
+.nav-links a:hover{color:var(--tx)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-links a.active{color:var(--ac)}
+.nav-sep{width:1px;height:16px;background:var(--line);margin:0 8px;flex:none}
+.nav-tools{display:flex;align-items:center;gap:8px;flex:none}
+.icon-btn{width:34px;height:34px;display:grid;place-items:center;font-size:15px;color:var(--tx2);
+  border:1px solid var(--line);border-radius:var(--radius);transition:color .2s,border-color .2s}
+.icon-btn:hover{color:var(--ac);border-color:var(--ac)}
+.burger{display:none;width:34px;height:34px;border:1px solid var(--line);border-radius:var(--radius);place-items:center}
+.burger span{display:block;width:15px;height:1px;background:var(--tx);margin:2.5px auto;transition:transform .25s var(--ease),opacity .2s}
+.burger.on span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger.on span:nth-child(2){opacity:0}
+.burger.on span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+/* ── 09 返回顶部 / 页脚 ─────────────────────────────────── */
+#top,#backToTop{position:fixed;right:var(--gut);bottom:22px;z-index:70;width:38px;height:38px;
+  display:grid;place-items:center;font-family:var(--mono);border:1px solid var(--line);background:var(--bg);
+  color:var(--tx2);border-radius:var(--radius);opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .3s var(--ease),transform .3s var(--ease),visibility .3s,color .2s,border-color .2s}
+#top.on,#backToTop.on{opacity:1;visibility:visible;transform:none}
+#top:hover,#backToTop:hover{color:var(--ac);border-color:var(--ac)}
+.foot,.footer{border-top:1px solid var(--line);padding:38px 0 30px;position:relative;z-index:1;margin-top:0}
+.foot-in,.footer-content{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gut);
+  display:flex;justify-content:space-between;align-items:flex-end;gap:26px;flex-wrap:wrap}
+.foot-l{display:grid;gap:7px}
+.foot p,.footer-content p{font-size:.84rem;color:var(--tx2)}
+.foot-clock{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--tx3)}
+.foot-clock b{color:var(--ac);font-weight:600}
+.foot-links,.footer-links{display:flex;gap:18px;flex-wrap:wrap}
+.foot-links a,.footer-links a{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tx2);transition:color .2s}
+.foot-links a:hover,.footer-links a:hover{color:var(--ac)}
+/* ── 10 通用小组件 ──────────────────────────────────────── */
+.loading,.no-results{padding:30px 0;color:var(--tx2);font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.12em;text-transform:uppercase;text-align:center}
+.js .rv{opacity:0;transform:translateY(15px);transition:opacity .62s var(--ease),transform .62s var(--ease);transition-delay:calc(var(--i,0)*62ms)}
+.rv.in{opacity:1;transform:none}
+.page-title{font-size:clamp(1.9rem,5.4vw,3rem);font-weight:800;letter-spacing:-.035em;line-height:1.06;margin-bottom:12px}
+/* ── 11 响应式 ──────────────────────────────────────────── */
+@media (max-width:820px){
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;flex-direction:column;align-items:stretch;
+    background:var(--bg);border-bottom:1px solid var(--line);padding:8px var(--gut) 18px;gap:0;
+    margin-left:0;max-height:calc(100vh - var(--nav-h));overflow-y:auto;display:none}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:14px 0;font-size:1rem;border-bottom:1px solid var(--line)}
+  .nav-links a::after{display:none}
+  .nav-sep{display:none}
+  .burger{display:grid;margin-left:auto}
+  .nav-tools{margin-left:8px}
+  .row{grid-template-columns:auto minmax(0,1fr);gap:12px;padding:17px 14px 17px 16px}
+  .r-meta,.r-arw{display:none}
+  .row:hover,.row:focus-visible{padding-left:20px}
+  .foot-in,.footer-content{flex-direction:column;align-items:flex-start;gap:20px}
+  .hud{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rv{opacity:1;transform:none}
+  .xhair,.hud{display:none!important}
+  #particles-js{display:none}
+}
+
+.pg-body{padding-top:calc(var(--nav-h) + clamp(36px,6vw,64px));padding-bottom:clamp(56px,9vw,104px)}
+.articles-stats{margin-top:18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--tx3)}
+.articles-stats strong{color:var(--ac)}
+.articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0;
+  border-top:1px solid var(--line);border-left:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.article-card{background:var(--bg);padding:24px;display:flex;flex-direction:column;gap:14px;cursor:pointer;
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  transition:background .24s var(--ease),color .24s var(--ease)}
+.article-card:hover,.article-card:focus-visible{background:var(--ac);color:var(--ac-ink)}
+.article-card:hover .article-card-summary,.article-card:hover .article-card-meta,.article-card:hover .article-tag{color:var(--ac-ink);opacity:.75}
+.article-card:hover .article-read-more{color:var(--ac-ink)}
+.article-card-title{font-size:1.16rem;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+.article-card-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--tx3);transition:color .24s}
+.article-tag{border:1px solid currentColor;padding:2px 7px;border-radius:var(--radius);font-family:var(--mono);font-size:10.5px}
+.article-tags{display:flex;gap:6px;flex-wrap:wrap}
+.article-card-summary{color:var(--tx2);font-size:.875rem;transition:color .24s}
+.article-card-footer{margin-top:auto;padding-top:6px}
+.article-read-more{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--tx2);transition:color .24s}
+.article-section{padding:calc(var(--nav-h) + clamp(36px,6vw,64px)) 0 clamp(56px,9vw,104px)}
+.article-nav{margin-bottom:24px}
+.article-nav-bottom{margin-top:44px;margin-bottom:0;padding-top:32px;border-top:1px solid var(--line)}
+.article-detail-header{padding-bottom:26px;margin-bottom:34px;border-bottom:1px solid var(--line)}
+.article-detail-header h1{font-size:clamp(1.7rem,4.8vw,2.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.12}
+.article-detail-meta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--tx3)}
+/* Markdown 正文排版 */
+.markdown-body{max-width:74ch;font-size:1.02rem;line-height:1.85;color:var(--tx)}
+.markdown-body>*+*{margin-top:1.15em}
+.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4{
+  font-weight:800;letter-spacing:-.025em;line-height:1.25;margin-top:2em;margin-bottom:.6em}
+.markdown-body h1{font-size:1.7rem}
+.markdown-body h2{font-size:1.36rem;padding-bottom:.42em;border-bottom:1px solid var(--line)}
+.markdown-body h3{font-size:1.13rem}
+.markdown-body h4{font-size:1rem;color:var(--tx2)}
+.markdown-body p{color:var(--tx2)}
+.markdown-body strong{color:var(--tx);font-weight:700}
+.markdown-body em{color:var(--tx)}
+.markdown-body a{color:var(--ac);border-bottom:1px solid color-mix(in srgb,var(--ac) 45%,transparent);
+  transition:border-color .2s}
+.markdown-body a:hover{border-bottom-color:var(--ac)}
+.markdown-body ul,.markdown-body ol{padding-left:1.35em;color:var(--tx2)}
+.markdown-body ul{list-style:none}
+.markdown-body ul>li{position:relative}
+.markdown-body ul>li::before{content:"";position:absolute;left:-1.05em;top:.78em;width:6px;height:1px;background:var(--ac)}
+.markdown-body ol{list-style:decimal}
+.markdown-body ol>li::marker{color:var(--ac);font-family:var(--mono);font-size:.85em}
+.markdown-body li+li{margin-top:.42em}
+.markdown-body blockquote{border-left:2px solid var(--ac);padding:2px 0 2px 18px;color:var(--tx2)}
+.markdown-body blockquote p{margin:0}
+.markdown-body blockquote p+p{margin-top:.7em}
+.markdown-body hr{border:0;border-top:1px solid var(--line);margin:2.4em 0}
+.markdown-body code{font-family:var(--mono);font-size:.86em;background:var(--line);
+  color:var(--ac);padding:.14em .42em;border-radius:var(--radius)}
+.markdown-body pre{background:var(--line);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;overflow-x:auto;font-size:.84rem;line-height:1.7}
+.markdown-body pre code{background:none;color:var(--tx);padding:0;font-size:1em}
+:root[data-theme="light"] .markdown-body pre{background:#e7e7e0}
+.markdown-body img{border:1px solid var(--line)}
+.markdown-body table{width:100%;border-collapse:collapse;font-size:.9rem}
+.markdown-body th,.markdown-body td{border:1px solid var(--line);padding:9px 12px;text-align:left}
+.markdown-body th{background:var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--tx2)}
+</style>
 </head>
 <body>
-    <!-- 粒子背景 -->
-    <div id="particles-js"></div>
-    
-    <!-- 背景装饰 -->
-    <div class="bg-decoration">
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div>
-        <div class="floating-shape shape-4"></div>
-        <div class="floating-shape shape-5"></div>
+<a class="skip" href="#main">跳到主内容</a>
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-github" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23a11.5 11.5 0 0 1 3-.405c1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><path class="i-s" d="M2.6 5.2h18.8v13.6H2.6z"/><path class="i-s" d="m2.6 6.2 9.4 6.4 9.4-6.4"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle class="i-s" cx="12" cy="12" r="4.2"/><path class="i-s" d="M12 1.8v2.6M12 19.6v2.6M1.8 12h2.6M19.6 12h2.6M4.8 4.8l1.9 1.9M17.3 17.3l1.9 1.9M19.2 4.8l-1.9 1.9M6.7 17.3l-1.9 1.9"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path class="i-s" d="M20.5 14.2A8.6 8.6 0 0 1 9.8 3.5a8.6 8.6 0 1 0 10.7 10.7z"/></symbol>
+</svg>
+<div id="progress" aria-hidden="true"></div>
+<div id="particles-js" aria-hidden="true"></div>
+<div class="bg-deco" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+
+<nav class="nav" id="nav" aria-label="主导航">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html#home"><em aria-hidden="true"></em>XEKernel</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#home">首页</a></li>
+      <li><a href="index.html#about">关于</a></li>
+      <li><a href="index.html#github">GitHub</a></li>
+      <li><a href="index.html#tools">工具</a></li>
+      <li><a href="index.html#contact">联系</a></li>
+      <li class="nav-sep" aria-hidden="true"></li>
+      <li><a href="projects/handwrite/">项目</a></li>
+      <li><a href="articles.html" class="active" aria-current="page">文章</a></li>
+      <li><a href="UpdateLog.html">日志</a></li>
+      <li><a href="services/serve.html">服务</a></li>
+    </ul>
+    <div class="nav-tools">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="切换深浅主题" title="切换深浅主题">
+        <svg class="i" id="themeIco" aria-hidden="true"><use href="#i-moon"/></svg>
+      </button>
+      <button class="burger" id="burger" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-
-    <!-- 导航栏 -->
-    <nav id="mainNav">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-atom"></i>
-                <span>XEKernel</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="navLink"><i class="fas fa-home"></i> 首页</a></li>
-                <li><a href="index.html#github" class="navLink"><i class="fab fa-github"></i> GitHub</a></li>
-                <li><a href="index.html#tools" class="navLink"><i class="fas fa-tools"></i> 工具</a></li>
-                <li><a href="index.html#contact" class="navLink"><i class="fas fa-address-card"></i> 联系</a></li>
-                <li><a href="projects/handwrite/" class="navLink"><i class="fas fa-folder"></i> 项目</a></li>
-                <li><a href="articles.html" class="navLink active"><i class="fas fa-pen-fancy"></i> 文章</a></li>
-                <li><a href="UpdateLog.html" class="navLink"><i class="fas fa-history"></i> 日志</a></li>
-                <li><a href="services/serve.html" class="navLink"><i class="fas fa-cogs"></i> 服务</a></li>
-            </ul>
-            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="切换深色/浅色模式">◐</button>
-            <div class="menu-toggle" id="mobileMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        <!-- ===== 文章列表视图 ===== -->
-        <section id="article-list" class="article-section">
-            <div class="section-content">
-                <div class="section-header">
-                    <h2><i class="fas fa-pen-fancy"></i> 文章</h2>
-                    <p><i class="fas fa-feather-alt"></i> 分享技术、思考与日常</p>
-                </div>
+  </div>
+</nav>
+<main id="main">
+<!-- ===== 文章列表视图 ===== -->
+        <section id="article-list">
+            <div class="section-content pg-body">
+                <div class="section-header" style="margin-bottom:22px">
+  <p class="mono" style="margin-bottom:14px">Writing</p>
+  <h1 class="page-title">文章</h1>
+  <p>关于技术、AI、开源项目与日常折腾的记录。源文件为 Markdown，推送后自动构建。</p>
+</div>
                 <div class="articles-stats" id="articlesStats">
-                    <span><i class="fas fa-file-alt"></i> 共 <strong id="articleCount">0</strong> 篇文章</span>
+                    <span> 共 <strong id="articleCount">0</strong> 篇文章</span>
                 </div>
                 <div id="articlesContainer" class="articles-grid">
                     <div class="loading">
-                        <i class="fas fa-spinner fa-spin"></i>
+                        
                         <p>正在加载文章...</p>
                     </div>
                 </div>
@@ -70,11 +311,11 @@
         </section>
 
         <!-- ===== 文章阅读器视图 ===== -->
-        <section id="article-reader" class="article-section" style="display:none;">
-            <div class="section-content">
+        <section id="article-reader" style="display:none;">
+            <div class="section-content pg-body">
                 <div class="article-nav">
                     <button class="back-link" onclick="showArticleList()">
-                        <i class="fas fa-arrow-left"></i> 返回文章列表
+                         返回文章列表
                     </button>
                 </div>
                 <article class="article-detail">
@@ -84,279 +325,388 @@
                     </div>
                     <div class="article-content markdown-body" id="articleContent">
                         <div class="loading">
-                            <i class="fas fa-spinner fa-spin"></i>
+                            
                             <p>正在加载文章...</p>
                         </div>
                     </div>
                 </article>
                 <div class="article-nav article-nav-bottom">
                     <button class="back-link" onclick="showArticleList()">
-                        <i class="fas fa-arrow-left"></i> 返回文章列表
+                         返回文章列表
                     </button>
                 </div>
             </div>
         </section>
-    </main>
-
-    <!-- 返回顶部 -->
-    <div id="backToTop">
-        <i class="fas fa-arrow-up"></i>
+</main>
+<button id="top" type="button" aria-label="返回顶部">&#8593;</button>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="foot-l">
+      <p>© 2024–2026 XEKernel · 由本人设计与开发</p>
+      <p class="foot-clock">本地时间 <b id="clock">--:--:--</b></p>
     </div>
+    <nav class="foot-links" aria-label="页脚导航">
+      <a href="index.html">首页</a>
+      <a href="projects/handwrite/">项目</a>
+      <a href="articles.html">文章</a>
+      <a href="UpdateLog.html">更新日志</a>
+      <a href="services/serve.html">服务</a>
+    </nav>
+  </div>
+</footer>
+<script>
+(function(){
+'use strict';
+var RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 
-    <footer class="footer">
-        <div class="footer-content">
-            <p><i class="fas fa-copyright"></i> Copyright &copy; 2024-2026 XEKernel. 保留所有权利</p>
-            <p><i class="fas fa-code"></i> 本网站由 XEKernel 设计与开发</p>
-            <div class="footer-links">
-                <a href="UpdateLog.html"><i class="fas fa-history"></i> 更新日志</a>
-                <a href="services/serve.html"><i class="fas fa-cogs"></i> 服务</a>
-            </div>
-        </div>
-    </footer>
+/* 主题 */
+function applyTheme(t){
+  var h=document.documentElement;
+  if(t==='light')h.setAttribute('data-theme','light');else h.removeAttribute('data-theme');
+  var u=$('#themeIco use'); if(u)u.setAttribute('href',t==='light'?'#i-sun':'#i-moon');
+}
+applyTheme(localStorage.getItem('theme')==='light'?'light':'dark');
+var tb=$('#themeBtn');
+if(tb)tb.addEventListener('click',function(){
+  var next=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+  applyTheme(next); try{localStorage.setItem('theme',next);}catch(e){}
+});
 
-    <!-- 脚本 -->
-    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/marked/12.0.1/marked.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/highlight.min.js" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
-    <script>
-    /* ═══════════════════════════════════════
-       文章系统 — JavaScript
-       ═══════════════════════════════════════ */
-    
-    let articlesData = [];
-    const articlesContainer = document.getElementById('articlesContainer');
-    const articleListSection = document.getElementById('article-list');
-    const articleReaderSection = document.getElementById('article-reader');
-
-    // 配置 marked
-    document.addEventListener('DOMContentLoaded', async () => {
-        if (typeof marked !== 'undefined') {
-            marked.setOptions({
-                gfm: true,
-                breaks: false
-            });
-        }
-
-        // 加载文章列表
-        await loadArticles();
-        
-        // 检查 URL hash 定位到某篇文章
-        checkHash();
-        
-        // 监听 hash 变化
-        window.addEventListener('hashchange', checkHash);
+/* 导航 */
+(function(){
+  var bar=$('#nav'),ls=$('#navLinks'),bg=$('#burger'); if(!bar)return;
+  window.addEventListener('scroll',function(){bar.classList.toggle('scrolled',window.scrollY>24)},{passive:true});
+  function close(){ls.classList.remove('open');bg.classList.remove('on');bg.setAttribute('aria-expanded','false');}
+  if(bg)bg.addEventListener('click',function(){
+    var o=ls.classList.toggle('open'); bg.classList.toggle('on',o);
+    bg.setAttribute('aria-expanded',String(o));
+    bg.setAttribute('aria-label',o?'关闭导航菜单':'打开导航菜单');
+  });
+  $$('#navLinks a').forEach(function(a){a.addEventListener('click',close)});
+  document.addEventListener('click',function(e){ if(bg&&!ls.contains(e.target)&&!bg.contains(e.target))close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape')close(); });
+  $$('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=a.getAttribute('href'); if(id==='#')return;
+      var t=$(id); if(!t)return;
+      e.preventDefault();
+      window.scrollTo({top:t.offsetTop-bar.offsetHeight,behavior:RM?'auto':'smooth'});
     });
+  });
+})();
 
-    /** 加载文章元数据索引 */
-    async function loadArticles() {
-        try {
-            const resp = await fetch('/articles/index.json?_t=' + Date.now());
-            articlesData = await resp.json();
-            renderArticleList();
-        } catch (e) {
-            console.error('加载文章索引失败:', e);
-            articlesContainer.innerHTML = `
-                <div class="no-results">
-                    <i class="fas fa-exclamation-circle" style="font-size:2rem;display:block;margin-bottom:12px;"></i>
-                    <p>暂无文章，敬请期待</p>
-                </div>
-            `;
-        }
+/* 进度条 */
+(function(){
+  var bar=$('#progress'); if(!bar)return; var q=false;
+  function paint(){q=false;var d=document.documentElement,m=d.scrollHeight-d.clientHeight;
+    bar.style.width=(m>0?(d.scrollTop/m)*100:0)+'%';}
+  window.addEventListener('scroll',function(){if(!q){q=true;requestAnimationFrame(paint)}},{passive:true});
+  paint();
+})();
+
+/* 返回顶部 */
+(function(){
+  var b=$('#top')||$('#backToTop'); if(!b)return;
+  window.addEventListener('scroll',function(){b.classList.toggle('on',window.scrollY>500)},{passive:true});
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:RM?'auto':'smooth'})});
+})();
+
+/* 错峰入场 */
+(function(){
+  var els=$$('.rv'); if(!els.length)return;
+  function showAll(){els.forEach(function(e){e.classList.add('in')})}
+  if(RM||!('IntersectionObserver' in window)){showAll();return;}
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+/* 浮动几何视差 */
+(function(){
+  if(RM)return;
+  var sh=$$('.bg-deco span'); if(!sh.length)return; var sy=0,q=false;
+  function paint(){q=false;sh.forEach(function(s,i){
+    s.style.transform='translate3d(0,'+(-sy*(.03+i*.022)).toFixed(1)+'px,0) rotate('+(sy*.02*(i%2?-1:1)).toFixed(2)+'deg)';});}
+  window.addEventListener('scroll',function(){sy=window.scrollY;if(!q){q=true;requestAnimationFrame(paint)}},{passive:true});
+  paint();
+})();
+
+/* 粒子场（自研，替代 particles.js） */
+(function(){
+  var host=$('#particles-js'); if(!host||RM)return;
+  var cv=document.createElement('canvas'); host.appendChild(cv);
+  var ctx=cv.getContext('2d'),W=0,H=0,dpr=1,ps=[],raf=0,run=true,C=[212,255,63];
+  function size(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=host.clientWidth;H=host.clientHeight;
+    cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var n=W<760?16:34;
+    ps=[];for(var i=0;i<n;i++)ps.push({x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16,r:Math.random()*1.3+.5});
+  }
+  function draw(){
+    if(!run)return;
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<ps.length;i++){
+      var p=ps[i]; p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.2832);
+      ctx.fillStyle='rgba('+C[0]+','+C[1]+','+C[2]+',.5)';ctx.fill();
+      for(var j=i+1;j<ps.length;j++){
+        var q2=ps[j],dx=p.x-q2.x,dy=p.y-q2.y,d=dx*dx+dy*dy;
+        if(d<20000){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q2.x,q2.y);
+          ctx.strokeStyle='rgba('+C[0]+','+C[1]+','+C[2]+','+(.14*(1-d/20000)).toFixed(3)+')';
+          ctx.lineWidth=.6;ctx.stroke();}
+      }
     }
+    raf=requestAnimationFrame(draw);
+  }
+  size();draw();
+  var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(size,220)},{passive:true});
+  document.addEventListener('visibilitychange',function(){
+    run=document.visibilityState==='visible'; if(run)draw();else cancelAnimationFrame(raf);});
+})();
 
-    /** 渲染文章列表 */
-    function renderArticleList() {
-        if (!articlesData || articlesData.length === 0) {
-            articlesContainer.innerHTML = `
-                <div class="no-results">
-                    <i class="fas fa-book-open" style="font-size:2rem;display:block;margin-bottom:12px;"></i>
-                    <p>暂无文章，敬请期待</p>
-                </div>
-            `;
-            document.getElementById('articleCount').textContent = '0';
-            return;
-        }
+/* 十字准星 + 坐标 HUD（仅桌面端） */
+(function(){
+  if(RM||!window.matchMedia('(hover:hover) and (min-width:1024px)').matches)return;
+  var xh=$('.xhair'),hd=$('.hud'); if(!xh||!hd)return;
+  xh.classList.add('on'); hd.classList.add('on');
+  var v=$('.xhair b:nth-child(1)'),h=$('.xhair b:nth-child(2)'),hx=$('#hudX'),hy=$('#hudY');
+  if(!v||!h||!hx||!hy)return;
+  var X=0,Y=0,q=false;
+  function paint(){q=false;
+    v.style.transform='translate3d('+X+'px,0,0)';
+    h.style.transform='translate3d(0,'+Y+'px,0)';
+    hx.textContent=String(X).padStart(4,'0'); hy.textContent=String(Y).padStart(4,'0');}
+  window.addEventListener('mousemove',function(e){X=e.clientX;Y=e.clientY;
+    if(!q){q=true;requestAnimationFrame(paint);}},{passive:true});
+})();
 
-        document.getElementById('articleCount').textContent = articlesData.length;
-        
-        // 按日期降序排列
-        articlesData.sort((a, b) => new Date(b.date) - new Date(a.date));
+/* 页脚时钟 */
+(function(){
+  var el=$('#clock'); if(!el)return;
+  function two(n){return String(n).padStart(2,'0')}
+  (function tick(){var d=new Date();
+    el.textContent=two(d.getHours())+':'+two(d.getMinutes())+':'+two(d.getSeconds());
+    setTimeout(tick,1000);})();
+})();
 
-        let html = '';
-        articlesData.forEach((article, i) => {
-            const tagsHtml = (article.tags || []).map(t => 
-                `<span class="article-tag">${t}</span>`
-            ).join('');
-            
-            html += `
-                <div class="article-card reveal" style="animation-delay:${i * 0.06}s" onclick="openArticle('${article.slug}')">
-                    <div class="article-card-body">
-                        <h3 class="article-card-title">${escapeHtml(article.title)}</h3>
-                        <div class="article-card-meta">
-                            <span class="article-date"><i class="far fa-calendar-alt"></i> ${article.date}</span>
-                            ${article.tags && article.tags.length ? `<span class="article-tags">${tagsHtml}</span>` : ''}
-                        </div>
-                        <p class="article-card-summary">${escapeHtml(article.summary || '')}</p>
-                    </div>
-                    <div class="article-card-footer">
-                        <span class="article-read-more">阅读全文 <i class="fas fa-arrow-right"></i></span>
-                    </div>
-                </div>
-            `;
-        });
-        articlesContainer.innerHTML = html;
+/* 工具函数 */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+window.__esc=esc;
+window.copyToClipboard=function(text){
+  function done(){ toast('已复制到剪贴板'); }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done,fallback);
+  } else fallback();
+  function fallback(){
+    var ta=document.createElement('textarea'); ta.value=text;
+    ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{document.execCommand('copy');done();}catch(e){prompt('请手动复制:',text);}
+    document.body.removeChild(ta);
+  }
+};
+function toast(msg){
+  var el=document.createElement('div'); el.textContent=msg;
+  el.style.cssText='position:fixed;left:50%;bottom:26px;transform:translateX(-50%);'
+    +'background:var(--ac);color:var(--ac-ink);padding:9px 18px;border-radius:2px;'
+    +'font-family:var(--mono);font-size:12px;letter-spacing:.08em;z-index:999;'
+    +'opacity:0;transition:opacity .25s;pointer-events:none';
+  document.body.appendChild(el);
+  requestAnimationFrame(function(){el.style.opacity='1'});
+  setTimeout(function(){el.style.opacity='0';setTimeout(function(){el.remove()},260)},1800);
+}
+window.showToast=toast;
+})();
 
-        // 触发滚动揭示动画
-        if (typeof setupScrollAnimations === 'function') {
-            setupScrollAnimations();
-        }
+/* ═══ 迷你 Markdown 渲染器 —— 零依赖替代 marked.js ═══ */
+function mdEsc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+}
+function mdInline(t){
+  t=mdEsc(t);
+  var codes=[];                                  // 先抽出行内代码，避免内部被二次处理
+  t=t.replace(/`([^`]+)`/g,function(_,c){codes.push(c);return '\u0000'+(codes.length-1)+'\u0000';});
+  t=t.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g,'<img src="$2" alt="$1" loading="lazy">');
+  t=t.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g,'<a href="$2">$1</a>');
+  t=t.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
+  t=t.replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>');
+  t=t.replace(/~~([^~]+)~~/g,'<del>$1</del>');
+  t=t.replace(/\u0000(\d+)\u0000/g,function(_,i){return '<code>'+codes[+i]+'</code>';});
+  return t;
+}
+function mdParse(src){
+  var lines=String(src).replace(/\r\n?/g,'\n').split('\n');
+  var out=[],i=0;
+  function isBlank(s){return /^\s*$/.test(s)}
+  while(i<lines.length){
+    var ln=lines[i];
+
+    if(isBlank(ln)){i++;continue;}
+
+    // 代码围栏
+    var f=ln.match(/^\s*```\s*([\w+-]*)\s*$/);
+    if(f){
+      i++;var buf=[];
+      while(i<lines.length && !/^\s*```/.test(lines[i])){buf.push(lines[i]);i++;}
+      i++;
+      out.push('<pre><code'+(f[1]?' data-lang="'+mdEsc(f[1])+'"':'')+'>'+mdEsc(buf.join('\n'))+'</code></pre>');
+      continue;
     }
-
-    /** 打开文章阅读器 */
-    async function openArticle(slug) {
-        // 更新 URL hash
-        history.pushState(null, '', '#/article/' + slug);
-        
-        // 切换视图
-        articleListSection.style.display = 'none';
-        articleReaderSection.style.display = 'block';
-        
-        // 加载文章内容
-        const contentDiv = document.getElementById('articleContent');
-        contentDiv.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>正在加载文章...</p></div>';
-        
-        try {
-            const resp = await fetch('/articles/' + slug + '.md?_t=' + Date.now());
-            if (!resp.ok) throw new Error('文章不存在');
-            const mdContent = await resp.text();
-            
-            // 解析 frontmatter 和正文
-            const { metadata, body } = parseFrontmatter(mdContent);
-            
-            // 更新文章头部信息
-            document.getElementById('articleDetailTitle').textContent = metadata.title || slug;
-            
-            let metaHtml = `<span class="article-date"><i class="far fa-calendar-alt"></i> ${metadata.date || ''}</span>`;
-            if (metadata.tags && metadata.tags.length) {
-                metaHtml += `<span class="article-tags">${metadata.tags.map(t => `<span class="article-tag">${t}</span>`).join('')}</span>`;
-            }
-            document.getElementById('articleDetailMeta').innerHTML = metaHtml;
-            
-            // 渲染 Markdown
-            if (typeof marked !== 'undefined') {
-                contentDiv.innerHTML = marked.parse(body);
-            } else {
-                contentDiv.innerHTML = `<pre>${escapeHtml(body)}</pre>`;
-            }
-            
-            // 代码高亮
-            if (typeof hljs !== 'undefined') {
-                contentDiv.querySelectorAll('pre code').forEach(block => {
-                    hljs.highlightElement(block);
-                });
-            }
-            
-            // 滚动到顶部
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-        } catch (e) {
-            console.error('加载文章失败:', e);
-            contentDiv.innerHTML = `
-                <div class="no-results">
-                    <i class="fas fa-exclamation-triangle" style="font-size:2rem;display:block;margin-bottom:12px;color:var(--am);"></i>
-                    <p>文章加载失败，请稍后重试</p>
-                </div>
-            `;
-        }
+    // 分割线
+    if(/^\s*([-*_])\s*\1\s*\1[\s\-*_]*$/.test(ln)){out.push('<hr>');i++;continue;}
+    // 标题
+    var h=ln.match(/^\s*(#{1,6})\s+(.*)$/);
+    if(h){var n=h[1].length;out.push('<h'+n+'>'+mdInline(h[2].replace(/\s*#+\s*$/,''))+'</h'+n+'>');i++;continue;}
+    // 引用块
+    if(/^\s*>/.test(ln)){
+      var q=[];
+      while(i<lines.length && (/^\s*>/.test(lines[i])||(q.length&&!isBlank(lines[i])&&!/^\s*(#|```|-|\d+\.)/.test(lines[i])))){
+        q.push(lines[i].replace(/^\s*>\s?/,''));i++;
+      }
+      out.push('<blockquote>'+mdParse(q.join('\n'))+'</blockquote>');
+      continue;
     }
-
-    /** 显示文章列表 */
-    function showArticleList() {
-        history.pushState(null, '', 'articles.html');
-        articleReaderSection.style.display = 'none';
-        articleListSection.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 表格
+    if(/\|/.test(ln) && i+1<lines.length && /^\s*\|?[\s:-]*-[\s:|-]*\|?\s*$/.test(lines[i+1])){
+      function cells(s){return s.replace(/^\s*\|/,'').replace(/\|\s*$/,'').split('|').map(function(x){return x.trim()})}
+      var head=cells(ln); i+=2; var rows=[];
+      while(i<lines.length && /\|/.test(lines[i]) && !isBlank(lines[i])){rows.push(cells(lines[i]));i++;}
+      out.push('<table><thead><tr>'+head.map(function(c){return '<th>'+mdInline(c)+'</th>'}).join('')
+        +'</tr></thead><tbody>'+rows.map(function(r){
+          return '<tr>'+r.map(function(c){return '<td>'+mdInline(c)+'</td>'}).join('')+'</tr>';
+        }).join('')+'</tbody></table>');
+      continue;
     }
-
-    /** 检查 URL hash 并打开对应文章 */
-    function checkHash() {
-        const hash = window.location.hash;
-        const match = hash.match(/^#\/article\/(.+)$/);
-        if (match) {
-            openArticle(match[1]);
-        }
+    // 无序列表
+    if(/^\s*[-*+]\s+/.test(ln)){
+      var ul=[];
+      while(i<lines.length && /^\s*[-*+]\s+/.test(lines[i])){ul.push(lines[i].replace(/^\s*[-*+]\s+/,''));i++;}
+      out.push('<ul>'+ul.map(function(x){return '<li>'+mdInline(x)+'</li>'}).join('')+'</ul>');
+      continue;
     }
-
-    /** 解析 Frontmatter (YAML 简单解析) */
-    function parseFrontmatter(text) {
-        const match = text.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
-        if (!match) {
-            return { metadata: {}, body: text };
-        }
-        
-        const yamlBlock = match[1];
-        const body = match[2];
-        const metadata = {};
-        
-        // 简单的 YAML 行解析
-        yamlBlock.split('\n').forEach(line => {
-            const kvMatch = line.match(/^\s*(\w+)\s*:\s*(.+)\s*$/);
-            if (kvMatch) {
-                let key = kvMatch[1].trim();
-                let value = kvMatch[2].trim();
-                // 处理数组: [tag1, tag2]
-                if (value.startsWith('[') && value.endsWith(']')) {
-                    value = value.slice(1, -1).split(',').map(s => s.trim().replace(/^['"]|['"]$/g, ''));
-                }
-                // 移除引号
-                if (typeof value === 'string') {
-                    value = value.replace(/^['"]|['"]$/g, '');
-                }
-                metadata[key] = value;
-            }
-        });
-        
-        return { metadata, body };
+    // 有序列表
+    if(/^\s*\d+\.\s+/.test(ln)){
+      var ol=[];
+      while(i<lines.length && /^\s*\d+\.\s+/.test(lines[i])){ol.push(lines[i].replace(/^\s*\d+\.\s+/,''));i++;}
+      out.push('<ol>'+ol.map(function(x){return '<li>'+mdInline(x)+'</li>'}).join('')+'</ol>');
+      continue;
     }
-
-    /** HTML 转义 */
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+    // 段落
+    var para=[];
+    while(i<lines.length && !isBlank(lines[i])
+          && !/^\s*(#{1,6}\s|>|```|[-*+]\s|\d+\.\s)/.test(lines[i])
+          && !/^\s*([-*_])\s*\1\s*\1/.test(lines[i])){para.push(lines[i]);i++;}
+    out.push('<p>'+mdInline(para.join(' '))+'</p>');
+  }
+  return out.join('\n');
+}
+function parseFrontmatter(text){
+  var m=String(text).match(/^\s*---\s*\n([\s\S]*?)\n---\s*\n?/);
+  if(!m)return {metadata:{},body:text};
+  var meta={},raw=m[1];
+  raw.split('\n').forEach(function(line){
+    var kv=line.match(/^([\w-]+)\s*:\s*(.*)$/); if(!kv)return;
+    var k=kv[1],v=kv[2].trim();
+    if(/^\[.*\]$/.test(v)){
+      meta[k]=v.slice(1,-1).split(',').map(function(s){return s.trim().replace(/^["']|["']$/g,'')}).filter(Boolean);
+    } else {
+      meta[k]=v.replace(/^["']|["']$/g,'');
     }
+  });
+  return {metadata:meta,body:text.slice(m[0].length)};
+}
 
-    // 处理浏览器后退按钮
-    window.addEventListener('popstate', () => {
-        const hash = window.location.hash;
-        if (!hash || !hash.startsWith('#/article/')) {
-            articleReaderSection.style.display = 'none';
-            articleListSection.style.display = 'block';
-        }
-    });
 
-    /** 监听主题切换，同步 highlight.js 主题 */
-    function syncHljsTheme() {
-        const theme = document.documentElement.getAttribute('data-theme');
-        const link = document.getElementById('hljs-theme');
-        if (!link) return;
-        if (theme === 'dark') {
-            link.href = 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/github-dark.min.css';
-        } else {
-            link.href = 'https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/github.min.css';
-        }
-    }
-    // 初始化触发
-    setTimeout(syncHljsTheme, 100);
-    // 劫持全局 toggleTheme (由 script.js 定义) 来联动
-    if (typeof window._origToggleTheme === 'undefined') {
-        window._origToggleTheme = window.toggleTheme || function(){};
-        window.toggleTheme = function() {
-            window._origToggleTheme();
-            setTimeout(syncHljsTheme, 50);
-        };
-    }
-    </script>
+/* ═══ 文章系统 ═══ */
+var articlesData=[];
+var LIST=document.getElementById('article-list');
+var READER=document.getElementById('article-reader');
+var BOX=document.getElementById('articlesContainer');
+
+async function loadArticles(){
+  try{
+    var r=await fetch('/articles/index.json?_t='+Date.now());
+    if(!r.ok) throw new Error('索引加载失败');
+    articlesData=await r.json();
+    if(!Array.isArray(articlesData)) throw new Error('索引格式错误');
+    renderList();
+  }catch(e){
+    console.error(e);
+    BOX.innerHTML='<div class="no-results">暂无文章，敬请期待</div>';
+  }
+}
+function renderList(){
+  if(!articlesData.length){
+    BOX.innerHTML='<div class="no-results">暂无文章，敬请期待</div>';
+    document.getElementById('articleCount').textContent='0'; return;
+  }
+  document.getElementById('articleCount').textContent=articlesData.length;
+  articlesData.sort(function(a,b){return new Date(b.date)-new Date(a.date)});
+  BOX.innerHTML=articlesData.map(function(it,i){
+    var tags=(it.tags||[]).map(function(t){return '<span class="article-tag">'+mdEsc(t)+'</span>'}).join('');
+    return '<article class="article-card rv" style="--i:'+i+'" tabindex="0" role="link" data-slug="'+mdEsc(it.slug)+'">'
+      +'<h3 class="article-card-title">'+mdEsc(it.title)+'</h3>'
+      +'<div class="article-card-meta"><span>'+mdEsc(it.date||'')+'</span>'
+      +(tags?'<span class="article-tags">'+tags+'</span>':'')+'</div>'
+      +'<p class="article-card-summary">'+mdEsc(it.summary||'')+'</p>'
+      +'<div class="article-card-footer"><span class="article-read-more">阅读全文 &rarr;</span></div>'
+      +'</article>';
+  }).join('');
+  Array.prototype.forEach.call(BOX.querySelectorAll('.article-card'),function(c){
+    function open(){openArticle(c.dataset.slug)}
+    c.addEventListener('click',open);
+    c.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault();open();} });
+  });
+  Array.prototype.forEach.call(BOX.querySelectorAll('.rv'),function(el){el.classList.add('in')});
+}
+async function openArticle(slug){
+  history.pushState(null,'','#/article/'+slug);
+  LIST.style.display='none'; READER.style.display='block';
+  var c=document.getElementById('articleContent');
+  c.innerHTML='<div class="loading">正在加载…</div>';
+  try{
+    var r=await fetch('/articles/'+slug+'.md?_t='+Date.now());
+    if(!r.ok) throw new Error('文章不存在');
+    var parsed=parseFrontmatter(await r.text());
+    document.getElementById('articleDetailTitle').textContent=parsed.metadata.title||slug;
+    var mh='<span>'+mdEsc(parsed.metadata.date||'')+'</span>';
+    var tg=parsed.metadata.tags;
+    if(tg&&tg.length) mh+='<span class="article-tags">'+tg.map(function(t){return '<span class="article-tag">'+mdEsc(t)+'</span>'}).join('')+'</span>';
+    document.getElementById('articleDetailMeta').innerHTML=mh;
+    c.innerHTML=mdParse(parsed.body);
+    window.scrollTo({top:0,behavior:'auto'});
+  }catch(e){
+    c.innerHTML='<div class="no-results">文章加载失败，请稍后重试</div>';
+  }
+}
+function showArticleList(){
+  history.pushState(null,'','#/');
+  READER.style.display='none'; LIST.style.display='block';
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function checkHash(){
+  var m=location.hash.match(/^#\/article\/(.+)$/);
+  if(m && articlesData.some(function(a){return a.slug===decodeURIComponent(m[1])})){
+    openArticle(decodeURIComponent(m[1]));
+  } else {
+    READER.style.display='none'; LIST.style.display='block';
+  }
+}
+window.openArticle=openArticle; window.showArticleList=showArticleList;
+document.addEventListener('DOMContentLoaded',async function(){
+  await loadArticles(); checkHash();
+  window.addEventListener('hashchange',checkHash);
+  window.addEventListener('popstate',checkHash);
+});
+</script>
 </body>
 </html>

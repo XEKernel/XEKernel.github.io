@@ -2,6 +2,14 @@
 
 ## 更新日志
 
+### 2026年9月25日 - 全站视觉重构（深色编辑排版风）
+- 全站配色改为深色底 `#08080a` + 荧光黄绿 `#d4ff3f`，直角细线编辑排版语言
+- **零外部依赖**：Font Awesome → 内联 SVG 精灵；particles.js → 自研 canvas 粒子场；marked.js / highlight.js → 自研迷你 Markdown 渲染器
+- 10 个页面全部改为**单文件**（CSS / JS 内联）；删除 `css/styles.css` 与 `js/script.js`
+- 设计约束：禁止渐变、禁止 box-shadow、圆角 ≤ 4px
+- 新增板块与交互：跑马灯横幅、关于/技能、十字准星 + 坐标 HUD、行列表悬停反色、语言环形图、提交活动热力图（本地渲染）
+- 无障碍与性能：语义化标签、键盘可达、`prefers-reduced-motion` 降级、无 JS 时内容可见、rAF 节流、仅用 transform/opacity 动画
+
 ### 2026年7月31日 - 导航与联系方式更新
 - 导航栏重新排序：本页板块（首页/GitHub/工具/联系）前置，独立页面（项目/文章/日志/服务）后置
 - 「项目」由下拉菜单改为直接链接，指向 HandWrite-CPP 项目页
