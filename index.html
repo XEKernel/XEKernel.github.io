@@ -194,11 +194,30 @@
     </div>
   </section>
 
+  <!-- ═══ 最近文章（首页展示最近 5 篇，点击进入文章页阅读视图）═══ -->
+  <section class="sec" id="articles">
+    <div class="wrap">
+      <header class="sec-head rv">
+        <p class="kicker mono">03 — Writing</p>
+        <h2>最近写的</h2>
+        <p class="lead">关于技术、AI 与一些零散想法的记录，点任意一篇直接进入阅读。</p>
+      </header>
+
+      <div class="rows" id="homeArticles">
+        <div class="skel"><em></em>正在加载文章…</div>
+      </div>
+
+      <div class="cta-row rv">
+        <a class="btn" href="articles.html">全部文章 <span class="arw" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ 工具 ═══ -->
   <section class="sec" id="tools">
     <div class="wrap">
       <header class="sec-head rv">
-        <p class="kicker mono">03 — Tools</p>
+        <p class="kicker mono">04 — Tools</p>
         <h2>常用工具</h2>
         <p class="lead">我平时会用到的一些站点与自制小工具。</p>
       </header>
@@ -247,7 +266,7 @@
   <section class="sec" id="contact">
     <div class="wrap">
       <header class="sec-head rv">
-        <p class="kicker mono">04 — Contact</p>
+        <p class="kicker mono">05 — Contact</p>
         <h2>联系方式</h2>
         <p class="lead">邮件是最可靠的渠道，其他平台也会看。</p>
       </header>
@@ -447,14 +466,21 @@ function nav(){
     bar.classList.toggle('scrolled', window.scrollY>24);
   },{passive:true});
 
-  // 高亮：找出当前视口顶部所在的区块
+  // 高亮：取「最后一个已越过的、且有导航入口的区块」。
+  // 首页的 #articles 没有对应导航项，所以滚过它时保持「GitHub」高亮而不是全灭。
   let q=false;
   function hi(){
     q=false;
     const y=window.scrollY+120;
-    let cur='';
-    $$('main section[id]').forEach(s=>{ if(s.offsetTop<=y) cur=s.id; });
-    $$('.navLink').forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+cur));
+    let cur=null;
+    $$('.navLink').forEach(a=>{
+      const id=a.getAttribute('href');
+      if(!id||id.charAt(0)!=='#') return;
+      const t=$(id);
+      if(t && t.offsetTop<=y) cur=id;
+    });
+    if(cur===null) return;                 // 还没进入任何锚点区，保持现状
+    $$('.navLink').forEach(a=>a.classList.toggle('active', a.getAttribute('href')===cur));
   }
   window.addEventListener('scroll',()=>{ if(!q){q=true;requestAnimationFrame(hi);} },{passive:true});
 
@@ -616,6 +642,33 @@ async function ghProjects(){
   }).join('');
 }
 
+/* 首页「最近写的」：读取文章索引，点任意一条进入 articles.html 的阅读视图 */
+async function homeArticles(){
+  const box=$('#homeArticles'); if(!box) return;
+  let list=null;
+  try{
+    const r=await fetch('/articles/index.json?_t='+Date.now());
+    if(r.ok){
+      const j=await r.json();
+      if(Array.isArray(j) && j.length) list=j;
+    }
+  }catch(e){}
+  if(!list){
+    box.innerHTML='<div class="skel"><em></em>文章列表暂不可用，可点击下方按钮前往文章页</div>';
+    return;
+  }
+  list.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  box.innerHTML=list.slice(0,5).map((it,i)=>{
+    const tags=(it.tags||[]).slice(0,3).join(' / ');
+    const meta=[it.date||'', tags].filter(Boolean).join(' · ');
+    return '<a class="row" href="articles.html#/article/'+encodeURIComponent(it.slug)+'">'
+      +'<span class="r-idx">'+String(i+1).padStart(2,'0')+'</span>'
+      +'<span class="r-main"><span class="r-tit">'+esc(it.title)+'</span>'
+      +'<span class="r-desc">'+esc(it.summary||'')+'</span></span>'
+      +'<span class="r-meta">'+esc(meta)+' <span class="r-arw" aria-hidden="true">→</span></span></a>';
+  }).join('');
+}
+
 /* 语言分布：环形图 + 条形图（单色阶，非渐变）*/
 const RAMP=['#d4ff3f','#a8cc32','#7d9970','#5c5c60','#43434a','#2e2e34'];
 async function ghLangs(){
@@ -735,20 +788,23 @@ function boot(){
   applyTheme(localStorage.getItem('theme')==='light'?'light':'dark');
   marquee(); typewriter(); clock(); field(); crosshair();
   progress(); nav(); backTop(); reveal(); parallax();
-  // 数据请求错峰，避免同时打满未认证限流
-  setTimeout(ghStats,260);
-  setTimeout(ghProjects,620);
-  setTimeout(ghLangs,900);
-  setTimeout(ghHeat,1500);
+  // 数据请求错峰发起，避免同时打满未认证限流；全部渲染完成后再校正锚点
+  const later=(fn,ms)=>new Promise(r=>setTimeout(()=>Promise.resolve().then(fn).then(r,r),ms));
+  Promise.all([
+    later(ghStats,260),
+    later(homeArticles,420),   // 本地文件，很小，排在 GitHub 请求前面
+    later(ghProjects,620),
+    later(ghLangs,900),
+    later(ghHeat,1500)
+  ]).then(anchorFix,anchorFix);
+}
 
-  // 页面高度会随 GitHub 数据渲染而变化，首屏数据到位后按锚点重新定位，
-  // 否则直接访问 index.html#contact 这类链接会落到错误位置。
-  if(location.hash){
-    setTimeout(function(){
-      var t=$(location.hash);
-      if(t) window.scrollTo(0, t.offsetTop - 58);
-    }, 2600);
-  }
+/* 页面高度随数据渲染而变化，直接访问 index.html#contact 这类链接会落偏。
+   等所有数据块渲染完，再按当前实际位置重定位一次。 */
+function anchorFix(){
+  if(!location.hash || location.hash.length<2) return;
+  const t=$(location.hash);
+  if(t) window.scrollTo(0, t.offsetTop - 58);
 }
 
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);

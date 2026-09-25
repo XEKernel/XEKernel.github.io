@@ -148,6 +148,12 @@
 .cc-a .arw{transition:transform .25s var(--ease)}
 .cc:hover .cc-a .arw{transform:translate(3px,-3px)}
 
+/* ── 数据块加载态与板块收尾按钮 ─────────────────────────────── */
+.skel{display:flex;align-items:center;gap:10px;padding:24px 4px;color:var(--tx2);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase}
+.skel em{width:7px;height:7px;background:var(--ac);border-radius:50%;animation:pulse 1.1s infinite}
+.cta-row{margin-top:28px}
+
 /* ── 响应式（首页专属；导航/行列表/页脚的响应式规则在 site.css）── */
 @media (max-width:940px){
   .hero-grid,.about-grid{grid-template-columns:1fr}

@@ -369,11 +369,14 @@ function mdParse(src){
   return out.join('\n');
 }
 function parseFrontmatter(text){
-  var m=String(text).match(/^\s*---\s*\n([\s\S]*?)\n---\s*\n?/);
-  if(!m)return {metadata:{},body:text};
+  // 先把 CRLF 统一成 LF。JS 正则里的 \r 也属于行终止符（"." 不匹配它），
+  // 若直接拿 CRLF 文本去匹配 /^(.*)$/，行尾的 \r 会让 "$" 永远对不上 —— 整个 frontmatter 会解析成空。
+  var t=String(text).replace(/\r\n?/g,'\n');
+  var m=t.match(/^---[ \t]*\n([\s\S]*?)\n---[ \t]*(?:\n|$)/);
+  if(!m)return {metadata:{},body:t};
   var meta={},raw=m[1];
   raw.split('\n').forEach(function(line){
-    var kv=line.match(/^([\w-]+)\s*:\s*(.*)$/); if(!kv)return;
+    var kv=line.match(/^([\w-]+)[ \t]*:[ \t]*(.*)$/); if(!kv)return;
     var k=kv[1],v=kv[2].trim();
     if(/^\[.*\]$/.test(v)){
       meta[k]=v.slice(1,-1).split(',').map(function(s){return s.trim().replace(/^["']|["']$/g,'')}).filter(Boolean);
@@ -381,7 +384,7 @@ function parseFrontmatter(text){
       meta[k]=v.replace(/^["']|["']$/g,'');
     }
   });
-  return {metadata:meta,body:text.slice(m[0].length)};
+  return {metadata:meta,body:t.slice(m[0].length)};
 }
 
 
@@ -441,11 +444,23 @@ async function openArticle(slug){
     var tg=parsed.metadata.tags;
     if(tg&&tg.length) mh+='<span class="article-tags">'+tg.map(function(t){return '<span class="article-tag">'+mdEsc(t)+'</span>'}).join('')+'</span>';
     document.getElementById('articleDetailMeta').innerHTML=mh;
-    c.innerHTML=mdParse(parsed.body);
+    c.innerHTML=mdParse(stripDupTitle(parsed.body, parsed.metadata.title));
     window.scrollTo({top:0,behavior:'auto'});
   }catch(e){
     c.innerHTML='<div class="no-results">文章加载失败，请稍后重试</div>';
   }
+}
+/* .md 源文件自身带一级标题（便于在 GitHub 上直接阅读），
+   而阅读页头部已经展示标题，这里去掉正文开头重复的那个 H1。 */
+function stripDupTitle(body,title){
+  if(!title) return body;
+  var s=String(body).replace(/^\s*\n+/,'');
+  var first=s.split('\n')[0];
+  var m=first.match(/^#\s+(.+?)\s*$/);
+  if(!m) return body;
+  var norm=function(t){return String(t).trim().replace(/[？?。.!！、,，:：;；]+$/,'')};
+  if(norm(m[1])!==norm(title)) return body;
+  return s.slice(first.length).replace(/^\s*\n+/,'');
 }
 function showArticleList(){
   history.pushState(null,'','#/');
