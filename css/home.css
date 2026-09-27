@@ -37,7 +37,7 @@
 .btn:hover .arw{transform:translate(3px,-3px)}
 
 /* 右侧资料卡：直角描边，头像环用 outline 而非阴影 */
-.card-side{border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.card-side{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
 .avatar{position:relative;width:96px;height:96px;margin-bottom:18px}
 .avatar img{
   width:96px;height:96px;border-radius:var(--radius);
@@ -157,6 +157,7 @@
 /* ── 响应式（首页专属；导航/行列表/页脚的响应式规则在 site.css）── */
 @media (max-width:940px){
   .hero-grid,.about-grid{grid-template-columns:1fr}
+  .bg-deco{display:none}   /* 单列布局下装饰方块会横穿文字，移动端直接关闭 */
   .card-side{order:-1}
   .avatar,.avatar img{width:76px;height:76px}
   .donut-wrap{justify-content:center}
