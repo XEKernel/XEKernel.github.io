@@ -38,9 +38,11 @@
 
 /* 右侧资料卡：直角描边，头像环用 outline 而非阴影 */
 .card-side{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
-.avatar{position:relative;width:96px;height:96px;margin-bottom:18px}
+/* 头像：img 用 block 消掉行内基线间隙，外边距 8px 让呼吸光环正好落在卡片内容列上，
+   不再比下方的姓名 / 统计多探出去 8px */
+.avatar{position:relative;display:block;width:96px;height:96px;margin:8px 0 18px 8px}
 .avatar img{
-  width:96px;height:96px;border-radius:var(--radius);
+  display:block;width:96px;height:96px;border-radius:var(--radius);
   border:1px solid var(--line);object-fit:cover;background:var(--line);
 }
 .avatar::after{                /* 头像环：纯描边 + 呼吸，不使用阴影 */
@@ -104,30 +106,55 @@
 .bars{display:grid;gap:11px;margin-top:6px}
 .bar-row{display:grid;grid-template-columns:74px 1fr 46px;align-items:center;gap:12px}
 .bar-row .nm{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--tx2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bar-track{height:6px;background:var(--line);border-radius:var(--radius);overflow:hidden}
-.bar-fill{height:100%;width:0;background:var(--ac);transition:width .9s var(--ease)}
+.bar-track{display:block;height:6px;background:var(--line);border-radius:var(--radius);overflow:hidden}
+.bar-fill{display:block;height:100%;width:0;background:var(--ac);transition:width .9s var(--ease)}
 .bar-row .pc{font-family:var(--mono);font-size:11px;color:var(--tx3);text-align:right}
 
 /* ── 11 数据卡 / 贡献热力图 ─────────────────────────────────── */
-/* 数据卡：单元格描边式网格（空位露出页面底色，而非分割线色） */
-.data-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:0;
+/* 数据卡：单元格描边式网格（空位露出页面底色，而非分割线色）
+   综合 + 常用语言 并排一行，提交活动独占整行（日历图需要横向空间） */
+.data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;
   border-top:1px solid var(--line);border-left:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.data-card{background:var(--bg);padding:20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.data-card{background:var(--bg);padding:20px;min-width:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.data-card.wide{grid-column:1/-1}
 .data-card h3{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx2);font-weight:600;margin-bottom:16px}
 .kv{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font-size:.86rem}
 .kv:last-child{border-bottom:0}
 .kv .k{color:var(--tx2)}
 .kv .v{font-family:var(--mono);font-weight:600}
 
-/* 热力图：13 周 × 7 天，纯色阶（非渐变） */
-.heat{display:grid;grid-template-columns:repeat(13,1fr);grid-auto-rows:1fr;gap:3px}
-.heat i{width:100%;aspect-ratio:1;background:var(--line);border-radius:1px;display:block}
-.heat i[data-l="1"]{background:var(--ac);opacity:.32}
-.heat i[data-l="2"]{background:var(--ac);opacity:.58}
-.heat i[data-l="3"]{background:var(--ac);opacity:.82}
-.heat i[data-l="4"]{background:var(--ac)}
-.heat-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
-.heat-key{display:flex;align-items:center;gap:4px}
+/* 热力图：GitHub 式日历（列 = 周，行 = 周日→周六），纯色阶非渐变
+   色阶选择器同时覆盖图例（图例在 .heat-foot 里，不在 .heat 内，早前只写 .heat 导致图例五格同色） */
+.heat-scroll{display:flex;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;padding-bottom:4px}
+.heat-inner{--cell:8px;--heat-gap:2px;--heat-label:20px;width:max-content}
+.heat-months{position:relative;height:13px;margin-left:calc(var(--heat-label) + 6px);margin-bottom:5px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--tx3);white-space:nowrap}
+.heat-months span{position:absolute;top:0}
+.heat-body{display:flex;align-items:stretch;gap:6px}
+.heat-days{display:grid;grid-template-rows:repeat(7,var(--cell));gap:var(--heat-gap);width:var(--heat-label);
+  font-family:var(--mono);font-size:9.5px;color:var(--tx3)}
+.heat-days span{display:flex;align-items:center;justify-content:flex-end}
+.heat{display:grid;grid-template-rows:repeat(7,var(--cell));grid-auto-flow:column;
+  grid-auto-columns:var(--cell);gap:var(--heat-gap)}
+.heat i{display:block;width:var(--cell);height:var(--cell);background:var(--line);border-radius:1px}
+/* 桌面端：格子放大到接近 GitHub 的视觉重量，整块日历在卡片里居中 */
+@media (min-width:941px){
+  .heat-scroll{justify-content:center}
+  .heat-inner{--cell:13px;--heat-gap:3px;--heat-label:22px}
+}
+.heat i.void{background:transparent}
+.heat i[data-l="1"],.heat-key i[data-l="1"]{background:var(--ac);opacity:.3}
+.heat i[data-l="2"],.heat-key i[data-l="2"]{background:var(--ac);opacity:.5}
+.heat i[data-l="3"],.heat-key i[data-l="3"]{background:var(--ac);opacity:.72}
+.heat i[data-l="4"],.heat-key i[data-l="4"]{background:var(--ac);opacity:1}
+/* 明色主题：荧光黄绿在白底上对比不足，改用墨色阶（越深越多） */
+:root[data-theme="light"] .heat i[data-l="1"],:root[data-theme="light"] .heat-key i[data-l="1"]{background:var(--tx);opacity:.18}
+:root[data-theme="light"] .heat i[data-l="2"],:root[data-theme="light"] .heat-key i[data-l="2"]{background:var(--tx);opacity:.36}
+:root[data-theme="light"] .heat i[data-l="3"],:root[data-theme="light"] .heat-key i[data-l="3"]{background:var(--tx);opacity:.62}
+:root[data-theme="light"] .heat i[data-l="4"],:root[data-theme="light"] .heat-key i[data-l="4"]{background:var(--tx);opacity:1}
+.heat-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:14px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tx3)}
+.heat-key{display:flex;align-items:center;gap:4px;flex:none}
 .heat-key i{width:9px;height:9px;display:block;border-radius:1px;background:var(--line)}
 
 /* ── 12 联系 ─────────────────────────────────────────────────── */
@@ -157,8 +184,8 @@
 /* ── 响应式（首页专属；导航/行列表/页脚的响应式规则在 site.css）── */
 @media (max-width:940px){
   .hero-grid,.about-grid{grid-template-columns:1fr}
-  .bg-deco{display:none}   /* 单列布局下装饰方块会横穿文字，移动端直接关闭 */
   .card-side{order:-1}
+  .data-grid{grid-template-columns:minmax(0,1fr)}
   .avatar,.avatar img{width:76px;height:76px}
   .donut-wrap{justify-content:center}
 }

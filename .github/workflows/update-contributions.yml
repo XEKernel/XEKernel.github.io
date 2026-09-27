@@ -1,0 +1,38 @@
+name: Update Contributions
+
+# 每天刷新一次首页热力图数据（data/contributions.json）
+# 数据源与 GitHub 个人主页那张贡献图同源：GraphQL contributionsCollection
+on:
+  schedule:
+    - cron: '17 22 * * *'      # UTC 22:17 = 北京时间 06:17
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  contributions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 抓取贡献日历
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python build_contributions.py
+
+      - name: 有变化才提交
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain data/contributions.json)" ]; then
+            git add data/contributions.json
+            git commit -m "🤖 更新贡献热力图数据 [skip ci]"
+            git push
+          else
+            echo "贡献数据无变化，跳过提交"
+          fi

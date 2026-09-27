@@ -59,10 +59,17 @@
             <div class="tl rv">
 <div class="update-section">
                 <div class="update-date">2026年9月27日</div>
-                <div class="update-type">UI 细节修复</div>
+                <div class="update-type">UI 细节修复 · 提交热力图改用真实贡献数据</div>
                 <ul class="update-list">
-                    <li>首屏资料卡（.card-side）补上背景色：修复背景装饰方块的边框透进卡片内部的穿帮</li>
-                    <li>移动端（≤940px 单列布局）关闭背景装饰方块——小屏上它们会随机横穿标题、正文与按钮，看起来像渲染故障</li>
+                    <li>「提交活动」热力图重做：数据源从公开事件 API（只保留 90 天 / 最多 300 条，私库提交与 Issue、PR review 都不计入）换成 GraphQL <code>contributionsCollection</code>，与 GitHub 个人主页那张贡献图同源，近一年完整 365 天、共 889 次贡献</li>
+                    <li>热力图外观对齐 GitHub：列 = 周、行 = 周日→周六，53 周铺满卡片；顶部月份标签、左侧星期标签、5 级色阶（阈值按有提交天数的四分位取，铺得开）；卡片独占整行并支持窄屏横向滚动</li>
+                    <li>新增 <code>build_contributions.py</code>（优先 GITHUB_TOKEN / 本机 gh CLI 的 GraphQL，兜底抓公开贡献页）与 <code>.github/workflows/update-contributions.yml</code>，每天 06:17 自动刷新 <code>data/contributions.json</code>；JSON 不可用时前端自动回退到公开事件方案</li>
+                    <li>修复「常用语言」进度条不可见：进度条填充是行内 <code>&lt;i&gt;</code>，宽高被忽略 —— 补 <code>display:block</code></li>
+                    <li>修复热力图图例五格同色：色阶选择器被限定在 <code>.heat</code> 内，而图例在 <code>.heat-foot</code> 里，选择器覆盖不到</li>
+                    <li>修复首屏资料卡头像位置：呼吸光环 <code>inset:-8px</code> 会向左上溢出，与下方姓名、统计的左对齐线错开 8px；改为头像元素留 8px 外边距让光环正好落在内容列上，同时 <code>img</code> 改 <code>display:block</code> 消除行内基线间隙</li>
+                    <li>首屏资料卡（.card-side）补上背景色：修复背景装饰方块的边框透进卡片内部的穿帮（装饰方块移动端保留）</li>
+                    <li>修复移动端数据卡横向溢出：日历图 <code>width:max-content</code> 把卡片最小内容宽度撑到 595px 超出视口，导致数值与图例被推到屏幕外 —— 网格轨道改 <code>minmax(0,1fr)</code> 并给卡片加 <code>min-width:0</code></li>
+                    <li>明色主题下热力图改用墨色阶（同色相越深越多），荧光黄绿在白底上对比不足</li>
                 </ul>
             </div>
 

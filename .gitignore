@@ -3,6 +3,7 @@ node_modules/
 *.py
 !build_novel.py
 !build_articles.py
+!build_contributions.py
 *.pyc
 __pycache__/
 .DS_Store
