@@ -32,16 +32,6 @@
     "summary": "写给普通人的\"造神\"实录：从数据清洗、预训练、后训练到推理部署，拆解一个 AI 模型耗资数亿、耗时数月、烧掉几百万度电的完整诞生过程。"
   },
   {
-    "slug": "markdown-guide",
-    "title": "Markdown 写作指南",
-    "date": "2026-07-30",
-    "tags": [
-      "教程",
-      "Markdown"
-    ],
-    "summary": "一篇全面的 Markdown 语法参考，包含常用格式、代码块、表格、数学公式等。"
-  },
-  {
     "slug": "test-github-actions",
     "title": "测试 GitHub Actions 自动索引",
     "date": "2026-07-30",
@@ -50,6 +40,16 @@
       "GitHub Actions"
     ],
     "summary": "这是一篇测试文章，用来验证 GitHub Actions 能否自动检测文章变更并更新索引。"
+  },
+  {
+    "slug": "markdown-guide",
+    "title": "Markdown 写作指南",
+    "date": "2026-07-30",
+    "tags": [
+      "教程",
+      "Markdown"
+    ],
+    "summary": "一篇全面的 Markdown 语法参考，包含常用格式、代码块、表格、数学公式等。"
   },
   {
     "slug": "hello-world",
