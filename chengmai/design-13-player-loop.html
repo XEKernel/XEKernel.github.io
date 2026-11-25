@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>13 · 玩家循环与游戏逻辑：怎么转起来 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" class="on" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="13-玩家循环与游戏逻辑-怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</h1>
+<blockquote>前十二篇都在设计"模拟怎么算"。<strong>这一篇设计"游戏怎么转"</strong>：<br>玩家怎么操作、什么时候会输、存档怎么活下去、数值怎么调。<br>依据：<code>decisions.md</code> <strong>R13/R14</strong>（时间）/ <strong>R16</strong>（模式）/ <strong>R17</strong>（编辑器边界）/ <strong>R18</strong>（地铁）。<br>⚠ 本篇是<strong>流程与规则</strong>，不是新机制。它不引入任何新系统。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一游戏状态机">一、游戏状态机</a></li><li><a href="#二时间控制">二、时间控制</a></li><li><a href="#三玩家操作三种基本动作">三、玩家操作：三种基本动作</a></li><li><a href="#四建造校验五道每道都要给具体理由">四、建造校验：五道，每道都要给具体理由</a></li><li><a href="#五失败判定三种每条都要有预警与挽回窗口">五、失败判定：三种，每条都要有预警与挽回窗口</a></li><li><a href="#六存档存什么不存什么怎么迁移">六、存档：存什么、不存什么、怎么迁移</a></li><li><a href="#七提示与渐进披露">七、提示与渐进披露</a></li><li><a href="#八平衡流程靠基准城市不靠手感">八、平衡流程：靠"基准城市"，不靠手感</a></li><li><a href="#九验收点">九、验收点</a></li><li><a href="#十-空号保留不复用">十、⚠ 空号（保留，不复用）</a></li><li><a href="#十一诊断让玩家知道为什么不长">十一、诊断：让玩家知道"为什么不长"⭐</a></li><li><a href="#十二通知分级--防轰炸">十二、通知：分级 + 防轰炸</a></li><li><a href="#十三政策工具箱玩家能拧的旋钮">十三、政策工具箱：玩家能拧的旋钮</a></li><li><a href="#十四信息架构面板里到底显示什么">十四、信息架构：面板里到底显示什么</a></li><li><a href="#十五新建游戏流程">十五、新建游戏流程</a></li><li><a href="#十六补充验收点">十六、补充验收点</a></li><li><a href="#十七教程内置图文--外链视频2026-11-17-定案">十七、教程：内置图文 + 外链视频（2026-11-17 定案）</a></li><li><a href="#十八里程碑--城市史--steam-成就三层不是替换2026-11-17">十八、里程碑 / 城市史 / Steam 成就：三层，不是替换（2026-11-17）</a></li><li><a href="#十九多语言翻译是本地化不是替换2026-11-17">十九、多语言：翻译是本地化，不是替换（2026-11-17）</a></li><li><a href="#二十配音tts-预生成文字为主2026-11-17">二十、配音：TTS 预生成，文字为主（2026-11-17）</a></li><li><a href="#二十一待定">二十一、待定</a></li></ul>
+<hr>
+<h2 id="一-游戏状态机">一、游戏状态机</h2>
+<pre class="code"><code>Boot（引擎 splash → XEKernel Logo）
+   ↓
+MainMenu
+  新游戏 · 读取存档 · 设置 · 模组 · 关于 · 退出
+   ↓
+NewGame / LoadGame  ──  Settings / Mods / About（模态，返回原处）
+   ↓
+Playing ⇄ Paused
+   ↓
+GameOver（三种失败）
+   ↓
+继续观察 / 读档 / 回主菜单</code></pre>
+<div class="tw"><table><thead><tr><th>状态</th><th>sim 是否推进</th><th>昼夜是否走</th><th>能否建造</th></tr></thead><tbody><tr><td><code>Playing</code></td><td>✅ 按速度</td><td>✅</td><td>✅</td></tr><tr><td><strong><code>Cinematic</code></strong>（拍摄）</td><td>✅ 按玩家设定的速度（可 0）</td><td>✅</td><td>❌ <strong>只观察</strong></td></tr><tr><td><strong><code>Paused</code></strong></td><td>❌ 完全停</td><td>❌ <strong>冻结</strong>（R13 铁律）</td><td>✅ <strong>可以</strong></td></tr><tr><td><code>GameOver</code></td><td>❌</td><td>❌</td><td>❌（只读）</td></tr><tr><td><code>MainMenu</code></td><td>❌</td><td>—</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>暂停时必须能建造</strong>：这是城建游戏的通行做法，也是玩家最放松的时刻。 如果暂停就不能操作，玩家会被迫在"时间流逝"的压力下做规划，体验很差。</p>
+<p>⚠ <strong>暂停时昼夜冻结</strong>：这是 R13 的硬规定（"暂停时昼夜冻结"）， 否则玩家暂停很久回来，天亮了但城市没变——视觉与逻辑就脱节了。</p>
+<h3 id="1-1-主菜单-玩家看到的第一个自定义画面">1.1 主菜单（玩家看到的第一个自定义画面）</h3>
+<pre class="code"><code>                    XEKernel
+                    ────────
+
+                    城 脉
+                  CITY VEINS
+
+        ┌─────────────────────────┐
+        │      新  游  戏          │  ← 默认高亮
+        │      读 取 存 档         │
+        │      设      置          │
+        │      模      组          │
+        │      关      于          │
+        │      退      出          │
+        └─────────────────────────┘
+
+                  版本 0.1.0</code></pre>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td><strong>"读取存档" 无存档时</strong></td><td><strong>灰显 + 提示"暂无存档"</strong>（不要点了没反应）</td></tr><tr><td>默认高亮</td><td>有存档 → 选"读取"；无存档 → 选"新建"</td></tr><tr><td>键盘可达</td><td>↑↓ 选择、Enter 确认、Esc 返回（<strong>全部功能纯键盘可操作</strong>）</td></tr><tr><td>背景</td><td><strong>3D 场景</strong>（缓慢横移的城市俯瞰）或静态图；<strong>不要纯色</strong></td></tr><tr><td>版本号</td><td>右下角，<strong>始终可见</strong>（方便报 bug）</td></tr></tbody></table></div>
+<p>⚠ <strong>背景 3D 场景要有"活气"</strong>：缓慢横移 + 轻微车流，<strong>不是静止图</strong>。 这是玩家对品质的第一印象，<strong>比任何 logo 都重要</strong>。</p>
+<h3 id="1-2-新游戏-四步-一屏完成">1.2 新游戏：四步，一屏完成</h3>
+<pre class="code"><code>┌─ 新游戏 ────────────────────────────────────────────┐
+│  地图     [平原] [水网] [山地]   [载入自定义地图…]   │
+│                                                     │
+│  模式     ○ 标准   ○ 宽松   ○ 沙盒                  │
+│           破产宽限 0 月 / 需求波动 ×1.0              │
+│                                                     │
+│  种子     [ 20261117 ]  [随机]                       │
+│                                                     │
+│  预览     ┌──────────────┐  起始资金 ¥X 万           │
+│           │  地形缩略图    │  气候：北方              │
+│           │  + 资源点标记  │                          │
+│           └──────────────┘                          │
+│                                                     │
+│                          [ 返回 ]   [ 开 始 ]        │
+└─────────────────────────────────────────────────────┘</code></pre>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td><strong>模式选择后不能改</strong></td><td>中途不可改（<code>01-playable</code> §5.1），界面要<strong>明确写"开始后不可更改"</strong></td></tr><tr><td><strong>种子可编辑</strong></td><td>想复现同一张图要能输入</td></tr><tr><td><strong>预览必须有</strong></td><td>不给预览 = 开局盲选地图，玩家会反复重开</td></tr><tr><td>沙盒</td><td>选沙盒后<strong>展开五个开关</strong>（无限资金 / 全解锁 / 无视规范 / 无污染沉陷 / 不破产）</td></tr><tr><td>⚠ 警告</td><td>沙盒开启后<strong>顶部常驻"沙盒：不记录成就"</strong></td></tr></tbody></table></div>
+<h3 id="1-3-读取存档-卡片要显示-足够判断的信息">1.3 读取存档：卡片要显示"足够判断的信息"</h3>
+<pre class="code"><code>┌─ 读取存档 ──────────────────────────────────────────┐
+│ ┌─────┐ 我的城市          2026年3月 · 第 7 年        │
+│ │缩略图│ 人口 12.4 万 · 财政 ¥3.2 亿   [标准]         │
+│ └─────┘ 上次游玩 2 小时前        [读取] [删除]       │
+├─────────────────────────────────────────────────────┤
+│ ┌─────┐ 平原测试          2026年1月 · 第 1 年        │
+│ │缩略图│ 人口 8,200 · 财政 ¥120 万    [沙盒]          │
+│ └─────┘ ⚠ 缺少模组：某某模组                         │
+└─────────────────────────────────────────────────────┘</code></pre>
+<p><strong>每张存档卡必须显示</strong>：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>为什么必须</th></tr></thead><tbody><tr><td><strong>缩略图</strong></td><td>玩家靠图像记档，不靠名字</td></tr><tr><td>游戏内日期 + 第几年</td><td>判断"玩到哪了"</td></tr><tr><td><strong>人口 / 财政</strong></td><td>判断"这档值不值得继续"</td></tr><tr><td><strong>模式标记</strong>（标准/宽松/沙盒）</td><td>⚠ <strong>沙盒档不记成就</strong>，必须一眼看出</td></tr><tr><td>上次游玩时间</td><td>判断新旧</td></tr><tr><td><strong>⚠ 缺 Mod / 缺 DLC 警告</strong></td><td>见 §1.6</td></tr></tbody></table></div>
+<p>⚠ <strong>删除要二次确认</strong>，且<strong>删进系统回收站</strong>（不可恢复是最气人的）。</p>
+<h3 id="1-4-设置-全屏单页-分-即时-与-需重启">1.4 设置：全屏单页，分"即时"与"需重启"</h3>
+<blockquote>用户：「模拟细节放入设置项，玩家选择不需要模拟的内容以释放性能。」+「设置页要全屏。」</blockquote>
+<pre class="code"><code>┌──────────────────────────────────────────────────────────────┐
+│  设  置                                                 ✕    │
+├────────────┬─────────────────────────────────────────────────┤
+│  画面      │                                                 │
+│  性能      │      内容区（可滚动）                            │
+│  声音      │                                                 │
+│  操作      │      行格式：  标签 │ 徽标 │ 控件 │ 说明        │
+│  语言      │                                                 │
+│  游戏      │                                                 │
+│  无障碍    │                                                 │
+│            │                                                 │
+│  ← 返回    │                                                 │
+├────────────┴─────────────────────────────────────────────────┤
+│  恢复默认                                       [ 应用 ]      │
+└──────────────────────────────────────────────────────────────┘</code></pre>
+<p>⚠ <strong>全屏而不是居中弹窗</strong>：一行要同时放「标签 + 徽标 + 控件 + 说明」， 居中弹窗在 1440 宽下会被挤成两行。<strong>全屏才有横向空间。</strong></p>
+<div class="tw"><table><thead><tr><th>分类</th><th>项</th><th>生效</th></tr></thead><tbody><tr><td><strong>画面</strong></td><td>分辨率 / 全屏 / 垂直同步 / 阴影 / 抗锯齿 / 渲染比例</td><td>即时</td></tr><tr><td>画面</td><td><strong>渲染后端</strong>（Forward+ / Mobile / Compatibility）</td><td>⚠ <strong>需重启</strong></td></tr><tr><td><strong>性能</strong></td><td>预设（高/中/低）· 车辆数 · 行人数 · 建筑 props · 摊贩 · 阴影 · 磨砂 · 远景层数</td><td>即时</td></tr><tr><td><strong>声音</strong></td><td>五条总线音量（Music/Ambience/SFX/Voice/UI）</td><td>即时</td></tr><tr><td><strong>操作</strong></td><td>键位重绑 / 鼠标灵敏度 / 边缘滚动</td><td>即时</td></tr><tr><td><strong>语言</strong></td><td>八语切换</td><td>⚠ <strong>需重启</strong>（字体资源要换）</td></tr><tr><td><strong>游戏</strong></td><td>节日沉浸档（全/标准/极简）、速度上限、自动存档间隔</td><td>即时</td></tr><tr><td><strong>无障碍</strong></td><td>UI 缩放 / 色盲模式 / 减弱闪烁 / 长按代替连点</td><td>即时</td></tr></tbody></table></div>
+<p>⚠ <strong>"性能"必须独立成一类</strong>，不能塞进"画质"： 它回答的是<strong>另一个问题</strong>——"我这台机器跑不跑得动"，而不是"画面要多好看"。 <strong>混在一起，玩家会以为降画质就是降性能。</strong></p>
+<p>⚠ <strong>性能类顶部必须常驻一句说明</strong>： 「<strong>只影响画面，不影响任何数值。低配跑出来的城市和高配完全一样。</strong>」 ——不写这句，玩家会怀疑自己的城市和别人不一样（<code>11-scale</code> §八·六）。</p>
+<p>⚠ <strong>"需重启"必须标注在选项旁</strong>，否则玩家改了没反应会以为坏了。 ⚠ <strong>画质给预设</strong>（低/中/高/极高）+ 单独覆盖，<strong>不要只给一堆滑块</strong>。 ⚠ 其中必须单列一项：<strong>「模型精度」（低/中/高/极高）</strong> —— 控制模型面数与贴图边长， 对应安装体积 <strong>≈1.5 / 4 / 8 / 15 GB</strong>。<strong>极高档作为可选下载</strong>（不装也能玩）。 设计细节见 <code>15-model-inventory</code> §5.3；⚠ <strong>它同样"只影响画面，不影响任何数值"</strong>。 ⚠ <strong>无障碍不是可选项</strong>：色盲模式（热力图配色可切）、UI 缩放（1080p→4K）、 <strong>长按代替连点</strong>（手部不便的玩家）——成本很低，但不做就是不让人玩。 ⚠ <strong>无障碍里没有"字幕大小"</strong> —— 本作不做字幕层（§20.7）。</p>
+<h3 id="1-5-关于页-不只是-credits">1.5 关于页：不只是 Credits</h3>
+<div class="tw"><table><thead><tr><th>分区</th><th>内容</th></tr></thead><tbody><tr><td><strong>版本信息</strong></td><td>版本号 / 构建号 / 引擎版本（<strong>可一键复制</strong>）</td></tr><tr><td><strong>Credits</strong></td><td>工作室、设计、程序、美术、音乐、配音、特别鸣谢</td></tr><tr><td><strong>第三方</strong></td><td>⚠ <strong>CC-BY 素材必须署名</strong>（法律要求，见 <code>credits-and-outsourcing.md</code> §五）</td></tr><tr><td><strong>链接</strong></td><td>B站 / YouTube / Steam 页 / 反馈邮箱</td></tr><tr><td><strong>法律</strong></td><td>EULA、隐私政策（有遥测才有）、开源许可</td></tr></tbody></table></div>
+<p>⚠ <strong>"复制诊断信息"按钮</strong>：一键复制版本 + 系统 + Mod 列表。 <strong>没有它，玩家报 bug 只会说"游戏崩了"</strong>。</p>
+<h3 id="1-6-兼容性-三种-读不了-必须区分">1.6 ⚠ 兼容性：三种"读不了"必须区分</h3>
+<p><strong>这是最容易做砸的地方</strong>——直接崩退或静默读错，玩家会失去整个存档。</p>
+<div class="tw"><table><thead><tr><th>情况</th><th>处理</th></tr></thead><tbody><tr><td><strong>版本更新</strong>（<code>FORMAT_VERSION</code> 升）</td><td><strong>自动迁移</strong>（§6.3）；失败则<strong>只读打开 + 提示</strong>，<strong>不覆盖原文件</strong></td></tr><tr><td><strong>缺 DLC</strong></td><td>⚠ <strong>不拒绝</strong>：把该 DLC 的实体<strong>冻结</strong>（如地铁变"停运"），提示"启用 X DLC 可恢复"</td></tr><tr><td><strong>缺 Mod</strong></td><td>⚠ <strong>不拒绝</strong>：Mod 内容降级为占位（灰盒子），提示"缺少 N 个模组"</td></tr></tbody></table></div>
+<p>⚠ <strong>原则：宁可"残缺地打开"，也不要"直接读不了"。</strong> 玩家的存档是几十小时的资产，<strong>不能因为配置变化就判定不可用</strong>。</p>
+<p>⚠ <strong>但有一个例外</strong>：<code>FORMAT_VERSION</code> <strong>跨大版本且无迁移函数</strong> → 必须拒绝， <strong>明确告知"存档来自 vX，当前版本不支持"</strong>。<strong>静默读成乱数据比拒绝更糟</strong>。</p>
+<h3 id="1-7-模组管理">1.7 模组管理</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>列表</td><td>名称 / 版本 / 作者 / 启用状态</td></tr><tr><td><strong>加载顺序</strong></td><td>可拖动排序，<strong>后加载覆盖先加载</strong>（<code>mods/README.md</code> 深合并）</td></tr><tr><td><strong>冲突提示</strong></td><td>两个 Mod 改同一个 key → <strong>黄色警告</strong>（不阻止，但告知）</td></tr><tr><td><strong>不兼容</strong></td><td><code>ui_api_version</code> 不匹配 → <strong>红色，拒绝加载</strong></td></tr><tr><td>⚠ 改 Mod 后<strong>需重启</strong></td><td>明确提示</td></tr></tbody></table></div>
+<p>⚠ <strong>不做"模组内下载安装"</strong>（那是创意工坊，打磨年再说）。本体只做<strong>本地文件夹管理</strong>。</p>
+<h3 id="1-8-dlc-开关">1.8 DLC 开关</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>位置</td><td>模组页的独立分区，或主菜单单独入口</td></tr><tr><td>默认</td><td><strong>已购买的全部开启</strong></td></tr><tr><td>⚠ <strong>关闭后</strong></td><td>该 DLC 的<strong>建造工具隐藏</strong>，已有实体<strong>冻结</strong>（不删除）</td></tr><tr><td>⚠ <strong>不可在游戏中切换</strong></td><td>只能在主菜单改（要重建 UI 与注册表）</td></tr></tbody></table></div>
+<p>⚠ <strong>"冻结而不是删除"是硬规则</strong>：玩家关掉再打开，城市必须完好。 <strong>如果关闭就删数据，没人敢关。</strong></p>
+<h3 id="1-9-实现状态-2026-11-22">1.9 实现状态（2026-11-22）</h3>
+<div class="tw"><table><thead><tr><th>页面 / 模块</th><th>文件</th><th>状态</th></tr></thead><tbody><tr><td>主菜单</td><td><code>main_menu.gd</code> + <code>menu_button.gd</code> + <code>glass_panel.gdshader</code></td><td>✅ 可跑；背景按<strong>真实时间</strong>算天色</td></tr><tr><td>设置页</td><td><code>settings_page.gd</code></td><td>✅ 骨架：9 分类、控件可点、<strong>语言切换即时生效</strong>（不必重启）；选项仍不落盘</td></tr><tr><td>关于页</td><td><code>about_page.gd</code></td><td>✅ 片尾滚动（40 px/s，长按 ×4）</td></tr><tr><td><strong>游戏内 HUD</strong></td><td><code>hud.gd</code> <code>top_bar.gd</code> <code>toolbar.gd</code> <code>panel_info.gd</code> <code>ui_layout.gd</code></td><td>✅ <strong>骨架</strong>：顶数据 / 底建造 / 左信息 / 右待定（§十四）；<strong>数值全是 <code>—</code></strong></td></tr><tr><td>新游戏</td><td><code>main_menu.gd</code> → <code>scenes/ui/hud.tscn</code></td><td>🟡 <strong>暂时跳 HUD 预览</strong>（游戏场景 <code>scenes/main.tscn</code> 仍是空 <code>Node3D</code>）</td></tr><tr><td>读档 / 模组</td><td>—</td><td>⬜ 未做（等 B2 有地图与存档）</td></tr></tbody></table></div>
+<p>⚠ <strong>选项仍不落盘</strong>：值写在脚本里，<code>user://settings.cfg</code> 等 B1 的 <code>core/save</code>。 ⚠ <strong>语言是例外</strong>：已写 <code>user://locale.txt</code>，且 <code>I18n.set_locale()</code> + 重建页面 ⇒ <strong>即时生效</strong>。 ⚠ 缺语言包时<strong>整包回退简中</strong>（<code>I18n.gd</code> 的 <code>_load</code>），不会显示 <code>menu.new_game</code> 这种 key（I18N-7）。</p>
+<h3 id="1-9b-验收点">1.9b 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>K28</strong></td><td><strong>全流程纯键盘可达</strong>（主菜单 → 新建 → 进游戏）</td></tr><tr><td><strong>K29</strong></td><td>无存档时"读取存档"<strong>灰显</strong>，不是可点但无反应</td></tr><tr><td><strong>K30</strong></td><td>存档卡显示<strong>缩略图 / 日期 / 人口 / 财政 / 模式标记</strong>五项</td></tr><tr><td><strong>K31</strong></td><td><strong>沙盒档在列表有明确标记</strong>，且进游戏后有常驻提示</td></tr><tr><td><strong>K32</strong></td><td>缺 Mod / 缺 DLC 的存档<strong>仍能打开</strong>（降级而非拒绝），并提示缺什么</td></tr><tr><td><strong>K33</strong></td><td>关闭 DLC 再开启，<strong>原有实体完好无损</strong></td></tr><tr><td><strong>K34</strong></td><td>"复制诊断信息"一键复制版本 + 系统 + Mod 列表</td></tr><tr><td><strong>K35</strong></td><td>标注"需重启"的设置项<strong>确实需要重启</strong>才生效</td></tr></tbody></table></div>
+<p>⚠ <strong>K32 是这一节的核心</strong>：存档是玩家几十小时的资产，<strong>不能因配置变化就读不了</strong>。</p>
+<hr>
+<h2 id="二-时间控制">二、时间控制</h2>
+<div class="tw"><table><thead><tr><th>档位</th><th>1 游戏日 =</th><th>1 游戏年 =</th><th>用途</th></tr></thead><tbody><tr><td>暂停</td><td>∞</td><td>∞</td><td>规划、看数据</td></tr><tr><td>1x</td><td>3 秒</td><td>18.3 分钟</td><td>默认</td></tr><tr><td>3x</td><td>1 秒</td><td>6.1 分钟</td><td>等待成长期</td></tr></tbody></table></div>
+<p>⚠ <strong>只有 1x 与 3x 两档，不加 5x/10x</strong>。理由：月度工作摊平后，3x 已把帧预算压到 1.1 ms/帧（<code>11-scale.md</code> §6.3.2），再快就要牺牲模拟精度。</p>
+<p>⚠ <strong>切换速度不得影响模拟结果</strong>：同一个种子 + 同一串操作，1x 与 3x 跑 10 年必须<strong>结果一致</strong>。 这是可复现性的底线，要写进验收（见 §八 K7）。</p>
+<hr>
+<h2 id="三-玩家操作-三种基本动作">三、玩家操作：三种基本动作</h2>
+<blockquote>千万人口规模下，<strong>操作的基本单位是"片区"，不是"格"</strong>（<code>11-scale.md</code> §七 C7）。</blockquote>
+<div class="tw"><table><thead><tr><th>动作</th><th>交互</th><th>适用</th></tr></thead><tbody><tr><td><strong>拖笔画线</strong></td><td>按住拖动出曲线（三次贝塞尔），松手成路</td><td>道路、地铁线</td></tr><tr><td><strong>框选刷区</strong></td><td>拖矩形 / 圆形刷子（半径可调）</td><td>6 类用地、拆除</td></tr><tr><td><strong>点放设施</strong></td><td>单击放置，可连续放置同一类</td><td>学校、水厂、变电站、车站、公园</td></tr></tbody></table></div>
+<p><strong>第五种（随时可用）：慢镜头 / 拍摄模式</strong> —— 一个热键直接进，<strong>不弹窗、不进菜单</strong>。 玩家想拍视频时随时按下，<strong>优先级高于节日的自动放慢</strong>（<code>10-presentation</code> §7.5.1）。</p>
+<p><strong>第四种（划区时顺带）</strong>：<strong>选布局原型</strong> —— 住宅地块可选 P1 行列式 / P2 周边式 / P3 点式 / P4 外板内塔（默认按 <code>code_era</code> 自动选），再调间距档与绿地率（<code>03-zoning</code> §3.5.4）。 ⚠ <strong>不需要玩家摆楼</strong>：3 万栋楼手工放不可能，但"选一种布局"是可操作的。</p>
+<p>⚠ <strong>不做逐格刷</strong>：2500 km² = 1000 万个 50m 格，逐格操作会让玩家疯掉。 ⚠ <strong>不做"画曲线高级工具"</strong>（如 CS 的 Move It）——那是模组生态的事，不是本体。</p>
+<h3 id="3-1-开局-15-分钟应该发生什么-这是最重要的交互设计">3.1 开局 15 分钟应该发生什么（这是最重要的交互设计）</h3>
+<div class="tw"><table><thead><tr><th>时间</th><th>玩家做的事</th><th>系统给的反馈</th></tr></thead><tbody><tr><td>0–2 min</td><td>看地形，转动相机</td><td>地形 + 一句指引"这里适合居住"</td></tr><tr><td>2–5 min</td><td><strong>修一条连接线到省道</strong>（引爆点，F87）</td><td>修通后立刻提示"外部通道已打开"</td></tr><tr><td>5–8 min</td><td>框选一片住宅用地</td><td>地块变色 + 显示"需求缺口"</td></tr><tr><td>8–12 min</td><td>等第一栋楼长出（瓦房/独院）</td><td>塔吊 → 建成 → 人口 +3</td></tr><tr><td>12–15 min</td><td><strong>出让第一块地</strong>（F86 第一桶金）</td><td>财政跳一下，玩家第一次"有钱了"</td></tr></tbody></table></div>
+<p>⚠ <strong>这 15 分钟是全游戏最关键的 15 分钟</strong>。如果玩家在这里不知道该干什么，后面做得再好也没用。 ⇒ <strong>A10 断言（陌生人 5 分钟铺出第一条路）测的就是这一段。</strong></p>
+<hr>
+<h2 id="四-建造校验-五道-每道都要给具体理由">四、建造校验：五道，每道都要给具体理由</h2>
+<p>玩家点下去但没建成，<strong>必须告诉他为什么</strong>（不能只是"叮"一声）。</p>
+<div class="tw"><table><thead><tr><th>#</th><th>校验</th><th>失败提示（示例）</th></tr></thead><tbody><tr><td>1</td><td><strong>资金</strong></td><td>「需要 ¥12.4 万，当前余额 ¥3.1 万」</td></tr><tr><td>2</td><td><strong>地形</strong></td><td>「此处为水体，不能建造」/「坡度 14 %，超过 8 % 上限」</td></tr><tr><td>3</td><td><strong>规范</strong></td><td>「此处限高 18 层（县城），当前设计 26 层」/「日照间距不足 2.1 m」</td></tr><tr><td>4</td><td><strong>市政</strong></td><td>「无供水覆盖，需先建水厂」（<strong>B3 阶段不校验，B6b 才生效</strong>）</td></tr><tr><td>5</td><td><strong>冲突</strong></td><td>「与已有建筑重叠」/「此处有基本农田（<code>E</code> 类），需先办理占补平衡」</td></tr></tbody></table></div>
+<p>⚠ <strong>错误提示必须带数字</strong>。这是用户长期的偏好（"错误反馈要具体：消息 + UI + 文件路径行号"）， 在游戏里同样成立——"无法建造"是没用的提示。</p>
+<p>⚠ <strong>第 4 道必须分阶段</strong>：B3 阶段市政视为无限供应（<code>03-zoning</code> §七），否则 B3 验收永远不过。</p>
+<hr>
+<h2 id="五-失败判定-三种-每条都要有预警与挽回窗口">五、失败判定：三种，每条都要有预警与挽回窗口</h2>
+<blockquote><code>01-playable-definition</code> P3 要求"至少 3 种会输的方式"。这里定细节。</blockquote>
+<div class="tw"><table><thead><tr><th>失败</th><th>判定</th><th><strong>预警（提前 3 个月）</strong></th><th>还能救吗</th></tr></thead><tbody><tr><td><strong>财政破产</strong></td><td>余额 &lt; 0 且无可借额度</td><td>顶栏财政变红 + 通知「连续 2 月赤字，债务额度剩 ¥X」</td><td>✅ 卖地/加税/砍支出</td></tr><tr><td><strong>人口空城</strong></td><td>净流出 &gt; 5 % <strong>连续 6 个月</strong></td><td>「本月净流出 2.1 %，已连续 3 月」</td><td>✅ 增加岗位/服务</td></tr><tr><td><strong>满意度崩盘</strong></td><td>满意度 &lt; 30 % <strong>连续 12 个月</strong></td><td>「满意度 34 %，已连续 9 月」</td><td>✅ 修学校/治拥堵</td></tr></tbody></table></div>
+<p>⚠ <strong>三条都必须有连续月份门槛</strong>，不能一次触发就结束——城建游戏的乐趣在"救回来"。 ⚠ <strong>宽松模式</strong>：破产宽限期 ×3（<code>01-playable-definition</code> §5.1），即从 0 个月拖到 3 个月。</p>
+<h3 id="5-1-结束之后">5.1 结束之后</h3>
+<div class="tw"><table><thead><tr><th>选项</th><th>行为</th></tr></thead><tbody><tr><td><strong>继续观察</strong></td><td>城市还在跑，只是不能建造（看自己的城市烂下去）</td></tr><tr><td><strong>读档</strong></td><td>回到最近一次存档</td></tr><tr><td><strong>回主菜单</strong></td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>不自动覆盖存档</strong>：失败后玩家的第一反应是"我要回到之前"，如果自动存档把好档覆盖了， 那是最气人的事。<strong>自动存档必须轮转保留最近 5 个。</strong></p>
+<hr>
+<h2 id="六-存档-存什么-不存什么-怎么迁移">六、存档：存什么、不存什么、怎么迁移</h2>
+<h3 id="6-1-存-真值">6.1 存（真值）</h3>
+<div class="tw"><table><thead><tr><th>内容</th><th>说明</th></tr></thead><tbody><tr><td><code>FORMAT_VERSION</code></td><td>版本号，用于迁移</td></tr><tr><td><code>sim_day</code> / <code>epoch_year</code> / <code>speed</code></td><td>时间状态</td></tr><tr><td><code>sandbox_flags</code></td><td><strong>必须存</strong>（<code>01-playable-definition</code> §5.1）</td></tr><tr><td><code>map_seed</code> + <strong>地图数据指纹</strong></td><td>保证同一个地形</td></tr><tr><td><strong><code>parcel</code> 多边形</strong>（顶点数组）</td><td>⚠ <strong>不能靠坐标重建</strong>（<code>11-scale.md</code> §七 C11）</td></tr><tr><td><code>building</code> / <code>ledger</code> / <code>od_matrix</code> / <code>resource_site</code></td><td>各系统真值</td></tr></tbody></table></div>
+<h3 id="6-2-不存-派生-读档重算">6.2 不存（派生，读档重算）</h3>
+<div class="tw"><table><thead><tr><th>内容</th><th>为什么</th></tr></thead><tbody><tr><td><code>accessibility</code> 栅格</td><td>可从路网重算</td></tr><tr><td><code>coverage_grid</code></td><td>可从设施重算</td></tr><tr><td><code>land_value</code> 栅格</td><td>可从因子重算</td></tr><tr><td><strong>路径 / agent 位置</strong></td><td>无意义，重算即可</td></tr><tr><td><code>visual_day_phase</code></td><td>R13 铁律：不存视觉相位</td></tr></tbody></table></div>
+<p>⚠ <strong>不存清单必须写进代码注释</strong>，否则以后有人图省事把派生量也存了，存档会膨胀到 GB 级。</p>
+<h3 id="6-3-版本迁移">6.3 版本迁移</h3>
+<pre class="code" data-lang="gdscript"><code># core/save_game.cs   （R19：core/ 为 C#）
+func _migrate(data: Dictionary) -&gt; Dictionary:
+    var v: int = data.get("FORMAT_VERSION", 0)
+    if v &lt; 2: data = _migrate_v1_to_v2(data)   # 每加一步就在这里加一行
+    return data</code></pre>
+<p>⚠ <strong>每个版本加一段迁移函数，永不删除</strong>。 ⚠ <strong>迁移失败必须报错并保留原文件</strong>，不许静默丢数据。</p>
+<hr>
+<h2 id="七-提示与渐进披露">七、提示与渐进披露</h2>
+<div class="tw"><table><thead><tr><th>阶段</th><th>显示什么</th><th>隐藏什么</th></tr></thead><tbody><tr><td>村（&lt;3000）</td><td>路 / 住宅 / 农田 / 基本财政</td><td>地铁、容积率、学区、债务</td></tr><tr><td>镇（3千–3万）</td><td>商业 / 水电气 / 税 / 少量统计</td><td>轨道、都市圈</td></tr><tr><td>县（3万–30万）</td><td>学区 / 限高 / 市政全量</td><td>城际</td></tr><tr><td>市（&gt;30万）</td><td>全部（含地铁、邻避、评级）</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>一次只教一件事</strong>。前 15 分钟不要弹"债务结构""邻避效应"， 否则玩家会被信息量淹死——<strong>这是 CS 最大的新手劝退原因之一。</strong></p>
+<hr>
+<h2 id="八-平衡流程-靠-基准城市-不靠手感">八、平衡流程：靠"基准城市"，不靠手感</h2>
+<h3 id="8-1-基准城市-balance-baseline">8.1 基准城市（Balance Baseline）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>定义</th></tr></thead><tbody><tr><td>地图</td><td><strong>固定一张</strong>（<code>maps/balance_plain.json</code>，平原 + 一条河 + 一个煤点）</td></tr><tr><td>操作序列</td><td><strong>固定脚本</strong>（<code>tools/balance_run.gd</code>：修路 → 划区 → 建校 → 卖地，按固定月份执行）</td></tr><tr><td>跑</td><td>到 100 游戏年</td></tr><tr><td>产出</td><td>人口 / 财政 / 地价 / 满意度 / 评级 <strong>五条曲线</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>改任何数值后跑一遍基准，与上一版曲线对比。</strong> 没有基准就等于闭眼调平衡——<strong>v1 就是死在"感觉一下"上</strong>。</p>
+<h3 id="8-2-三个平衡回归-每次调数值都要过">8.2 三个平衡回归（每次调数值都要过）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>K1</strong></td><td>1000 万人口时<strong>不崩</strong>（无负数人口、无 NaN、财政不爆）</td></tr><tr><td><strong>K2</strong></td><td><strong>A6 仍成立</strong>（只收税不卖地，12 个月后财政为负）</td></tr><tr><td><strong>K3</strong></td><td><strong>村庄能活到镇</strong>（基准地图上，30 游戏年内人口 &gt; 3000）</td></tr></tbody></table></div>
+<p>⚠ <strong>K2 是最容易被平衡改动破坏的一条</strong>：调税率、调维护费、调出让金，任何一个都可能让 A6 不再成立。 <strong>每次调数值必须重跑 K1–K3。</strong></p>
+<hr>
+<h2 id="九-验收点">九、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>K4</strong></td><td>暂停 → 等 10 分钟真实时间 → <code>sim_day</code> 不变、昼夜相位不变、建筑不变</td><td>探针 + 截图</td></tr><tr><td><strong>K5</strong></td><td>暂停状态下能建造（画路成功）</td><td>手动</td></tr><tr><td><strong>K6</strong></td><td>建造失败时，<strong>提示里带具体的数字与原因</strong></td><td>手动，五类各一次</td></tr><tr><td><strong>K7</strong></td><td>同种子 + 同操作序列，<strong>1x 与 3x 跑 10 年结果一致</strong></td><td>探针对比两次</td></tr><tr><td><strong>K8</strong></td><td>三种失败各触发一次，且<strong>提前 3 个月有预警</strong></td><td>探针制造条件</td></tr><tr><td><strong>K9</strong></td><td>失败后<strong>自动存档没被覆盖</strong>（最近 5 个都在）</td><td>检查存档目录</td></tr><tr><td><strong>K10</strong></td><td>存档只含 §6.1 的真值，<strong>派生量不在文件里</strong></td><td>打开存档检查</td></tr><tr><td><strong>K11</strong></td><td>旧版本存档能迁移到新版本，且<strong>迁移失败不丢数据</strong></td><td>准备一个 v1 存档</td></tr><tr><td><strong>K12</strong></td><td>新手第一分钟<strong>不同时弹出超过 1 条提示</strong></td><td>手动观察</td></tr><tr><td><strong>K13</strong></td><td>基准城市跑 100 年，五条曲线能生成并导出</td><td><code>tools/balance_run.gd</code></td></tr></tbody></table></div>
+<p>⚠ <strong>K7 是可复现性的底线</strong>：如果加速会影响结果，所有验收断言都不可信， 而且玩家的"操作"会变成"抢时间"。</p>
+<hr>
+<hr>
+<h2 id="十-空号-保留-不复用">十、⚠ 空号（保留，不复用）</h2>
+<blockquote>本章号在 2026-11-16 起草时预留，<strong>内容已并入 §八（平衡流程）与 §九（验收点）</strong>，从未落笔。<br><strong>不重排后续章节号</strong>：<code>09-core-tick</code> / <code>10-presentation</code> 等文里有「<code>13-player-loop</code> §十二」这类跨文引用，<br>重排会全线失效。<strong>新内容追加到文末，不要占用 §十。</strong></blockquote>
+<hr>
+<h2 id="十一-诊断-让玩家知道-为什么不长">十一、诊断：让玩家知道"为什么不长"⭐</h2>
+<blockquote><strong>这是城建游戏最大的痛点</strong>：玩家画了地，等了三分钟，楼没长，然后不知道自己做错了什么。</blockquote>
+<h3 id="11-1-建造校验-vs-生长诊断-两件事-别混">11.1 建造校验 vs 生长诊断（两件事，别混）</h3>
+<div class="tw"><table><thead><tr><th>场景</th><th>玩家问的</th><th>谁回答</th></tr></thead><tbody><tr><td><strong>建造校验</strong></td><td>"我为什么建不了这个？"</td><td>五道校验（§四），<strong>点击时立刻</strong></td></tr><tr><td><strong>生长诊断</strong></td><td>"我建了，为什么它一直不长？"</td><td>本节，<strong>点击地块时查询</strong></td></tr></tbody></table></div>
+<p>⚠ 前者是"动作被拒绝"，后者是"动作成功了但没结果"——<strong>后者更让人困惑</strong>。</p>
+<h3 id="11-2-诊断原因表-每个-parcel-都能查">11.2 诊断原因表（每个 parcel 都能查）</h3>
+<p>按优先级返回<strong>第一条</strong>阻碍，不是全部：</p>
+<div class="tw"><table><thead><tr><th>优先级</th><th>原因</th><th>玩家该做什么</th></tr></thead><tbody><tr><td>1</td><td><strong><code>E</code> 类禁建</strong>（基本农田/水体）</td><td>办理占补平衡，或换地方</td></tr><tr><td>2</td><td><strong>无需求</strong>（该用途需求 = 0）</td><td>等人口长，或改用途</td></tr><tr><td>3</td><td><strong>无路可达</strong>（<code>accessibility</code> &lt; 阈值）</td><td>修路</td></tr><tr><td>4</td><td><strong>无市政</strong>（水/电未覆盖）</td><td>建水厂/变电站（B6b 后才生效）</td></tr><tr><td>5</td><td><strong>规范受限</strong>（日照不足 / 超限高 / 退线不够）</td><td>降层数、改朝向、调布局原型</td></tr><tr><td>6</td><td><strong>沉陷区</strong>（采煤塌陷）</td><td>治理后再建</td></tr><tr><td>7</td><td><strong>经济不成立</strong>（地价 − 建造成本 &lt; 0）</td><td>提可达性/学区，或等市场</td></tr><tr><td>8</td><td><strong>被收储/在建中</strong></td><td>等工期</td></tr></tbody></table></div>
+<p>⚠ <strong>只返回第一条</strong>：一次给 8 条原因，玩家还是会懵。<strong>给最卡的那一条 + 一个动作建议。</strong></p>
+<p>⚠ <strong>这条提示必须能一步跳到解决</strong>（点"修路"直接进修路工具）。</p>
+<h3 id="11-3-全城级的-为什么长不快">11.3 全城级的"为什么长不快"</h3>
+<p>除了逐个 parcel，还要一个<strong>全局归因</strong>：</p>
+<div class="tw"><table><thead><tr><th>症状</th><th>全城归因（城市面板显示）</th></tr></thead><tbody><tr><td>人口不涨</td><td>「岗位缺口 X 个」/「住房缺口 Y 套」/「净流出 Z %」</td></tr><tr><td>财政不涨</td><td>「税基太小：就业人口仅 N 万」/「靠卖地支撑 63 %」</td></tr><tr><td>大片不长</td><td>「东区无供水覆盖」/「主干道可达性偏低」</td></tr></tbody></table></div>
+<p>⚠ <strong>这是"城市面板"存在的唯一理由</strong>：不是陈列数据，是<strong>回答"我的城市卡在哪"</strong>。</p>
+<hr>
+<h2 id="十二-通知-分级-防轰炸">十二、通知：分级 + 防轰炸</h2>
+<blockquote>CS 的顾问弹窗是全世界玩家的共同吐槽。<strong>它的问题不是内容错，是频率和打断。</strong></blockquote>
+<h3 id="12-1-三级-只有一级能打断">12.1 三级，只有一级能打断</h3>
+<div class="tw"><table><thead><tr><th>级</th><th>内容</th><th>表现</th><th>会暂停游戏吗</th></tr></thead><tbody><tr><td><strong>紧急</strong></td><td>失败预警（赤字 2 月 / 净流出 3 月 / 债务到期）</td><td>顶部横幅 + 音效</td><td>❌ <strong>不暂停</strong></td></tr><tr><td><strong>重要</strong></td><td>里程碑达成、节日开始、资源枯竭、设施故障</td><td>侧边滑入，5 秒消失</td><td>❌</td></tr><tr><td><strong>提示</strong></td><td>引导、"可以试试建所学校"</td><td>角落小标签，可关</td><td>❌</td></tr></tbody></table></div>
+<p>⚠ <strong>任何通知都不暂停游戏</strong>。城建游戏的节奏由玩家控制，弹窗抢走控制权是最烦的设计。</p>
+<h3 id="12-2-防轰炸三条规则">12.2 防轰炸三条规则</h3>
+<div class="tw"><table><thead><tr><th>规则</th><th>数值</th></tr></thead><tbody><tr><td>同一类通知 <strong>30 秒内合并</strong>为一条（"3 处设施故障"）</td><td>合并窗口 30 s</td></tr><tr><td><strong>每分钟最多 2 条</strong>重要通知</td><td>上限 2/min</td></tr><tr><td>提示类在玩家<strong>连续操作中不发</strong>（等空闲 3 秒）</td><td>空闲阈值 3 s</td></tr></tbody></table></div>
+<p>⚠ <strong>玩家可以一键关掉"提示"级</strong>，但"紧急"级不能关（那是失败预警，关了直接输得莫名其妙）。</p>
+<h3 id="12-3-通知必须可追溯">12.3 通知必须可追溯</h3>
+<p>侧边有一个<strong>消息列表</strong>（最近 50 条），随时能翻。 理由：玩家在专注建造时会忽略滑入的通知，<strong>事后要能找回来</strong>。</p>
+<hr>
+<h2 id="十三-政策工具箱-玩家能拧的旋钮">十三、政策工具箱：玩家能拧的旋钮</h2>
+<blockquote><code>12-china-features</code> 里的 F16（限购）、F44（招商补贴）都是"政策"，但没定义玩家怎么用。</blockquote>
+<div class="tw"><table><thead><tr><th>旋钮</th><th>范围</th><th>代价（<strong>必须有</strong>）</th></tr></thead><tbody><tr><td><strong>企业税率</strong></td><td>5–25 %</td><td>越高收入越多，但企业迁出、岗位减少</td></tr><tr><td><strong>房产税率</strong></td><td>0–3 %（推打磨年）</td><td>收入 vs 居民满意度</td></tr><tr><td><strong>土地出让底价</strong></td><td>市场价 50–150 %</td><td>越高单块收入越高，但流拍风险上升</td></tr><tr><td><strong>招商补贴</strong></td><td>0–500 万/企业</td><td>吸引企业，但短期财政失血</td></tr><tr><td><strong>维护支出比例</strong></td><td>50–120 %</td><td>低于 100 % 省钱，但设施老化加速（F94）</td></tr><tr><td><strong>公交票价</strong></td><td>1–5 元</td><td>高票价减少乘客 → 更多开车 → 更堵</td></tr></tbody></table></div>
+<p>⚠ <strong>每个旋钮必须有代价，不许有"纯增益"</strong>。否则玩家会全部拉满，政策就失去意义。</p>
+<p>⚠ <strong>旋钮不宜多</strong>：六个已经不少。<strong>每多一个就要多一条平衡回归（K1–K3）的检查面。</strong></p>
+<hr>
+<h2 id="十四-信息架构-2026-11-22-按开发者要求重排">十四、信息架构（2026-11-22 按开发者要求重排）</h2>
+<blockquote>旧版是「顶栏 4 项 + 右侧三个面板」。开发者 2026-11-22 定为：<br><strong>顶部 = 数据 / 底部 = 建造 / 左侧 = 信息 / 右侧 = 待定</strong>，<br>并且<strong>可点的东西只显示图标</strong>（文字与说明进悬停提示）。<br>数据全部来自 <code>config/ui/layout.json</code> + <code>panels.json</code>，加一项只改 json。</blockquote>
+<h3 id="14-1-顶部-存档城市名-4-项数据">14.1 顶部：存档城市名 + 4 项数据</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>显示</th><th>悬停说明</th></tr></thead><tbody><tr><td><strong>城市名</strong></td><td>当前存档城市名（<code>TopBar.set_city_name()</code>；无存档时"未命名城市"）</td><td>—</td></tr><tr><td>日期</td><td><code>2026-01-01</code>（<strong>永不显示时:分</strong>，R13）</td><td>"当前游戏日期…"</td></tr><tr><td>收入</td><td>月度净收支（<code>—</code> 未接 sim）</td><td>"税收 + 卖地 − 支出"</td></tr><tr><td>人口</td><td>市域常住人口</td><td>"市域常住人口"</td></tr><tr><td>温度</td><td><code>— °C</code>（等 <code>climate_zone</code>）</td><td>"当前气温…"</td></tr></tbody></table></div>
+<p>⚠ <strong>顶部只放"随时要瞄一眼"的数，不放能点的东西</strong>——能点的全在底部。 ⚠ 四项用<strong>固定槽宽</strong>排（170 px），否则 <code>2026-01-01</code> 与 <code>—</code> 会把后面几项推得忽远忽近。</p>
+<h3 id="14-2-底部-所有-建-与-规划-13-组-50-个子工具">14.2 底部：所有「建」与「规划」（13 组 / 50 个子工具）</h3>
+<p>两行：<strong>上=当前组的子工具，下=工具组</strong>。点组换子工具。全部来自 <code>layout.json</code> 的 <code>groups</code> / <code>tools</code>。</p>
+<div class="tw"><table><thead><tr><th>组</th><th>子工具</th></tr></thead><tbody><tr><td>🛣️ 道路</td><td>直路 / 曲线 / 高架 / 跨江桥 / 人行横道 / 单行</td></tr><tr><td>🗂️ 区划</td><td>住宅 / 商业 / 工业 / 办公 / 农业</td></tr><tr><td>🏢 建筑</td><td>地标 / 公共建筑 / 自建</td></tr><tr><td>🚌 交通设施</td><td>公交站 / 地铁站 / 信号灯 / 停车场 / <strong>非机动车道</strong></td></tr><tr><td>⚡ 市政管网</td><td>电力 / 供水 / 污水 / 燃气 / 垃圾</td></tr><tr><td>🏫 公共服务</td><td>学校 / 医院 / 公园 / 菜市场 / 体育设施 / 文化设施</td></tr><tr><td>🏭 产业</td><td>工业园 / 开发区 / 资源点</td></tr><tr><td>🔌 能源</td><td>电厂 / 变电站 / <strong>充电桩</strong> / 供热站</td></tr><tr><td>🌳 绿化</td><td>综合公园 / 行道树 / 口袋公园</td></tr><tr><td>🌊 水利</td><td>河道 / 排水 / 堤防</td></tr><tr><td>🧱 更新</td><td>拆迁 / <strong>老旧小区改造</strong> / <strong>城中村整治</strong></td></tr><tr><td>⛰️ 地形</td><td>平整 / 填挖 / 水域</td></tr><tr><td>🧨 拆除</td><td>推平</td></tr></tbody></table></div>
+<p>⚠ <strong>片区级刷子，不是单格</strong>（中国式超大街区）。B1 只到"能点、能切组"；刷子属 B2（road）/ B3（zoning）。</p>
+<p>⚠ 四个<strong>必须有、但在通用城市模拟里常被漏掉</strong>的工具：<strong>非机动车道</strong>（电动自行车是中国城市交通的主体之一）、 <strong>充电桩</strong>、<strong>老旧小区改造</strong>（不是拆迁）、<strong>城中村整治</strong>（不是推平）。它们不对应"新建"，对应"存量改造"。</p>
+<h3 id="14-3-左侧-27-个信息视图-8-组-只-看-不改">14.3 左侧：27 个信息视图 / 8 组（只"看"，不改）</h3>
+<blockquote>2026-11-22 开发者提醒：「我提到的功能只是我想到的，实际的城市有很多东西」。<br>⇒ 视图从 12 个扩到 <strong>27 个</strong>，并且<strong>必须分组</strong>——一列竖条放不下，20+ 图标平铺也找不到东西。<br>竖条第一列是<strong>组</strong>，第二列是<strong>该组的视图</strong>，第三列是面板本体。</blockquote>
+<div class="tw"><table><thead><tr><th>组</th><th>视图（id · 回答什么问题）</th></tr></thead><tbody><tr><td>🧭 总览</td><td><code>city</code> 我的城市卡在哪 · <code>history</code> 我做到过什么</td></tr><tr><td>👥 人口</td><td><code>population</code> 人在哪还在来吗 · <code>age</code> 这城年轻还是老 · <code>migration</code> 谁在来谁在走 · <code>housing</code> 住得起吗住得下吗</td></tr><tr><td>💼 经济</td><td><code>finance</code> 钱从哪来到哪去 · <code>employment</code> 岗位够不够 · <code>industry</code> 产业有没有升级 · <code>commerce</code> 街上有没有人气</td></tr><tr><td>🗺️ 土地</td><td><code>land</code> 地值不值钱 · <code>zoning</code> 地都划成什么了 · <code>renewal</code> 老城要不要拆</td></tr><tr><td>🚌 交通</td><td><code>road</code> 路够不够 · <code>transit</code> 公交地铁够不够 · <code>parking</code> 车停哪儿</td></tr><tr><td>⚡ 市政</td><td><code>utility</code> 水电够不够 · <code>energy</code> 电从哪来 · <code>heating</code> 冬天冷不冷</td></tr><tr><td>🌿 环境</td><td><code>environment</code> 住得舒不舒服 · <code>green</code> 有没有地方遛弯 · <code>water_system</code> 河湖治得怎么样 · <code>flood</code> 下大雨会不会淹</td></tr><tr><td>🏛️ 民生</td><td><code>education</code> 学位够不够 · <code>health</code> 看病难不难 · <code>safety</code> 安不安全 · <code>heritage</code> 留住了什么</td></tr></tbody></table></div>
+<p><strong>四个是刻意单列的</strong>（不是从别的面板里"顺手"能看出来的）：</p>
+<div class="tw"><table><thead><tr><th>视图</th><th>为什么必须单独存在</th></tr></thead><tbody><tr><td><code>housing</code> 住房</td><td>房价 / 租金 / 空置率 / 保障房占比——<strong>住房是中国城市的第一议题</strong>，塞进"人口"就没人看得到</td></tr><tr><td><code>migration</code> 人口流动</td><td>外来人口占比 / 落户 / 流动人口 / 净流入——<strong>户籍与流动是中国特色</strong>，和"总人口"是两件事</td></tr><tr><td><code>renewal</code> 城市更新</td><td>老旧建筑占比 / 城中村 / 已拆迁 / <strong>保留文保</strong>——<strong>拆迁 vs 文保必须并排看</strong>，这是中国城市最真实的一对矛盾</td></tr><tr><td><code>heating</code> 供热</td><td>只对<strong>北方城市</strong>显示（<code>climate_zone</code>）；覆盖率 / 管网年龄 / 投诉量 / 供暖季</td></tr></tbody></table></div>
+<p>⚠ <strong>财政面板必须把「卖地占收入」单独列出并高亮</strong>（<code>panels.json</code> 的 <code>highlight</code>）—— 胜利条件是"不靠卖地自持"，<strong>玩家得能实时看到自己离这条线有多远</strong>；不做这个显示，那条规则等于不存在。</p>
+<p>⚠ <strong>年龄结构单独成面板</strong>：60+ 占比与抚养比是<strong>中国式老龄化的观察口</strong>。 ⚠ <strong>土地从财政里拆出来</strong>：地价 + 容积率 + 开发强度，是<strong>财政与天际线的同一件事</strong>。</p>
+<h4 id="候选池-想得到-但现在不做">候选池（想得到、但<strong>现在不做</strong>）</h4>
+<p>城市的东西远不止这 27 个。以下先登记、不实现，<strong>等有人真的要看再加</strong>（加一个视图只需改 <code>panels.json</code>）：</p>
+<p>货运物流 · 出租/网约车 · 托育与养老 · 体育与文化设施存量 · 旅游 · 开发区与 TOD 站点周边 · 地下管廊 · 5G 基站与智慧灯杆 · 公厕与环卫设施 · 消防站覆盖 · 殡葬 · 市集与摊贩 · 学校细分（小学/初中/高中/职校）· 医院分级（社区/二级/三甲）</p>
+<p>⚠ 这张表的意义：<strong>"没想到"不代表"不需要"</strong>，但也不该先做一堆没人看的空面板。 登记在这儿，谁需要谁加，加的成本是一次 json 编辑。</p>
+<h3 id="14-4-右侧-待定-留白">14.4 右侧：待定（留白）</h3>
+<p><code>layout.right_panels.list</code> 为空 ⇒ <strong>整块区域不生成</strong>；往里加 id 就自动出现（面板由 <code>panels.json</code> 提供）。 ⚠ 这是<strong>数据决定的</strong>，不是忘了写。</p>
+<h3 id="14-5-热力图-6-种-可叠-2-层">14.5 热力图（6 种，可叠 2 层）</h3>
+<p>地价 / 可达性 / 服务覆盖 / 拥堵 / 噪音 / 污染。</p>
+<p>⚠ 热力图是<strong>信息工具</strong>，不是装饰。<strong>图例必须带数值刻度</strong>，否则玩家看不懂"红"是多红。 ⚠ 色阶遵循中国习惯：<strong>涨/高 = 红，跌/低 = 绿</strong>。</p>
+<hr>
+<h3 id="14-6-放置规则-每个工具能放哪-要接什么-多少钱-2026-11-23">14.6 放置规则：每个工具能放哪、要接什么、多少钱（2026-11-23）</h3>
+<blockquote>开发者要求「放置规则也加上」。这一节回答三个问题：<strong>能放在哪</strong>、<strong>服务多大范围</strong>、<strong>量级多贵</strong>。<br>⚠ 半径与面积多数<strong>待核对国标</strong>（标【推测】），<strong>未核对前不得写进 <code>config/sim/</code></strong>（R4 纪律）。</blockquote>
+<p><strong>四条通则</strong>（先看这四条，再看表）：</p>
+<ol><li><strong>一切建造都必须有路可达</strong> —— 除了「道路」自己，任何东西放下去都要连到既有路网，否则拒绝并给理由</li><li><strong>除「更新」与「地形」外，都必须接上市政</strong>才能生长（电/水是底线，<code>utility</code> 系统定了地块能不能长）</li><li>⭐ <strong>工具放的是「用地意向」，不是固定尺寸的模型</strong> —— 真实尺寸由 <code>parcel</code> + 布局原型决定，</li></ol>
+<p>   而且<strong>之后还会变</strong>：厂区会扩建、地块会切分或合并（<code>03-zoning</code> §三·七）。    ⇒ 玩家点下去 ≠ 生成一个固定盒子，而是"我打算在这里做这件事"。</p>
+<ol><li>⭐⭐ <strong>大院型设施可以手动扩展范围</strong>（机场 / 火车站 / 大学 / 三级医院 / 体育会展 / 大型厂区 / 公园 / 污水厂）：</li></ol>
+<p>   建成后能用"扩展范围"工具把<strong>相邻空地或可征收地块</strong>并进这个大院——<strong>要花钱征地、要连续、有施工期</strong>，    单次不超过原面积 50%，文保禁扩。规则见 <code>03-zoning</code> §3.7.7–3.7.9。    ⚠ 这条和"工具只是用地意向"不矛盾：<strong>普通建筑由系统长，大院由玩家划线</strong>，两者分工写死在 §3.7.9。</p>
+<div class="tw"><table><thead><tr><th>组</th><th>基底 / 地形</th><th>占地与间距</th><th>半径 / 覆盖</th><th>造价量级</th><th>前置条件</th></tr></thead><tbody><tr><td>🛣️ 道路</td><td>陆地；跨水走桥</td><td>单段 ≥ 一条车道；路口有最小转角【推测】</td><td>—</td><td>低（支路）→ 高（桥）</td><td>第一条路用启动资金；其余必须连既有路</td></tr><tr><td>🗂️ 区划</td><td>任意已建区块</td><td>按宗地（parcel）划</td><td>—</td><td>极低（只是划线）</td><td>宗地必须临路</td></tr><tr><td>🏢 建筑</td><td>平整陆地</td><td>按布局原型的 footprint；<strong>退线 + 日照间距</strong></td><td>—</td><td>中 – 高</td><td>区划 + 临路 + 市政</td></tr><tr><td>🚌 交通设施</td><td>公交站需路侧；地铁站需轨道</td><td>站台尺寸【推测】；站间距公交 500–800 m / 地铁 800–1200 m【推测】</td><td>公交 500 m / 地铁 800 m【推测】</td><td>中（公交）→ 很高（地铁）</td><td>地铁需先有线路（DLC1 前只有公交）</td></tr><tr><td>⚡ 市政管网</td><td>沿道路埋设</td><td>管径按需求；必须接入干管</td><td>随压力衰减</td><td>中</td><td>需要水厂/电厂存在（<code>energy</code> 先建）</td></tr><tr><td>🏫 公共服务</td><td>平整陆地</td><td><strong>学校 ≥ 1 公顷</strong>【推测】；医院按床位</td><td>小学 500 m / 社区服务 15 分钟圈（<code>GB 50180</code> 生活圈）【推测】</td><td>中</td><td>临路 + 市政；与噪音源保持距离</td></tr><tr><td>🏭 产业</td><td>平整陆地，<strong>远离居住</strong></td><td>工业园按公顷计；卫生防护距离【推测】</td><td>—</td><td>高</td><td>临<strong>货运</strong>级道路；市政容量足</td></tr><tr><td>🔌 能源</td><td>电厂需水源/运输条件</td><td>电厂占地大【推测】；变电站小</td><td>供电半径随电压等级【推测】</td><td>很高</td><td>—</td></tr><tr><td>🌳 绿化</td><td>任意（含填方后）</td><td>口袋公园 ≥ 400 ㎡【推测】</td><td>公园服务半径 500 m【推测】</td><td>低</td><td>—</td></tr><tr><td>🌊 水利</td><td>沿河道</td><td>—</td><td>—</td><td>高</td><td>—</td></tr><tr><td>🧱 更新</td><td><strong>已有建成区</strong></td><td>按宗地；可跨宗但需合并</td><td>—</td><td>中 – 高（含<strong>安置补偿</strong>）</td><td>产权处置；<strong>文保建筑禁拆</strong></td></tr><tr><td>⛰️ 地形</td><td>任意</td><td>坡度上限【推测】</td><td>—</td><td>中</td><td>—</td></tr><tr><td>🧨 拆除</td><td>已有建筑</td><td>按宗地/建筑</td><td>—</td><td>低</td><td><strong>文保禁拆</strong>；拆除产生渣土与安置</td></tr></tbody></table></div>
+<p><strong>哪些工具放出来的东西之后还能"长大"：</strong></p>
+<div class="tw"><table><thead><tr><th>情况</th><th>例子</th><th>谁决定新边界</th></tr></thead><tbody><tr><td>自动生长</td><td>住宅、商业、小厂房</td><td>系统（地价/需求/容积率余量）</td></tr><tr><td><strong>玩家手动扩展</strong></td><td>机场、火车站、大学、大医院、体育中心、<strong>大型厂区</strong>、公园、污水厂</td><td><strong>玩家拉边界 + 掏征地钱</strong>（§3.7.7）</td></tr><tr><td>只改造不扩</td><td>老旧小区改造、城中村整治</td><td>系统（在既有宗地内）</td></tr></tbody></table></div>
+<p><strong>几条容易漏的约束：</strong></p>
+<ul><li><strong>地铁站不能凭空放</strong>：没有线路就没有站。R18 定了公交与地铁都在本体，但地铁要等线路规划（DLC1 的 <code>transit_corridor</code> 预留字段）</li><li><strong>供热站只对北方</strong>（<code>climate_zone</code>）：南方城市这一项在建造成本里不出现</li><li><strong>拆迁 ≠ 城中村整治</strong>：前者是拆，后者是改造（<code>renewal</code> 组里是两个不同工具）</li><li><strong>老旧小区改造不产生新建筑</strong>：只提升既有小区的设施与容积率余量</li></ul>
+<p>⚠ <strong>半径数值全部待核对</strong>：<code>reference/gb-standards.md</code> 里现有的"服务半径"条目多数标着【推测】， 核对完成前只能当占位。这条与 R4（形态参数按国标）是同一件事。</p>
+<h2 id="十五-新建游戏流程">十五、新建游戏流程</h2>
+<pre class="code"><code>选地图（内置 3 张 + 自己的图）
+   ↓
+选模式（标准 / 宽松 / 沙盒）← 中途不可改，§一
+   ↓
+设种子（影响程序化生成与随机事件）
+   ↓
+看开局信息（地形预览 + 资源点 + 起始资金）
+   ↓
+进游戏（第一句引导）</code></pre>
+<p>⚠ <strong>内置地图至少 3 张</strong>，覆盖不同地形： <strong>平原（华北）</strong> / <strong>水网（江南）</strong> / <strong>山地（西南）</strong>。 理由：地形决定地铁造价与产业（<code>08-traffic</code> §3.5.4），<strong>一张平原图会让玩家以为这游戏只有一种玩法</strong>。</p>
+<hr>
+<h2 id="十六-补充验收点">十六、补充验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>K14</strong></td><td>点任意一个不长的 parcel，<strong>能给出唯一的第一阻碍原因</strong></td><td>探针遍历 8 种原因</td></tr><tr><td><strong>K15</strong></td><td>诊断提示能<strong>一步跳到解决工具</strong></td><td>手动</td></tr><tr><td><strong>K16</strong></td><td>连续操作 60 秒，<strong>提示类通知为 0</strong>（等空闲才发）</td><td>探针计时</td></tr><tr><td><strong>K17</strong></td><td>同类通知 30 秒内<strong>合并成一条</strong></td><td>探针制造 3 次同类</td></tr><tr><td><strong>K18</strong></td><td>财政面板<strong>单独显示"卖地占收入比例"</strong></td><td>手动</td></tr><tr><td><strong>K19</strong></td><td>任一政策旋钮拉到极值，<strong>都能看到明确代价</strong>（不出现纯增益）</td><td>探针六个各拉一次</td></tr></tbody></table></div>
+<p>⚠ <strong>K14 是这一批最重要的</strong>：它决定了新手会不会在"楼不长"这一步放弃。</p>
+<hr>
+<h2 id="十七-教程-内置图文-外链视频-2026-11-17-定案">十七、教程：内置图文 + 外链视频（2026-11-17 定案）</h2>
+<blockquote>用户：「教程我可以录视频塞到游戏里（这样不好，几个 GB 的视频文件太占空间了，<br>干脆上传到 B 站和油管以及抖音）。」</blockquote>
+<h3 id="17-1-三层-各管各的">17.1 三层，各管各的</h3>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>大小</th><th>是否联网</th></tr></thead><tbody><tr><td><strong>① 即时提示</strong></td><td>一步一句话（"点这里画路"）</td><td>&lt; 1 KB</td><td>❌ 内置</td></tr><tr><td><strong>② 内置图文教程</strong></td><td>关键玩法 12–15 页，每页文字 + 截图/动图</td><td><strong>&lt; 5 MB</strong></td><td>❌ <strong>内置</strong></td></tr><tr><td><strong>③ 外链视频</strong></td><td>完整玩法讲解、进阶技巧</td><td>0（外链）</td><td>✅ 需联网</td></tr></tbody></table></div>
+<p>⚠ <strong>底线：②必须内置，③只是补充。</strong></p>
+<p>理由：<strong>断网、平台被墙、视频下架</strong>都是真实情况。 如果新玩家第一次打开游戏、点"教程"却打不开网页——<strong>这游戏当场就废了。</strong></p>
+<h3 id="17-2-视频平台策略">17.2 视频平台策略</h3>
+<div class="tw"><table><thead><tr><th>平台</th><th>用途</th><th>是否做游戏内跳转</th></tr></thead><tbody><tr><td><strong>B 站</strong></td><td>中国大陆主渠道</td><td>✅ 默认</td></tr><tr><td><strong>YouTube</strong></td><td>海外</td><td>✅ 按语言/地区切</td></tr><tr><td><strong>抖音</strong></td><td><strong>只做宣传引流，不做游戏内跳转</strong></td><td>❌</td></tr></tbody></table></div>
+<p>⚠ <strong>抖音不做游戏内跳转的理由</strong>：它的链接会唤起 App，PC 上体验极差； 而且它不适合放"10 分钟教学"，只适合 15 秒钩子。<strong>那是发行渠道，不是教程渠道。</strong></p>
+<h3 id="17-3-实现">17.3 实现</h3>
+<pre class="code" data-lang="json"><code>// help/tutorial.json
+{
+  "pages": [
+    { "id": "road", "title": "先修一条路",
+      "text": "拖动鼠标画一条路。连接到地图边缘的省道，外部通道就打开了。",
+      "image": "help/img/road.png" },
+    { "id": "zone", "title": "划一片住宅用地", "image": "help/img/zone.png" }
+  ],
+  "videos": {
+    "zh-CN": [ { "title": "入门 10 分钟", "url": "https://www.bilibili.com/video/BV..." } ],
+    "en":    [ { "title": "Getting Started", "url": "https://youtu.be/..." } ]
+  }
+}</code></pre>
+<div class="tw"><table><thead><tr><th>规则</th><th>说明</th></tr></thead><tbody><tr><td>无网检测</td><td>断网时<strong>隐藏视频入口</strong>（不要给一个点了没反应的按钮）</td></tr><tr><td>视频入口位置</td><td>主菜单 + 帮助面板，<strong>不主动弹</strong></td></tr><tr><td>图文可跳过</td><td>老玩家不该被强制看 12 页</td></tr><tr><td><strong>图文与实现同步</strong></td><td>改 UI 就要改截图，<strong>截图过期比没有更糟</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>最后一条是长期成本</strong>：内置图文教程要跟着 UI 改。 所以<strong>页数要少（12–15 页）</strong>，太多维护不动。</p>
+<hr>
+<h2 id="十八-里程碑-城市史-steam-成就-三层-不是替换-2026-11-17">十八、里程碑 / 城市史 / Steam 成就：三层，不是替换（2026-11-17）</h2>
+<blockquote>用户：「那么就取消里程碑，改成 Steam 成就是否可行？」</blockquote>
+<p><strong>技术可行，但不该替换 —— 因为两者记录的不是同一个主体。</strong></p>
+<h3 id="18-0-关键区别-里程碑是-这个城市的-成就是-这个玩家的">18.0 ⭐ 关键区别：里程碑是"这个城市的"，成就是"这个玩家的"</h3>
+<div class="tw"><table><thead><tr><th></th><th>内建里程碑（城市史）</th><th>Steam 成就</th></tr></thead><tbody><tr><td>主体</td><td><strong>这一局、这座城市</strong></td><td><strong>这个账号</strong></td></tr><tr><td>数据</td><td>每条<strong>达成的年份</strong>（第 87 年通地铁）</td><td><strong>一个布尔值</strong>（拿过 / 没拿过）</td></tr><tr><td>跨存档</td><td><strong>一局一份，不继承</strong></td><td>账号级，永久</td></tr><tr><td>可见性</td><td>游戏内时间轴</td><td>Steam 个人资料页</td></tr><tr><td>失败/重开</td><td>跟着存档走</td><td>不会丢</td></tr></tbody></table></div>
+<p>⚠ <strong>一个玩了 400 年的存档，玩家会想知道"我的城市第 87 年通了地铁"。</strong> Steam 成就给不了这个——它只记得"你曾经拿过"。<strong>这是体验，不是装饰。</strong></p>
+<h3 id="18-1-三层结构">18.1 三层结构</h3>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>数量</th><th>是否必做</th></tr></thead><tbody><tr><td><strong>① 城市史</strong>（内建）</td><td>全部达成年份，一局一份时间轴</td><td><strong>24 条</strong></td><td>✅ 必做</td></tr><tr><td>② 内建徽章</td><td>跨存档的账号级记录（非 Steam 平台用）</td><td>24 条</td><td>✅ 必做（轻量）</td></tr><tr><td><strong>③ Steam 成就</strong></td><td>从 24 条里挑代表作<strong>镜像</strong>过去</td><td><strong>10 条</strong></td><td>⭕ 可选（按平台）</td></tr></tbody></table></div>
+<p>⚠ <strong>②不能省</strong>：游戏可能上 WeGame / Epic / GOG / 自己卖。 <strong>把成就绑死 Steam API，等于其他渠道全废。</strong></p>
+<h3 id="18-2-steam-成就的-10-条-从-24-条里挑">18.2 Steam 成就的 10 条（从 24 条里挑）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>成就</th><th>源里程碑</th><th>为什么选它</th></tr></thead><tbody><tr><td>1</td><td>第一锹土</td><td>A1 第一条路</td><td>所有人都会拿到，门槛 0</td></tr><tr><td>2</td><td>破百万</td><td>A10 人口 100 万</td><td><strong>胜利条件的一半</strong></td></tr><tr><td>3</td><td>自给自足</td><td>B3 财政自持 12 月</td><td><strong>胜利条件的另一半</strong></td></tr><tr><td>4</td><td>第一桶金</td><td>B2 首次土地出让</td><td>循环入门</td></tr><tr><td>5</td><td>地铁梦</td><td>MS-C2 第一条地铁线</td><td>中国玩家最想要的</td></tr><tr><td>6</td><td>分流见效</td><td>C3 轨道分流 −20 %</td><td>证明玩家懂 TOD</td></tr><tr><td>7</td><td>双核城市</td><td>C4 多中心形成</td><td>形态成就</td></tr><tr><td>8</td><td><strong>枯木逢春</strong></td><td><strong>D1 资源枯竭后转型</strong></td><td><strong>最难的一条</strong></td></tr><tr><td>9</td><td><strong>旧貌换新颜</strong></td><td><strong>D2 老城电网改造</strong></td><td>城市更新毕业证</td></tr><tr><td>10</td><td>年味</td><td>D4 第一个有年味的春节</td><td>传播点（截图好看）</td></tr></tbody></table></div>
+<p>⚠ <strong>只挑 10 条</strong>：Steam 成就太多会稀释价值，玩家记不住。 ⚠ <strong>第 8、9 两条是"难度标杆"</strong>：全球解锁率会很低，这是刻意的。</p>
+<h3 id="18-3-steam-成就的三个硬约束">18.3 ⚠ Steam 成就的三个硬约束</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>约束</th><th>后果</th></tr></thead><tbody><tr><td>1</td><td><strong>发布后不能删、不能改名</strong></td><td>定错了永久错。<strong>发布前务必双人复核</strong></td></tr><tr><td>2</td><td><strong>不能让沙盒存档触发</strong></td><td>否则一条"无限资金"就能拿全部成就，会被骂</td></tr><tr><td>3</td><td><strong>必须走平台抽象层</strong></td><td>不能直接调 <code>Steamworks.*</code></td></tr></tbody></table></div>
+<p>⚠ <strong>第 2 条与 <code>sandbox_flags</code> 是同一件事</strong>：开了任一作弊开关的存档， <strong>城市史照记（游戏内），但不推送到平台</strong>（<code>01-playable-definition</code> §5.1 已定"成就禁用"）。</p>
+<h3 id="18-4-平台抽象层-这个不能省">18.4 平台抽象层（这个不能省）</h3>
+<pre class="code" data-lang="gdscript"><code># platform/achievements.gd —— 唯一入口
+func unlock(id: StringName) -&gt; void:
+    _record_local(id)              # ① 永远先记本地（城市史 + 徽章）
+    if _backend != null:           # ② 有平台才推送
+        _backend.unlock(id)</code></pre>
+<div class="tw"><table><thead><tr><th>实现</th><th>场景</th></tr></thead><tbody><tr><td><code>local_backend</code></td><td>无 Steam / 其他渠道 / 开发期</td></tr><tr><td><code>steam_backend</code></td><td>Steam 发行</td></tr></tbody></table></div>
+<p>⚠ <strong>规则：本地永远是真相，平台是镜像。</strong> 平台推送失败（离线、网络问题）不能影响游戏内记录——<strong>下次启动补推</strong>。</p>
+<p>⚠ <strong>反面案例</strong>：很多独立游戏直接调 Steam API，上 GOG 时成就全丢， 或者干脆不做成就。<strong>正确做法是"先记自己，再向外同步"。</strong></p>
+<h3 id="18-5-所以-取消里程碑-不成立-但可以这样理解">18.5 所以"取消里程碑"不成立，但可以这样理解</h3>
+<div class="tw"><table><thead><tr><th>你的意图</th><th>正确的做法</th></tr></thead><tbody><tr><td>少维护一套东西</td><td>✅ <strong>24 条只写一次数据，城市史与 Steam 成就共用同一份定义</strong></td></tr><tr><td>用 Steam 的展示能力</td><td>✅ 镜像 10 条过去</td></tr><tr><td>不做游戏内 UI</td><td>❌ 城市史时间轴<strong>必须做</strong>（它是体验，不是装饰）</td></tr></tbody></table></div>
+<p>⚠ <strong>真正的节省是"一套数据、两个出口"，不是"砍掉一个"。</strong></p>
+<h3 id="18-6-一条硬规则-里程碑不给数值奖励">18.6 ⭐ 一条硬规则：里程碑不给数值奖励</h3>
+<div class="tw"><table><thead><tr><th>奖励类型</th><th>采纳</th><th>理由</th></tr></thead><tbody><tr><td>一次性金钱/资源</td><td>❌</td><td><strong>会破坏平衡，且诱导玩家为奖励做不合理的事</strong></td></tr><tr><td>解锁内容</td><td>❌</td><td>内容是玩家买的，不该被锁</td></tr><tr><td><strong>统计页（城市史）</strong></td><td>✅</td><td>记录感</td></tr><tr><td><strong>造景模式（隐藏 UI）</strong></td><td>✅</td><td>拍照/录视频用</td></tr><tr><td>成就徽章</td><td>✅</td><td>收集欲</td></tr></tbody></table></div>
+<p>⚠ <strong>不给数值奖励是刻意的</strong>：一旦里程碑给钱，玩家就会"为了凑里程碑"而规划， 而不是"因为城市需要"而规划——<strong>模拟的诚实性就没了。</strong></p>
+<h3 id="18-7-四组-共-24-条">18.7 四组，共 24 条</h3>
+<p><strong>A 成长（10）</strong></p>
+<div class="tw"><table><thead><tr><th>#</th><th>里程碑</th><th>条件</th></tr></thead><tbody><tr><td>MS-A1</td><td>第一条路</td><td>修通 ≥ 500 m 道路</td></tr><tr><td>MS-A2</td><td>第一栋房</td><td>长出第一栋建筑</td></tr><tr><td>MS-A3</td><td>通了电</td><td>首个变电站在网</td></tr><tr><td>MS-A4</td><td>全村通水</td><td>村庄期全部住宅有供水</td></tr><tr><td>MS-A5</td><td>第一个小厂</td><td>首个 <code>M2</code> 建成</td></tr><tr><td>MS-A6</td><td>第一条商业街</td><td>沿街 <code>B1</code> ≥ 20 间</td></tr><tr><td>MS-A7</td><td>第一所小学</td><td>首个 <code>school</code> 建成</td></tr><tr><td>MS-A8</td><td>第一个菜市场</td><td>首个 <code>B2</code> 建成</td></tr><tr><td>MS-A9</td><td>第一个小区</td><td>首个 <code>compound</code> 交付（4 阶段走完）</td></tr><tr><td>MS-A10</td><td>升级为市</td><td>人口 &gt; 30 万</td></tr></tbody></table></div>
+<p><strong>B 财政（5）</strong></p>
+<div class="tw"><table><thead><tr><th>#</th><th>里程碑</th><th>条件</th></tr></thead><tbody><tr><td>MS-B1</td><td>第一次收支平衡</td><td>单月收入 ≥ 支出</td></tr><tr><td>MS-B2</td><td>第一桶金</td><td>首次土地出让成功</td></tr><tr><td>MS-B3</td><td><strong>财政自持 12 个月</strong></td><td><code>tax_self_sufficiency</code> ≥ 1.0 连续 12 月（<strong>不含卖地/卖资源</strong>）</td></tr><tr><td>MS-B4</td><td>摆脱资源依赖</td><td>资源收入占比 &lt; 5 % 撑满一整年</td></tr><tr><td>MS-B5</td><td>化解债务危机</td><td>从 <code>余额 &amp;lt; 0</code> 且触顶债务，恢复到正且自持</td></tr></tbody></table></div>
+<p><strong>C 形态与交通（5）</strong></p>
+<div class="tw"><table><thead><tr><th>#</th><th>里程碑</th><th>条件</th></tr></thead><tbody><tr><td>MS-C1</td><td>第一座高铁站</td><td><code>hsr_station</code> 建成</td></tr><tr><td>MS-C2</td><td>第一条地铁线</td><td><code>metro_line</code> 通车</td></tr><tr><td>MS-C3</td><td>轨道分流见效</td><td>单条线让覆盖走廊公路流量 −20 %（TR9）</td></tr><tr><td>MS-C4</td><td><strong>多中心形成</strong></td><td>存在 ≥ 2 个地价峰值，相距 &gt; 3 km</td></tr><tr><td>MS-C5</td><td>第一个 CBD</td><td><code>cbd_office</code> ≥ 10 栋相邻</td></tr></tbody></table></div>
+<p><strong>D 最难的四条（"城市史"级别）</strong></p>
+<div class="tw"><table><thead><tr><th>#</th><th>里程碑</th><th>条件</th></tr></thead><tbody><tr><td><strong>D1</strong></td><td><strong>资源枯竭后成功转型</strong></td><td>从"资源型"变"综合/创新型"且评级不降</td></tr><tr><td><strong>D2</strong></td><td><strong>老城电网改造完成</strong></td><td>全城 <code>level 0/1</code> 杆塔改造为地埋（F94）</td></tr><tr><td><strong>D3</strong></td><td><strong>通勤 30 分钟</strong></td><td><code>avg_commute_s</code> 中位数 ≤ 1800 s</td></tr><tr><td><strong>D4</strong></td><td>第一个有年味的春节</td><td>春节氛围全覆盖 + 烟花（免费更新内容）</td></tr></tbody></table></div>
+<p>⚠ <strong>最难组四条（<code>MS-D1</code>…<code>MS-D4</code>）是真正的"玩明白了"</strong>：MS-D1 是资源诅咒的毕业证，MS-D2 是城市更新的毕业证。 <strong>它们不该给奖励，因为它们本身就是奖励。</strong></p>
+<h3 id="18-8-呈现方式">18.8 呈现方式</h3>
+<div class="tw"><table><thead><tr><th>场景</th><th>表现</th></tr></thead><tbody><tr><td>达成时</td><td>侧边通知（"重要"级，5 秒消失），<strong>不弹窗、不暂停</strong></td></tr><tr><td>随时查看</td><td>主菜单 → 城市史（时间轴，标出每次达成在第几年）</td></tr><tr><td>未达成</td><td><strong>不显示</strong>（不做好看的灰色列表）</td></tr></tbody></table></div>
+<p>⚠ <strong>未达成的不显示</strong>：给玩家看 24 个灰色锁会变成"任务清单"， 而里程碑的意义是<strong>事后回看"我做到过什么"</strong>，不是"还要做多少"。</p>
+<hr>
+<h3 id="18-9-验收点">18.9 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>K20</strong></td><td>24 条里程碑<strong>各能达成一次</strong>，且<strong>不可重复记录</strong></td><td>探针造条件逐个验证</td></tr><tr><td><strong>K21</strong></td><td>里程碑<strong>不给任何数值奖励</strong>（财政/人口不因达成而变化）</td><td>探针对比达成前后</td></tr><tr><td><strong>K22</strong></td><td>城市史时间轴能正确标出达成年份，<strong>且新开档不继承</strong></td><td>手动 + 探针</td></tr><tr><td><strong>K23</strong></td><td>断网时帮助面板<strong>不显示视频入口</strong></td><td>断网测试</td></tr><tr><td><strong>K24</strong></td><td>内置图文教程<strong>离线可看全 12–15 页</strong></td><td>断网测试</td></tr><tr><td><strong>K25</strong></td><td><strong>沙盒存档（<code>sandbox_flags ≠ 0</code>）不推送任何平台成就</strong></td><td>探针</td></tr><tr><td><strong>K26</strong></td><td>无 Steam 时降级为 <code>local_backend</code>，24 条徽章<strong>照常记录</strong></td><td>探针</td></tr><tr><td><strong>K27</strong></td><td>平台推送失败（模拟断网）<strong>不影响本地记录</strong>，下次启动补推</td><td>探针断网重连</td></tr></tbody></table></div>
+<p>⚠ <strong>K21 是底线</strong>：一旦里程碑能换钱，整个模拟的诚实性就崩了。 ⚠ <strong>K26 决定能不能上其他渠道</strong>：做不到就只能绑死 Steam。</p>
+<blockquote>依据 <code>01-playable-definition</code> §5.2 的"成就式里程碑"（已否掉"人口到 X 就解锁"）。<br>这里给出完整清单与规则。</blockquote>
+<h2 id="十九-多语言-翻译是本地化-不是替换-2026-11-17">十九、多语言：翻译是本地化，不是替换（2026-11-17）</h2>
+<blockquote>用户：「然后就是多语言支持。」</blockquote>
+<h3 id="19-1-八语-2026-11-17-用户确定">19.1 八语（2026-11-17 用户确定）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>语言</th><th>优先级</th><th>字符集</th><th><strong>主要难点</strong></th></tr></thead><tbody><tr><td>1</td><td><strong>简体中文</strong></td><td><strong>原生</strong></td><td>CJK</td><td>所有文案以它为准</td></tr><tr><td>2</td><td><strong>繁体中文</strong></td><td>首发</td><td>CJK</td><td><strong>字形与用词</strong>都不同（<code>地铁</code>/<code>捷運</code>）需台湾用词表，不是简单转字形</td></tr><tr><td>3</td><td><strong>English</strong></td><td>首发</td><td>拉丁</td><td>语序差异最大（拼接一定露馅）</td></tr><tr><td>4</td><td><strong>日本語</strong></td><td>首发</td><td>CJK + 假名</td><td>⚠ <strong>日文汉字字形与中文不同</strong>（<code>直</code>/<code>骨</code>/<code>海</code>），见 §19.2</td></tr><tr><td>5</td><td><strong>한국어</strong></td><td>首发</td><td>谚文</td><td>现代韩文几乎不用汉字，需谚文字体；<strong>文本换行规则不同</strong></td></tr><tr><td>6</td><td><strong>Français</strong></td><td>首发</td><td>拉丁</td><td>文本比英文长 <strong>15–20 %</strong></td></tr><tr><td>7</td><td><strong>Español</strong></td><td>首发</td><td>拉丁</td><td>长 <strong>15–20 %</strong>；拉美/西班牙用词分叉</td></tr><tr><td>8</td><td><strong>Русский</strong></td><td>首发</td><td>西里尔</td><td>长 <strong>30–35 %</strong>（最长的一个）</td></tr><tr><td>—</td><td><del>العربية</del></td><td><strong>暂不做</strong></td><td>阿拉伯</td><td>⚠ RTL + BIDI，见 §19.5（<strong>但布局要预留</strong>）</td></tr></tbody></table></div>
+<p>⚠ <strong>八语意味着"改一句文案要改八处"</strong>——这是长期成本，不是一次性成本。 ⚠ <strong>文本膨胀</strong>：俄语比英文长 30–35 %。<strong>所有按钮/标签按 +35 % 留宽</strong>，否则俄语版会截断。</p>
+<h3 id="19-2-cjk-四语-真正的成本在这里">19.2 ⚠ CJK 四语：真正的成本在这里</h3>
+<p><strong>四种 CJK 语言不等于"一套字体"</strong>。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>数</th></tr></thead><tbody><tr><td>中文常用字</td><td>≈ 3 500</td></tr><tr><td>日文常用汉字 + 假名</td><td>≈ 2 136 + 假名</td></tr><tr><td>韩文常用音节（谚文）</td><td>≈ 2 350</td></tr><tr><td><strong>合并后去重</strong></td><td><strong>≈ 6 000–8 000</strong></td></tr></tbody></table></div>
+<div class="tw"><table><thead><tr><th>问题</th><th>说明</th></tr></thead><tbody><tr><td><strong>字体体积</strong></td><td>全集 CJK 字体 20 MB+；<strong>按八语合并子集约 4–8 MB</strong></td></tr><tr><td>⚠ <strong>字形差异</strong></td><td><strong>同一码位在不同语言下字形不同</strong>：简体 <code>直</code>、日文 <code>直</code>、繁体 <code>直</code> 内部笔画不一样</td></tr><tr><td>⚠ <strong>只装一套字体的后果</strong></td><td><strong>日本玩家一眼看出"这是中文字形"</strong>，像看到用中文写的日文</td></tr></tbody></table></div>
+<p><strong>解法（两条，二选一）</strong>：</p>
+<div class="tw"><table><thead><tr><th>方案</th><th>做法</th><th>代价</th></tr></thead><tbody><tr><td><strong>A（推荐）</strong></td><td>用 <strong>Source Han Sans 的 SC / TC / JP / KR 四个变体</strong>，按 <code>locale</code> 切换字体资源</td><td>体积 ×4（但可各自子集化，实际 +6–10 MB）</td></tr><tr><td>B</td><td>一套字体 + OpenType <code>locl</code> 特性</td><td>依赖字体是否支持，且 Godot 的 <code>locl</code> 支持有限</td></tr></tbody></table></div>
+<p>⚠ <strong>这是 CJK 本地化最容易翻车的地方</strong>：文本全对，但字是"错语言的字形"。 ⚠ <strong>韩文不需要汉字字形</strong>，但需要谚文覆盖——合并子集必须包含。</p>
+<h3 id="19-3-字体子集化策略-八语合并">19.3 字体子集化策略（八语合并）</h3>
+<div class="tw"><table><thead><tr><th>组</th><th>覆盖范围</th><th>预估体积</th></tr></thead><tbody><tr><td><strong>CJK×4</strong></td><td>SC / TC / JP / KR 各自子集</td><td>各 2–3 MB，<strong>合计 8–12 MB</strong></td></tr><tr><td>拉丁（EN/FR/ES）</td><td>Latin-1 + 扩展</td><td>&lt; 300 KB</td></tr><tr><td>西里尔（RU）</td><td>Cyrillic + 扩展</td><td>&lt; 200 KB</td></tr></tbody></table></div>
+<p>⚠ <strong>总计 ≈ 10–13 MB</strong>——在 10–15 MB 量级，可接受，但<strong>必须做子集化</strong>，否则光字体就 80 MB+。 ⚠ <strong>按语言分语言包</strong>：玩家只下自己那一种（中文版约 3 MB）。</p>
+<h3 id="19-4-文本膨胀率-ui-必须按最长语言设计">19.4 ⚠ 文本膨胀率：UI 必须按最长语言设计</h3>
+<div class="tw"><table><thead><tr><th>语言</th><th>相对英文长度</th></tr></thead><tbody><tr><td><strong>俄语</strong></td><td><strong>+30–35 %</strong></td></tr><tr><td>法语 / 西语</td><td>+15–20 %</td></tr><tr><td>中文 / 日文 / 韩文</td><td><strong>−10~−20 %</strong>（但字宽更大，占位不等于变短）</td></tr></tbody></table></div>
+<p>⚠ <strong>规则：所有按钮、标签、面板标题按 <code>英文 × 1.35</code> 设计</strong>。 否则俄语版会出现"文字被截断"或"按钮撑破布局"——<strong>这类 bug 只有在俄语下才暴露</strong>。</p>
+<p>⚠ <strong>验证方式</strong>：<code>L1</code> 断言要<strong>逐语言截图对比</strong>，不能只看中文。</p>
+<h3 id="19-5-技术选型">19.5 技术选型</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>方案</th></tr></thead><tbody><tr><td>引擎 i18n</td><td>Godot 内置 <code>tr()</code> + CSV 翻译表</td></tr><tr><td>键名规范</td><td><code>ui.xxx</code> / <code>notify.xxx</code> / <code>milestone.xxx</code>，<strong>按模块前缀</strong></td></tr><tr><td><strong>占位符</strong></td><td><code>{n}</code> <code>{city}</code>，<strong>禁止字符串拼接</strong></td></tr><tr><td>翻译表</td><td>八个 <code>.po</code> / CSV，按 locale 分文件；<strong>简中是唯一源</strong></td></tr><tr><td>字体</td><td><strong>CJK 按语言分四套子集</strong>（§19.2）+ 拉丁 + 西里尔（§19.3）</td></tr><tr><td>打包</td><td><strong>按语言分语言包</strong>（玩家只下自己那种）</td></tr><tr><td>缺翻译</td><td><strong>回退简中 + 写日志</strong>，不显示 key 名</td></tr></tbody></table></div>
+<p>⚠ <strong>禁止字符串拼接</strong>是硬规则：中文"共 12 人"和英文"12 people"语序不同， 拼出来的必然是错的。<strong>一律用 <code>{n}</code> 占位 + 每种语言自己的句式。</strong> ⚠ <strong>八语下拼接的代价是八倍</strong>：一次偷懒，八个语言各错一遍。</p>
+<h3 id="19-5b-实现状态-2026-11-20-ui-骨架已接入">19.5b 实现状态（2026-11-20，UI 骨架已接入）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>实际做法</th></tr></thead><tbody><tr><td>翻译表格式</td><td><strong><code>i18n/zh_CN.json</code> + <code>i18n/en.json</code></strong>（不是 CSV）</td></tr><tr><td>加载方式</td><td>运行时读 JSON → 构建 <code>Translation</code> → <code>TranslationServer.add_translation()</code></td></tr><tr><td>界面文字</td><td>全部走 <code>I18n.t("key")</code>，无硬编码</td></tr><tr><td>占位符</td><td><code>I18n.tf("menu.version", {"v": "0.1.0"})</code></td></tr><tr><td>调试</td><td><code>godot ... -- --locale=en</code></td></tr><tr><td>切换</td><td>读 <code>user://locale.txt</code>（设置页后续写入），<strong>需重启</strong></td></tr><tr><td>缺词条</td><td>回退 <strong>zh_CN</strong>（不是 en，也不是显示 key 名），并 <code>push_warning</code></td></tr></tbody></table></div>
+<p>⚠ <strong>为什么不用 Godot 的 CSV → <code>.translation</code> 导入链</strong>： 那需要编辑器跑一次导入，<code>--headless</code> 下很脆（导入设置要先进编辑器配）。 运行时构建 <code>Translation</code> 走的是<strong>同一个 <code>TranslationServer</code></strong>，<code>tr()</code> 一样命中， 但<strong>不依赖 <code>.godot/</code> 导入缓存</strong>——这对"直接 <code>--path .</code> 跑场景"的调试方式更稳。</p>
+<p>⚠ <strong>代价</strong>：JSON 没有 CSV 的翻译工具生态（Trados/Crowdin 吃 CSV）。 <strong>等真正开始翻译（要外包时）再转 CSV</strong>，那时有编辑器、有构建流程，不是问题。</p>
+<p><strong>当前覆盖</strong>：主菜单 / 设置页 / 关于页，共 <strong>139 条词条</strong>。 日 / 韩 / 法 / 西 / 俄 五个语言包<strong>还没做</strong>，现在切过去会回退中文—— <strong>这符合 §19.5 的"缺翻译回退源语言"，但正式发版前必须补齐</strong>（L4c 会红）。</p>
+<p>⚠ **键名规范改为 <code>set.<em> </code> / <code>menu.</em></code> / <code>about.*</code>**（按页面前缀，不是按控件类型）—— 按页面分组更利于"一次只翻一页"，也方便页面增删时定位孤立词条。</p>
+<h3 id="19-6-中国概念怎么翻-保留-不抹平">19.6 ⚠ 中国概念怎么翻：保留，不抹平</h3>
+<blockquote><strong>这游戏的核心卖点是"中国"。翻译成英文时把中国概念抹平，等于把卖点删了。</strong></blockquote>
+<div class="tw"><table><thead><tr><th>中文概念</th><th>❌ 抹平式翻译</th><th>✅ 保留 + 解释</th></tr></thead><tbody><tr><td>学区房</td><td>"school district housing"</td><td><strong><code>xuequfang</code>（school-district housing）</strong></td></tr><tr><td>城中村</td><td>"urban village"</td><td><strong><code>chengzhongcun</code>（urban village）</strong></td></tr><tr><td>单位大院</td><td>"work unit compound"</td><td><strong><code>danwei</code> compound</strong></td></tr><tr><td>耕地红线</td><td>"farmland red line"</td><td><strong><code>gengdi hongxian</code>（farmland red line）</strong></td></tr><tr><td>拆迁</td><td>"demolition"</td><td><strong><code>chaiqian</code>（demolition &amp; relocation）</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>判断标准</strong>：这个词在<strong>中国语境里有独特机制</strong>（学区房有学区溢价、城中村有非正规住房）， 就保留拼音 + 解释；如果只是普通事物（"道路""公园"），正常翻译。</p>
+<p>⚠ <strong>外国玩家不需要"看懂"，需要"知道这是个陌生的中国东西"</strong>—— 和玩日本游戏看到"武士""町屋"一样，<strong>异域感本身就是内容</strong>。</p>
+<h3 id="19-7-数字与单位-中文独有格式必须转换">19.7 数字与单位：中文独有格式必须转换</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>中文</th><th>英文</th></tr></thead><tbody><tr><td>货币</td><td><code>¥12.4 万</code></td><td><code>¥124,000</code> 或 <code>CNY 124k</code></td></tr><tr><td>大数</td><td><code>亿</code> <code>万</code></td><td><code>million</code> <code>billion</code></td></tr><tr><td>面积</td><td><code>亩</code> <code>平方米</code></td><td><code>mu</code> <code>m²</code></td></tr><tr><td>日期</td><td><code>2026年3月</code></td><td><code>Mar 2026</code></td></tr></tbody></table></div>
+<p>⚠ <strong><code>万</code>/<code>亿</code> 是中文独有进位</strong>，英文没有。<strong>必须有转换函数</strong>，不能让英文玩家看到 "12.4 wan"。</p>
+<p>⚠ <strong>农历节日</strong>：春节 → <code>Spring Festival</code>（国内）/ <code>Lunar New Year</code>（国外更通用）， 两个都要给，按语言选。<strong>这不是翻译问题，是认知习惯问题。</strong></p>
+<h3 id="19-8-中文排版-容易被忽略但很显眼">19.8 中文排版（容易被忽略但很显眼）</h3>
+<div class="tw"><table><thead><tr><th>问题</th><th>处理</th></tr></thead><tbody><tr><td><strong>避头尾</strong>（标点不能出现在行首）</td><td>自己做禁则处理，Godot 默认不做</td></tr><tr><td>全角/半角混排</td><td>数字与英文用半角，中文标点用全角</td></tr><tr><td>中英混排间距</td><td>中英文之间加 1/4 空格（可选，但显专业）</td></tr><tr><td>行高</td><td>中文需要比英文更大的行高（约 1.6–1.8 倍字号）</td></tr></tbody></table></div>
+<p>⚠ <strong>"避头尾"是最容易被看出来的低级错误</strong>：一行开头出现一个"。"，中文玩家立刻觉得不专业。</p>
+<h3 id="19-9-阿拉伯语-暂不做-但布局必须预留">19.9 阿拉伯语：暂不做，但<strong>布局必须预留</strong></h3>
+<blockquote>用户：「阿拉伯估计很难。」</blockquote>
+<p><strong>确实难，但不做的代价是现在就要付的</strong>：</p>
+<div class="tw"><table><thead><tr><th>难点</th><th>说明</th></tr></thead><tbody><tr><td><strong>RTL 整体镜像</strong></td><td>不只是文字从右往左，<strong>整个界面要镜像</strong>（工具栏在右、进度条反向）</td></tr><tr><td><strong>双向文本（BIDI）</strong></td><td>阿拉伯文里的<strong>数字和英文仍然从左到右</strong>，混排要算法处理</td></tr><tr><td><strong>字母按位置变形</strong></td><td>同一个字母在词首/词中/词尾/独立时字形不同（连写）</td></tr><tr><td><strong>字体</strong></td><td>需要阿拉伯字体（但体积不大）</td></tr></tbody></table></div>
+<p>⚠ <strong>这三样里，只有第一样可以在现在低成本预留</strong>：</p>
+<div class="tw"><table><thead><tr><th>现在就这么写</th><th>以后做 RTL 要改</th></tr></thead><tbody><tr><td>❌ <code>margin_left: 20</code></td><td>✅ <strong><code>margin_start: 20</code></strong></td></tr><tr><td>❌ <code>align: left</code></td><td>✅ <strong><code>align: start</code></strong></td></tr><tr><td>❌ <code>position.x = 20</code></td><td>✅ <strong>逻辑方向偏移</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>用逻辑方向（<code>start</code>/<code>end</code>）代替物理方向（<code>left</code>/<code>right</code>）</strong>， 以后做 RTL 只要<strong>翻一个开关</strong>，而不是改几百处布局。</p>
+<p>⚠ <strong>这个预留零成本</strong>：现在写的时候换个词而已。 ⚠ 但它<strong>只在 <code>layout.json</code> 与 UI 代码里生效</strong>——3D 世界的坐标不镜像。</p>
+<h3 id="19-10-翻译工作流-八语的现实问题">19.10 翻译工作流（八语的现实问题）</h3>
+<p>⚠ <strong>八语 = 改一句文案要改八处</strong>。这是长期成本。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>做法</th></tr></thead><tbody><tr><td><strong>唯一源</strong></td><td>先写简中，其余七语从它翻</td></tr><tr><td><strong>键名</strong></td><td><code>ui.xxx</code> / <code>notify.xxx</code> / <code>milestone.xxx</code> / <code>help.xxx</code>（按模块前缀）</td></tr><tr><td><strong>占位符</strong></td><td><code>{n}</code> <code>{city}</code>，<strong>禁止字符串拼接</strong></td></tr><tr><td><strong>术语表</strong></td><td>中国概念保留拼音（§19.6）；<strong>八语共用一份术语表</strong>，否则同一个词八种翻法</td></tr><tr><td><strong>缺翻译的兜底</strong></td><td>缺条目时<strong>回退简中并在日志里报错</strong>，不要显示 key 名</td></tr><tr><td><strong>谁翻</strong></td><td>简/繁/英自己 + AI；日/韩/法/西/俄 <strong>建议找人校一遍</strong>（AI 直翻的语感问题在游戏里很显眼）</td></tr></tbody></table></div>
+<p>⚠ <strong>"缺翻译回退简中"比"显示 key 名"好</strong>：玩家看到 <code>ui.panel.city</code> 会立刻觉得是半成品。 ⚠ <strong>术语表必须在第一版就建</strong>：八个语言八个译者，没有术语表一定会分叉。</p>
+<h3 id="19-11-验收点">19.11 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody></tbody></table></div>
+<blockquote>⚠ <strong>2026-11-21 编号修订</strong>：本节原用 <code>L1–L8</code>，与<strong>宪法铁律 L1–L8</strong>（硬约束）正面撞车。<br>改为 <strong><code>I18N-1</code> … <code>I18N-8</code></strong>，宪法铁律保持不动。</blockquote>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>I18N-1</strong></td><td><strong>八语逐个切换</strong>，所有 UI <strong>无溢出、无截断</strong></td><td>逐语言 × 逐面板截图（8×N 张）</td></tr><tr><td><strong>I18N-2</strong></td><td>所有文案<strong>无字符串拼接</strong>（<code>grep</code> 不到 <code>+ " "</code> 之类）</td><td>代码检查</td></tr><tr><td><strong>I18N-3</strong></td><td>英文界面下 <code>万/亿</code> <strong>正确转换为 million/billion</strong></td><td>手动看财政面板</td></tr><tr><td><strong>I18N-4</strong></td><td>八语字体<strong>合计 &lt; 15 MB</strong>，且<strong>任一语言都不出现方块字</strong></td><td>检查字体 + 遍历全部文案</td></tr><tr><td><strong>I18N-4b</strong></td><td>⚠ <strong>日文界面用的是日文字形</strong>（不是中文字形），繁体是繁体的字形</td><td>截图对比 <code>直</code> <code>骨</code> <code>海</code> 三字</td></tr><tr><td><strong>I18N-4c</strong></td><td>俄语界面<strong>无截断</strong>（最长语言，+35 %）</td><td>截图</td></tr><tr><td><strong>I18N-5</strong></td><td>中文<strong>避头尾生效</strong>（标点不出现在行首）</td><td>截长文本</td></tr><tr><td><strong>I18N-6</strong></td><td>中国概念在八语里<strong>保留拼音 + 解释</strong>，不被抹平</td><td>人工核对术语表</td></tr><tr><td><strong>I18N-7</strong></td><td>缺翻译时<strong>回退简中</strong>，不显示 <code>ui.xxx</code> 这类 key 名</td><td>删一条翻译测试</td></tr><tr><td><strong>I18N-8</strong></td><td><code>layout.json</code> 与 UI 代码里<strong>没有物理方向</strong>（<code>left</code>/<code>right</code>），只有 <code>start</code>/<code>end</code></td><td>代码检查</td></tr></tbody></table></div>
+<p>⚠ <strong>I18N-2 是最容易漏的</strong>：拼接在中文里看不出问题，一切英文就暴露。</p>
+<hr>
+<h2 id="二十-配音-tts-预生成-文字为主-2026-11-17">二十、配音：TTS 预生成，文字为主（2026-11-17）</h2>
+<blockquote>用户：「城市内部配音（这个打算直接使用 TTS 来生成相应语言的内容）。」</blockquote>
+<h3 id="20-1-先问一个更根本的问题-这游戏需要配音吗">20.1 先问一个更根本的问题：这游戏需要配音吗</h3>
+<div class="tw"><table><thead><tr><th>事实</th><th>影响</th></tr></thead><tbody><tr><td>CS1 几乎无配音（只有音效与音乐）</td><td>城建玩家不期待配音</td></tr><tr><td>玩家常边玩边听播客/音乐</td><td><strong>大量语音是负担，不是加分</strong></td></tr><tr><td>重复听同一句会烦</td><td>播报类语音必须<strong>低频且可关</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>结论：配音是"可选增强"，不是必需。默认关闭，玩家自己开。</strong></p>
+<h3 id="20-2-范围-2026-11-17-用户明确">20.2 范围（2026-11-17 用户明确）</h3>
+<blockquote>「我的配音就是城市的<strong>市民碎片语音</strong>，以及假设城市有<strong>演唱会</strong>之类等需要配音。」</blockquote>
+<div class="tw"><table><thead><tr><th>类型</th><th>做不做</th><th>来源</th><th>说明</th></tr></thead><tbody><tr><td><strong>市民碎片语音</strong></td><td>✅ <strong>主体</strong></td><td><strong>TTS</strong></td><td>路人短句、市场叫卖，丰富环境</td></tr><tr><td><strong>演出人声</strong></td><td>✅ <strong>主体</strong></td><td><strong>免版权采样，不用 TTS</strong></td><td>见 §20.8</td></tr><tr><td>通知播报</td><td>⭕ 可选</td><td>TTS</td><td>有价值（可访问性），但<strong>不是他的计划主体</strong>，可后置</td></tr><tr><td>教程旁白</td><td>❌</td><td>—</td><td>已改为<strong>外链视频</strong>（§十七）</td></tr><tr><td>剧情/角色对话</td><td>❌</td><td>—</td><td>本游戏没有叙事</td></tr><tr><td>UI 反馈</td><td>❌</td><td>音效</td><td>不用 TTS</td></tr></tbody></table></div>
+<p>⚠ <strong>环境音与 BGM 不在本节</strong>：它们不是"配音"，见 <code>10-presentation</code> §七。</p>
+<h3 id="20-3-演出人声-不要用-tts-唱歌">20.3 演出人声：不要用 TTS 唱歌</h3>
+<div class="tw"><table><thead><tr><th>做法</th><th>可行性</th></tr></thead><tbody><tr><td>TTS 念白</td><td>❌ 做不出演唱效果</td></tr><tr><td><strong>歌声合成（SVS）</strong></td><td>⚠ 是另一门技术，成本高，且中文 SVS 质量参差</td></tr><tr><td><strong>免版权 vocal 采样 + 低通 + 混响</strong></td><td>✅ <strong>采纳</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>理由：现场演唱会从场外听，人声本来就是模糊的。</strong> 观众记住的是"那晚有演出"（低频轰鸣 + 欢呼 + 远处旋律），<strong>不是歌词</strong>。 ⇒ 用免版权的人声采样 + 观众欢呼 + 大混响，效果足够，且<strong>没有版权风险</strong>。</p>
+<h3 id="20-4-关键约束-播报文本必须-可预生成">20.4 ⚠ 关键约束：播报文本必须"可预生成"</h3>
+<p><strong>预生成（pre-baked）vs 实时 TTS</strong>：</p>
+<div class="tw"><table><thead><tr><th>方案</th><th>问题</th></tr></thead><tbody><tr><td><strong>实时 TTS</strong></td><td>需本地模型（数 GB）或联网 API（延迟 + 隐私 + 可能不可用）</td></tr><tr><td><strong>预生成</strong>（采纳）</td><td>打包音频文件，零运行时成本，离线可用</td></tr></tbody></table></div>
+<p>⚠ <strong>但预生成有个硬约束</strong>：文本必须是固定的，<strong>不能含任意数字</strong>。</p>
+<div class="tw"><table><thead><tr><th>文本</th><th>能否预生成</th></tr></thead><tbody><tr><td>「财政出现赤字」</td><td>✅</td></tr><tr><td>「人口开始外流」</td><td>✅</td></tr><tr><td>「财政赤字 <strong>12.4 万</strong>」</td><td>❌ <strong>无法预生成</strong>（数字任意）</td></tr></tbody></table></div>
+<p>⇒ <strong>播报只说"定性"，不说"定量"；数字由 UI 显示。</strong></p>
+<p>⚠ <strong>这是刻意的取舍</strong>：如果非要念数字，就得上实时 TTS 或生成几万条音频。 <strong>"财政出现赤字" + 屏幕上红色数字，效果不比念出来差，成本差两个数量级。</strong></p>
+<h3 id="20-4-1-配音只做中文-2026-11-18-定-r22">20.4.1 ⚠ 配音只做中文（2026-11-18 定，R22）</h3>
+<blockquote>用户：「音频只有中文，一些内容翻译成其他语言就没味了。」</blockquote>
+<div class="tw"><table><thead><tr><th>项</th><th>UI 文案</th><th><strong>配音</strong></th></tr></thead><tbody><tr><td>语言数</td><td><strong>八语</strong></td><td><strong>只有中文</strong></td></tr><tr><td>理由</td><td>文本便宜</td><td>⚠ <strong>翻译过去就"没味"了</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>这个判断是对的，而且不只是成本问题</strong>： 菜市场叫卖、街边喇叭、广场舞、电动车警报——<strong>这些声音本身承载的是"中国"</strong>。 翻成英文/俄语之后，它们不再是环境音，而变成了"奇怪的配音"。</p>
+<p>⚠ <strong>其余七语下 <code>Voice</code> 总线静音</strong>。没有字幕，也不需要——信息在 UI 上（§20.7）。 ⚠ <strong>这不是缺功能</strong>：§20.7 已定"文字是主、语音是辅"， 无配音的玩家本来就不受影响。<strong>TTS 播报仍有价值（可访问性），但不值得八语各做一遍。</strong></p>
+<h3 id="20-5-量级估算">20.5 量级估算</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>数量</th></tr></thead><tbody><tr><td><strong>市民碎片</strong>（主体）</td><td>约 <strong>150 条</strong></td></tr><tr><td>通知播报（可选，后置）</td><td>约 <strong>120 条</strong></td></tr><tr><td><strong>合计 × 3 语言</strong></td><td>350–810 个音频（取决于播报做不做）</td></tr><tr><td>平均 2 秒，OGG 64 kbps</td><td>约 <strong>16 KB/条</strong></td></tr><tr><td><strong>总计</strong></td><td><strong>≈ 6–13 MB</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>可以接受</strong>，但要<strong>按语言分包</strong>（玩家只下载自己语言的包，约 2–4 MB）。 ⚠ <strong>演出人声不在这里</strong>：那是免版权采样 + 效果，不是 TTS（§20.3）。</p>
+<h3 id="20-6-必须提醒的两个风险">20.6 ⚠ 必须提醒的两个风险</h3>
+<p><strong>风险一：许可证</strong></p>
+<div class="tw"><table><thead><tr><th>工具</th><th>商用风险</th></tr></thead><tbody><tr><td>Edge TTS（微软）</td><td>⚠ <strong>条款不明确</strong>，商用前必须查证</td></tr><tr><td>Piper（MIT）</td><td>✅ 模型许可证需逐个确认</td></tr><tr><td>GPT-SoVITS</td><td>⚠ 音色克隆涉及<strong>声音权</strong>，用自己的声音最安全</td></tr><tr><td>商用 API（Azure/火山/讯飞）</td><td>✅ 明确可商用，但按量付费</td></tr></tbody></table></div>
+<p>⚠ <strong>如果音色是克隆某个真人的</strong>，商用可能侵权。<strong>用自己的声音，或买商用授权。</strong></p>
+<p><strong>风险二：中文 TTS 的常见硬伤</strong></p>
+<div class="tw"><table><thead><tr><th>问题</th><th>例子</th></tr></thead><tbody><tr><td>多音字</td><td>「重」庆 vs 「重」量</td></tr><tr><td>数字读法</td><td>「2026 年」读"二零二六"还是"两千零二十六"</td></tr><tr><td>儿化音</td><td>该有的没有，不该有的乱加</td></tr><tr><td>语调</td><td>紧急通知读得像天气预报</td></tr></tbody></table></div>
+<p>⚠ <strong>必须人工逐条试听</strong>，不能批量生成就交付。 <strong>120 条 × 3 语言 = 360 条要听一遍</strong>——这是真成本，不是零成本。</p>
+<h3 id="20-7-不做字幕层-2026-11-20-决定">20.7 不做字幕层（2026-11-20 决定）</h3>
+<blockquote>用户：「我们不需要字幕，那些嘈杂的声音本身就无法描述。」</blockquote>
+<p><strong>决定：不做字幕系统。</strong> 理由不是省事，是<strong>字幕在这个游戏里没有意义</strong>：</p>
+<div class="tw"><table><thead><tr><th>声音</th><th>能写成字幕吗</th></tr></thead><tbody><tr><td>菜市场叫卖 / 广场舞 / 电动车警报</td><td>❌ <strong>写不出来</strong> —— 写"远处有人叫卖"是废话，不是字幕</td></tr><tr><td>城市底噪</td><td>❌ 同上</td></tr><tr><td>通知（财政赤字 / 人口外流）</td><td>⚠ 能写，但<strong>这条信息本来就在 UI 上</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>第三条是关键</strong>：给通知配字幕，等于把 UI 上已有的信息<strong>再显示一遍</strong>，纯冗余。</p>
+<p><strong>⇒ 由此得出一条硬规则</strong>：</p>
+<blockquote>### ⭐ 任何"只通过声音传达"的信息，都是设计错误。</blockquote>
+<p><strong>声音只负责氛围，信息一律走 UI。</strong> 这条守住了，没有字幕也不会漏掉任何东西。</p>
+<div class="tw"><table><thead><tr><th>原来打算</th><th>现在</th></tr></thead><tbody><tr><td>语音 + 字幕 + UI 通知</td><td><strong>UI 通知（唯一）</strong> + 语音（可选，纯氛围）</td></tr><tr><td>语音默认关</td><td>不变（R22：只做中文）</td></tr><tr><td>字幕大小可调</td><td><strong>没有这个东西</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>这不影响无障碍</strong>：听障玩家需要的是<strong>信息</strong>，而信息在 UI 上。 <strong>如果哪天出现"只能听"的信息，那是 bug，不是缺字幕。</strong></p>
+<p>⚠ <strong>片子尾/关于页的"滚动字幕"是另一回事</strong>（<code>10-presentation</code> §4.3）， 那是 Credits，不是语音字幕，<strong>照做</strong>。</p>
+<h3 id="20-8-验收点">20.8 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody></tbody></table></div>
+<blockquote>⚠ <strong>2026-11-21 编号修订</strong>：本节原用 <code>V1–V6</code>，与 <strong><code>08-traffic</code> 的 TR1–TR30</strong>（交通验收）撞车。<br>改为 <strong><code>VO-1</code> … <code>VO-6</code></strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>VO-1</strong></td><td>语音<strong>默认关闭</strong>，开启后只用本地文件，<strong>不发起任何网络请求</strong></td><td>抓包</td></tr><tr><td><strong>VO-2</strong></td><td>每条语音的内容在 UI 上<strong>有对应的可见通知</strong>（不是字幕，是通知本身）</td><td>检查资源</td></tr><tr><td><strong>VO-3</strong></td><td>播报文本<strong>不含任意数字</strong>（可预生成）</td><td>代码检查 + 文案审阅</td></tr><tr><td><strong>VO-4</strong></td><td>音频包<strong>按需下载</strong>，单包 &lt; 5 MB</td><td>检查打包</td></tr><tr><td><strong>VO-4b</strong></td><td>⚠ <strong>配音只做中文</strong>（<code>decisions.md</code> R22），其余语言<strong>无语音、也不需要字幕</strong>（信息在 UI）</td><td>检查打包</td></tr><tr><td><strong>VO-5</strong></td><td>全部音频<strong>人工试听过</strong>，多音字与数字读法已修正</td><td>逐条确认（360 条）</td></tr><tr><td><strong>VO-6</strong></td><td>TTS 工具与音色的<strong>商用许可已确认并存档</strong></td><td>文档</td></tr></tbody></table></div>
+<p>⚠ <strong>VO-5 是唯一不能偷懒的一条</strong>：批量 TTS 生成后直接交付，一定会有一批读错。</p>
+<hr>
+<h2 id="二十一-待定">二十一、待定</h2>
+<ol><li><del>教程形态</del> → <strong>已定：内置图文（12–15 页）+ 外链视频</strong>（§十七）。</li></ol>
+<p>   不用任务式，任务式太像手游</p>
+<ol><li><strong>是否做"顾问"</strong>（弹窗建议）——CS 的顾问很烦，建议做成可关的侧边提示</li><li><del>倍速上限</del> → <strong>已定：只有 1x / 3x</strong>（§二：3x 已把月工作压到 1.1 ms/帧，再快就牺牲精度）；</li></ol>
+<p>   「想快进」用<strong>节日跳过 + 里程碑跳读</strong>解决，不加 5x/10x（10x 仅拍摄模式，<code>CAM6</code>）</p>
+<ol><li><strong>失败后能否"继续观察"到底</strong>——会不会越跑越糟然后崩？</li><li><strong>诊断能否批量</strong>（框选一片，告诉我这片为什么都不长）</li><li><strong>是否给"回流"入口</strong>：<code>decisions.md</code> / <code>config</code> 能否给玩家看（透明度 vs 破坏沉浸）</li><li><strong>里程碑数量</strong>：24 条是否偏多？B/C 组可各砍 1–2 条（<strong>但 Steam 成就仍取其中 10 条</strong>）</li><li><strong>内置地图的截图维护成本</strong>：改 UI 就要重拍 12–15 张图，谁来做</li><li><strong>Steam 成就的中文本地化</strong>：成就名要有中英双版，且<strong>发布后不能改</strong>，需提前定稿</li><li><strong>是否接 Steam 云存档</strong> —— 与"存档格式版本迁移"（§6.3）有耦合，要一起考虑</li><li><del>是否做日文/韩文</del> → <strong>已定：做</strong>（R20 八语含日/韩；<code>I18N-4b</code> 要求日文字形，字体预算 &lt;15 MB）</li><li><strong>繁中的用词表</strong>：<code>地铁</code> vs <code>捷運</code>、<code>软件</code> vs <code>軟體</code> —— <strong>已定做八语（R20），这条是执行项</strong>：需一份对照表，不是简单转字形</li><li><strong>语音包是否做"方言版"</strong>（粤语/四川话）—— R22 已定"配音只做中文"，方言版属<strong>额外</strong>，成本 ×N；</li></ol>
+<p>   建议<strong>不做</strong>，把传播力交给"节日氛围 + 环境音"（<code>10-presentation</code> §六）</p>
+<h3 id="21-1-剩下这几条需要开发者拍-ai-只给建议-不拍">21.1 剩下这几条<strong>需要开发者拍</strong>（AI 只给建议，不拍）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>待定</th><th>卡在哪</th><th>我的建议</th></tr></thead><tbody><tr><td>2</td><td>是否做"顾问"（弹窗建议）</td><td>纯产品判断</td><td><strong>做成可关的侧边提示</strong>，不弹窗。CS 的顾问是负面记忆点</td></tr><tr><td>4</td><td>失败后能否"继续观察"到底</td><td>需要先知道"越来越糟"会不会崩</td><td>先做<strong>只读观察模式</strong>（禁止建造、可看数值），崩不崩等 B6 有平衡数据再定</td></tr><tr><td>5</td><td>诊断能否批量（框选一片）</td><td>依赖 §11.2 的 parcel 级归因先跑通</td><td><strong>B6b 之后再做</strong>；先保证单点诊断准确，批量只是聚合</td></tr><tr><td>6</td><td>是否给"回流"入口（给玩家看裁定/config）</td><td>透明度 vs 沉浸</td><td><strong>不给全量</strong>；只给"我这条规则从哪来"的一句话溯源</td></tr><tr><td>7</td><td>里程碑 24 条是否偏多</td><td>需要实际游玩节奏</td><td>保持 24 条，但在 B7 手感期<strong>砍到 18–20</strong>（Steam 成就仍取 10 条）</td></tr><tr><td>8</td><td>内置地图截图的维护成本</td><td>改 UI 就要重拍 12–15 张</td><td>⚠ <strong>这条最该早定</strong>：建议教程图<strong>不含 UI 截图</strong>，只用示意图 + 文字，避免每次改 UI 重拍</td></tr><tr><td>9</td><td>Steam 成就中文本地化</td><td>发布后不能改</td><td>提前定稿清单，放 <code>i18n/</code> 与代码同一批冻结</td></tr><tr><td>10</td><td>是否接 Steam 云存档</td><td>与存档版本迁移耦合（§6.3）</td><td><strong>接</strong>，但必须等 <code>FORMAT_VERSION</code> 迁移链稳定（B1 后段），否则冲突会很难查</td></tr></tbody></table></div>
+<p>⚠ 第 8 条是我唯一建议"现在就定"的：它决定教程的<strong>载体形态</strong>，定晚了会白做一轮图。</p>
+<hr>
+<ul><li><strong>2026-11-22（三）</strong>：<strong>§14.2 / §14.3 扩充</strong> —— 底部工具 8 组→<strong>13 组 / 50 子工具</strong>；</li></ul>
+<p>  左侧信息视图 12→<strong>27 个 / 8 组</strong>（竖条改为两级：组 → 视图）。   新增"候选池"登记 14 类暂不实现的城市维度，理由写在正文：<strong>"没想到"不等于"不需要"，但不该先做空面板</strong>。</p>
+<ul><li><strong>2026-11-22（二）</strong>：<strong>§1.9 实现状态</strong>更新到当日（含 HUD 骨架与语言即时切换）；</li></ul>
+<p>  <strong>§十四 信息架构整节重写</strong>：顶数据 / 底建造 / 左 12 信息视图 / 右待定，可点元素图标化。</p>
+<ul><li><strong>2026-11-22</strong>：§二十一 待定项清理——#3 倍速（已定 1x/3x）、#11 日韩（R20 已定做）、#12 繁中词表（改为执行项）、</li></ul>
+<p>  #13 方言配音（R22 之下建议不做）。剩 7 条仍是真待定。</p>
+<ul><li><strong>2026-11-20（二）</strong>：<strong>多语言已接入 UI 骨架</strong>（新增 §19.5b 实现状态）。</li></ul>
+<p>  ⚠ 实际用 <strong>JSON + 运行时构建 <code>Translation</code></strong>，不是 CSV 导入链——   后者要编辑器跑导入，<code>--headless</code> 下很脆；JSON 走同一个 <code>TranslationServer</code>，   <code>tr()</code> 一样命中但不依赖导入缓存。<strong>等要外包翻译时再转 CSV。</strong>   已覆盖主菜单/设置页/关于页共 <strong>139 条</strong>，<code>--locale=en</code> 可切；其余五语回退中文。</p>
+<ul><li><strong>2026-11-20</strong>：三处按用户要求改：</li></ul>
+<p>  ① <strong>§1.4 设置页改为全屏单页</strong>（不是居中弹窗）—— 一行要放「标签+徽标+控件+说明」，      居中弹窗在 1440 宽下会被挤成两行；   ② <strong>新增"性能"分类</strong>（车辆/行人/props/摊贩/阴影/磨砂/远景层数），      ⚠ <strong>必须独立于"画质"</strong>（回答的是"跑不跑得动"不是"好不好看"），      且顶部常驻「只影响画面，不影响任何数值」；规则边界见 <code>11-scale</code> §八·六；   ③ ⚠ <strong>§20.7 推翻"字幕"设计</strong>：<strong>不做字幕层</strong>。理由不是省事——      <strong>环境音（叫卖/广场舞/警报）根本写不成字幕</strong>，而通知的字幕是 UI 已有信息的重复。      由此定下硬规则：⭐ <strong>任何"只通过声音传达"的信息都是设计错误</strong>。      无障碍里<strong>删掉"字幕大小"</strong>；VO-2 / VO-4b 同步改口径。</p>
+<ul><li><strong>2026-11-18（二）</strong>：<strong>§一 由一行状态机扩成完整菜单外壳规格</strong>（用户指出"一进游戏看到什么、</li></ul>
+<p>  怎么新建/读取存档、设置项、关于页、模组及 DLC 开关"全都还没写）：   ① <strong>主菜单</strong>（六入口 + 3D 活背景 + 无存档灰显 + 纯键盘可达）；   ② <strong>新游戏四步一屏</strong>（地图/模式/种子/<strong>预览</strong>）——⚠ 预览必须有，否则开局盲选、反复重开；   ③ <strong>读档卡片六要素</strong>（缩略图 / 日期 / 人口财政 / <strong>模式标记</strong> / 时间 / <strong>缺 Mod-DLC 警告</strong>）；   ④ <strong>设置分"即时"与"需重启"</strong>并标注；<strong>无障碍不是可选项</strong>；   ⑤ <strong>关于页</strong>含"复制诊断信息"（没有它，玩家报 bug 只会说"游戏崩了"）；   ⑥ ⚠ <strong>兼容性三种情况</strong>：版本升级自动迁移 / <strong>缺 DLC 只冻结不拒绝</strong> / <strong>缺 Mod 降级占位</strong>   —— 原则是 <strong>"宁可残缺打开，不要直接读不了"</strong>；   ⑦ <strong>模组管理</strong>（顺序/冲突/不兼容）+ <strong>DLC 开关</strong>（<strong>关闭只冻结不删除</strong>）。   新增 <strong>K28–K35</strong> 八条断言（2026-11-21 由 K33–K40 重编，消除 K28–K32 断号）。</p>
+<ul><li><strong>2026-11-17（四）</strong>：<strong>§二十 配音范围按用户明确收窄</strong> —— 主体是</li></ul>
+<p>  <strong>市民碎片语音（TTS）+ 演出人声（免版权采样）</strong>，通知播报降为"可选后置"。   新增 <strong>§20.3 演出人声：不要用 TTS 唱歌</strong>（SVS 是另一门技术；   <strong>现场从场外听人声本来就模糊，观众记住的是"那晚有演出"而不是歌词</strong>）。   环境音与 BGM 移到 <code>10-presentation</code> §七（它们不是配音）。</p>
+<ul><li><strong>2026-11-17（三）</strong>：新增 <strong>§十九 多语言</strong> 与 <strong>§二十 配音（TTS）</strong>。</li></ul>
+<p>  ① 多语言：首发<strong>三语</strong>（简中/繁中/英），不做全语言；⚠ <strong>禁止字符串拼接</strong>（中文看不出，翻英文必露）；   ⚠ <strong>CJK 字体必须子集化</strong>（20 MB → 2–3 MB）；⭐ <strong>中国概念保留拼音 + 解释不抹平</strong>   （学区房/城中村/单位大院/耕地红线/拆迁）——<strong>异域感本身就是卖点</strong>；   ⚠ <code>万/亿</code> 是中文独有进位，必须有转换函数；⚠ 中文"避头尾"要自己做（Godot 默认不做）。   ② 配音：<strong>TTS 预生成，不做实时</strong>；只做"通知播报 + 市民碎片"，不做剧情旁白；   ⚠ <strong>核心约束：播报文本不含任意数字</strong>（否则无法预生成）——只说定性，数字由 UI 显示；   量级 600 条 × 16 KB ≈ 10 MB，按语言分包；⚠ 两个风险：<strong>TTS 商用许可</strong>、   <strong>中文 TTS 硬伤（多音字/数字读法）必须人工逐条试听 360 条</strong>；   ⚠ 语音默认关闭，<strong>文字是主语音是辅，两者同源同 key</strong>。新增 I18N-1–I18N-6、VO-1–VO-6 十二条验收（编号 2026-11-21 改，原为 L1–L6 / V1–V6）。</p>
+<ul><li><strong>2026-11-17（二）</strong>：<strong>§十八 重写为三层结构</strong>（用户问「取消里程碑改成 Steam 成就是否可行」）。</li></ul>
+<p>  <strong>结论：可行但不能替换</strong> —— ⭐ 关键区别：<strong>里程碑是"这个城市的"（记达成年份、一局一份），   Steam 成就是"这个玩家的"（布尔值、账号级）</strong>。一个 400 年存档玩家会想知道"第 87 年通的地铁"，   成就给不了这个。改为：<strong>① 城市史 24 条（内建，必做）② 内建徽章（非 Steam 渠道用，必做）   ③ Steam 成就 10 条（镜像）</strong>。新增三条硬约束（发布后不能改名 / <strong>沙盒不推送</strong> /   必须走平台抽象层）、<strong><code>local_backend</code> + <code>steam_backend</code> 双实现</strong>（本地永远是真相，平台是镜像，   推送失败下次补推）、以及 K25–K27 三条验收。   ⚠ 核心判断：<strong>真正的节省是"一套数据、两个出口"，不是"砍掉一个"。</strong></p>
+<ul><li><strong>2026-11-17</strong>：新增 <strong>§十七 教程方案</strong> 与 <strong>§十八 里程碑设计（24 条）</strong>。</li></ul>
+<p>  ① 教程分三层：<strong>即时提示（内置）/ 内置图文（保证离线可看）/ 外链视频（B站/YouTube）</strong>；   ⚠ 抖音<strong>只做宣传引流，不做游戏内跳转</strong>（会唤起 App，PC 体验极差）；   ⚠ 断网时隐藏视频入口；⚠ 图文章节限制 12–15 页（改 UI 要重拍，太多维护不动）。   ② 里程碑 24 条分四组（成长 10 / 财政 5 / 形态交通 5 / <strong>最难 4</strong>），   ⚠ <strong>一条硬规则：里程碑不给任何数值奖励</strong>（只给统计页/造景模式/徽章），   否则玩家会为凑里程碑而规划，模拟的诚实性就没了。   ⚠ 未达成的不显示（不做好看的灰色列表，那会变成任务清单）。   新增 K20–K24 五条验收。</p>
+<ul><li><strong>2026-11-16（二）</strong>：新增 <strong>§十一–§十六</strong>，补齐游戏逻辑的五个空白：</li></ul>
+<p>  <strong>① 诊断与归因</strong>（"为什么不长"——八条原因按优先级只返回第一条 + 一步到解决，   以及全城级归因"我的城市卡在哪"）；<strong>② 通知分级与防轰炸</strong>   （三级，<strong>任何通知都不暂停游戏</strong>，同类 30 秒合并，每分钟上限 2 条）；   <strong>③ 政策工具箱</strong>（六个旋钮，<strong>每个都必须有代价，不许纯增益</strong>）；   <strong>④ 信息架构</strong>（顶栏 4 项 / 三面板各回答一个问题 / 热力图带数值刻度 /   <strong>财政面板必须单独高亮"卖地占比"</strong>，否则胜利条件玩家感知不到）；   <strong>⑤ 新建游戏流程</strong>（内置 3 张不同地形的地图，避免"一张平原图让玩家以为只有一种玩法"）。   新增 K14–K19 六条验收。</p>
+<ul><li><strong>2026-11-16</strong>：首版。依据用户「接下来光顾着模拟，一些逻辑到现在也没说」——</li></ul>
+<p>  <strong>补齐一直被跳过的"游戏怎么转"这一层</strong>：游戏状态机、时间控制、三种基本操作、   开局 15 分钟的交互脚本、<strong>建造五道校验（每条提示都带数字）</strong>、   三种失败的判定/预警/挽回、<strong>存档存什么不存什么</strong>、版本迁移、   渐进披露、<strong>基准城市 + 三个平衡回归（K1–K3）</strong>、13 条验收断言。</p><div class="pager"><a href="design-10-presentation.html">← 10 · 表现层：视觉基准、资产管线、UI 与音效</a><a href="design-11-scale.html">11 · 规模架构（Megacity Scale） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-游戏状态机">一、游戏状态机</a><a class="l3" href="#1-1-主菜单-玩家看到的第一个自定义画面">1.1 主菜单（玩家看到的第一个自定义画面）</a><a class="l3" href="#1-2-新游戏-四步-一屏完成">1.2 新游戏：四步，一屏完成</a><a class="l3" href="#1-3-读取存档-卡片要显示-足够判断的信息">1.3 读取存档：卡片要显示"足够判断的信息"</a><a class="l3" href="#1-4-设置-全屏单页-分-即时-与-需重启">1.4 设置：全屏单页，分"即时"与"需重启"</a><a class="l3" href="#1-5-关于页-不只是-credits">1.5 关于页：不只是 Credits</a><a class="l3" href="#1-6-兼容性-三种-读不了-必须区分">1.6 ⚠ 兼容性：三种"读不了"必须区分</a><a class="l3" href="#1-7-模组管理">1.7 模组管理</a><a class="l3" href="#1-8-dlc-开关">1.8 DLC 开关</a><a class="l3" href="#1-9-实现状态-2026-11-22">1.9 实现状态（2026-11-22）</a><a class="l3" href="#1-9b-验收点">1.9b 验收点</a><a class="l2" href="#二-时间控制">二、时间控制</a><a class="l2" href="#三-玩家操作-三种基本动作">三、玩家操作：三种基本动作</a><a class="l3" href="#3-1-开局-15-分钟应该发生什么-这是最重要的交互设计">3.1 开局 15 分钟应该发生什么（这是最重要的交互设计）</a><a class="l2" href="#四-建造校验-五道-每道都要给具体理由">四、建造校验：五道，每道都要给具体理由</a><a class="l2" href="#五-失败判定-三种-每条都要有预警与挽回窗口">五、失败判定：三种，每条都要有预警与挽回窗口</a><a class="l3" href="#5-1-结束之后">5.1 结束之后</a><a class="l2" href="#六-存档-存什么-不存什么-怎么迁移">六、存档：存什么、不存什么、怎么迁移</a><a class="l3" href="#6-1-存-真值">6.1 存（真值）</a><a class="l3" href="#6-2-不存-派生-读档重算">6.2 不存（派生，读档重算）</a><a class="l3" href="#6-3-版本迁移">6.3 版本迁移</a><a class="l2" href="#七-提示与渐进披露">七、提示与渐进披露</a><a class="l2" href="#八-平衡流程-靠-基准城市-不靠手感">八、平衡流程：靠"基准城市"，不靠手感</a><a class="l3" href="#8-1-基准城市-balance-baseline">8.1 基准城市（Balance Baseline）</a><a class="l3" href="#8-2-三个平衡回归-每次调数值都要过">8.2 三个平衡回归（每次调数值都要过）</a><a class="l2" href="#九-验收点">九、验收点</a><a class="l2" href="#十-空号-保留-不复用">十、⚠ 空号（保留，不复用）</a><a class="l2" href="#十一-诊断-让玩家知道-为什么不长">十一、诊断：让玩家知道"为什么不长"⭐</a><a class="l3" href="#11-1-建造校验-vs-生长诊断-两件事-别混">11.1 建造校验 vs 生长诊断（两件事，别混）</a><a class="l3" href="#11-2-诊断原因表-每个-parcel-都能查">11.2 诊断原因表（每个 parcel 都能查）</a><a class="l3" href="#11-3-全城级的-为什么长不快">11.3 全城级的"为什么长不快"</a><a class="l2" href="#十二-通知-分级-防轰炸">十二、通知：分级 + 防轰炸</a><a class="l3" href="#12-1-三级-只有一级能打断">12.1 三级，只有一级能打断</a><a class="l3" href="#12-2-防轰炸三条规则">12.2 防轰炸三条规则</a><a class="l3" href="#12-3-通知必须可追溯">12.3 通知必须可追溯</a><a class="l2" href="#十三-政策工具箱-玩家能拧的旋钮">十三、政策工具箱：玩家能拧的旋钮</a><a class="l2" href="#十四-信息架构-2026-11-22-按开发者要求重排">十四、信息架构（2026-11-22 按开发者要求重排）</a><a class="l3" href="#14-1-顶部-存档城市名-4-项数据">14.1 顶部：存档城市名 + 4 项数据</a><a class="l3" href="#14-2-底部-所有-建-与-规划-13-组-50-个子工具">14.2 底部：所有「建」与「规划」（13 组 / 50 个子工具）</a><a class="l3" href="#14-3-左侧-27-个信息视图-8-组-只-看-不改">14.3 左侧：27 个信息视图 / 8 组（只"看"，不改）</a><a class="l4" href="#候选池-想得到-但现在不做">候选池（想得到、但现在不做）</a><a class="l3" href="#14-4-右侧-待定-留白">14.4 右侧：待定（留白）</a><a class="l3" href="#14-5-热力图-6-种-可叠-2-层">14.5 热力图（6 种，可叠 2 层）</a><a class="l3" href="#14-6-放置规则-每个工具能放哪-要接什么-多少钱-2026-11-23">14.6 放置规则：每个工具能放哪、要接什么、多少钱（2026-11-23）</a><a class="l2" href="#十五-新建游戏流程">十五、新建游戏流程</a><a class="l2" href="#十六-补充验收点">十六、补充验收点</a><a class="l2" href="#十七-教程-内置图文-外链视频-2026-11-17-定案">十七、教程：内置图文 + 外链视频（2026-11-17 定案）</a><a class="l3" href="#17-1-三层-各管各的">17.1 三层，各管各的</a><a class="l3" href="#17-2-视频平台策略">17.2 视频平台策略</a><a class="l3" href="#17-3-实现">17.3 实现</a><a class="l2" href="#十八-里程碑-城市史-steam-成就-三层-不是替换-2026-11-17">十八、里程碑 / 城市史 / Steam 成就：三层，不是替换（2026-11-17）</a><a class="l3" href="#18-0-关键区别-里程碑是-这个城市的-成就是-这个玩家的">18.0 ⭐ 关键区别：里程碑是"这个城市的"，成就是"这个玩家的"</a><a class="l3" href="#18-1-三层结构">18.1 三层结构</a><a class="l3" href="#18-2-steam-成就的-10-条-从-24-条里挑">18.2 Steam 成就的 10 条（从 24 条里挑）</a><a class="l3" href="#18-3-steam-成就的三个硬约束">18.3 ⚠ Steam 成就的三个硬约束</a><a class="l3" href="#18-4-平台抽象层-这个不能省">18.4 平台抽象层（这个不能省）</a><a class="l3" href="#18-5-所以-取消里程碑-不成立-但可以这样理解">18.5 所以"取消里程碑"不成立，但可以这样理解</a><a class="l3" href="#18-6-一条硬规则-里程碑不给数值奖励">18.6 ⭐ 一条硬规则：里程碑不给数值奖励</a><a class="l3" href="#18-7-四组-共-24-条">18.7 四组，共 24 条</a><a class="l3" href="#18-8-呈现方式">18.8 呈现方式</a><a class="l3" href="#18-9-验收点">18.9 验收点</a><a class="l2" href="#十九-多语言-翻译是本地化-不是替换-2026-11-17">十九、多语言：翻译是本地化，不是替换（2026-11-17）</a><a class="l3" href="#19-1-八语-2026-11-17-用户确定">19.1 八语（2026-11-17 用户确定）</a><a class="l3" href="#19-2-cjk-四语-真正的成本在这里">19.2 ⚠ CJK 四语：真正的成本在这里</a><a class="l3" href="#19-3-字体子集化策略-八语合并">19.3 字体子集化策略（八语合并）</a><a class="l3" href="#19-4-文本膨胀率-ui-必须按最长语言设计">19.4 ⚠ 文本膨胀率：UI 必须按最长语言设计</a><a class="l3" href="#19-5-技术选型">19.5 技术选型</a><a class="l3" href="#19-5b-实现状态-2026-11-20-ui-骨架已接入">19.5b 实现状态（2026-11-20，UI 骨架已接入）</a><a class="l3" href="#19-6-中国概念怎么翻-保留-不抹平">19.6 ⚠ 中国概念怎么翻：保留，不抹平</a><a class="l3" href="#19-7-数字与单位-中文独有格式必须转换">19.7 数字与单位：中文独有格式必须转换</a><a class="l3" href="#19-8-中文排版-容易被忽略但很显眼">19.8 中文排版（容易被忽略但很显眼）</a><a class="l3" href="#19-9-阿拉伯语-暂不做-但布局必须预留">19.9 阿拉伯语：暂不做，但布局必须预留</a><a class="l3" href="#19-10-翻译工作流-八语的现实问题">19.10 翻译工作流（八语的现实问题）</a><a class="l3" href="#19-11-验收点">19.11 验收点</a><a class="l2" href="#二十-配音-tts-预生成-文字为主-2026-11-17">二十、配音：TTS 预生成，文字为主（2026-11-17）</a><a class="l3" href="#20-1-先问一个更根本的问题-这游戏需要配音吗">20.1 先问一个更根本的问题：这游戏需要配音吗</a><a class="l3" href="#20-2-范围-2026-11-17-用户明确">20.2 范围（2026-11-17 用户明确）</a><a class="l3" href="#20-3-演出人声-不要用-tts-唱歌">20.3 演出人声：不要用 TTS 唱歌</a><a class="l3" href="#20-4-关键约束-播报文本必须-可预生成">20.4 ⚠ 关键约束：播报文本必须"可预生成"</a><a class="l3" href="#20-4-1-配音只做中文-2026-11-18-定-r22">20.4.1 ⚠ 配音只做中文（2026-11-18 定，R22）</a><a class="l3" href="#20-5-量级估算">20.5 量级估算</a><a class="l3" href="#20-6-必须提醒的两个风险">20.6 ⚠ 必须提醒的两个风险</a><a class="l3" href="#20-7-不做字幕层-2026-11-20-决定">20.7 不做字幕层（2026-11-20 决定）</a><a class="l3" href="#20-8-验收点">20.8 验收点</a><a class="l2" href="#二十一-待定">二十一、待定</a><a class="l3" href="#21-1-剩下这几条需要开发者拍-ai-只给建议-不拍">21.1 剩下这几条需要开发者拍（AI 只给建议，不拍）</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

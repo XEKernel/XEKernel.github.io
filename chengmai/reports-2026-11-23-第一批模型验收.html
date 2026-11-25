@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第一批模型验收（2026-11-23） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" class="on" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 审查与报告</div><h1 id="第一批模型验收-2026-11-23">第一批模型验收（2026-11-23）</h1>
+<blockquote>对象：<code>assets/models/buildings/</code> 下 8 个模型（<code>docs/assets/batch-01.md</code> 的第一批）<br>工具：<code>bench/check_assets.py</code>（本次新建）、<code>bench/glb_inventory.py</code><br>结论：<strong>8/8 交付完整，0 条 FAIL，1 条 WARN（合理）</strong>。可以进 B3 当占位。</blockquote>
+<hr>
+<h2 id="一-交付完整性">一、交付完整性</h2>
+<div class="tw"><table><thead><tr><th>模型</th><th>glb</th><th>slots.json</th><th>SOURCE.md</th><th>regions.json</th><th>checks</th><th>tex</th></tr></thead><tbody><tr><td><code>vlg_court</code> 独院农房</td><td>2</td><td>✅</td><td>✅</td><td>✅</td><td>4</td><td>4</td></tr><tr><td><code>city_slab</code> 高层板楼</td><td>2</td><td>✅</td><td>✅</td><td>✅</td><td>4</td><td>4</td></tr><tr><td><code>shop_street</code> 沿街商铺</td><td>2</td><td>✅</td><td>✅</td><td>✅</td><td>4</td><td>4</td></tr><tr><td><code>factory</code> 标准厂房</td><td>2</td><td>✅</td><td>✅</td><td>✅</td><td>4</td><td>4</td></tr><tr><td><code>bus_stop</code> 公交站台</td><td>2</td><td>✅</td><td>✅</td><td>✅</td><td>4</td><td>4</td></tr><tr><td><code>gas_station</code> 加油站</td><td>2</td><td>✅</td><td>✅</td><td>✅</td><td>4</td><td>4</td></tr><tr><td><code>adm_fire</code> 消防站</td><td>2</td><td>✅</td><td>✅</td><td>✅</td><td>4</td><td>4</td></tr><tr><td><code>construction</code> 在建工地</td><td>2</td><td>✅</td><td>✅</td><td>✅</td><td>4</td><td>4</td></tr></tbody></table></div>
+<p>16 个 glb / 31.8 MB。<strong>8 个模型全部带 l0 + l1 两档</strong>，checks 里有 t1/t2/t3/t5 四张降级图。</p>
+<h2 id="二-技术合规-脚本判定">二、技术合规（脚本判定）</h2>
+<div class="tw"><table><thead><tr><th>检查项</th><th>结果</th></tr></thead><tbody><tr><td>材质槽名 = <code>body/roof/base/glass/metal/sign</code></td><td>✅ <strong>8/8 全对</strong>（这是最关键的，降级全指望它）</td></tr><tr><td>材质数 ≤ 6</td><td>✅ 全部正好 6</td></tr><tr><td>图集 ≤ 2 张</td><td>✅ 全部 2 张（6 个材质共享 2 张图，做法正确）</td></tr><tr><td>底面在 y=0</td><td>✅ 全部 <code>minY = 0.000</code></td></tr><tr><td>单体化（包围盒 ≤200 m）</td><td>✅ 最大 96.6 m（厂房）</td></tr><tr><td>贴图存在</td><td>✅ 16/16 有贴图（不是灰模）</td></tr><tr><td>命名</td><td>✅ <code>&amp;lt;id&amp;gt;_v01_l0.glb</code></td></tr></tbody></table></div>
+<p><strong>面数</strong>（预算 T1 ≤ 3 万）：</p>
+<div class="tw"><table><thead><tr><th>模型</th><th>l0</th><th>l1</th><th>说明</th></tr></thead><tbody><tr><td>city_slab</td><td>12,426</td><td>5,506</td><td>唯一过万的，窗格+空调架是几何堆出来的</td></tr><tr><td>shop_street</td><td>5,310</td><td>3,434</td><td></td></tr><tr><td>adm_fire</td><td>4,410</td><td>3,288</td><td></td></tr><tr><td>construction</td><td>3,306</td><td>2,634</td><td></td></tr><tr><td>factory</td><td>3,288</td><td>2,932</td><td></td></tr><tr><td>gas_station</td><td>1,634</td><td>1,634</td><td>⚠ l1 面数没降（只降了贴图）</td></tr><tr><td>vlg_court</td><td>1,206</td><td>786</td><td></td></tr><tr><td>bus_stop</td><td>708</td><td>600</td><td></td></tr></tbody></table></div>
+<h2 id="三-视觉验收-我逐张看了-checks">三、视觉验收（我逐张看了 checks）</h2>
+<div class="tw"><table><thead><tr><th>验收点</th><th>结论</th></tr></thead><tbody><tr><td><strong>T3 消防站：红色车库门是否实体</strong></td><td>✅ 门是<strong>凹进去的实体</strong>、上方蓝条、训练塔带爬梯、场地红铺装。纯色下单靠"红门 + 塔"就能认出是消防站</td></tr><tr><td><strong>T5 农房：白模能否认出</strong></td><td>✅ 坡屋顶 + 院墙围合 + 栏杆大门 + 窗洞全在，远看像"一户人家"</td></tr><tr><td><strong>T3 板楼：窗是不是几何</strong></td><td>✅ 窗是凹进 + 独立玻璃面，<strong>能数清 11 层与单元数</strong>，空调机位是几何小块</td></tr><tr><td><strong>T1 底商：是否有"参差"</strong></td><td>✅ 六间店面<strong>高低不齐</strong>（两段高、两段退台），招牌各不相同（兰州拉面/沙县小吃/五金建材/条纹雨棚/黑雨棚），卷帘门齐</td></tr><tr><td><strong>T3 塔吊工地</strong></td><td>✅ 塔吊<strong>独立落地</strong>（自己的混凝土基础 + 配重 + 吊钩），防尘网是实体板，顶部露筋未完工</td></tr><tr><td><strong>T3 加油站</strong></td><td>✅ 大罩棚 + 4 台加油机 + 便利店 + 红条 + 价格牌</td></tr></tbody></table></div>
+<p><strong>这一批最难的三个点都过了</strong>：红门是实体、窗格是几何、店面参差不是整齐一排。</p>
+<h2 id="四-问题与建议-4-条-都不影响入库">四、问题与建议（4 条，都不影响入库）</h2>
+<h3 id="4-1-construction-水平中心偏移-5-50-m">4.1 ⚠ construction 水平中心偏移 5.50 m</h3>
+<p>原因是塔吊站在楼旁边、吊臂伸出很远——<strong>这本身是对的</strong>（真实工地就这样）。但 <code>check_assets.py</code> 会报 WARN， 因为按包围盒中心摆放时这栋楼会歪 5.5 m。</p>
+<p><strong>处理</strong>：在 <code>SOURCE.md</code> 里注明"轴心在楼体 footprint 中心，非包围盒中心"，放置时按 footprint 对齐。 （如果以后要自动摆放，需要读 <code>regions.json</code> 里的 footprint 而不是包围盒。）</p>
+<h3 id="4-2-gas_station-的-l1-与-l0-面数相同-1634-1634">4.2 ⚠ gas_station 的 l1 与 l0 面数相同（1634 = 1634）</h3>
+<p>降级只体现在贴图（2.6 MB → 1.38 MB）。<strong>这不算错</strong>——1 600 面本来就没得减。 但要在 <code>SOURCE.md</code> 写一句"L1 靠贴图降级"，否则以后有人看面数会以为漏做了低模。</p>
+<h3 id="4-3-面数普遍远低于预算-1-2k-12k-vs-30k">4.3 面数普遍远低于预算（1.2k–12k vs 30k）</h3>
+<p><strong>好处</strong>：性能友好，<code>11-scale</code> 的 draw call 预算压力小。 <strong>隐患</strong>：省下来的面数没用在"轮廓"上——而<strong>白模档（T5）只有轮廓</strong>。 建议下一批把余量花在这些地方：<strong>檐口出挑、女儿墙压顶、阳台进深差、围墙压顶、屋顶设备</strong>。 这些细节在贴图全关之后仍然可见。</p>
+<h3 id="4-4-命名有两套编号-容易混">4.4 命名有两套编号，容易混</h3>
+<ul><li>模型文件：<code>_l0</code> / <code>_l1</code>（LOD 层级）</li><li>检查图：<code>_t1/_t2/_t3/_t5</code>（画质档 T0–T5）</li></ul>
+<p>LOD 与 T 档是<strong>两件事</strong>（一个是几何层级，一个是玩家可选的画质档）。建议统一成 <code>&amp;lt;id&amp;gt;_v01_lod0.glb</code> + <code>checks/&amp;lt;id&amp;gt;_t3.png</code>，避免以后有人以为 <code>l0</code> 就是"最高画质"。</p>
+<h2 id="五-一个必须记进文档的事实-这批不是-ai-生成">五、⭐ 一个必须记进文档的事实：这批不是"AI 生成"</h2>
+<p><code>SOURCE.md</code> 写的是：</p>
+<blockquote>来源：本项目程序化建模（Blender bmesh 脚本生成），非外部资产<br>生成脚本：<code>tools/blender/batch01/b01_build.py</code></blockquote>
+<p>也就是说：<strong>实际走的是"程序化脚本建模"路线，不是图像/3D 生成 AI。</strong> 这对项目其实是<strong>好事</strong>（可复现、参数化、没有版权风险、命名与槽名能精确控制），但必须记实， 否则会出现两种混乱：</p>
+<ol><li>以后有人拿 <code>14-model-prompts.md</code> 的提示词去喂图像 AI，得到的东西和这批风格不一致；</li><li>有人以为"提示词"是给 AI 的，实际上在这条路线里它是<strong>规格说明书</strong>。</li></ol>
+<p>已在 <code>14-model-prompts.md</code> 补 §零 说明两条路线。</p>
+<h2 id="六-结论">六、结论</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>结论</th></tr></thead><tbody><tr><td>能否进 B3 占位</td><td>✅ 可以</td></tr><tr><td>能否进 B7 正式画面</td><td>🟡 可以，但先按 §4.1–4.3 修一轮</td></tr><tr><td>本批最大收获</td><td><strong>证明"六个固定材质槽 + 几何承担结构"这套规范是可执行的</strong>——8/8 全部照做，T3/T5 两档没有翻车</td></tr><tr><td>下一步</td><td>让建模方按 §4 修 4 条 → 再出第二批（道路/车辆/标识）</td></tr></tbody></table></div>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-23</strong>：首版。用新建的 <code>bench/check_assets.py</code> 跑准入（0 FAIL / 1 WARN），逐张看 checks 验收 6 个关键点，</li></ul>
+<p>  提出 4 条修正（塔吊轴心、加油站 L1 说明、面数余量用在轮廓、命名统一），   并记录"本批实为程序化脚本建模而非 AI 生成"这一事实。</p><div class="pager"><a href="reports-2026-11-22-语言策略.html">← 语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a><a href="reports-index.html">报告索引 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-交付完整性">一、交付完整性</a><a class="l2" href="#二-技术合规-脚本判定">二、技术合规（脚本判定）</a><a class="l2" href="#三-视觉验收-我逐张看了-checks">三、视觉验收（我逐张看了 checks）</a><a class="l2" href="#四-问题与建议-4-条-都不影响入库">四、问题与建议（4 条，都不影响入库）</a><a class="l3" href="#4-1-construction-水平中心偏移-5-50-m">4.1 ⚠ construction 水平中心偏移 5.50 m</a><a class="l3" href="#4-2-gas_station-的-l1-与-l0-面数相同-1634-1634">4.2 ⚠ gas_station 的 l1 与 l0 面数相同（1634 = 1634</a><a class="l3" href="#4-3-面数普遍远低于预算-1-2k-12k-vs-30k">4.3 面数普遍远低于预算（1.2k–12k vs 30k）</a><a class="l3" href="#4-4-命名有两套编号-容易混">4.4 命名有两套编号，容易混</a><a class="l2" href="#五-一个必须记进文档的事实-这批不是-ai-生成">五、⭐ 一个必须记进文档的事实：这批不是"AI 生成"</a><a class="l2" href="#六-结论">六、结论</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

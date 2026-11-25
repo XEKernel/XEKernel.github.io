@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>14 · AI 建模提示词规范（中国建筑） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" class="on" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 资产与建模</div><h1 id="14-ai-建模提示词规范-中国建筑">14 · AI 建模提示词规范（中国建筑）</h1>
+<blockquote><strong>本篇给"用 AI 生成建筑模型"这件事定规矩</strong>：怎么描述、怎么保证不重样、怎么入库。<br>上游约束：<code>10-presentation.md</code> §五（资产管线：glTF / 米 / 轴心 / LOD / 图集）；<br>类型谱系：<code>03-zoning.md</code> §二（用地分类）与 <code>12-china-features.md</code>（中国特色台账）。</blockquote>
+<hr>
+<h2 id="〇-先说清楚-这是两条路线-别混">〇、先说清楚：这是<strong>两条路线</strong>，别混</h2>
+<div class="tw"><table><thead><tr><th>路线</th><th>谁在做</th><th>本文件的角色</th><th>第一批实际用了吗</th></tr></thead><tbody><tr><td><strong>A 程序化脚本建模</strong></td><td>Blender <code>bmesh</code> 脚本（<code>tools/blender/batch01/</code>）</td><td>本文件是<strong>规格说明书</strong>（尺寸/槽名/降级要求）</td><td>✅ <strong>第一批走的就是这条</strong></td></tr><tr><td>B 图像/3D 生成 AI</td><td>提示词喂给生成模型</td><td>本文件是<strong>提示词模板</strong></td><td>❌ 暂未使用</td></tr></tbody></table></div>
+<p>⚠ <strong>为什么这条要写清楚</strong>：第一批的 <code>SOURCE.md</code> 明确写着"程序化建模（Blender bmesh 脚本生成），非外部资产"。 好处是<strong>可复现、可参数化、没有版权风险、槽名与命名能精确控制</strong>；代价是风格受脚本能力限制。 所以：<strong>拿本文件的提示词去喂图像 AI，结果不会和第一批一致</strong>——那是另一条路线，要单独验一轮。</p>
+<p>本文件的 §五（按类型的变化轴与中国要素）、§八（招牌不翻译）、§九（降级约束）<strong>两条路线都适用</strong>； §四（提示词骨架）只在路线 B 用。</p>
+<h2 id="一-先说现有模型盘点-2026-11-23-实测">一、先说现有模型盘点（2026-11-23 实测）</h2>
+<p>用 <code>bench/glb_inventory.py</code> 直接读 GLB 的 JSON chunk 统计（不解包、不依赖 Blender）：</p>
+<p><strong>46 个模型 / 合计 420.7 MB / 有贴图 21 个 / 无贴图 25 个</strong></p>
+<div class="tw"><table><thead><tr><th>批次</th><th>内容</th><th>贴图</th><th>单模型大小</th><th>面数</th><th>判断</th></tr></thead><tbody><tr><td><code>residential-10/</code> <code>r1</code>–<code>r10</code></td><td>10 个住宅（小区级）</td><td>✅ 14–22 张</td><td><strong>7.8–14.8 MB</strong></td><td>1.0–3.1 万</td><td>🟡 <strong>能用，但要减负</strong></td></tr><tr><td><code>industrial-8/</code> <code>i1</code>–<code>i8</code></td><td>8 个工业厂区</td><td>✅ 33–41 张</td><td><strong>22.2–25.4 MB</strong></td><td>1.6–4.8 万</td><td>❌ <strong>太重，必须重做贴图</strong></td></tr><tr><td><code>civic-site/</code></td><td>消防站/派出所/商场/写字楼/厂房/电厂/学校</td><td>❌ 0</td><td>0.44–0.85 MB</td><td>0.9–2.2 万</td><td>🟡 无贴图，几何可用</td></tr><tr><td><code>civic-site/urban-mix/</code></td><td>沿街商业/商场/双塔/塔楼/住宅</td><td>❌ 0</td><td>0.18–1.03 MB</td><td>0.4–2.3 万</td><td>🟡 同上</td></tr><tr><td><code>residential-10/</code> <code>residential_*</code></td><td>早期测试（5F/10F/20F/30F 等）</td><td>❌ 0</td><td>0.17–3.07 MB</td><td>0.3–6.3 万</td><td>🟡 可作 LOD 低模参考</td></tr><tr><td><code>*_full</code> / <code>civic_district_full</code> / <code>industrial_park_full</code></td><td><strong>整个片区</strong></td><td>部分</td><td>5.6–46 MB</td><td>12.7–30.3 万</td><td>❌ 片区级，不进游戏（我们要单体 + 实例化）</td></tr></tbody></table></div>
+<h3 id="1-1-三个必须先解决的技术问题">1.1 三个必须先解决的技术问题</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>问题</th><th>证据</th><th>怎么办</th></tr></thead><tbody><tr><td>1</td><td><strong>贴图把体积吃光了</strong></td><td>工业模型 22–25 MB、面数才 1.6–4.8 万；单个 glb 内嵌 32–39 张图 ⇒ 平均每张 ~600 KB（等于未压缩 1024² PNG）</td><td>走图集：≤2 张 4096²，转 KTX2/Basis。<strong>这类模型一个都不该超过 5 MB</strong></td></tr><tr><td>2</td><td><strong>一半没贴图</strong></td><td>25/46 无 <code>textures</code></td><td>无贴图的只能当灰模/远景；主体建筑必须有材质</td></tr><tr><td>3</td><td><strong>单体化不清</strong></td><td><code>r1_yunjintai</code> 包围盒 446×63×34 m、<code>residential10_full</code> 1600×102 m ⇒ 一个 glb 里塞了整个小区</td><td>进游戏前<strong>必须拆成单体</strong>（我们要 MultiMesh 实例化，不是整片塞进来）；片区级模型只当"参考图/背景板"</td></tr></tbody></table></div>
+<p>⚠ 包围盒是按 accessor 的 min/max 合起来的<strong>近似值</strong>（没乘节点变换），尺寸判断留有余量； 但"446 m 长的住宅"这种量级差一眼就能看出是片区级，不是单体。</p>
+<h3 id="1-2-现有资产怎么用-结论">1.2 现有资产怎么用（结论）</h3>
+<div class="tw"><table><thead><tr><th>用在哪</th><th>用哪些</th></tr></thead><tbody><tr><td><strong>主城可见建筑（游戏内）</strong></td><td>❌ 现在一个都不能直接进：要么缺贴图，要么太重。<strong>r1–r10 减面+压图后可用</strong>（目标 ≤5 MB/栋）</td></tr><tr><td><strong>参考与配色</strong></td><td>✅ 全部可用：当"中国住宅长什么样"的参照，写提示词时对着看</td></tr><tr><td><strong>LOD 低模</strong></td><td>🟡 <code>residential_*</code> 那批 0.2–0.6 MB 的可以改造成 LOD2/LOD3</td></tr><tr><td><strong>菜单/宣传图</strong></td><td>✅ 片区级 <code>*_full</code> 直接能当背景板</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-入库技术契约-不满足不进-assets-buildings">二、入库技术契约（不满足不进 assets/buildings/）</h2>
+<p>照 <code>10-presentation</code> §五，这里只列<strong>AI 生成最容易违反</strong>的几条：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>要求</th><th>为什么</th></tr></thead><tbody><tr><td>单位</td><td><strong>米</strong>，Y-up，正面朝 <strong>−Z</strong></td><td>引擎与 Godot 约定；不统一就得逐个手转</td></tr><tr><td>轴心</td><td><strong>底面中心</strong></td><td>实例化按地块中心摆放，轴心错了整条街歪</td></tr><tr><td>单体化</td><td><strong>一个 glb = 一栋/一个设施</strong></td><td>MultiMesh 实例化前提；片区级模型无法复用</td></tr><tr><td>三角面</td><td>单体 ≤ <strong>3 万</strong>（主城 LOD0）；≤ 8000（LOD1）；≤ 1500（LOD2）</td><td><code>11-scale</code> 的 draw call 预算</td></tr><tr><td>贴图</td><td><strong>≤ 2 张 4096² 图集</strong>，KTX2/Basis</td><td>工业那批就是反例：39 张图 → 25 MB</td></tr><tr><td>材质</td><td><strong>每模型 1 个材质</strong>（多材质会拆 draw call）</td><td>同前</td></tr><tr><td>命名</td><td><code>&amp;lt;类型&amp;gt;_&amp;lt;风格&amp;gt;_&amp;lt;变体&amp;gt;_&amp;lt;LOD&amp;gt;.glb</code>，如 <code>res_banlou_tile_03_l0.glb</code></td><td>批量生成必须可追溯</td></tr></tbody></table></div>
+<hr>
+<h2 id="三-不重样-三类规则-别一刀切">三、⭐ 不重样：三类规则，别一刀切</h2>
+<blockquote>开发者原话：「建筑不能重样，就算是不同小区之间的建筑也有所差别。住宅这里好说，基本上长得都大差不差，<br>除了外形以及玻璃面积还要占地；主要是工业和商业以及服务设施这些，这些是几乎不可能重样的，除非是同一家公司的。」</blockquote>
+<p>这段话本身就是规则，把它拆成三类：</p>
+<div class="tw"><table><thead><tr><th>类别</th><th>规则</th><th>例子</th></tr></thead><tbody><tr><td><strong>A. 允许家族化</strong>（同小区/同开发商内部可以像）</td><td>同一 <code>compound</code> 内共用 1–2 个原型 + 参数微调</td><td>一个小区里 8 栋楼，同色同风格、只变层数与进深</td></tr><tr><td><strong>B. 必须多样</strong>（跨小区/跨厂必须不同）</td><td>每栋独立生成，且必须跨过至少 3 条"变化轴"</td><td>化工厂 vs 纺织厂 vs 电子厂；百货 vs 购物中心 vs 街铺</td></tr><tr><td><strong>C. 允许统一</strong>（真实世界就是连锁）</td><td>同一品牌连锁可复用同一模型</td><td>银行网点、便利店、加油站、快餐、快递驿站的<strong>招牌与配色</strong>统一，<strong>但体量随地块变</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>C 类只统一"招牌与配色"，不统一体量</strong>：同一个银行在不同地块上，楼可以完全不同，只是招牌一样。 ⚠ 判定"重样"的标准不是外观一样，而是<strong>同一屏内出现两个几乎相同的体量轮廓</strong>——那才出戏。</p>
+<hr>
+<h2 id="四-提示词骨架-所有类型共用">四、提示词骨架（所有类型共用）</h2>
+<pre class="code"><code>【主体】&lt;类型&gt;，&lt;风格/年代&gt;，&lt;体量描述&gt;，中国&lt;城市等级&gt;（县/地级市/省会/一线）
+【规模】占地约 &lt;X&gt; m × &lt;Y&gt; m，&lt;层数&gt; 层，总高约 &lt;H&gt; m，容积率约 &lt;FAR&gt;
+【材质】&lt;外墙材料&gt;，&lt;颜色&gt;，&lt;屋顶材料&gt;，&lt;门窗材质&gt;
+【中国要素】&lt;从 §五 的要素清单里挑 2–4 条，必须具体&gt;
+【细节】&lt;3–5 条，例如女儿墙/空调外机/防盗窗/雨棚/招牌&gt;
+【相机】等轴测视角 / 三分之四俯视，白底或浅灰底，无环境
+【技术】单体建筑，单位米，轴心在底面中心，正面朝 -Z，单一材质，贴图集 ≤2 张 4096
+【负向】&lt;见下&gt;</code></pre>
+<p><strong>通用负向（每次都要带）</strong></p>
+<pre class="code"><code>欧式尖顶, 美式木屋, 玻璃幕墙盒子, 悬浮的空调外机, 没有围墙的住宅, 平白无设备的屋顶,
+多余的树与人, 透视畸变, 夸张光影, 多个建筑拼在一起, 低模穿帮, 镜像重复</code></pre>
+<p><strong>为什么必须点名"中国要素"</strong>：AI 的默认先验是欧美建筑。不点名，十次有八次给你一栋带斜屋顶的美式别墅。</p>
+<hr>
+<h2 id="五-按类型-变化轴-中国要素-可复制提示词">五、按类型：变化轴 + 中国要素 + 可复制提示词</h2>
+<h3 id="5-1-住宅-允许家族化">5.1 住宅（允许家族化）</h3>
+<div class="tw"><table><thead><tr><th>原型</th><th>变化轴（同小区内只变这几项）</th><th>必含中国要素</th></tr></thead><tbody><tr><td><strong>板楼</strong>（多层/小高层）</td><td>层数（6/11/18）、进深、单元数、阳台形式（内凹/凸出/封闭）、屋顶（平/坡）</td><td>空调外机架、防盗窗、女儿墙、单元门雨棚、外挂瓷砖或真石漆</td></tr><tr><td><strong>塔楼</strong>（高层）</td><td>标准层形状（方/十字/蝶形）、核心筒位置、顶部收分、玻璃占比</td><td>塔楼裙房、电梯机房凸出、外墙分格、晾衣杆</td></tr><tr><td><strong>洋房/叠拼</strong></td><td>层数（4–6）、露台、坡屋顶、入口门廊</td><td>坡屋顶 + 老虎窗（<strong>不要欧式尖顶</strong>）、院墙、私家车库</td></tr><tr><td><strong>联排/自建房</strong>（城中村）</td><td>开间、层数（3–6，<strong>参差</strong>）、加建痕迹</td><td>参差不齐的马赛克瓷砖、外挂楼梯、防盗网、屋顶水箱</td></tr></tbody></table></div>
+<p>提示词示例（板楼）：</p>
+<pre class="code"><code>中国地级市住宅板楼，2010 年代风格，11 层，3 个单元，外挂米黄色真石漆，浅灰色坡屋顶
+【规模】占地约 48 m × 14 m，11 层，总高约 33 m，容积率约 2.0
+【材质】真石漆外墙，白色塑钢窗，深灰瓦坡屋顶，单元门深红铝合金
+【中国要素】每户窗下空调外机架，阳台部分封闭，女儿墙带压顶，单元门雨棚，楼号牌
+【细节】外墙分格缝，局部瓷砖裙房，屋顶电梯机房，北侧晾衣杆
+【相机】等轴测视角，浅灰底，无环境
+【技术】单体建筑，单位米，轴心在底面中心，正面朝 -Z，单一材质
+【负向】欧式尖顶, 罗马柱, 玻璃幕墙, 悬浮细节, 多人多树</code></pre>
+<h3 id="5-2-工业-必须多样-最不能重样的一类">5.2 工业（<strong>必须多样</strong>，最不能重样的一类）</h3>
+<div class="tw"><table><thead><tr><th>原型</th><th>变化轴</th><th>中国要素</th></tr></thead><tbody><tr><td><strong>门式钢架单层厂房</strong></td><td>跨度（18/24/30 m）、柱距、屋面坡度、山墙开洞</td><td>彩钢板外墙（蓝/灰/白）、采光带、卷帘门、货运月台、厂名大字</td></tr><tr><td><strong>多层标准厂房</strong></td><td>层数（4–6）、柱网、外挂货梯、连廊</td><td>瓷砖或涂料外墙、货运电梯、货梯前平台、装卸区</td></tr><tr><td><strong>工艺装置区</strong>（化工/冶金）</td><td>塔器/管廊/储罐布置、烟囱高度、冷却塔</td><td>管廊架空、球形储罐、烟囱 + 冷却塔、防爆区黄线、火炬</td></tr><tr><td><strong>仓储物流</strong></td><td>柱网、月台数量、雨棚</td><td>大面积彩钢、月台雨棚、货车回转场地、地磅</td></tr></tbody></table></div>
+<p>⚠ <strong>"几乎不可能重样"的落法</strong>：不是让 AI 随意发挥，而是<strong>每栋指定不同的"工艺组合"</strong>—— 例如 <code>i1</code> 化工厂 = 装置区 + 球罐 + 烟囱；<code>i3</code> 纺织厂 = 锯齿天窗厂房 + 高窗 + 仓库； <code>i7</code> 电子厂 = 多层洁净厂房 + 连廊 + 氮气站。工艺不同，形体自然不同。</p>
+<p>提示词示例（门式钢架）：</p>
+<pre class="code"><code>中国地级市单层门式钢架厂房，跨度 24 m，柱距 6 m，4 跨，2020 年代
+【规模】占地约 96 m × 60 m，檐高 9 m，屋脊高 11 m
+【材质】蓝灰色压型彩钢板外墙，白色采光带，深灰屋面，银灰卷帘门
+【中国要素】山墙厂名大字，货运月台与雨棚，屋面采光带，室外管廊，围墙与大门
+【细节】雨落管，屋面通风器，地磅，叉车通道标线
+【相机】等轴测视角，浅灰底，无环境
+【技术】单体建筑，单位米，轴心在底面中心，正面朝 -Z，单一材质
+【负向】锯齿天窗（此型号不要）, 办公塔楼, 玻璃幕墙, 多栋拼在一起</code></pre>
+<h3 id="5-3-商业-必须多样">5.3 商业（必须多样）</h3>
+<div class="tw"><table><thead><tr><th>原型</th><th>变化轴</th><th>中国要素</th></tr></thead><tbody><tr><td><strong>沿街商铺</strong></td><td>开间、层数（1–3）、招牌形式、雨棚</td><td>卷帘门、广告牌（竖向/横向）、遮阳雨棚、台阶、外挂空调</td></tr><tr><td><strong>百货 / 超市</strong></td><td>体量、入口雨棚、广告位</td><td>大面积招牌、玻璃门厅、屋顶广告牌、卸货后门</td></tr><tr><td><strong>购物中心（mall）</strong></td><td>中庭天窗、动线、外立面分格、主力店位置</td><td>玻璃幕墙主入口、巨幅广告、屋顶设备、地下车库出入口</td></tr><tr><td><strong>综合体 / 写字楼裙房</strong></td><td>塔楼与裙房比例、退台、幕墙分格</td><td>裙房商业 + 塔楼办公、屋顶标识、广场铺装</td></tr></tbody></table></div>
+<p>提示词示例（沿街商铺）：</p>
+<pre class="code"><code>中国老城区沿街商铺，2 层，6 间不同店面，1990–2010 年代混杂
+【规模】占地约 36 m × 12 m，2 层，总高约 7.5 m
+【材质】瓷砖与涂料混杂外墙，不同颜色招牌，卷帘门，玻璃橱窗
+【中国要素】竖向招牌与横向门头混排，遮阳雨棚参差，楼上住户外挂空调与防盗窗
+【细节】台阶，店门口杂物位，二层窗户晾晒
+【相机】等轴测视角，浅灰底
+【技术】单体建筑，单位米，轴心在底面中心，正面朝 -Z
+【负向】统一招牌, 欧式街区, 玻璃盒子, 过于整洁</code></pre>
+<p>⚠ <strong>"参差"是中国街景的关键</strong>：招牌大小不一、雨棚高低不齐、空调外机乱挂。<strong>AI 默认会给你整整齐齐，一定要在提示词里写"参差/不统一"</strong>。</p>
+<h3 id="5-4-服务设施-必须多样-且各型差别最大">5.4 服务设施（必须多样，且各型差别最大）</h3>
+<div class="tw"><table><thead><tr><th>设施</th><th>变化轴</th><th>中国要素</th></tr></thead><tbody><tr><td><strong>小学</strong></td><td>教学楼排布、操场位置、围墙形式</td><td>塑胶跑道、校门 + 传达室、校名墙、围墙防攀爬</td></tr><tr><td><strong>中学</strong></td><td>教学楼 + 实验楼 + 宿舍</td><td>同上 + 自行车棚</td></tr><tr><td><strong>医院门诊楼</strong></td><td>门诊/急诊/住院分区、入口雨棚</td><td>十字标志、救护车坡道、挂号大厅玻璃、排队雨棚</td></tr><tr><td><strong>派出所</strong></td><td>体量小、朝向</td><td>蓝白配色、警徽、围墙院子、岗亭</td></tr><tr><td><strong>消防站</strong></td><td>车库门数量、训练塔</td><td><strong>红色卷帘门</strong>、训练塔、警铃、车库前场地</td></tr><tr><td><strong>公交首末站</strong></td><td>站房 + 停车位 + 候车廊</td><td>站牌、候车棚、调度室、充电桩</td></tr><tr><td><strong>地铁出入口</strong></td><td>出入口形式（独立/结合建筑）、无障碍电梯</td><td>玻璃雨棚、扶梯、导向标识、风亭</td></tr><tr><td><strong>文化馆/图书馆</strong></td><td>体量、入口广场</td><td>大台阶、柱廊、屋顶造型（<strong>不要欧式穹顶</strong>）</td></tr><tr><td><strong>菜市场</strong></td><td>大棚式/室内式</td><td>铁皮大棚 + 摊位、水产区、垃圾房、雨棚</td></tr></tbody></table></div>
+<p>⚠ <strong>服务设施最容易被 AI 画成"通用公共建筑"</strong>（一堆玻璃盒子）。<strong>每型必须在提示词里锁死 2 个不可省的形制特征</strong>： 消防站 = 红色车库门 + 训练塔；派出所 = 蓝白配色 + 院墙岗亭；小学 = 塑胶跑道 + 校门。</p>
+<hr>
+<h2 id="六-批量生成配额-建议">六、批量生成配额（建议）</h2>
+<blockquote>⚠ <strong>完整清单（257 类 / 18 组）与总量（≈723 个资产）见 <code>15-model-inventory.md</code></strong>；<br>体积不再设上限，改为<strong>四档精度 + 玩家自选</strong>（<code>15</code> §5.2–5.3）。<br>下面这张表只管一件事：<strong>每类先做几个变体就够"不重样"</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>类型</th><th>原型数</th><th>每原型变体</th><th>合计</th><th>备注</th></tr></thead><tbody><tr><td>住宅</td><td>4（板/塔/洋房/联排）</td><td>5</td><td><strong>20</strong></td><td>覆盖 4 个 <code>code_era</code></td></tr><tr><td>工业</td><td>4（钢架/多层/装置区/仓储）</td><td>4</td><td><strong>16</strong></td><td>按工艺组合区分</td></tr><tr><td>商业</td><td>4（街铺/百货/mall/综合体）</td><td>4</td><td><strong>16</strong></td><td>街铺要 6 间混排</td></tr><tr><td>服务</td><td>9（上表）</td><td>2</td><td><strong>18</strong></td><td>每型 2 个变体够用</td></tr><tr><td>市政</td><td>4（变电站/供热站/污水厂/垃圾站）</td><td>2</td><td><strong>8</strong></td><td>形体差异小</td></tr><tr><td><strong>合计</strong></td><td></td><td></td><td><strong>78</strong></td><td>每个 ≤ 5 MB ⇒ 资产包 ≤ 390 MB（可压）</td></tr></tbody></table></div>
+<p>⚠ 78 个是<strong>起步集</strong>。<code>11-scale</code> 说全图 5–15 万栋建筑，但那是<strong>实例</strong>；原型 78 个 + 参数化微调（层数/进深/材质）足够撑住"不重样"的观感。</p>
+<hr>
+<h2 id="七-验收-ai-生成的东西必须过这一关">七、验收（AI 生成的东西必须过这一关）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>检查</th><th>手段</th></tr></thead><tbody><tr><td><strong>A-1</strong></td><td>单位是米、轴心在底面中心、正面朝 −Z</td><td><code>bench/glb_inventory.py</code> 看尺寸 + 人工抽查</td></tr><tr><td><strong>A-2</strong></td><td>单体化（包围盒最长边 ≤ 200 m）</td><td>同上，超了就是片区内嵌</td></tr><tr><td><strong>A-3</strong></td><td>三角面 ≤ 3 万、贴图 ≤ 2 张、单文件 ≤ 5 MB</td><td>同上</td></tr><tr><td><strong>A-4</strong></td><td><strong>同屏不出现两个轮廓相同的建筑</strong></td><td>人工过一遍（最有效）；或算"体量签名"（宽深比+层数+屋顶形式）去重</td></tr><tr><td><strong>A-5</strong></td><td>中国要素至少命中 2 条</td><td>人工对照 §五 的要素清单</td></tr></tbody></table></div>
+<p>⚠ A-4 是唯一必须人眼看的：<strong>AI 生成的模型经常"整体不同、轮廓相同"</strong>——远看就是一排一样的盒子。</p>
+<hr>
+<h2 id="八-写实基线-不做这一步-做出来就是动画片">八、⭐ 写实基线：不做这一步，做出来就是动画片</h2>
+<blockquote>建立于 2026-11-24。起因：第一批 8 个模型技术项全过（槽名/单体/降级都对），<br>但开发者一看就说「像动画片里面的一样」，要求「几乎要跟现实的一样」。<br><strong>完整规范在 <code>docs/assets/realism-spec.md</code></strong>，本节只讲<strong>与建模直接相关的三条</strong>，<br>因为这三条一旦建模时没留，后面补不回来。</blockquote>
+<h3 id="8-1-先说归因-第一批的几何没问题-问题在材质与光照">8.1 先说归因：第一批的几何没问题，问题在材质与光照</h3>
+<p>实测（8 个模型全查）：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>实测</th><th>判定</th></tr></thead><tbody><tr><td>材质槽名、单体化、降级图</td><td>全对</td><td>✅</td></tr><tr><td><strong>normal 贴图</strong></td><td><strong>0 张</strong></td><td>❌</td></tr><tr><td><strong>roughness / AO 贴图</strong></td><td><strong>0 张</strong></td><td>❌</td></tr><tr><td><strong>PBR 参数是否按材料区分</strong></td><td><strong>8 个模型 6 个材质参数完全相同</strong></td><td>❌</td></tr><tr><td>玻璃</td><td><code>metal=0, rough=0.18</code>，无环境反射</td><td>❌ 是"蓝纸片"</td></tr></tbody></table></div>
+<p>⇒ <strong>第一批不重做几何，重做材质 + 渲染 + 补生活痕迹。</strong> 详见 <code>batch-01-fix.md</code>。</p>
+<p>⚠ 这条判断很重要：如果按"模型不像就重做模型"去干，会废掉 8 个已经合格的模型。</p>
+<h3 id="8-2-建模时必须留的三样-事后补不了">8.2 建模时必须留的三样（事后补不了）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>必须留</th><th>为什么事后补不了</th></tr></thead><tbody><tr><td>1</td><td><strong>UV 按真实物理尺寸铺</strong></td><td>面砖 0.3×0.3 m、彩钢肋距 0.25 m、卷帘门帘片 0.1 m。按整面墙拉伸会导致"一块砖一米大"，重铺要改所有 UV 与贴图</td></tr><tr><td>2</td><td><strong>几何承担结构、贴图只做质感</strong></td><td>这条原本是为白模档（§九）定的，现在有了第二个理由：normal 贴图<strong>不许</strong>用来表现窗洞/门洞，否则一关法线就塌</td></tr><tr><td>3</td><td><strong>材质分槽时就选对材料</strong></td><td>混凝土和彩钢板不能共用一套 PBR（rough 0.85 vs 0.45）。事后改要重贴图</td></tr></tbody></table></div>
+<h3 id="8-3-提示词里必须写的三个-反动画片-关键词">8.3 提示词里必须写的三个"反动画片"关键词</h3>
+<p>按重要性排序，<strong>少一个就退化成动画片</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>关键词</th><th>对应什么</th><th>提示词怎么写</th></tr></thead><tbody><tr><td>1</td><td><strong>法线细节</strong></td><td>normal map</td><td>"砖缝、石材颗粒、混凝土气孔、卷帘门波纹，表面有可见微观起伏"</td></tr><tr><td>2</td><td><strong>污渍与风化</strong></td><td>albedo 脏污层</td><td>"竖向雨水冲刷痕、墙根溅泥发暗、金属件锈迹、朝南面褪色"</td></tr><tr><td>3</td><td><strong>不规整</strong></td><td>几何微偏</td><td>"窗洞轻微错位、女儿墙高度不一、雨棚歪斜、不要严格网格对齐"</td></tr></tbody></table></div>
+<p>⚠ <strong>光写 "photorealistic / 写实风格" 是无效的</strong>——那是风格词，不改变材质与几何。 必须写<strong>物理事实</strong>：有什么污渍、在哪个位置、多深。</p>
+<p>⚠ 补充第四条（住宅类必写）：<strong>"空调外机凌乱外挂，位置毫无规律"</strong>。 这是中国住宅立面的第一识别特征，一栋 11 层板楼正面能数出 30–60 台。</p>
+<h3 id="8-4-目标档位-避免无限返工">8.4 目标档位（避免无限返工）</h3>
+<div class="tw"><table><thead><tr><th>档</th><th>能否达到</th></tr></thead><tbody><tr><td><strong>照片级</strong>（分辨不出是渲染）</td><td>❌ 257 类不可能；只给 3–5 个地标用扫描/照片重建</td></tr><tr><td><strong>写实游戏资产</strong>（CS2 / Anno 级）</td><td>✅ <strong>目标</strong>，靠 <code>realism-spec</code> 的 L1+L2+L3</td></tr><tr><td>精致动画（第一批现状）</td><td>❌</td></tr></tbody></table></div>
+<p>⚠ 一个反直觉但重要的判断：<strong>俯视视角下，L3（不整齐+生活痕迹）比 L2（贴图精度）更重要。</strong> 玩家离建筑 100 m 时看不清砖缝，但<strong>一眼能看出"这排楼太整齐了"</strong>。 <strong>所以只能先做一件事时，先做 L3。</strong></p>
+<h3 id="8-5-验收">8.5 验收</h3>
+<p>脚本：<code>bench/check_realism.py</code>（R-1~R-8）——查 normal/ORM 存在、材质参数不得与同批完全相同、饱和度、明度标准差。 人眼：<code>realism-spec.md</code> §8.2 的 V-1~V-6（最省时间的是 V-6：<strong>把图缩到 25% 再看，还像建筑吗</strong>）。</p>
+<h2 id="九-为-白模档-而生-建模时必须留的三样东西">九、⭐ 为"白模档"而生：建模时必须留的三样东西</h2>
+<blockquote>游戏要给"设备差到发指"的玩家一条活路：一路退到<strong>只渲染白模</strong>（<code>15-model-inventory</code> §5.2）。<br>这件事<strong>必须在建模时就满足</strong>，事后改不了。所以要向建模方交代三件事。</blockquote>
+<h3 id="9-1-材质分区-6-个-且命名固定">9.1 材质分区 ≤ 6 个，且命名固定</h3>
+<p>每个模型必须按部位分成<strong>不超过 6 个材质槽</strong>，槽名固定为：</p>
+<div class="tw"><table><thead><tr><th>槽名</th><th>放什么</th><th>举例</th></tr></thead><tbody><tr><td><code>body</code></td><td>主体墙面</td><td>真石漆、彩钢板、瓷砖</td></tr><tr><td><code>roof</code></td><td>屋顶/女儿墙压顶</td><td>瓦、卷材、彩钢</td></tr><tr><td><code>base</code></td><td>底部/裙房/门厅</td><td>石材裙房、卷帘门</td></tr><tr><td><code>glass</code></td><td>窗与玻璃</td><td>窗、幕墙、橱窗</td></tr><tr><td><code>metal</code></td><td>金属构件</td><td>栏杆、雨棚、货梯</td></tr><tr><td><code>sign</code></td><td>招牌/标识</td><td>店招、厂名、路名牌</td></tr></tbody></table></div>
+<p>⚠ <strong>为什么必须命名固定</strong>：T3/T4 降级时要按槽取色、按面积合并。槽名乱了，降级只能靠人工一栋栋配， 238 类没有可能手工维护。</p>
+<h3 id="9-2-每个槽必须给一个-hex-主色">9.2 每个槽必须给一个 hex 主色</h3>
+<ul><li>导出时附一份极小的元数据（贴在 <code>.glb</code> 同级，或写进 glTF 的 <code>extras</code>）：</li></ul>
+<p>  ``<code>json   { "slots": { "body": "#d8cfc0", "roof": "#5b5b5b", "glass": "#7fa8c9", "sign": "#c62828" } }   </code>``</p>
+<ul><li>T3 = 直接读这些 hex；T4 = 取<strong>面积最大的两个</strong>；T5 = 全部忽略</li></ul>
+<h3 id="9-3-几何承担结构-贴图只承担质感">9.3 ⭐ 几何承担结构，贴图只承担质感</h3>
+<p>这是最容易翻车的一条。<strong>贴图里不允许出现"唯一表达结构"的东西</strong>：</p>
+<div class="tw"><table><thead><tr><th>允许画在贴图里</th><th>不允许画在贴图里</th></tr></thead><tbody><tr><td>砖缝、抹灰、锈迹、水渍、污渍</td><td><strong>窗格</strong>（窗必须是几何或至少是独立的 <code>glass</code> 面）</td></tr><tr><td>墙面分格线的<strong>色差</strong></td><td><strong>门洞</strong>（门必须有凹进或独立的 <code>base</code> 面）</td></tr><tr><td>招牌上的<strong>文字</strong></td><td><strong>楼层线、檐口、栏杆</strong>（这些是体量，必须几何）</td></tr></tbody></table></div>
+<p><strong>检验方法（一句话）</strong>：把模型改成纯色（T3）后，<strong>还能不能认出这是什么</strong>？ 认不出，就是"靠贴图撑结构"，退回重做。</p>
+<h3 id="9-4-写进提示词的固定句式">9.4 写进提示词的固定句式</h3>
+<p>每条提示词末尾都要带这段（否则 AI 会给你"贴图脸"）：</p>
+<pre class="code"><code>【降级要求】几何必须独立表达结构（窗、门洞、檐口、栏杆都做实体或独立面），
+不要用贴图表现结构；材质按 body/roof/base/glass/metal/sign 分区，不超过 6 个；
+每个分区给出主色 hex。</code></pre>
+<hr>
+<h2 id="十-待定">十、待定</h2>
+<ol><li><strong>贴图管线</strong>：现在是 PNG 内嵌，要不要统一转 KTX2/Basis？转的话需要一套离线脚本（B1 之后）。</li><li><strong>参数化 vs 纯模型</strong>：层数、进深这类变化，是"多生成几个模型"还是"一个模型 + 着色器/实例参数"？</li></ol>
+<p>   倾向后者（省资产），但屋顶/立面变化用参数化很难，可能要混合。</p>
+<ol><li><strong>谁做减面</strong>：AI 生成的网格拓扑很脏（三角面乱），减面工具（Blender Decimate）会不会把窗框压没？需要实测。</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-24</strong>：新增 <strong>§八 写实基线</strong>（起因：第一批技术项全过但"像动画片"）。</li></ul>
+<p>  给出实测归因（0 张 normal/ORM、8 个模型 PBR 参数相同、玻璃无反射）、   建模时必须留的三样（UV 物理尺度 / 几何承担结构 / 材质选对材料）、   三个"反动画片"关键词（法线细节 / 污渍风化 / 不规整）、目标档位（写实游戏资产，非照片级）、   以及"俯视视角下 L3 比 L2 更重要"这条判断。原 §八 待定顺延为 §十。</p>
+<ul><li><strong>2026-11-23（三）</strong>：新增 <strong>§零 两条路线</strong>（程序化脚本 vs 生成 AI）——第一批实为前者，</li></ul>
+<p>  本文件的"提示词"在那条路线里等于"规格说明书"，§五/§八/§九 两条路线通用。</p>
+<ul><li><strong>2026-11-23（二）</strong>：新增 <strong>§九 为"白模档"而生</strong>：材质分区 ≤6 且槽名固定、每槽给 hex 主色、</li></ul>
+<p>  <strong>几何承担结构（贴图不许表达窗格/门洞/檐口）</strong>，并给出提示词固定句式与一句检验法   （"改成纯色还认得出吗"）。</p>
+<ul><li><strong>2026-11-23</strong>：首版。盘点现有 46 个 GLB（<code>bench/glb_inventory.py</code> 实测：420.7 MB / 21 有贴图 / 25 无贴图）；</li></ul>
+<p>  定三类"不重样"规则（允许家族化 / 必须多样 / 允许连锁统一）；给通用提示词骨架 + 通用负向；   按住宅/工业/商业/服务给变化轴与可复制提示词；配额 78 个起步；验收 A-1~A-5。</p><div class="pager"><a href="design-15-model-inventory.html">← 15 · 资产全集：要建什么、多少、什么顺序</a><a href="design-17-asset-layers.html">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#〇-先说清楚-这是两条路线-别混">〇、先说清楚：这是两条路线，别混</a><a class="l2" href="#一-先说现有模型盘点-2026-11-23-实测">一、先说现有模型盘点（2026-11-23 实测）</a><a class="l3" href="#1-1-三个必须先解决的技术问题">1.1 三个必须先解决的技术问题</a><a class="l3" href="#1-2-现有资产怎么用-结论">1.2 现有资产怎么用（结论）</a><a class="l2" href="#二-入库技术契约-不满足不进-assets-buildings">二、入库技术契约（不满足不进 assets/buildings/）</a><a class="l2" href="#三-不重样-三类规则-别一刀切">三、⭐ 不重样：三类规则，别一刀切</a><a class="l2" href="#四-提示词骨架-所有类型共用">四、提示词骨架（所有类型共用）</a><a class="l2" href="#五-按类型-变化轴-中国要素-可复制提示词">五、按类型：变化轴 + 中国要素 + 可复制提示词</a><a class="l3" href="#5-1-住宅-允许家族化">5.1 住宅（允许家族化）</a><a class="l3" href="#5-2-工业-必须多样-最不能重样的一类">5.2 工业（必须多样，最不能重样的一类）</a><a class="l3" href="#5-3-商业-必须多样">5.3 商业（必须多样）</a><a class="l3" href="#5-4-服务设施-必须多样-且各型差别最大">5.4 服务设施（必须多样，且各型差别最大）</a><a class="l2" href="#六-批量生成配额-建议">六、批量生成配额（建议）</a><a class="l2" href="#七-验收-ai-生成的东西必须过这一关">七、验收（AI 生成的东西必须过这一关）</a><a class="l2" href="#八-写实基线-不做这一步-做出来就是动画片">八、⭐ 写实基线：不做这一步，做出来就是动画片</a><a class="l3" href="#8-1-先说归因-第一批的几何没问题-问题在材质与光照">8.1 先说归因：第一批的几何没问题，问题在材质与光照</a><a class="l3" href="#8-2-建模时必须留的三样-事后补不了">8.2 建模时必须留的三样（事后补不了）</a><a class="l3" href="#8-3-提示词里必须写的三个-反动画片-关键词">8.3 提示词里必须写的三个"反动画片"关键词</a><a class="l3" href="#8-4-目标档位-避免无限返工">8.4 目标档位（避免无限返工）</a><a class="l3" href="#8-5-验收">8.5 验收</a><a class="l2" href="#九-为-白模档-而生-建模时必须留的三样东西">九、⭐ 为"白模档"而生：建模时必须留的三样东西</a><a class="l3" href="#9-1-材质分区-6-个-且命名固定">9.1 材质分区 ≤ 6 个，且命名固定</a><a class="l3" href="#9-2-每个槽必须给一个-hex-主色">9.2 每个槽必须给一个 hex 主色</a><a class="l3" href="#9-3-几何承担结构-贴图只承担质感">9.3 ⭐ 几何承担结构，贴图只承担质感</a><a class="l3" href="#9-4-写进提示词的固定句式">9.4 写进提示词的固定句式</a><a class="l2" href="#十-待定">十、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

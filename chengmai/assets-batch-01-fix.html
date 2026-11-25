@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第一批返修单（8 个模型） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" class="on" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 资产与建模</div><h1 id="第一批返修单-8-个模型">第一批返修单（8 个模型）</h1>
+<blockquote>🅰 <strong>本文是「逐件返修条目」</strong>（改什么、改到什么程度）。<br>🅱 <strong>要粘给建模 AI 的总指令在 <code>docs/prompts/for-modeling-ai.md</code></strong>（SA-2 会照本文做）。</blockquote>
+<blockquote>依据：<code>realism-spec.md</code>（写实基线）。起因：第一批技术准入 8/8 通过，但观感像动画片。<br><strong>总判断：不重做几何，重做材质 + 渲染 + 补 L3 细节。</strong><br>任务拆分与并行方式见 <code>agent-plan.md</code>。</blockquote>
+<hr>
+<h2 id="零-先做这个-共享材质库-否则-238-类要重复调-238-次">零、先做这个：共享材质库（否则 238 类要重复调 238 次）</h2>
+<p><strong>这是整批返修里最重要的一件事，也是唯一"必须先做"的一件事。</strong></p>
+<p>第一批的问题是<strong>8 个模型的 6 个材质参数完全相同</strong>（<code>body metal=0 rough=0.78</code> 等）， 说明当时的做法是"给每个模型现造一套材质"。</p>
+<p>后面还有 230 类。如果继续这么干，<strong>每次调材质都要改 230 处，且必然逐渐不一致</strong>。</p>
+<h3 id="0-1-做法">0.1 做法</h3>
+<p>建一个 <strong>Blender 材质库文件</strong> <code>assets/materials/matlib.blend</code>，里面是<strong>按"槽 × 材料"组织的材质</strong>， 所有模型<strong>链接（link）引用</strong>，不复制。</p>
+<div class="tw"><table><thead><tr><th>槽</th><th>材料变体（起步）</th><th>谁用</th></tr></thead><tbody><tr><td><code>body</code></td><td><code>body_paint_old</code>（旧涂料）/ <code>body_paint_new</code>（新涂料）/ <code>body_tile</code>（面砖）/ <code>body_stone</code>（石材）/ <code>body_panel</code>（彩钢板）/ <code>body_brick</code>（红砖）</td><td>住宅/公建/厂房</td></tr><tr><td><code>roof</code></td><td><code>roof_sbs</code>（卷材）/ <code>roof_tile</code>（瓦）/ <code>roof_metal</code>（彩钢瓦）/ <code>roof_gravel</code>（砾石保护层）</td><td>全部</td></tr><tr><td><code>base</code></td><td><code>base_granite</code>（花岗岩）/ <code>base_terrazzo</code>（水磨石）/ <code>base_concrete</code>（水泥）</td><td>全部</td></tr><tr><td><code>glass</code></td><td><code>glass_clear</code>（白玻）/ <code>glass_lowe</code>（镀膜）/ <code>glass_dirty</code>（脏旧玻璃）</td><td>全部</td></tr><tr><td><code>metal</code></td><td><code>metal_alu</code>（铝框）/ <code>metal_steel</code>（钢）/ <code>metal_galv</code>（镀锌）/ <code>metal_rust</code>（锈蚀）</td><td>全部</td></tr><tr><td><code>sign</code></td><td><code>sign_print</code>（喷绘布）/ <code>sign_lightbox</code>（灯箱）/ <code>sign_wall</code>（墙面字）</td><td>全部</td></tr></tbody></table></div>
+<p>⚠ <strong>槽名必须仍然叫 <code>body/roof/base/glass/metal/sign</code></strong>（T3 降级靠它，不能改）； 变体只在<strong>材质内部</strong>区分，<strong>不新增槽</strong>。</p>
+<h3 id="0-2-每个材质必须的东西">0.2 每个材质必须的东西</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>要求</th></tr></thead><tbody><tr><td>albedo</td><td>去饱和（S ≤ 0.25–0.35）、有脏污层、明度标准差 ≥ 0.04</td></tr><tr><td><strong>normal</strong></td><td>程序化生成（砖缝/颗粒/肋条），强度按 <code>realism-spec</code> §4.2</td></tr><tr><td><strong>ORM</strong></td><td>R=AO, G=rough, B=metal，打包一张（glTF 标准）</td></tr><tr><td>PBR 数值</td><td>按 <code>realism-spec</code> §4.2 的表，<strong>不许一套参数打天下</strong></td></tr><tr><td>复用</td><td>同一材质被 ≥3 个模型引用（否则说明粒度太细）</td></tr></tbody></table></div>
+<h3 id="0-3-交付">0.3 交付</h3>
+<pre class="code"><code>assets/materials/
+  matlib.blend            # 主库
+  matlib_manifest.json    # 每个材质的槽名/变体名/albedo hex/rough/metal/是否有 normal+ORM
+  tex/                    # 各材质的 albedo/normal/orm 图</code></pre>
+<p><code>matlib_manifest.json</code> 是给引擎和检查脚本用的，<strong>必须与 blend 内容同步</strong>。</p>
+<hr>
+<h2 id="一-共性修复-8-个模型都要做-不重复写">一、共性修复（8 个模型都要做，不重复写）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>项</th><th>具体要求</th></tr></thead><tbody><tr><td>C-1</td><td><strong>换材质</strong></td><td>6 个槽全部改为引用 <code>matlib</code>，按真实性选变体（如厂房 body 用 <code>body_panel</code> 而不是 <code>body_paint_old</code>）</td></tr><tr><td>C-2</td><td><strong>补 normal + ORM</strong></td><td>至少 <code>body</code> / <code>roof</code> / <code>base</code> 三个槽必须有；<code>glass</code>/<code>metal</code> 可只给 ORM</td></tr><tr><td>C-3</td><td><strong>贴图物理尺度</strong></td><td>UV 按真实尺寸铺：面砖 0.3×0.3 m、彩钢肋距 0.25 m、卷帘门帘片 0.1 m（见 §4.4）</td></tr><tr><td>C-4</td><td><strong>墙根变暗</strong></td><td>albedo 里距地 0.8 m 内加深 15–25%（溅泥 + 泛碱）</td></tr><tr><td>C-5</td><td><strong>竖向雨痕</strong></td><td>檐口/窗台下方 1–3 m 有竖向深色条纹</td></tr><tr><td>C-6</td><td><strong>朝南褪色</strong></td><td>朝南面（−Z 面）亮度 +5~10%，朝北面 −5%</td></tr><tr><td>C-7</td><td><strong>玻璃加反射</strong></td><td><code>glass</code> 改 <code>glass_clear</code>/<code>glass_dirty</code>，rough 0.03–0.12，<strong>引擎侧确认有环境反射</strong></td></tr><tr><td>C-8</td><td><strong>金属参数修正</strong></td><td>铝框 <code>metal ≥ 0.85 rough 0.35–0.5</code>（第一批写的 0.22 差一个数量级）</td></tr><tr><td>C-9</td><td><strong>渲染配置</strong></td><td><code>checks/</code> 新增 <code>*_real.png</code>：太阳光 40° + HDRI 天空 + AO + ACES 色调映射 + 中性灰背景</td></tr><tr><td>C-10</td><td><strong>1.8 m 人形参照</strong></td><td><code>*_real.png</code> 里放一个人形（灰色剪影即可），用于核对贴图尺度（V-1）</td></tr><tr><td>C-11</td><td><strong>轴心修正（construction）</strong></td><td>轴心改到楼体 footprint 中心，包围盒偏移在 <code>SOURCE.md</code> 注明</td></tr><tr><td>C-12</td><td><strong>命名统一</strong></td><td>glb 用 <code>lod0/lod1</code>；<code>SOURCE.md</code> 里注明 <code>checks/t<em></code> 是画质档、<code>lod</em></code> 是几何档</td></tr></tbody></table></div>
+<p>⚠ C-9 的 <code>*_real.png</code> <strong>必须保留原有 <code>t1/t3/t5</code> 图</strong>——那些是降级验收用的，不能删。</p>
+<hr>
+<h2 id="二-逐模型修复">二、逐模型修复</h2>
+<h3 id="2-1-vlg_court-独院农房-p0">2.1 vlg_court 独院农房（P0）</h3>
+<p><strong>问题</strong>：白模能认出坡顶+院墙+大门（合格），但带贴图时是"新盖的样板房"。</p>
+<div class="tw"><table><thead><tr><th>层</th><th>改什么</th></tr></thead><tbody><tr><td>L2</td><td><code>body</code> → <code>body_paint_old</code>（白灰墙面，泛碱重）；<code>roof</code> → <code>roof_tile</code>（瓦，<strong>瓦楞方向沿坡向</strong>）；<code>base</code> → <code>base_concrete</code>（水泥散水）</td></tr><tr><td>L3 几何</td><td>① 院墙高度沿线起伏 ±8 cm ② 主房与院墙<strong>不平行</strong>（偏 1.5°）③ 屋顶加<strong>太阳能热水器</strong>（中国农村必备）④ 院墙加<strong>门楼</strong>（比墙高 40 cm，带挑檐）⑤ 墙根加<strong>柴火/农具堆</strong>（2–3 个小方块）</td></tr><tr><td>L3 贴图</td><td>① 白墙上<strong>大面积泛碱</strong>（墙根 1.5 m 内白斑）② 瓦面<strong>青苔/深色水渍</strong>③ 院墙上部雨痕</td></tr></tbody></table></div>
+<p><strong>验收</strong>：把图缩小到 25%，仍然能看出"这是村里的一座院子"；院墙不是一条直线。</p>
+<hr>
+<h3 id="2-2-city_slab-高层板楼-p0">2.2 city_slab 高层板楼（P0）</h3>
+<p><strong>问题</strong>：窗格是几何（合格），但立面<strong>太干净、空调太少太整齐</strong>——这是最典型的"动画片住宅"。</p>
+<div class="tw"><table><thead><tr><th>层</th><th>改什么</th></tr></thead><tbody><tr><td>L2</td><td><code>body</code> → <code>body_paint_old</code>；<code>glass</code> → <code>glass_dirty</code>（旧楼玻璃有脏污与窗帘差异）</td></tr><tr><td>L3 几何</td><td>① <strong>空调外机 40–60 台，位置完全随机</strong>（不进网格）② 部分阳台<strong>封闭</strong>（玻璃+铝框，新旧色差）③ 女儿墙高度差 10 cm ④ 顶层<strong>加建</strong>（一小块体块，材质色差明显）⑤ 单元入口<strong>加雨棚</strong></td></tr><tr><td>L3 贴图</td><td>① 每个窗洞<strong>窗帘/家具差异</strong>（同一张玻璃图上不能所有窗一样）② 墙面<strong>从上往下渐深的雨痕</strong>③ 楼号牌、单元牌</td></tr></tbody></table></div>
+<p>⚠ <strong>关键</strong>：空调外机是<strong>中国住宅立面的第一识别特征</strong>。第一批有少量机位但排列整齐—— 真实情况是<strong>毫无规律</strong>，有的装了两台，有的没装，有的装在窗中间。</p>
+<p><strong>验收</strong>：正面能数出 ≥40 台空调，且<strong>任意相邻三台不在同一水平线上</strong>。</p>
+<hr>
+<h3 id="2-3-shop_street-沿街商铺-p0">2.3 shop_street 沿街商铺（P0）</h3>
+<p><strong>问题</strong>：六间高低不齐（合格），但<strong>墙面干净、招牌太整齐、门口没有杂物</strong>。</p>
+<div class="tw"><table><thead><tr><th>层</th><th>改什么</th></tr></thead><tbody><tr><td>L2</td><td><code>body</code> → <code>body_tile</code>（面砖，多数临街商铺是面砖）；<code>sign</code> 按 <code>shopsigns.json</code> 的配色出</td></tr><tr><td>L3 几何</td><td>① 每间店面<strong>雨棚高度差 10–30 cm、倾斜 1–3°</strong> ② <strong>招牌层层叠加</strong>（主招牌 + 侧挂竖牌 + 横幅）③ 门口<strong>杂物</strong>（纸箱、塑料筐、拖把、立式广告牌）④ 卷帘门<strong>半开/半关</strong>至少一间 ⑤ 二层以上<strong>防盗窗</strong>（程序化栅格）⑥ 空调外机在二层窗口</td></tr><tr><td>L3 贴图</td><td>① 卷帘门<strong>锈迹 + 撕掉一半的广告残胶</strong>② 面砖墙<strong>雨痕与油污</strong>（餐饮店墙面油污更重）③ 台阶<strong>磨光</strong>（中间亮、边缘暗）</td></tr></tbody></table></div>
+<p>⚠ <strong>招牌上的中文必须保留、不翻译</strong>（<code>15</code> §八）。</p>
+<p><strong>验收</strong>：截图里能看出"六家不同的店在同一个楼里"，而不是"一栋商业楼贴了六个牌"。</p>
+<hr>
+<h3 id="2-4-factory-门式钢架厂房-p0">2.4 factory 门式钢架厂房（P0）</h3>
+<p><strong>问题</strong>：形体对，但彩钢板是<strong>纯蓝平涂</strong>（最典型的动画片厂房）。</p>
+<div class="tw"><table><thead><tr><th>层</th><th>改什么</th></tr></thead><tbody><tr><td>L2</td><td><code>body</code> → <code>body_panel</code>（彩钢板，metal 0.15–0.25 / rough 0.35–0.5）；<code>roof</code> → <code>roof_metal</code></td></tr><tr><td>L3 几何</td><td>① <strong>肋条几何或法线</strong>（肋距 0.25 m，这是彩钢板的本质）② 屋脊<strong>采光带</strong>③ 山墙<strong>通风器</strong>（屋顶上 3–5 个）④ <strong>装卸月台</strong>（高出地面 1.2 m + 雨棚）⑤ 外墙<strong>管线条</strong>（排水管、消防管）⑥ 墙角<strong>混凝土保护墩</strong></td></tr><tr><td>L3 贴图</td><td>① 彩钢板<strong>竖向流锈</strong>（螺栓处最重）② <strong>褪色</strong>（朝阳面浅、背阴面深）③ 勒脚深色 ④ 墙面<strong>厂名大字</strong>（<code>shopsigns.json</code> 的 <code>wall</code> 形制）</td></tr></tbody></table></div>
+<p><strong>验收</strong>：能看出"这是用了五年的厂房"，不是新盖的。</p>
+<hr>
+<h3 id="2-5-bus_stop-公交站台-p0">2.5 bus_stop 公交站台（P0）</h3>
+<p><strong>问题</strong>：体量对，但太干净——真实站台<strong>广告满墙、地面有痰渍/口香糖、顶棚脏</strong>。</p>
+<div class="tw"><table><thead><tr><th>层</th><th>改什么</th></tr></thead><tbody><tr><td>L2</td><td><code>body</code> → <code>metal_galv</code>；<code>glass</code> → <code>glass_dirty</code>；<code>sign</code> → <code>sign_lightbox</code>（夜间发光）</td></tr><tr><td>L3 几何</td><td>① 广告灯箱<strong>两面不同内容</strong>② 顶棚<strong>积水边/下挠</strong>③ 座椅（不锈钢，3 座）④ 站牌<strong>贴满小广告</strong>（贴图）⑤ 地面<strong>排水沟格栅</strong></td></tr><tr><td>L3 贴图</td><td>① 玻璃<strong>下半部脏</strong>（手印/泥）② 立柱<strong>鞋印与贴纸残胶</strong>③ 顶棚内侧<strong>霉斑</strong></td></tr></tbody></table></div>
+<hr>
+<h3 id="2-6-gas_station-加油站-p0">2.6 gas_station 加油站（P0）</h3>
+<p><strong>问题</strong>：罩棚+4 机位+便利店三件齐（合格），但<strong>地面太干净</strong>——加油站地面永远有油渍。</p>
+<div class="tw"><table><thead><tr><th>层</th><th>改什么</th></tr></thead><tbody><tr><td>L2</td><td><code>body</code> → <code>body_paint_new</code>（加油站墙面新的）；<code>base</code> → <code>base_concrete</code>（地面）</td></tr><tr><td>L3 几何</td><td>① 罩棚下<strong>吊装式加油机</strong>（不是落地柱）② <strong>防撞柱</strong> 4 根 ③ 便利店<strong>玻璃门 + 促销海报</strong>④ <strong>价格牌</strong>（可换数字）⑤ 卸油口井盖</td></tr><tr><td>L3 贴图</td><td>① 加油岛<strong>油渍</strong>（深色不规则斑）② 地面<strong>轮胎印</strong>③ 罩棚下沿<strong>积灰</strong>④ 立柱<strong>防撞条</strong>（黄黑斜纹）</td></tr></tbody></table></div>
+<p>⚠ <strong>涂装不得用真实品牌 logo</strong>（法律 + 美术原因），用"相似但虚构"的配色。</p>
+<hr>
+<h3 id="2-7-adm_fire-消防站-p0">2.7 adm_fire 消防站（P0）</h3>
+<p><strong>问题</strong>：红门是实体（T3 合格），但整体像"新建的"，缺少训练场与出警痕迹。</p>
+<div class="tw"><table><thead><tr><th>层</th><th>改什么</th></tr></thead><tbody><tr><td>L2</td><td><code>body</code> → <code>body_tile</code>（消防站多是面砖）；<code>metal</code> → <code>metal_galv</code></td></tr><tr><td>L3 几何</td><td>① <strong>训练塔</strong>（已有，加强：加窗洞与爬梯）② <strong>训练场</strong>（水泥地 + 跑道线）③ <strong>消防车 2 辆</strong>（可选，或留空位）④ 车库门前<strong>导流线</strong>⑤ 旗杆 + 晾晒架（消防员晒水带）⑥ 车库门<strong>导轨</strong>与<strong>观察窗</strong></td></tr><tr><td>L3 贴图</td><td>① 卷帘门<strong>油污与轮迹</strong>② 车库门前地面<strong>深色轮胎痕</strong>③ 墙面<strong>消防标语</strong>（红底白字，<code>shopsigns.json</code> 增补）</td></tr></tbody></table></div>
+<hr>
+<h3 id="2-8-construction-塔吊-在建体-p1">2.8 construction 塔吊+在建体（P1）</h3>
+<p><strong>问题</strong>：塔吊独立落地、防尘网是实体（T3 合格），但<strong>太干净、太完整</strong>。</p>
+<div class="tw"><table><thead><tr><th>层</th><th>改什么</th></tr></thead><tbody><tr><td>L2</td><td><code>body</code> → <code>base_concrete</code>（未完工混凝土）；<code>metal</code> → <code>metal_rust</code>（塔吊标准节有锈）</td></tr><tr><td>L3 几何</td><td>① 塔吊<strong>附墙杆</strong>（连接楼体）② 楼体<strong>部分楼层有模板/支撑</strong>③ 地面<strong>材料堆场</strong>（钢管、木方、砖垛）④ <strong>临时板房</strong>（蓝顶白墙，中国工地标配）⑤ 围挡<strong>绿植草坪贴皮</strong>（中国工地围挡特征）⑥ <strong>喷淋降尘管</strong>（沿围挡顶部）</td></tr><tr><td>L3 贴图</td><td>① 防尘网<strong>褶皱与褪色</strong>（绿色会晒成浅绿）② 混凝土<strong>模板缝与麻面</strong>③ 围挡<strong>褪色公益广告</strong>（贴图）</td></tr></tbody></table></div>
+<p>⚠ 轴心：改到楼体 footprint 中心（不是包围盒中心，塔吊吊臂会拉偏 5.5 m）。</p>
+<hr>
+<h2 id="三-交付清单">三、交付清单</h2>
+<p>每个模型目录下必须有：</p>
+<pre class="code"><code>&lt;id&gt;/
+  &lt;id&gt;_lod0.glb / &lt;id&gt;_lod1.glb          # lod0 引用 matlib，lod1 用降级贴图
+  &lt;id&gt;.slots.json                         # 6 个槽的 hex（T3 用）
+  regions.json                            # 分区（不变）
+  SOURCE.md                               # ⭐ 新增：normal/ORM 打包方式 + 面数余量说明 + 轴心说明
+  checks/
+    &lt;id&gt;_t1.png &lt;id&gt;_t2.png &lt;id&gt;_t3.png &lt;id&gt;_t5.png   # 保留：降级验收
+    &lt;id&gt;_real.png                         # ⭐ 新增：写实预览（含 1.8 m 人形参照）
+    &lt;id&gt;_real_back.png                    # ⭐ 新增：背面（验朝北褪色）
+  tex/                                    # albedo + normal + orm</code></pre>
+<h2 id="四-验收顺序-不许跳">四、验收顺序（不许跳）</h2>
+<ol><li><code>python bench/check_assets.py assets/models/buildings</code> → <strong>0 FAIL</strong>（原技术项）</li><li><strong>新写实检查 R-1~R-8 全过</strong>（<code>python bench/check_realism.py assets/models/buildings</code>；R-9/R-10 待脚本，先用 V-6 人眼代）</li><li>人眼 V-1~V-6（见 §8.2），<strong>逐条在报告里打勾</strong></li><li>缩小到 25% 再看一遍（V-6）</li></ol>
+<p>⚠ <strong>任一项不过就退回，不许"先入库以后再说"。</strong> 第一批的问题就是"技术项全过就入库了"。</p>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-24</strong>：首版。8 个模型返修：<strong>共享材质库 matlib（6 槽 × 3–6 变体）</strong> +</li></ul>
+<p>  C-1~C-12 共性修复 + 逐模型 L2/L3 条目 + 新增 <code>*_real.png</code> 写实预览（含 1.8 m 人形参照）。   明确不重做几何、轴心只改 <code>construction</code>、<code>t1/t3/t5</code> 图必须保留。</p><div class="pager"><a href="assets-batch-01.html">← 第一批模型清单与提示词（交付给建模组）</a><a href="assets-batch-02.html">第二批模型清单与提示词（道路 / 车辆 / 标识） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#零-先做这个-共享材质库-否则-238-类要重复调-238-次">零、先做这个：共享材质库（否则 238 类要重复调 238 次）</a><a class="l3" href="#0-1-做法">0.1 做法</a><a class="l3" href="#0-2-每个材质必须的东西">0.2 每个材质必须的东西</a><a class="l3" href="#0-3-交付">0.3 交付</a><a class="l2" href="#一-共性修复-8-个模型都要做-不重复写">一、共性修复（8 个模型都要做，不重复写）</a><a class="l2" href="#二-逐模型修复">二、逐模型修复</a><a class="l3" href="#2-1-vlg_court-独院农房-p0">2.1 vlg_court 独院农房（P0）</a><a class="l3" href="#2-2-city_slab-高层板楼-p0">2.2 city_slab 高层板楼（P0）</a><a class="l3" href="#2-3-shop_street-沿街商铺-p0">2.3 shop_street 沿街商铺（P0）</a><a class="l3" href="#2-4-factory-门式钢架厂房-p0">2.4 factory 门式钢架厂房（P0）</a><a class="l3" href="#2-5-bus_stop-公交站台-p0">2.5 bus_stop 公交站台（P0）</a><a class="l3" href="#2-6-gas_station-加油站-p0">2.6 gas_station 加油站（P0）</a><a class="l3" href="#2-7-adm_fire-消防站-p0">2.7 adm_fire 消防站（P0）</a><a class="l3" href="#2-8-construction-塔吊-在建体-p1">2.8 construction 塔吊+在建体（P1）</a><a class="l2" href="#三-交付清单">三、交付清单</a><a class="l2" href="#四-验收顺序-不许跳">四、验收顺序（不许跳）</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

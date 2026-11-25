@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>交接单（HANDOFF） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" class="on" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 计划与纪律</div><h1 id="交接单-handoff">交接单（HANDOFF）</h1>
+<blockquote><strong>给"下一个接手的 Agent"看的一页纸</strong>：另一个工具、另一个会话、或者三个月后的自己。<br>⚠ 本文<strong>不是</strong>"先读我"（唯一入口是仓库根 <code>README.md</code>，D6）。本文解决的是"<strong>从哪继续、别踩什么</strong>"。<br>冲突时优先级：<code>design/00-constitution.md</code> → <code>decisions.md</code> → <code>plan.md</code> → 本文。</blockquote>
+<p><strong>最近更新：2026-11-24</strong>（每次交接前更新，文末 append）</p>
+<blockquote>📌 <strong>粘给新会话的开工指令 → <code>docs/prompts/for-new-session.md</code></strong>；<br><strong>粘给建模 AI 的总指令 → <code>docs/prompts/for-modeling-ai.md</code></strong>。<br>📌 <strong>想了解"这一轮做什么" → 读 <code>docs/NEXT.md</code></strong>：一页讲完"代码到哪一步了、下一步做什么、验收命令是什么"。<br>本文件偏"别踩什么坑"；<code>NEXT.md</code> 偏"这一轮干什么"。</blockquote>
+<hr>
+<h2 id="一-分工-2026-11-22-开发者明确">一、分工（2026-11-22 开发者明确）</h2>
+<div class="tw"><table><thead><tr><th>角色</th><th>做什么</th><th>不做什么</th></tr></thead><tbody><tr><td><strong>WorkBuddy</strong></td><td><strong>只做前置</strong>：设计文档、契约、基准测量、脚手架、验收定义</td><td><strong>不写业务逻辑</strong>（B1 之后的 sim/view/ui 实现）</td></tr><tr><td><strong>另一个 Agent 工具</strong>（待定）</td><td>按批次实现 + 跑验收 + 出 30 秒视频</td><td>不改裁定、不改契约（要改先回 <code>decisions.md</code>）</td></tr></tbody></table></div>
+<p>⇒ 前置工作的目标是：<strong>让接手方不需要理解全部历史，也能按契约把模块接起来</strong>。 这就是 <code>docs/contracts/</code> 八张卡与 <code>design/09-core-tick.md</code> §7.4 接口表存在的原因。</p>
+<hr>
+<h2 id="二-接手顺序-20-分钟">二、接手顺序（20 分钟）</h2>
+<blockquote>📚 全仓文档按 12 类归在 <code>docs/DOCS.md</code>（带行数与「改 A 要连带改 B」规则）。<strong>不知道读哪篇就先看那张表。</strong></blockquote>
+<pre class="code"><code>1. README.md                    ← 唯一入口：定位、判据、目录约定
+2. 本文 §四 当前状态            ← 现在到哪一步了
+3. docs/contracts/&lt;你要动的系统&gt;.md   ← 一页纸契约（必读）
+4. docs/design/09-core-tick.md §7.4  ← core 已实现的接口，别重造
+5. docs/plan.md 你那一批        ← 交付 / 验收 / 停止条件</code></pre>
+<p>⚠ <strong>不要从 <code>decisions.md</code> 开始读</strong>（31 条裁定，会淹死）。它是"查"的，不是"读"的。</p>
+<hr>
+<h2 id="三-可跑命令-全部已实测过">三、可跑命令（全部已实测过）</h2>
+<div class="tw"><table><thead><tr><th>命令</th><th>证明什么</th><th>期望</th></tr></thead><tbody><tr><td><code>dotnet run --project bench/coretest</code></td><td>core 逻辑（时间/日历/农历/存档/总线/调度/8 系统）</td><td><code>10 组 138 条，0 组失败</code></td></tr><tr><td><code>godot --headless --path . --quit</code></td><td>工程能被 Godot 打开、无脚本错误</td><td>只打印版本行，退出码 0</td></tr><tr><td><code>python tools/gen_lunar.py --check-only</code></td><td>农历表与双源交叉校验一致</td><td><code>一致</code> ×2 + <code>✅ 现有文件校验通过</code></td></tr><tr><td><code>dotnet build Chengmai.csproj</code></td><td><strong>Godot 侧 C# 工程能编</strong>（net8.0，模拟器全部代码）</td><td><code>0 个警告 0 个错误</code> → <code>.godot/mono/temp/bin/Debug/Chengmai.dll</code></td></tr><tr><td><code>python bench/check_assets.py assets/models/buildings</code></td><td><strong>资产准入闸门</strong>：槽名/图集/单体/底面原点/面数/降级截图，0 FAIL 才能进 B3</td></tr><tr><td><code>python bench/check_realism.py assets/models/buildings</code></td><td><strong>写实准入闸门</strong>：normal/ORM/材质参数区分/玻璃反射/metallic/写实预览图；与上面那条是两把尺子，都要 0 FAIL</td></tr><tr><td><code>python bench/lint_docs.py</code></td><td>文档自洽 + 不许硬编码颜色 + <strong>性能话题必须链接 <code>19-tradeoffs</code></strong> + <strong>关键常量一致性</strong></td><td><code>OK 未发现矛盾</code></td></tr><tr><td><code>godot --path . res://scenes/ui/main_menu.tscn -- --shot=build/shots/a.png --shot-frame=24 --hour=21.5</code></td><td><strong>UI 真渲染</strong>（不是 headless）；<code>--hour</code> 必须给，否则天光按真实时钟变，两次截图没法比</td><td><code>[shot] build/shots/a.png 1600x900</code></td></tr><tr><td><code>godot --path . res://scenes/ui/hud.tscn -- --shot=build/shots/hud.png --shot-frame=24 --hour=21.5 --locale=zh_CN</code></td><td><strong>HUD 骨架</strong>能出图（顶栏 / 左栏 / 右面板 / 底栏）</td><td><code>[shot] ... 1600x900</code>，面板无脚本错误</td></tr></tbody></table></div>
+<p>⚠ <strong>测帧率必须开窗</strong>（<code>godot --path .</code>），<code>--headless</code> 的数字<strong>无效</strong>（<code>plan.md</code> 批次纪律第 6 条）。</p>
+<hr>
+<h2 id="四-当前状态-2026-11-22">四、当前状态（2026-11-22）</h2>
+<div class="tw"><table><thead><tr><th>层</th><th>状态</th></tr></thead><tbody><tr><td><strong>B0 立法</strong></td><td>✅ 完成（2026-11-16）：宪法定稿、8 系统边界表、<code>02</code>–<code>10</code> 九篇契约、<code>R1–R32</code></td></tr><tr><td><strong>core/</strong></td><td>✅ 5 个 <code>.cs</code> 已实现（clock / bus / sim / save_game / check），138 条断言全绿</td></tr><tr><td><strong>C# 工程</strong></td><td>✅ <code>Chengmai.csproj</code> + <code>Chengmai.sln</code> 已建（<strong>CLI 建的，不需要在编辑器里点</strong>）；<code>dotnet build</code> 0 错，Godot 实测加载到 <code>Chengmai.dll</code> 并跑通 8 系统注册</td></tr><tr><td><strong>scripts/sim/</strong></td><td>🟡 8 目录 / 24 个 <code>.cs</code> <strong>空桩</strong>（接口与频率已对，逻辑全 TODO）</td></tr><tr><td><strong>tools/</strong></td><td>⬜ 5 个 <code>.gd</code> 全是 5 行占位（<code>check_contract</code> / <code>acceptance</code> / <code>probe_*</code>）</td></tr><tr><td><strong>view/</strong></td><td>⬜ 相机 / 地形 / 道路 / 建筑 / 车辆全占位；<code>cinematic.gd</code> 刚建接口</td></tr><tr><td><strong>ui/</strong></td><td>✅ <strong>外壳三页</strong>（主菜单 / 设置 / 关于）+ ✅ <strong>三配置全接线</strong>（<code>theme.json</code>→<code>ui_style.gd</code>；<code>layout.json</code>+<code>panels.json</code>→<code>ui_layout.gd</code>+<code>hud.gd</code>）&lt;br&gt;✅ <strong>HUD 布局（2026-11-22 开发者定）</strong>：<strong>顶部=数据</strong>（日期/收入/人口/温度）· <strong>底部=建造</strong>（8 组 × 子工具）· <strong>左侧=信息</strong>（12 视图）· <strong>右侧=待定</strong>&lt;br&gt;⚠ 数值全是 <code>—</code>；<code>hud.tscn</code> 是<strong>预览页</strong>（游戏场景还是空 Node3D）</td></tr><tr><td><strong>assets/</strong></td><td>🟡 <code>registry.json</code>（26 原型）在；模型/音频/贴图目录空</td></tr><tr><td><strong>config/</strong></td><td>✅ 齐：<code>sim/</code> 9 个 json、<code>ui/</code> 5 个、<code>assets/compose</code>、<code>difficulty/modes</code>、<code>data/lunar.json</code></td></tr></tbody></table></div>
+<p><strong>B1 还剩四件</strong>：<code>check_contract.gd</code> 九条 → <code>acceptance.gd</code> 接 <code>check.cs</code> → <code>view/</code> 相机与地形 → UI 数据驱动骨架。</p>
+<hr>
+<h2 id="四-五-c-工程-结构-名字三处一致-怎么从-cli-重建">四·五、C# 工程：结构、名字三处一致、怎么从 CLI 重建</h2>
+<p><strong>不需要打开编辑器点「项目 → 工具 → C#」</strong>——本工程已由 CLI 建好（2026-11-22）：</p>
+<pre class="code"><code>Chengmai.csproj     ← Sdk="Godot.NET.Sdk/4.7.1"，TargetFramework=net8.0
+Chengmai.sln        ← Debug / ExportDebug / ExportRelease 三档
+project.godot       ← [dotnet] project/assembly_name="Chengmai"</code></pre>
+<h3 id="三处名字必须一致-不一致-启动时报-failed-to-load-project-assembly">三处名字必须一致（不一致 = 启动时报 Failed to load project assembly）</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>值</th></tr></thead><tbody><tr><td><code>Chengmai.csproj</code> 的 <code>&amp;lt;AssemblyName&amp;gt;</code></td><td><code>Chengmai</code></td></tr><tr><td><code>.csproj</code> / <code>.sln</code> 的<strong>文件名</strong></td><td><code>Chengmai.*</code></td></tr><tr><td><code>project.godot</code> 的 <code>dotnet/project/assembly_name</code></td><td><code>Chengmai</code></td></tr></tbody></table></div>
+<h3 id="三条硬约束">三条硬约束</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>约束</th><th>为什么</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><code>TargetFramework</code> <strong>只能是 <code>net8.0</code></strong></td><td>GodotSharp 4.7.1 的 <code>lib/</code> 只有 <code>net8.0</code>；换版本恢复不到包</td></tr><tr><td><strong>2</strong></td><td><strong>必须 <code>&amp;lt;Compile Remove="bench/</strong>" /&amp;gt;</code>**</td><td><code>bench/</code> 是独立工程（各自有入口点、各自编译 core/sim），否则重复类型 + 多入口</td></tr><tr><td><strong>3</strong></td><td><code>bench/coretest</code> 的 TFM <strong>也必须是 <code>net8.0</code></strong></td><td>否则 net10 能编的语法在 Godot 侧编不过：<strong>断言全绿但集成失败</strong>，最难查</td></tr></tbody></table></div>
+<h3 id="离线恢复">离线恢复</h3>
+<p>本机 <code>nuget.org</code> 不通，但 Godot 自带离线包源 <code>&amp;amp;lt;Godot&amp;amp;gt;</code>（含 <code>Godot.NET.Sdk.4.7.1</code> 等）， 且 <code>~/.nuget/packages/godot.net.sdk/4.7.1</code> 已缓存 ⇒ <code>dotnet build</code> 可离线成功。 ⚠ 换机器时若报找不到 <code>Godot.NET.Sdk</code>，把该 nupkgs 目录加成 NuGet 源即可，不要改 TFM。</p>
+<h3 id="重建-三种情况">重建（三种情况）</h3>
+<div class="tw"><table><thead><tr><th>情况</th><th>做法</th></tr></thead><tbody><tr><td>日常改代码</td><td><code>dotnet build Chengmai.csproj</code>（或让 Godot 编辑器自己编）</td></tr><tr><td>工程文件丢了</td><td>按上面三行重建，然后 <code>dotnet sln add</code></td></tr><tr><td>改完要证明引擎真的加载了</td><td>建一个一次性 C# 节点探针 → <code>godot --headless --path . &amp;lt;探针场景&amp;gt;</code> → 看到 <code>[PROBE]</code> 输出 → <strong>删掉探针</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>凡是能用 CLI 做完的，不要让用户去点编辑器</strong>：编辑器点击步骤不可复现、不可 review、也无法写进交接单。</p>
+<hr>
+<h2 id="四-六-本机-rust-tauri-环境-2026-11-22-实测-当前是坏的">四·六、本机 Rust / Tauri 环境（2026-11-22 实测，<strong>当前是坏的</strong>）</h2>
+<blockquote>参考工程：<code>D:\project\QzoneArchive-main</code>（Rust + Tauri 2，2026-10-31 在本机构建成功过）。</blockquote>
+<p><strong>两个坑，按顺序修：</strong></p>
+<div class="tw"><table><thead><tr><th>#</th><th>症状</th><th>原因</th><th>修法</th></tr></thead><tbody><tr><td>1</td><td><code>cargo build</code> 报 <code>link: missing operand after '\377\376'</code> / <code>Try 'link --help'</code></td><td>Git-Bash 的 <code>/usr/bin/link.exe</code>（coreutils 硬链接工具）<strong>抢在 MSVC 链接器前面</strong></td><td>把 <code>…\VC\Tools\MSVC\&amp;lt;ver&amp;gt;\bin\Hostx64\x64</code> 前置到 PATH；最稳是用 Developer Command Prompt</td></tr><tr><td>2</td><td><code>LNK1181: 无法打开输入文件 "advapi32.lib"</code>（或 <code>kernel32.lib</code>）</td><td><strong>Windows SDK 的 <code>Lib/Include</code> 被清空</strong>：<code>D:\Windows Kits\10\</code> 只剩 <code>Catalogs/</code></td><td>重装 Windows SDK 本体（注册表 <code>KitsRoot10</code> 还指向 <code>D:\Windows Kits\10\</code>）</td></tr></tbody></table></div>
+<p><strong>另外两条 MSYS2 使用纪律：</strong></p>
+<ul><li>给 MSVC 传 <code>/nologo</code> 这种参数会被自动转成路径（<code>F:/Git/nologo</code>）⇒ 用 <code>-nologo</code>，或设 <code>MSYS2_ARG_CONV_EXCL="*"</code></li><li>链接器不认 <code>/d/...</code> 这种 POSIX 路径 ⇒ 一律写 <code>D:/...</code></li></ul>
+<p><strong>可用的事实（不用再验）：</strong> MSVC 编译器 <strong>14.44.35207 / 14.51.36231</strong> 两套都在； rustup 有 <strong>gnu 与 msvc</strong> 两套工具链，默认 msvc；Tauri 只支持 msvc。</p>
+<hr>
+<h2 id="五-禁改区-动了必须回-decisions-md-提裁定">五、禁改区（动了必须回 decisions.md 提裁定）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>不能随手改</th><th>为什么</th></tr></thead><tbody><tr><td>1</td><td><strong>8 个系统目录 / 系统名 / Tick 顺序</strong></td><td>宪法 §二/§三；<code>Sim.Register</code> 会直接抛异常</td></tr><tr><td>2</td><td><strong>bus key 名字</strong>（<code>road.lanes</code> 这种）</td><td>下游按名字读；改名 = 静默崩</td></tr><tr><td>3</td><td><strong><code>core/</code> 的公开签名</strong>（<code>Clock.Advance</code>、<code>Bus.TryGetLagged</code>、<code>Sim.OnMonthWorkSlice</code>…）</td><td>8 个系统全依赖</td></tr><tr><td>4</td><td>**<code>config/sim/*.json</code> 的字段结构**</td><td>存档迁移与 Mod 兼容</td></tr><tr><td>5</td><td><strong><code>FORMAT_VERSION</code> 的迁移分支</strong></td><td>每一段迁移<strong>永不允许删除</strong></td></tr><tr><td>5.5</td><td><strong>以为"做村庄可以跳过存档迁移链"</strong></td><td>R34：<code>save</code> 带 <code>FORMAT_VERSION</code> + 迁移注册表是 <strong>V0 的硬前提</strong>。没有它，V0 存档到 V1 就打不开，"同一存档玩到市 + 拍宣传片"整个方案作废</td></tr><tr><td>6</td><td><strong>UI 里写死 <code>Color(...)</code></strong></td><td>皮肤立刻改不动；且会重新长出三套"近白"。一律走 <code>Style.color("&amp;lt;token&amp;gt;")</code>（<code>lint_docs.py</code> 会报）</td></tr><tr><td>7</td><td><strong>往 <code>hud.gd</code> / <code>toolbar.gd</code> 里硬编码面板或工具清单</strong></td><td>全部从 <code>panels.json</code> / <code>layout.json</code> 来；硬编码 = 又把配置文件变回摆设</td></tr><tr><td>8</td><td><strong>往按钮里塞文字</strong>（而不是用图标 + tooltip）</td><td>2026-11-22 开发者明确"文字太占空间"；<code>lint_docs.py</code> 第 10 组会查每个可点元素有没有图标</td></tr><tr><td>6</td><td><strong><code>decisions.md</code> 的既有裁定</strong></td><td>只能新增，不能改写历史</td></tr></tbody></table></div>
+<p>⚠ 允许随手改的：<strong>本系统目录内的实现细节</strong>、新增私有方法、注释、测试。</p>
+<hr>
+<h2 id="五-五-用户提-新现象-时的处理流程-2026-11-22-定">五·五、用户提"新现象"时的处理流程（2026-11-22 定）</h2>
+<blockquote>开发者原话：「我提到都是一些现象……要把它分到类别里，不然想起来一条加一条会乱。」</blockquote>
+<p><strong>不要立刻加一条 F 号。</strong> 按四步走（<code>../design/12-china-features.md</code> §二·零）：</p>
+<ol><li><strong>记原话</strong>（保留语气，别先翻译成设计术语）</li><li><strong>归类</strong>：C1 空间形态 / C2 土地财政 / C3 人口社会 / C4 产业就业 / C5 市政生命周期 /</li></ol>
+<p>   C6 交通网络 / C7 时间节庆 / C10 文化视觉 / C9 跨系统</p>
+<ol><li><strong>判落点</strong>：① 已有条目的<strong>参数</strong> ② 已有条目的<strong>枚举值</strong> ③ 真要新规则才开新 F</li><li><strong>定批次</strong>：<code>B1</code>–<code>B7</code> / <code>打磨年</code> / <code>DLCn</code>（不许"以后""有机会"）</li></ol>
+<p>⚠ <strong>三个反例</strong>（都是真实发生过的）：</p>
+<ul><li>「堵火车」+「铁路切开城市」+「道口」→ 一个<strong>区间占用模型</strong>，不是三个功能</li><li>「地铁有段在地上」→ F23 的 <code>alignment</code> <strong>枚举</strong>，不是"高架地铁系统"</li><li>「初五商店开门」→ F24 的<strong>一张时长表</strong>，不是四个节日模式</li></ul>
+<p>⚠ <strong>没有"落点"的登记 = 许愿</strong>，直接打回。</p>
+<hr>
+<h2 id="六-每批开工前的门-三样齐了再动手">六、每批开工前的门（三样齐了再动手）</h2>
+<ol><li><strong>契约冻结</strong>：本批涉及的 key / 字段 / 断言已写进 <code>contracts/*.md</code>（<code>agents.md</code> §二·六）</li><li><strong>验收命令</strong>：一条能跑的命令 + 明确期望值（不许"看起来对"）</li><li><strong>停止条件</strong>：什么情况下必须停下来重做（每批在 <code>plan.md</code> 里都写了）</li></ol>
+<p>⚠ 缺任何一样就不要开——v1 就是这么散的。</p>
+<hr>
+<h2 id="七-已知的坑-会反复踩的">七、已知的坑（会反复踩的）</h2>
+<div class="tw"><table><thead><tr><th>坑</th><th>说明</th></tr></thead><tbody><tr><td><strong><code>1/30</code> 累加丢帧</strong></td><td>浮点累加必须带 <code>1e-9</code> 容差，否则 30fps 跑 60 秒少 1 日（CK8 实测）</td></tr><tr><td>**<code>*_changed</code> 不清**</td><td>边界布尔必须"每天开头清"，否则月系统每月跑 30 次（CK3 实测）</td></tr><tr><td><strong><code>service_system.cs</code> 漏接口</strong></td><td>空桩必须实现 <code>ISimSystem</code>，且 <code>Name</code> 与宪法名一致（DG4 断言兜住）</td></tr><tr><td>**<code>road/</code> 没有 <code>*_system</code>**</td><td><code>RoadSystem</code> 在 <code>road_graph.cs</code> 里（3 文件已满）</td></tr><tr><td><strong>合并 <code>MultiMesh</code> 与 <code>Mesh</code></strong></td><td>实例容器可 <code>duplicate()</code>，<strong>网格本体绝不能</strong>（<code>agents.md</code> 坑 #13）</td></tr><tr><td><strong>用 <code>Vector3</code> 做 sim</strong></td><td>C# 下只快 2.1 倍；纯 <code>float[]</code> 快 44 倍（L6）</td></tr></tbody></table></div>
+<hr>
+<h2 id="八-变更记录">八、变更记录</h2>
+<ul><li><strong>2026-11-22</strong>：首版。记录"WorkBuddy 只做前置"的分工、可跑命令、当前状态、六条禁改区、每批开工三门、六个已知坑。</li></ul><div class="pager"><a href="plan.html">← v2 推进规划 · 按批次</a><a href="agents.html">v2 子代理协作规范 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-分工-2026-11-22-开发者明确">一、分工（2026-11-22 开发者明确）</a><a class="l2" href="#二-接手顺序-20-分钟">二、接手顺序（20 分钟）</a><a class="l2" href="#三-可跑命令-全部已实测过">三、可跑命令（全部已实测过）</a><a class="l2" href="#四-当前状态-2026-11-22">四、当前状态（2026-11-22）</a><a class="l2" href="#四-五-c-工程-结构-名字三处一致-怎么从-cli-重建">四·五、C# 工程：结构、名字三处一致、怎么从 CLI 重建</a><a class="l3" href="#三处名字必须一致-不一致-启动时报-failed-to-load-project-assembly">三处名字必须一致（不一致 = 启动时报 Failed to load project a</a><a class="l3" href="#三条硬约束">三条硬约束</a><a class="l3" href="#离线恢复">离线恢复</a><a class="l3" href="#重建-三种情况">重建（三种情况）</a><a class="l2" href="#四-六-本机-rust-tauri-环境-2026-11-22-实测-当前是坏的">四·六、本机 Rust / Tauri 环境（2026-11-22 实测，当前是坏的）</a><a class="l2" href="#五-禁改区-动了必须回-decisions-md-提裁定">五、禁改区（动了必须回 decisions.md 提裁定）</a><a class="l2" href="#五-五-用户提-新现象-时的处理流程-2026-11-22-定">五·五、用户提"新现象"时的处理流程（2026-11-22 定）</a><a class="l2" href="#六-每批开工前的门-三样齐了再动手">六、每批开工前的门（三样齐了再动手）</a><a class="l2" href="#七-已知的坑-会反复踩的">七、已知的坑（会反复踩的）</a><a class="l2" href="#八-变更记录">八、变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

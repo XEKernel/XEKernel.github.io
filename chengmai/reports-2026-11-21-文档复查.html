@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026-11-21 文档复查：冲突 / 疏漏 / 不合理 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" class="on" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 审查与报告</div><h1 id="2026-11-21-文档复查-冲突-疏漏-不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</h1>
+<blockquote>范围：<code>README.md</code> + <code>docs/</code>（design 16 篇 / decisions / plan / agents / glossary / reference 抽查）。<br>方法：交叉对照「宪法 / decisions / plan / system-boundaries」四份最高效力文件，逐篇核对数字、编号、文件清单、批次与验收。<br><strong>B0 两条验收仍然通过</strong>：<code>Q*</code> 待拍板 ⬜ = 0；<code>02</code>–<code>10</code> 九篇都同时有「数据契约 + 验收点」两节。<br>所以下面<strong>不是 B0 没做完</strong>，而是 <strong>B0 之后新增的 R19–R23 与几轮设计扩充没有回填到旧篇</strong>，产生了系统性漂移。</blockquote>
+<hr>
+<h2 id="零-一句话结论">零、一句话结论</h2>
+<p><strong>规则本身没崩，崩的是"规则的副本"。</strong> 同一条事实在 3–5 个文件里各存一份，改一处不改其余 ⇒ 现在有 7 处会直接让验收假绿或白干一场的冲突（P0）， 一套完全撞车的断言编号体系（P1），和一批仍在引用作废决定的陈旧段落（P2）。 <strong>P0 必须在 B1 开工前修完</strong>，其余可以边做边修。</p>
+<div class="tw"><table><thead><tr><th>级别</th><th>条数</th><th>性质</th><th>处理时机</th></tr></thead><tbody><tr><td><strong>P0</strong></td><td>7</td><td>会让验收永远不过 / 白写代码 / 验收测不出东西</td><td><strong>B1 之前必修</strong></td></tr><tr><td><strong>P1</strong></td><td>4 组</td><td>编号撞车、清单双轨，检索与派活会拿错</td><td>B1 期间顺手改</td></tr><tr><td><strong>P2</strong></td><td>13</td><td>陈旧数字与措辞，不改也不会崩，但会误导</td><td>随意</td></tr><tr><td><strong>遗漏</strong></td><td>7</td><td>文档引用了不存在的东西 / 存在未定义的空洞</td><td>分 P0/P2</td></tr></tbody></table></div>
+<h3 id="修复进度-2026-11-21-当天">修复进度（2026-11-21 当天）</h3>
+<p><strong>已改完（22 处，不改任何裁定含义）：</strong></p>
+<div class="tw"><table><thead><tr><th>项</th><th>处置</th></tr></thead><tbody><tr><td>P0-1</td><td><code>09:451</code> Tick 顺序补 <code>utility</code>（8 个系统）</td></tr><tr><td>P0-3</td><td><code>07</code> §6.1 降级为"历史论证 + 现落点 3 文件"；<code>03</code>/<code>12</code>/<code>13</code> 全部 <code>.gd</code>→<code>.cs</code></td></tr><tr><td>P0-6</td><td><code>plan</code> B5 ① 与 <code>11-scale</code> C2 改「25 万实例 ≤ 15 ms」，4 ms 标为"未达成目标值"</td></tr><tr><td>P0-7</td><td><code>README:117</code> 删 <code>#2b6cb0</code>；B1-4 改「任一色 token」</td></tr><tr><td>P1-9</td><td><code>13</code> 补 §十 空号说明；K33–K40 → <strong>K28–K35</strong>（消除断号）；移除正文中间重复的变更记录</td></tr><tr><td>P1-8（部分）</td><td>多语言断言 <code>L1–L8</code> → <strong>I18N-1…8</strong>；配音断言 <code>V1–V6</code> → <strong>VO-1…6</strong>（消除与宪法铁律 / 交通验收的撞车）</td></tr><tr><td>遗漏 O1</td><td>新建 <code>config/sim/time.json</code>（按 <code>09</code> §7.3 schema，含时段系数比、节日档位、独立性规则）</td></tr><tr><td>P2</td><td>19 条陈旧数字已改：<code>glossary</code> 三条、<code>02</code> 两处（50×50 km / R22–R30）、<code>10-presentation</code> 两处（26 类）、<code>plan</code> 三处（七项/六条/九篇）、<code>README</code> 判据 D1/D5/D8、<code>README</code> §四/§六/§七、<code>decisions</code> 总表补 R19–R23 + R9/R13 加"已被修正"横幅、<code>agents</code> 15 条、<code>12</code> D4=8、<code>05</code> <code>job_slot</code> 待核注记</td></tr></tbody></table></div>
+<p><strong>第二批（开发者「都按建议做」后已全部落地，记为 R24–R31）：</strong></p>
+<div class="tw"><table><thead><tr><th>裁定</th><th>内容</th><th>落地位置</th></tr></thead><tbody><tr><td><strong>R24</strong></td><td>反向读一律读上月值</td><td><code>system-boundaries</code> §四 硬规则改写 + §三 五处标注；<code>09</code> §六 第 4 条纪律</td></tr><tr><td><strong>R25</strong></td><td>native 降为应急，B4 不前置</td><td><code>plan</code> B4 输入条件；<code>11-scale</code> §七 C1 作废</td></tr><tr><td><strong>R26</strong></td><td>15 万 = 上限 / 8 万 = 基线</td><td><code>11-scale</code> §八、<code>plan</code> B5④</td></tr><tr><td><strong>R27</strong></td><td>DLC 编号以 <code>12 §4.5</code> 为准</td><td><code>decisions</code> R18、<code>03</code>/<code>06</code>/<code>07</code>/<code>09</code> 的 DLC2→DLC1、<code>08</code> 的 <code>bus</code>、F23/F35/F36/F99、DLC5 改名</td></tr><tr><td><strong>R28</strong></td><td>行政层级保持四级</td><td><code>09</code> §3.2 删"都市"行</td></tr><tr><td><strong>R29</strong></td><td>高铁站进本体、班次进 DLC4</td><td><code>08 §3.7.7</code>、<code>12 §3.5</code></td></tr><tr><td><strong>R30</strong></td><td>OD 月边界一次</td><td><code>11-scale</code> §四</td></tr><tr><td><strong>R31</strong></td><td>断言编号两字母化</td><td>14 个文件、约 200 处引用；前缀表见 <code>glossary.md</code> 附录</td></tr></tbody></table></div>
+<p><strong>R31 的编号映射</strong>：<code>PK</code>(01 门槛) <code>RD</code>(02) <code>ZN</code>(03) <code>PP</code>(04) <code>EM</code>(05) <code>FN-</code>(06) <code>SV</code>(07) <code>TR</code>(08) <code>CK</code>(09) <code>UI</code>/<code>CAM</code>/<code>AR</code>(10) <code>U</code>/<code>IM</code>(11) <code>DG</code>/<code>CN</code>(12，<code>F</code> 台账不动) <code>K</code>(13) <code>DG</code>(README 判据)； 裁定 <code>R<em></code> 与台账 <code>F</em></code> <strong>未动</strong>。⚠ <strong>核心循环的 R1/R2/R3 与裁定号同名</strong>，已在 <code>01 §四</code> 与 <code>glossary</code> 附录加限定写法（「核心循环 R1」/<code>CL1</code>），未整体改名（全仓 190 处引用，多为裁定号）。</p>
+<p><strong>仍未处理（结构性问题，不影响开工）：</strong> 核心循环 R1–R3 与裁定号同名的<strong>整体改名</strong>；<code>07</code> 的 <code>SV13/SV14</code> 空号（已注明不回收）。</p>
+<hr>
+<h2 id="一-p0-七条会真出事的冲突">一、P0 · 七条会真出事的冲突</h2>
+<h3 id="p0-1-tick-顺序在两处漏了-utility">P0-1 Tick 顺序在两处漏了 utility</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>现文</th></tr></thead><tbody><tr><td><code>00-constitution.md</code> §三</td><td><code>road → utility → zoning → population → employment → services → finance → traffic</code> ✅</td></tr><tr><td><code>decisions.md</code> R15</td><td>同上 ✅</td></tr><tr><td><strong><code>09-core-tick.md:451</code></strong>（§六 三条纪律 第 2 条）</td><td><code>road → zoning → population → employment → services → finance → traffic</code> ❌ <strong>缺 utility</strong></td></tr><tr><td><code>system-boundaries.md:166</code> 依赖图</td><td>有 utility ✅</td></tr></tbody></table></div>
+<p><strong>后果</strong>：<code>09</code> 是 B4 各系统实现时最常被翻的一篇，缺一个系统就是"市政在人口之后算"。 <strong>建议</strong>：<code>09:451</code> 补齐；并在 <code>check_contract.gd</code> 加一条"08 个系统目录名集合 == 宪法 §三 顺序表集合"的断言，让这类漂移以后自动报错。</p>
+<hr>
+<h3 id="p0-2-唯一的反向读-是假的-实际有-5-处">P0-2 「唯一的反向读」是假的：实际有 5 处</h3>
+<p><code>system-boundaries.md:176</code> 写死：</p>
+<blockquote><strong>唯一的反向读是 <code>zoning</code> 读 <code>employment</code> 上月产能</strong></blockquote>
+<p>但同一文件 §三 的明细里，反向读有 5 处：</p>
+<div class="tw"><table><thead><tr><th>读方</th><th>读的 key</th><th>方向</th><th>是否已注明</th></tr></thead><tbody><tr><td><code>zoning</code></td><td><code>employment.last_month_output</code></td><td>反向</td><td>✅ 已注明，用滞后一期</td></tr><tr><td><strong><code>zoning</code></strong></td><td><strong><code>finance.land_value</code></strong>（<code>:90</code>）</td><td>反向</td><td>❌</td></tr><tr><td><strong><code>population</code></strong></td><td><strong><code>traffic.avg_commute_s</code></strong>（<code>:104</code>）</td><td>反向</td><td>❌</td></tr><tr><td><strong><code>services</code></strong></td><td><strong><code>finance.budget</code></strong>（<code>:130</code>）</td><td>反向</td><td>❌</td></tr><tr><td><strong><code>finance</code></strong></td><td><strong><code>traffic.avg_commute_s</code></strong>（<code>:142</code>）</td><td>反向</td><td>❌</td></tr></tbody></table></div>
+<p>（<code>employment</code> 读 <code>utility.gas_ok</code> 是正向，没问题。）</p>
+<p><strong>后果</strong>：这条规则是"数据由谁产生"之外的第二根支柱。它现在既不成立、也没被推翻， 而是<strong>每处都默默破了例</strong>——这正是 v1 的失败形态（规则写在纸上，实现各走各的）。 <strong>建议</strong>：把硬规则改成可执行的版本：</p>
+<blockquote><strong>读 Tick 顺序在自己之后的系统，一律读"上月值"（<code>stale</code> 标记），不读本月值。</strong><br>并且 <code>§四·五 降级规则</code> 的机制<strong>就是</strong>这条规则的实现，不需要新概念。</blockquote>
+<p>这样 5 处反向读全部合法，<code>zoning ← employment</code> 也不再是"唯一特例"，而是同一条规则的第一个例子。</p>
+<hr>
+<h3 id="p0-3-r19-c-分工-与-r15-拆-utility-没有回填到-07-services">P0-3 R19（C# 分工）与 R15（拆 utility）没有回填到 07-services</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>现文</th><th>冲突对象</th></tr></thead><tbody><tr><td><code>07-services.md:465-479</code></td><td><code>services/</code> 需要 <strong>7 个文件</strong>：<code>service_system.gd</code> <code>school.gd</code> <code>power_grid.gd</code> <code>water_chain.gd</code> <code>sewage.gd</code> <code>comm_tower.gd</code> <code>utility.gd</code></td><td><code>system-boundaries.md:132</code>：<code>services/</code> <strong>3 文件</strong>；R15 已把电力/水/污水/通信/燃气拆给 <code>utility</code></td></tr><tr><td><code>03-zoning.md:280-282</code></td><td><code>zoning_system.gd</code> / <code>parcel_subdiv.gd</code> / <code>growth.gd</code></td><td>R19：<code>sim/</code> 是 <code>.cs</code></td></tr><tr><td><code>13-player-loop.md:396</code></td><td>示例代码 <code># core/save_game.gd</code></td><td>R19：<code>core/</code> 是 <code>.cs</code></td></tr><tr><td><code>12-china-features.md:1422</code></td><td>DLC 落点 <code>scripts/sim/&amp;lt;系统&amp;gt;/dlc_*.gd</code></td><td>R19：<code>.cs</code></td></tr></tbody></table></div>
+<p><strong>后果</strong>：<code>07</code> §6.1 那张 7 文件表是 <strong>R15 之前</strong>的论证，它自己的结论（"拆成第 8 个系统"）已经写在下面几行， 但表没有删。谁按表派活，就会在 <code>services/</code> 里建出 <code>power_grid</code>，直接破 D5 和 D4。 <strong>建议</strong>：<code>07</code> §6.1 整节改成"历史论证（结论已由 R15 实现）"，并给出<strong>当前的 3 文件</strong>表； <code>03</code>/<code>13</code>/<code>12</code> 的后缀统一改 <code>.cs</code>。</p>
+<hr>
+<h3 id="p0-4-native-sim_core-到底是-b4-必需-还是-不需要">P0-4 native/sim_core 到底是"B4 必需"还是"不需要"</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>说法</th></tr></thead><tbody><tr><td><code>plan.md:195-197</code></td><td>⚠ <strong><code>native/sim_core</code> 必须在 B4 之前可用</strong>……是 B4 的输入条件，不是可选项</td></tr><tr><td><code>11-scale.md:371-398</code></td><td>⭐ <strong>不需要 native，C# 就够</strong>（1000 万月结 C# 71 ms，预算 400 ms）；native <strong>从"必需"降为"应急"</strong></td></tr><tr><td><code>11-scale.md:690</code>（§七 C1）</td><td><strong>B4 之前必需</strong>。1000 万人的月度结算在 GDScript 里做不完 ← 这条写于 R19 之前</td></tr><tr><td><code>README.md:258</code></td><td>目录树里仍留 <code>native/sim_core/ Cargo.toml</code></td></tr></tbody></table></div>
+<p><strong>后果</strong>：这是<strong>工期权重的差别</strong>——按 <code>plan</code> 走，B4 之前要写一个 Rust GDExtension + 绑定 + 跨语言调试； 按 <code>11-scale</code> 走，一行 Rust 都不用写。当前文档两种指令同时有效。 <strong>建议</strong>：以 <code>11-scale §6.4.1</code> 为准（有实测），改三处：<code>plan.md:195-197</code>（B4 输入条件删掉 native）、 <code>11-scale.md:690</code>（C1 标记作废，附实测依据）、<code>README.md:258</code>（native 标"应急，默认不建"）。</p>
+<hr>
+<h3 id="p0-5-活跃-agent-签收数-15-万-8-万-三个地方三个数">P0-5 活跃 agent 签收数：15 万 / 8 万，三个地方三个数</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>数</th></tr></thead><tbody><tr><td><code>decisions.md:508</code>（R5）</td><td><strong>B7 签收标准 = 15 万活跃 agent</strong>（≈12 ms）</td></tr><tr><td><code>11-scale.md:716-717</code>（§八）</td><td>B7 可玩版 100 万人口 → <strong>8 万 agent</strong>；打磨年 M1 300 万 → <strong>15 万</strong></td></tr><tr><td><code>plan.md:209</code>（B5 验收 ④）</td><td><strong>8 万活跃 agent</strong> 下不超预算</td></tr><tr><td><code>11-scale.md:632</code>（§6.5.1）</td><td>首发 100 万人口 → <strong>真 agent 15 万</strong></td></tr></tbody></table></div>
+<p><strong>后果</strong>：B5/B7 签收时"做到了没有"没有唯一答案。 <strong>建议</strong>：保留 R5 的 15 万为<strong>能力上限档位</strong>，把"签收"明确成"在 X 档位硬件下 ≥ 8 万且掉档可解释"， 然后把 <code>11-scale §八</code> 与 <code>plan B5</code> 的数字对齐到同一句话。</p>
+<hr>
+<h3 id="p0-6-变换填充-4-ms-这条验收-自己的实测数据已经否掉了">P0-6 「变换填充 ≤ 4 ms」这条验收，自己的实测数据已经否掉了</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>数字</th></tr></thead><tbody><tr><td><code>plan.md:206</code>（B5 验收 ①）</td><td>20 万车 + 5 万行人，填充 <strong>&lt; 4 ms</strong></td></tr><tr><td><code>11-scale.md:691</code>（§七 C2）</td><td>同上 <strong>≤ 4 ms</strong></td></tr><tr><td><code>11-scale.md:604</code>（§6.4.9 实测）</td><td>25 万 C# + <code>buffer</code> <strong>≈ 13.7 ms</strong>（超 3.4 倍）</td></tr><tr><td><code>11-scale.md:583</code>（§6.4.8）</td><td>15 万 fill <strong>8.2 ms</strong></td></tr></tbody></table></div>
+<p><strong>后果</strong>：这条验收<strong>永远不可能通过</strong>，而它是 B5 的第一条。第一次跑就会卡在这里。 <strong>建议</strong>：改成"<strong>25 万实例填充 ≤ 15 ms（C# + Buffer）</strong>，且 30 fps 稳定"，把原来的 4 ms 降级为"目标值（未达成）"。</p>
+<hr>
+<h3 id="p0-7-配色-readme-仍说-2b6cb0-已拍板-而主题文件里主色是-null">P0-7 配色：README 仍说 #2b6cb0 已拍板，而主题文件里主色是 null</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>现文</th></tr></thead><tbody><tr><td><code>README.md:117</code></td><td>「视觉规范可复用（<strong>直角 + <code>#2b6cb0</code> 那套已拍板</strong>）」 ❌</td></tr><tr><td><code>10-presentation.md:221/227</code></td><td>主色<strong>未定</strong>；<strong>不用 <code>#2b6cb0</code></strong>（用户原话"反而会加重 AI 味"） ✅</td></tr><tr><td><code>config/ui/theme.json</code></td><td><code>"primary": null</code>，注释写明待定 ✅</td></tr><tr><td><code>plan.md:104</code>（B1-4）</td><td>验收：<strong>改 <code>ui/theme.json</code> 的主色，界面颜色跟着变</strong></td></tr></tbody></table></div>
+<p><strong>后果</strong>：两件事。① README 是唯一「先读我」，它现在把一条已作废的决定当成结论； ② <strong>B1-4 这条验收目前无法执行</strong>——主色是 <code>null</code>，改了也看不出变化。 <strong>建议</strong>：README 那句改掉；B1-4 改成"改 <code>theme.json</code> 里任一色 token（先用占位色）→ 界面颜色变化"， 主色色号留给美术方向，不阻塞 B1。</p>
+<hr>
+<h2 id="二-p1-编号体系撞车-会影响-验收查得到吗">二、P1 · 编号体系撞车（会影响"验收查得到吗"）</h2>
+<p>现在断言前缀是<strong>按篇自取</strong>的，同一字母在不同文件里指完全不同的东西。最危险的六组：</p>
+<div class="tw"><table><thead><tr><th>前缀</th><th>用途 A</th><th>用途 B</th><th>用途 C</th></tr></thead><tbody><tr><td><strong>L</strong></td><td>宪法铁律 <strong>L1–L8</strong>（硬约束，<code>check_contract</code> 引用）</td><td><code>13</code> §十九 多语言断言 <strong>L1–L8</strong> ← ⚠ <strong>L6/L7/L8 与铁律完全撞车</strong></td><td>—</td></tr><tr><td><strong>P</strong></td><td><code>01</code> 可玩门槛 <strong>P1–P5</strong></td><td><code>03</code> 布局原型 <strong>P1–P5</strong>（行列式/周边式…）</td><td><code>04</code> 人口断言 <strong>P1–P15</strong></td></tr><tr><td><strong>F</strong></td><td><code>12</code> 中国特色台账 <strong>F1–F120</strong>（F9=城中村、F38=调休）</td><td><code>06</code> 财政断言 <strong>F1–F10</strong></td><td>—</td></tr><tr><td><strong>C</strong></td><td><code>10</code> 拍摄能力 <strong>C1–C7</strong></td><td><code>11</code> 连带影响 <strong>C1–C12</strong></td><td><code>12</code> 中国性判据 <strong>C1–C6</strong></td></tr><tr><td><strong>V</strong></td><td><code>08</code> 交通验收 <strong>V1–V30</strong></td><td><code>13</code> §二十 配音验收 <strong>V1–V6</strong></td><td>—</td></tr><tr><td><strong>R</strong></td><td><code>02</code> 路网验收 <strong>R1–R30</strong></td><td><code>decisions</code> 裁定 <strong>R1–R23</strong></td><td>—</td></tr><tr><td><strong>D</strong></td><td>README 判据 <strong>D1–D11</strong></td><td><code>13</code> §十八 里程碑 <strong>D1–D24</strong>（D4=第一个有年味的春节）</td><td>—</td></tr></tbody></table></div>
+<p><strong>为什么这条是 P1 而不是 P2</strong>：<code>plan.md</code> B7 写的是「K4–K19」「C2–C6 拍摄能力」—— 读者必须知道"这个 C 是 <code>10-presentation</code> 的 C 还是 <code>12</code> 的 C"。现在无法从编号本身判断。</p>
+<p><strong>建议（一次性，成本很低）</strong>：给每篇定一个<strong>两字母前缀</strong>，写进 <code>glossary.md</code> 末尾：</p>
+<pre class="code"><code>可玩门槛  PK1–PK5      路网     RD1–RD30    分区   ZN1–ZN21
+人口      PP1–PP15     就业     EM1–EM18    财政   FN1–FN10
+服务      SV1–SV23     交通     TR1–TR30    时钟   CK1–CK19
+玩家      PL1–PL40     多语言   I18N-1–8    配音   VO1–VO6
+判据      D1–D11       裁定     R1–R23（不动）</code></pre>
+<p>裁定 <code>R*</code> <strong>不要改</strong>（对外引用太多）；其余一次性重编，并在各篇顶部留一行"本篇编号前缀 = XX"。</p>
+<h3 id="p1-9-13-player-loop-的结构缺口">P1-9 13-player-loop 的结构缺口</h3>
+<ul><li><strong>缺 §十</strong>：目录与正文都从「九、验收点」直接跳到「十一、诊断」（<code>:489</code>）。</li><li><strong>变更记录位置错</strong>：2026-11-16 那条被插在 §十六 与 §十七 之间（<code>:646</code>），不在文末。</li><li><strong>K 编号断号</strong>：<code>K1–K27</code> 有，<code>K33–K40</code> 有，<strong><code>K28–K32</code> 不存在</strong>。</li><li><code>plan.md</code> B7 只引用到 <code>K24</code>，<code>K25–K40</code> 从未被任何批次认领（K33–K40 是菜单/存档页，属于 B1，却在 B7 验收里没出现）。</li></ul>
+<h3 id="p1-10-dlc-编号两套并行">P1-10 DLC 编号两套并行</h3>
+<p><code>12-china-features.md:§4.5</code> 定的是：<strong>DLC1 环境与季节 / DLC2 节日 / DLC3 城中村 / DLC4 都市圈 / DLC5 轨道扩展 / DLC6 治理 / DLC7 灾害</strong>。 但：</p>
+<div class="tw"><table><thead><tr><th>位置</th><th>写的</th><th>与 §4.5 的关系</th></tr></thead><tbody><tr><td><code>decisions.md:745</code>（R18）</td><td>环境与季节 = <strong>DLC2</strong></td><td>❌ 与 §4.5 的 DLC1 冲突</td></tr><tr><td><code>03-zoning.md:496</code> <code>06:44</code> <code>07:36</code> <code>09:31</code></td><td>污染/季节 = <strong>DLC2</strong></td><td>❌ 同</td></tr><tr><td><code>01-playable-definition.md:298</code></td><td>环境 = <strong>DLC1</strong></td><td>✅ 与 §4.5 一致，与 R18 冲突</td></tr><tr><td><code>12:64</code>（F9 城中村）</td><td>DLC3</td><td>✅</td></tr><tr><td><code>12:88</code>（F23 地铁/公交）、<code>12:131/138</code>（F35/F36 无人机）</td><td><strong>DLC1</strong></td><td>❌ 它们想说的是"旧 DLC1=公共交通"，而现在的 DLC1 是环境季节</td></tr><tr><td><code>08:40</code> <code>08:888/896</code></td><td>公交地铁 = <strong>DLC1</strong>，<strong>基础版不生成 bus</strong></td><td>❌ <strong>与 R18 正面冲突</strong>（R18 已把公交地铁移回本体，本篇 §三·五 也写了本体实现，V9/V10 还专门验收公交与地铁的差别）</td></tr><tr><td><code>08:913</code></td><td>轨道扩展 = <strong>DLC5</strong></td><td>✅</td></tr></tbody></table></div>
+<p><strong>后果</strong>：<code>08</code> 一篇之内自相矛盾——§三·五 实现公交/地铁，§6.1.1 说"基础版没有 bus"。 <strong>建议</strong>：以 §4.5 为唯一编号表；改 <code>decisions R18</code> 里"DLC2 不变"那句为"DLC1"；把 <code>08</code> 的 <code>bus</code> 行从"DLC1 才载入"改成"本体载入（R18）"；<code>01:298</code> 统一到 §4.5。</p>
+<h3 id="p1-11-行政层级-四级还是五级">P1-11 行政层级：四级还是五级</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>分级</th></tr></thead><tbody><tr><td><code>01-playable-definition.md:241-246</code>（§5.3）</td><td>村 / 镇 / 县 / <strong>市 &gt; 30 万</strong>（四级，R4）</td></tr><tr><td><code>09-core-tick.md:109-115</code>（§3.2 轨一）</td><td>村 / 镇 / 县 / 市 / <strong>都市 &gt; 100 万</strong>（五级）</td></tr><tr><td><code>decisions.md</code> R4</td><td>四级（村/镇/县/市）</td></tr></tbody></table></div>
+<p><strong>后果</strong>：<code>09</code> 多出的"都市"没有对应的规范集（R4 说每级适用不同国标），也没有对应的资产/标题文案。 <strong>建议</strong>：二选一——要么删"都市"（推荐，与 R4 一致，100 万只是胜利条件不是新层级），要么在 <code>01</code> §5.3 与 R4 里补第五级。</p>
+<hr>
+<h2 id="三-p2-陈旧数字与措辞-13-条">三、P2 · 陈旧数字与措辞（13 条）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>位置</th><th>现文</th><th>应为</th></tr></thead><tbody><tr><td>1</td><td><code>glossary.md:10</code></td><td>用地格 <strong>20 m</strong>，代码 <code>cell</code></td><td>R6 已废；宪法 §四 是 <strong>50 m 派生栅格</strong>，且"没有用地格这个概念"</td></tr><tr><td>2</td><td><code>glossary.md:45</code></td><td>模拟时钟 <strong>年 = 360 日</strong></td><td>R14：<strong>365/366</strong></td></tr><tr><td>3</td><td><code>glossary.md:11/49</code></td><td>"地块 = <code>block</code>（200–500 m）" 与 "<code>parcel</code> = 地块" <strong>同名两义</strong></td><td>应分名：<code>block</code> = 街区，<code>parcel</code> = 地块</td></tr><tr><td>4</td><td><code>02-road.md:717</code></td><td>"30×30 km 的 50 m 栅格 = 600×600 = 720 KB"</td><td>地图是 <strong>50×50 km</strong> → 1000×1000 = <strong>2 MB</strong></td></tr><tr><td>5</td><td><code>02-road.md:733</code></td><td>断言"并入 R27–R31"</td><td>主表只到 <strong>R30</strong>（R31 不存在）</td></tr><tr><td>6</td><td><code>10-presentation.md:873</code></td><td>archetype「见 §五 表，<strong>22 类</strong>」</td><td>§五 实为 <strong>26 类</strong>（<code>registry.json</code> 26 条，变更记录也写 26）</td></tr><tr><td>7</td><td><code>10-presentation.md:203</code></td><td>"<strong>30 个</strong> archetype 各一张 2048² 贴图"</td><td>同上，26</td></tr><tr><td>8</td><td><code>README.md:149-165</code>（§四）</td><td>"v2 的 8 个系统（<strong>提案，待拍板</strong>）"，第 8 行是"存档与时钟"，交通流标"<strong>不含公交</strong>"，下面写"砍掉的 8 个…<strong>公共交通</strong>"</td><td>与 R15（utility 是第 8 系统）、R18（公交地铁回本体）全冲突；该节应整节删除或重写</td></tr><tr><td>9</td><td><code>README.md:10</code> <code>186-195</code></td><td>"空目录，未开工"、"41 个 .gd 全空占位"、仓库只有 <code>e3bd3e6</code>+<code>f8f1013</code></td><td>实际已有第 3 个提交 <code>52dd13b</code>，且工作区里有 <strong>UI 外壳</strong>（main_menu / settings / about / ui_kit / i18n / city_backdrop ≈ 3 千行）、<code>bench/</code>、<code>config/*</code>、<code>assets/registry.json</code>、<code>help/tutorial.json</code> 全未提交</td></tr><tr><td>10</td><td><code>README.md:236-247</code>（目录树）</td><td><code>core/</code> <strong>4 文件</strong>（clock·bus·save_game·game）；<code>sim/</code> 只列 <strong>7</strong> 个目录；<code>view/</code> 5 个含 <code>camera</code></td><td>宪法/plan：<code>core/</code> <strong>5 文件</strong>（clock·bus·sim·save_game·check）；<code>sim/</code> <strong>8</strong> 个（缺 utility）；plan 的 <code>view/</code> 有 <code>cinematic.gd</code>，实际没有</td></tr><tr><td>11</td><td><code>09-core-tick.md:167</code> vs <code>:530</code></td><td>§4.3 表："调休 <strong>暂不做</strong>（DLC 候选）"；§九："调休 <strong>已定：做</strong>（F38，本体 B4）"</td><td>同一篇自相矛盾，正文表要改</td></tr><tr><td>12</td><td><code>plan.md:85/97</code></td><td>"交付（<strong>六项</strong>）" 下面 7 行；"验收（<strong>四条</strong>）" 下面 6 条（B1-1…B1-6）</td><td>改成七项 / 六条</td></tr><tr><td>13</td><td><code>plan.md:56</code> vs <code>:63</code></td><td>B0 交付写 <code>02</code>–<code>09</code> 八篇；B0 验收写 <code>02</code>–<code>10</code> <strong>九篇</strong></td><td>统一为九篇（实际九篇都有）</td></tr><tr><td>14</td><td><code>13-player-loop.md:291</code></td><td>时间档位只有 <strong>1x / 3x</strong>，明确"不加 5x/10x"</td><td><code>09:467</code> 的 <code>speed</code> 是 <code>u8</code> 取值 <strong>1/2/3</strong>（隐含 2x）</td></tr><tr><td>15</td><td><code>agents.md:151</code></td><td>标题"已知的坑（<strong>13 条</strong>）"</td><td>实为 <strong>15 条</strong>（变更记录与 README 都写 15）</td></tr><tr><td>16</td><td><code>12-china-features.md:1263</code></td><td>"D4 判据（<code>ls scripts/sim/</code> = <strong>7</strong>）不被破坏"</td><td>R15 起是 <strong>8</strong></td></tr><tr><td>17</td><td><code>05-employment.md:258</code></td><td><code>job_slot</code> 上限 <strong>≤ 30 万</strong></td><td>100 万人口按 50–60 % 就业率需 <strong>50–60 万</strong>；若 <code>capacity</code> 是聚合的请注明，否则上限要翻倍</td></tr><tr><td>18</td><td><code>decisions.md:31</code></td><td>标题「已裁定总表（<strong>R1–R18</strong>）」</td><td>实际有 <strong>R19–R23</strong>（且表里没有它们）</td></tr><tr><td>19</td><td><code>README.md:24</code></td><td>"要签裁定才能改：<code>R1–R14</code>、系统数量（<strong>7</strong>）"</td><td>R1–R23、系统数 <strong>8</strong></td></tr></tbody></table></div>
+<hr>
+<h2 id="四-遗漏-文档引用了不存在的东西-或存在未定义的空洞">四、遗漏（文档引用了不存在的东西，或存在未定义的空洞）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>缺什么</th><th>谁在引用</th><th>影响</th></tr></thead><tbody><tr><td><strong>O1</strong></td><td><code>config/sim/time.json</code> <strong>不存在</strong>（<code>config/sim/</code> 只有 8 个系统 json）</td><td><code>09-core-tick.md:487</code> §7.3 给了完整 schema</td><td>时钟参数无落点，B1 <code>clock.cs</code> 会硬编码</td></tr><tr><td><strong>O2</strong></td><td><code>config/dlc/</code> 目录 <strong>不存在</strong></td><td><code>12:1422</code> §4.6</td><td>DLC 开关无落点（可接受，但应标"待建"）</td></tr><tr><td><strong>O3</strong></td><td><code>tools/benchmark.gd</code> <strong>不存在</strong></td><td>R5 要求"开局跑一次 3 秒基准自动落档"；<code>08:944</code>、<code>11:915</code> 都引用</td><td>硬件档位无法自动判定，R5 的"随硬件可配"落不了地</td></tr><tr><td><strong>O4</strong></td><td><code>tools/balance_run.gd</code> <strong>不存在</strong></td><td><code>plan.md:278</code>（B7 交付）、<code>13:480</code> K13</td><td>B7 的基准曲线验收无工具</td></tr><tr><td><strong>O5</strong></td><td><strong>高铁站在本体春运里的数据来源未定义</strong></td><td><code>12:§3.5</code> 说春运第一主角是 <code>hsr_station</code>（B7 本体）；<code>08:517</code> 说高铁班次与跨城 OD 属 <strong>DLC4</strong></td><td>本体春运要么没有高铁客流（自相矛盾），要么偷偷做了 DLC4 的内容。必须明确：<strong>本体只做"站房 + 站前地面交通峰值"，不做班次</strong></td></tr><tr><td><strong>O6</strong></td><td><strong>OD 重算频率</strong>两种说法</td><td><code>11:160</code> "<strong>每日一次</strong>，native 增量分配 ≤200 ms"；<code>08:52</code>/<code>09:445</code> "<strong>月边界</strong>算一次"</td><td>日更 × 2500 起点 × K 轮在预算上完全不同量级</td></tr><tr><td><strong>O7</strong></td><td><strong><code>time_slot</code> 由 <code>visual_day_phase</code> 派生</strong>，没有豁免条款</td><td><code>09:470</code>；<code>R13</code> 铁律"视觉时钟不参与任何数值"</td><td>严格讲这是"表现层驱动了 sim 的采样选择"。<code>09:218</code> 只有一句口头保证"不改变任何数值"，建议写进宪法 §四 的例外清单</td></tr></tbody></table></div>
+<hr>
+<h2 id="五-建议的修复顺序">五、建议的修复顺序</h2>
+<p><strong>第一批（我可以直接改，纯机械、不改裁定含义）</strong></p>
+<ol><li>P0-1 <code>09:451</code> 补 <code>utility</code></li><li>P0-3 <code>07</code> §6.1 改历史论证 + 全部 <code>.gd</code>→<code>.cs</code>（<code>03</code>/<code>12</code>/<code>13</code>）</li><li>P0-6 <code>plan:206</code> + <code>11:691</code> 的 4 ms → 15 ms</li><li>P0-7 <code>README:117</code> 删 <code>#2b6cb0</code>；<code>plan:104</code> B1-4 改成"色 token"</li><li>P2 的 19 条陈旧数字（含 <code>glossary</code> 三条、<code>README</code> §四/§六/§七）</li></ol>
+<p><strong>第二批（需要你拍一句，因为动了裁定或口径）</strong></p>
+<ol><li>P0-2 反向读规则改写（建议按上面那句"一律读上月值"）</li><li>P0-4 native 定位（建议按 <code>11-scale</code> 实测，把 native 降为应急）</li><li>P0-5 签收数 15 万 / 8 万定一个</li><li>P1-10 DLC 编号以 <code>12 §4.5</code> 为准（会连带改 R18 一句）</li><li>P1-11 四级 / 五级二选一</li></ol>
+<p><strong>第三批（编号重编，一次性做完最省事）</strong></p>
+<ol><li>P1-8 全部断言前缀两字母化 + <code>glossary</code> 附录；<code>13</code> 补 §十、K28–K32 或直接重排</li></ol>
+<blockquote>⚠ 提醒：编号重编会让历史报告里的引用失效，所以要么现在做（B1 之前，引用还少），<br>要么永远不做（那就接受 <code>plan</code> 里"这个 C 是哪个 C"要人工判断）。</blockquote>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-21（三）</strong>：开发者「都按建议做」⇒ <strong>R24–R31 八条全部落地</strong>（含 R31 全仓断言编号重编）。</li><li><strong>2026-11-21（二）</strong>：机械类 22 处已修（见上「修复进度」），裁定类 7 项待开发者拍板。</li><li><strong>2026-11-21</strong>：首版。41 条问题（P0 7 / P1 4 组 / P2 19 / 遗漏 7），逐条带 <code>文件:行号</code>。</li></ul>
+<p>  核心判断：<strong>规则没崩，副本崩了</strong>——B0 之后新增的 R19–R23 与几轮扩充没有回填旧篇。</p><div class="pager"><a href="reports-2026-11-21-引擎选型评估.html">← 2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a><a href="reports-2026-11-22-B1开场.html">B1 开场记录 · core/ 五文件（2026-11-22） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#零-一句话结论">零、一句话结论</a><a class="l3" href="#修复进度-2026-11-21-当天">修复进度（2026-11-21 当天）</a><a class="l2" href="#一-p0-七条会真出事的冲突">一、P0 · 七条会真出事的冲突</a><a class="l3" href="#p0-1-tick-顺序在两处漏了-utility">P0-1 Tick 顺序在两处漏了 utility</a><a class="l3" href="#p0-2-唯一的反向读-是假的-实际有-5-处">P0-2 「唯一的反向读」是假的：实际有 5 处</a><a class="l3" href="#p0-3-r19-c-分工-与-r15-拆-utility-没有回填到-07-services">P0-3 R19（C# 分工）与 R15（拆 utility）没有回填到 07-serv</a><a class="l3" href="#p0-4-native-sim_core-到底是-b4-必需-还是-不需要">P0-4 native/sim_core 到底是"B4 必需"还是"不需要"</a><a class="l3" href="#p0-5-活跃-agent-签收数-15-万-8-万-三个地方三个数">P0-5 活跃 agent 签收数：15 万 / 8 万，三个地方三个数</a><a class="l3" href="#p0-6-变换填充-4-ms-这条验收-自己的实测数据已经否掉了">P0-6 「变换填充 ≤ 4 ms」这条验收，自己的实测数据已经否掉了</a><a class="l3" href="#p0-7-配色-readme-仍说-2b6cb0-已拍板-而主题文件里主色是-null">P0-7 配色：README 仍说 #2b6cb0 已拍板，而主题文件里主色是 null</a><a class="l2" href="#二-p1-编号体系撞车-会影响-验收查得到吗">二、P1 · 编号体系撞车（会影响"验收查得到吗"）</a><a class="l3" href="#p1-9-13-player-loop-的结构缺口">P1-9 13-player-loop 的结构缺口</a><a class="l3" href="#p1-10-dlc-编号两套并行">P1-10 DLC 编号两套并行</a><a class="l3" href="#p1-11-行政层级-四级还是五级">P1-11 行政层级：四级还是五级</a><a class="l2" href="#三-p2-陈旧数字与措辞-13-条">三、P2 · 陈旧数字与措辞（13 条）</a><a class="l2" href="#四-遗漏-文档引用了不存在的东西-或存在未定义的空洞">四、遗漏（文档引用了不存在的东西，或存在未定义的空洞）</a><a class="l2" href="#五-建议的修复顺序">五、建议的修复顺序</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

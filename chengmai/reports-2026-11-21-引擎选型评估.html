@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？ — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" class="on" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 审查与报告</div><h1 id="2026-11-21-引擎选型评估-godot-能否胜任-要不要考虑-unity-虚幻">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</h1>
+<blockquote>触发：开发者提问「Godot 能否胜任？Unity 和虚幻引擎是否需要考虑？」<br>结论先行：<strong>继续用 Godot 4.7 mono。</strong> 但要守住三条硬约束，并在 <strong>B5 结束</strong>设一道复核闸门。<br>⚠ 本文是评估，不是裁定。要不要换引擎由开发者拍板（宪法 §五）。</blockquote>
+<hr>
+<h2 id="一-先看清-胜任-到底在问什么">一、先看清"胜任"到底在问什么</h2>
+<p>这个项目的负载有四块，<strong>只有一块和引擎强相关</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>负载</th><th>量级</th><th>和引擎的关系</th></tr></thead><tbody><tr><td>①</td><td><strong>模拟</strong>（人口/就业/财政/OD）</td><td>1000 万条数据、月结 71 ms（C#）</td><td><strong>几乎无关</strong>。只要语言能跑纯数组 + 不碰引擎 API，Godot / Unity / 自研都一样</td></tr><tr><td>②</td><td><strong>实例填充</strong>（把 agent 位置写进 MultiMesh）</td><td>25 万实例 ≈ 13.7 ms（C# + <code>Buffer</code>）</td><td><strong>中</strong>。取决于引擎的批量 API。Godot <code>MultiMesh.Buffer</code> 已实测可用</td></tr><tr><td>③</td><td><strong>渲染提交</strong>（draw call）</td><td>5–15 万栋建筑 + 15 万车（分块 + 4 档 LOD）</td><td><strong>强</strong>。这是唯一"换引擎可能变好"的一块</td></tr><tr><td>④</td><td><strong>世界流式</strong>（2500 km²、2500 瓦片）</td><td>≤120 片激活</td><td><strong>强，但我们已经自己做了</strong>。引擎内建的流式（Unity Addressables / UE World Partition）能省事，不是必需</td></tr></tbody></table></div>
+<p>⚠ <strong>关键判断：这个项目最难的 ①②④ 都和引擎无关。</strong> 换引擎能改善的只有 ③，而 ③ 目前 <strong>15 万 agent ≈ 25 ms（40 fps）、过了 30 fps 线</strong>， 不构成换引擎的理由。</p>
+<hr>
+<h2 id="二-三个引擎对这张需求表的正面回答">二、三个引擎对这张需求表的正面回答</h2>
+<p>事实核对时间：2026-11-21。Godot 最新稳定为 <strong>4.7.2</strong>（4.8 在 beta）； Unity 为 <strong>Unity 6</strong>（运行时费用已于 2024 年取消）；Unreal 为 <strong>UE5.x</strong>。</p>
+<div class="tw"><table><thead><tr><th>需求</th><th>Godot 4.7 mono</th><th>Unity 6</th><th>Unreal 5</th></tr></thead><tbody><tr><td><strong>主语言</strong></td><td>C#（.NET 8）+ GDScript</td><td>C#</td><td><strong>C++ + Blueprint</strong></td></tr><tr><td><strong>纯数组模拟性能</strong></td><td>实测 44× GDScript（<code>bench/</code>），够用</td><td>Burst/DOTS 可再快数倍，但要<strong>重写架构</strong></td><td>C++ 快，但开发速度慢一个量级</td></tr><tr><td><strong>海量实例</strong></td><td>MultiMesh + <code>Buffer</code>（已实测 5.49 ms/10 万）</td><td>GPU Instancing / DOTS Graphics</td><td><strong>Nanite 只解决静态网格</strong>，动态车流仍需 Instancing</td></tr><tr><td><strong>大世界流式</strong></td><td>❌ 无内建，<strong>必须自己按瓦片管</strong>（我们已设计）</td><td>✅ Addressables / Scene streaming</td><td>✅ <strong>World Partition（最强）</strong></td></tr><tr><td><strong>画面上限</strong></td><td>中（Forward+/SDFGI，够用）</td><td>中高（HDRP）</td><td><strong>最高（Nanite + Lumen）</strong></td></tr><tr><td><strong>C# 在引擎里的成熟度</strong></td><td>✅ 桌面/移动可用；⚠ <strong>Web 导出仍是实验性</strong>；⚠ 主机需第三方移植</td><td>✅ 最成熟</td><td>❌ 无 C#（有第三方插件，不建议）</td></tr><tr><td><strong>迭代速度</strong></td><td>⭐ 最快（编辑器秒开、C# 热重载部分可用）</td><td>中（域重载慢，可关）</td><td>慢（C++ 编译 + 编辑器重）</td></tr><tr><td><strong>许可成本</strong></td><td><strong>MIT，永久免费，零抽成</strong></td><td>年收入 ≤ 20 万美元免费；Pro ≈ <strong>2,310 美元/席/年</strong></td><td>免费，<strong>单品终身收入超 100 万美元后抽 5%</strong>（EGS 渠道 3.5%）</td></tr><tr><td><strong>单人 + 一年工期</strong></td><td>✅ 可行</td><td>⚠ 可行但要先学 DOTS</td><td>❌ 不现实</td></tr></tbody></table></div>
+<p><strong>来源</strong>：Godot 官网下载页 / 4.7 迁移文档；Godot 4 in 2026 综述（C# 桌面可用、Web 实验性、大世界流式与会话级渲染是短板）； Unity 与 Unreal 定价对比（2026-10 核对：Unity 运行时费用已取消、Pro ≈ \$2,310/席/年；UE 5% 抽成门槛 100 万美元）。</p>
+<hr>
+<h2 id="三-为什么-不换-是理性选择-四条硬理由">三、为什么"不换"是理性选择（四条硬理由）</h2>
+<h3 id="3-1-换引擎解决不了最难的部分">3.1 换引擎解决不了最难的部分</h3>
+<p>难的是 <strong>"1000 万人口 + OD 聚合 + 2500 km² 瓦片流式"这套架构</strong>，它由 <code>11-scale</code> 定，和引擎无关。 换到 Unity，这套架构一行不少写；换到 Unreal，还要用 C++ 再写一遍。</p>
+<h3 id="3-2-现有实测数据会全部作废">3.2 现有实测数据会全部作废</h3>
+<p><code>11-scale</code> §6.4 那 30 多个数字（44×、71 ms、5.49 ms、13.7 ms、40 fps）<strong>是本机 + Godot 4.7 mono 测出来的</strong>。 换引擎后这些数字全部失效，等于把"用实测替代估算"这条路重新走一遍 —— 而那正是 R19 的依据。</p>
+<h3 id="3-3-单人-高考后一年-学习成本是最大的隐形成本">3.3 单人 + 高考后一年，学习成本是最大的隐形成本</h3>
+<ul><li>Unity：语言同是 C#，<strong>迁移成本最低</strong>；但要用 DOTS/Burst 补 CPU，等于再学一套范式，且 DOTS 生态坑多。</li><li>Unreal：C++ + Blueprint + 编辑器工作流，<strong>从零到能改引擎层至少 3–6 个月</strong>，直接吃掉可玩版工期。</li></ul>
+<h3 id="3-4-许可与抽成">3.4 许可与抽成</h3>
+<p>Godot MIT <strong>零抽成</strong>；UE 抽 5%（100 万美元后）；Unity 订阅制。 对一个"可能是人生第一款商业作品"的项目，<strong>零抽成 + 零法务风险</strong>本身就是价值。</p>
+<hr>
+<h2 id="四-godot-上必须守住的五条-否则会真的-不胜任">四、Godot 上必须守住的五条（否则会真的"不胜任"）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>约束</th><th>违反的后果</th><th>现在是否已守</th></tr></thead><tbody><tr><td><strong>E1</strong></td><td><strong>模拟层不碰引擎 API</strong>（只跑 <code>float[]</code>/<code>int[]</code>）</td><td>C# 的 interop 把优势吃光，退回 GDScript 量级</td><td>✅ 宪法 §四 + L6</td></tr><tr><td><strong>E2</strong></td><td><strong>所有实例走 MultiMesh 分块</strong>（按 archetype × 2 km 区块），禁逐建筑 <code>Node3D</code></td><td>draw call 爆炸，5 万栋楼就掉到 20 fps</td><td>✅ plan B3 停止条件已写</td></tr><tr><td><strong>E3</strong></td><td><strong>世界坐标用"浮动原点"</strong>：渲染时以当前瓦片为原点，避免 50 km 处 float32 精度抖动</td><td>远景 z-fighting / 阴影抖</td><td>⚠ <strong>尚未写进文档</strong>，建议补</td></tr><tr><td><strong>E4</strong></td><td><strong>自建资产管线</strong>（R3），不指望 Asset Store</td><td>Godot 商店体量小，但本项目本来就自建</td><td>✅ R3</td></tr><tr><td><strong>E5</strong></td><td><strong>不做 Web、不做主机</strong>（C# Web 导出仍实验性；主机需第三方移植）</td><td>只做 Steam 桌面，风险归零</td><td>✅ 无此需求</td></tr></tbody></table></div>
+<p>⚠ <strong>E3 是唯一一条"现在没写、以后会疼"的</strong>。建议写进 <code>11-scale</code> §十 或 <code>10-presentation</code>：</p>
+<blockquote>渲染层以"当前激活瓦片中心"为原点做坐标平移，<code>sim/</code> 仍存绝对分米坐标。<br>50 km 处 float32 分辨率约 4 mm，静态建筑无感，但薄片（雨棚、桥面、车道线）会闪。</blockquote>
+<hr>
+<h2 id="四-五-城脉要-画质-这条不能只靠引擎-2026-11-22-补">四·五、⭐ 城脉要"画质"，这条不能只靠引擎（2026-11-22 补）</h2>
+<blockquote>开发者：「城脉也是需要追求一些画质的，虽然虚幻有 lumen，但是虚幻的游戏再加上 C++ 会很难优化。」</blockquote>
+<p><strong>这两句都对，而且第二句正好点中换 UE 的真实代价。</strong></p>
+<h3 id="4-5-1-先说清-城脉的画质-是什么">4.5.1 先说清"城脉的画质"是什么</h3>
+<p>城建游戏的"好看"<strong>不是材质分辨率</strong>。四件事按重要性排：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>观感来源</th><th>靠什么实现</th><th>引擎相关度</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><strong>密度与体量</strong>（高楼群、天际线、街区肌理）</td><td>街区尺度 + 容积率 + LOD + 分块合批</td><td>低（这是设计 + 数据的事）</td></tr><tr><td><strong>2</strong></td><td><strong>车流/人流的存在感</strong>（城市是活的）</td><td>15 万实例 + impostor 远景 + 车灯</td><td><strong>中</strong>（MultiMesh 批量写，已实测）</td></tr><tr><td><strong>3</strong></td><td><strong>光照与时间</strong>（黄昏、夜景招牌、窗光、雾）</td><td>HDR + SSAO/SSIL + 体积雾 + 发光材质 + 昼夜相位</td><td><strong>高</strong>（Godot 4.7 已支持 HDR 输出）</td></tr><tr><td><strong>4</strong></td><td><strong>一致性</strong>（低饱和、克制的 UI、不花）</td><td><code>10-presentation</code> §四 的设计纪律</td><td>无</td></tr></tbody></table></div>
+<p>⚠ <strong>结论：占分最多的是第 1 条，而第 1 条是"密度 × 尺度"，不是"每块砖多精细"。</strong> CS1 到今天仍然"好看"，靠的也不是材质，是<strong>楼群的高低错落与灯火密度</strong>。</p>
+<h3 id="4-5-2-godot-4-7-在画质上能给到什么">4.5.2 Godot 4.7 在画质上能给到什么</h3>
+<div class="tw"><table><thead><tr><th>能力</th><th>状态</th><th>对本项目</th></tr></thead><tbody><tr><td><strong>HDR 输出</strong></td><td>4.7 起支持（Win/macOS/Linux/iOS）</td><td>✅ 夜景霓虹与车灯不过曝，<strong>这是"中国城市夜景"的前提</strong></td></tr><tr><td>SDFGI / SSAO / SSIL / SSR</td><td>4.x 内建</td><td>✅ 够用；远景靠 SDFGI，近景靠 SSAO</td></tr><tr><td>体积雾 + 高度雾</td><td>内建</td><td>✅ 长江/雾都/晨雾，成本极低、观感提升大</td></tr><tr><td>区域光（AreaLight3D）</td><td>4.7 新增</td><td>✅ 招牌、店面、站台灯箱</td></tr><tr><td>TAA / FXAA / MSAA</td><td>内建</td><td>✅ 远景细线（车道线、栏杆）不闪</td></tr><tr><td>后处理（色调映射 / 辉光 / 景深）</td><td>内建</td><td>✅ 撑起"摄影感"，<code>10-presentation</code> §7.5 拍摄模式直接吃这个</td></tr><tr><td><strong>Nanite 级虚拟几何</strong></td><td>❌ 没有</td><td>⚠ <strong>不需要</strong>：建筑是 26 类原型 × 模块，不是百万面扫描件</td></tr><tr><td><strong>Lumen 级动态 GI</strong></td><td>❌ 质量不及</td><td>⚠ 城市昼夜固定切换，<strong>烘焙 + SDFGI 混合足够</strong>，不需要每帧重算全局光</td></tr></tbody></table></div>
+<p>⚠ <strong>没有 Nanite / Lumen 不等于"画质差"</strong>，只等于"不能走写实扫描资产的路线"。 而 R3 已经定了<strong>自建资产、低面数模块化</strong>——这条路本来就不吃 Nanite。</p>
+<h3 id="4-5-3-为什么-ue-c-难优化-是真的">4.5.3 为什么"UE + C++ 难优化"是真的</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>UE5</th><th>Godot 4.7</th></tr></thead><tbody><tr><td><strong>自定义模拟系统的位置</strong></td><td>要么塞进 Actor/Component（跟引擎 Tick 与 GC 搏斗），要么写 <code>UObject</code> 生命周期</td><td><strong>Sim 层是纯 C# 数组，根本不在引擎里跑</strong>（宪法 §四）</td></tr><tr><td><strong>迭代速度</strong></td><td>C++ 编译 + 编辑器热重载不稳，一次改动分钟级</td><td>改完即跑；C# 侧 <code>dotnet build</code> 秒级</td></tr><tr><td><strong>能不能改引擎</strong></td><td>❌ 源码可看但改引擎 = 自己维护一个分支</td><td>✅ MIT，可改、可裁、可嵌</td></tr><tr><td><strong>性能归因</strong></td><td>黑盒多（GC、Tick 分组、蓝图 VM），卡了不好定位</td><td>三层清楚：logic（C#）/ fill（interop）/ render（GPU）——<code>11-scale</code> §6.4.5 已分开测过</td></tr><tr><td><strong>本项目真正的瓶颈</strong></td><td>15 万 agent 推进 + 25 万实例填充</td><td>同左，且<strong>已验证 C# 能压在 25 ms</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>一句话：UE 的优化难点不在"UE 慢"，在"慢的时候你不知道慢在哪，而且改不动"。</strong> 我们这套架构恰好把"慢在哪"拆成了三个可独立测量的量——这是换 UE 会丢掉的资产。</p>
+<h3 id="4-5-4-所以画质怎么-追-不换引擎的前提下">4.5.4 所以画质怎么"追"（不换引擎的前提下）</h3>
+<div class="tw"><table><thead><tr><th>杠杆</th><th>做法</th><th>成本</th></tr></thead><tbody><tr><td><strong>天际线</strong></td><td>容积率 + <code>code_era</code> 决定的高低错落；<code>10-presentation</code> §五 的 26 类原型按年代分层</td><td>设计已定</td></tr><tr><td><strong>夜景</strong></td><td>HDR + 发光材质（招牌/窗/车灯）+ 体积雾；车灯用 shader 而非光源</td><td>低</td></tr><tr><td><strong>密度感</strong></td><td>15 万真 agent（近景）+ impostor（中远景）+ 流量热力（远景）</td><td>已设计</td></tr><tr><td><strong>细节克制</strong></td><td>材质 ≤8、图集 2×4096、低饱和；<strong>不做每栋楼独立贴图</strong></td><td>已定（AR 断言）</td></tr><tr><td><strong>拍摄模式</strong></td><td>慢镜头 + 隐藏 UI + 景深 + 10x 回放，产出短视频素材</td><td>已设计（CAM1–CAM7）</td></tr></tbody></table></div>
+<p>⚠ <strong>画质的验收不该是"像不像照片"，而是"截图能不能直接发"</strong>： <code>10-presentation</code> AR 组断言 + 一个可执行的补充判据—— <strong>"同种子同一机位，截图与原画 1:1 对比，能数出窗格、招牌、车道线与行道树"</strong>（近景）， <strong>"远景能看出 3 种以上屋顶类型与 2 处以上地标"</strong>。这条建议加到 AR6/AR7。</p>
+<hr>
+<h2 id="五-什么情况下应该真的换-复核闸门">五、什么情况下应该真的换（复核闸门）</h2>
+<p><strong>时点：B5 结束</strong>（那时有真实帧预算，也有 15 万 agent 的成品）。</p>
+<div class="tw"><table><thead><tr><th>触发条件</th><th>该换到</th><th>说明</th></tr></thead><tbody><tr><td><strong>① 渲染提交 &gt; 10 ms 且无法再分块/降 LOD</strong>，画面达不到"值得截图"的门槛</td><td>Unity（HDRP）</td><td>只有这一条是"引擎限制"，且要先穷尽分块与 LOD</td></tr><tr><td><strong>② 美术方向改成"接近写实"</strong>（Nanite/Lumen 级材质与光照）</td><td>Unreal</td><td>⚠ <strong>"要画质"不等于"要写实"</strong>：密度、灯火、天际线在 Godot 就能做到；只有当目标是<strong>扫描级建筑 + 影视级 GI</strong> 时，UE 才真的赢（但成本翻倍、优化变黑盒）</td></tr><tr><td><strong>③ 要上主机 / 要做 Web 版</strong></td><td>Unity / Unreal</td><td>Godot 主机需第三方移植；C# Web 导出实验性</td></tr><tr><td><strong>④ 需要成熟的第三方中间件</strong>（大规模植被、地形编辑、道路工具）</td><td>Unity</td><td>Godot 生态确实小</td></tr></tbody></table></div>
+<p>⚠ <strong>除这四条之外，不建议换</strong>。尤其不要因为"Unity 教程多""Unreal 画面好"而换 —— 那两条对这个项目的瓶颈（每帧 15 万实例 + 月度 1000 万结算）都没有帮助。</p>
+<hr>
+<h2 id="六-如果现在就要一个-保险">六、如果现在就要一个"保险"</h2>
+<p><strong>不做引擎切换，做"可迁移性"</strong>（成本几乎为零，且本来就在做）：</p>
+<ol><li><code>sim/</code> 全部纯 C#、零引擎类型 → 换引擎时<strong>这 29 个文件可以整包搬</strong></li><li>数据契约全走 <code>config/*.json</code> + <code>FORMAT_VERSION</code> 存档 → 不绑引擎序列化</li><li><code>view/</code> 保持"薄"：只做"读 bus → 写 MultiMesh/材质" → 换引擎只重写这一层</li><li><code>bench/</code> 保留原始代码 → 换引擎后能立刻重跑同一组基准做对比</li></ol>
+<p>⇒ <strong>按现在的分层，真要换，代价是"重写 <code>view/</code> + <code>ui/</code>"，不是"重写整个游戏"。</strong> 这就是宪法 §四"模拟层不认识引擎"的额外红利。</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-22</strong>：新增 <strong>§四·五 画质</strong>（依据「城脉也要追求画质，但 UE+C++ 难优化」）：</li></ul>
+<p>  ① 拆出四条观感来源，<strong>占分最多的是"密度与体量"，不是材质</strong>；   ② Godot 4.7 能给 HDR / SDFGI / 体积雾 / AreaLight / TAA，缺的是 Nanite 与 Lumen 质量——<strong>但 R3 的自建低面数资产本来不吃 Nanite</strong>；   ③ 确认"UE+C++ 难优化"是真的：<strong>慢的时候不知道慢在哪、且改不动</strong>，而这套架构已把性能拆成 logic/fill/render 三个可测量；   ④ 给出不换引擎追画质的五个杠杆，并建议补 <strong>AR6/AR7</strong> 两条"截图能否直接发"的判据。</p>
+<ul><li><strong>2026-11-21</strong>：首版。结论：<strong>继续 Godot 4.7 mono</strong>，守 E1–E5，B5 结束设复核闸门；</li></ul>
+<p>  新增一条待补约束 <strong>E3 浮动原点</strong>（50 km 处 float32 精度）。</p><div class="pager"><a href="reports-2026-11-15-缺口审查.html">← 2026-11-15 · v2 缺口审查报告</a><a href="reports-2026-11-21-文档复查.html">2026-11-21 文档复查：冲突 / 疏漏 / 不合理 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-先看清-胜任-到底在问什么">一、先看清"胜任"到底在问什么</a><a class="l2" href="#二-三个引擎对这张需求表的正面回答">二、三个引擎对这张需求表的正面回答</a><a class="l2" href="#三-为什么-不换-是理性选择-四条硬理由">三、为什么"不换"是理性选择（四条硬理由）</a><a class="l3" href="#3-1-换引擎解决不了最难的部分">3.1 换引擎解决不了最难的部分</a><a class="l3" href="#3-2-现有实测数据会全部作废">3.2 现有实测数据会全部作废</a><a class="l3" href="#3-3-单人-高考后一年-学习成本是最大的隐形成本">3.3 单人 + 高考后一年，学习成本是最大的隐形成本</a><a class="l3" href="#3-4-许可与抽成">3.4 许可与抽成</a><a class="l2" href="#四-godot-上必须守住的五条-否则会真的-不胜任">四、Godot 上必须守住的五条（否则会真的"不胜任"）</a><a class="l2" href="#四-五-城脉要-画质-这条不能只靠引擎-2026-11-22-补">四·五、⭐ 城脉要"画质"，这条不能只靠引擎（2026-11-22 补）</a><a class="l3" href="#4-5-1-先说清-城脉的画质-是什么">4.5.1 先说清"城脉的画质"是什么</a><a class="l3" href="#4-5-2-godot-4-7-在画质上能给到什么">4.5.2 Godot 4.7 在画质上能给到什么</a><a class="l3" href="#4-5-3-为什么-ue-c-难优化-是真的">4.5.3 为什么"UE + C++ 难优化"是真的</a><a class="l3" href="#4-5-4-所以画质怎么-追-不换引擎的前提下">4.5.4 所以画质怎么"追"（不换引擎的前提下）</a><a class="l2" href="#五-什么情况下应该真的换-复核闸门">五、什么情况下应该真的换（复核闸门）</a><a class="l2" href="#六-如果现在就要一个-保险">六、如果现在就要一个"保险"</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

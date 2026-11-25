@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第一批模型清单与提示词（交付给建模组） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" class="on" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 资产与建模</div><h1 id="第一批模型清单与提示词-交付给建模组">第一批模型清单与提示词（交付给建模组）</h1>
+<blockquote>🅰 <strong>本文是「第一批 8 件的逐件规格 + 提示词」</strong>。<br>🅱 <strong>要「一次性粘给建模 AI」的总指令，在 <code>docs/prompts/for-modeling-ai.md</code></strong>（它会让对方先读本文）。</blockquote>
+<blockquote><strong>用途</strong>：直接复制提示词去生产。<strong>8 个模型</strong>，覆盖 7 个类别，每个都要能退到纯色（T3）与白模（T5）。<br>🔴 <strong>2026-11-24 全篇重写</strong>：第一批 8/8 已交付且技术项全过，但<strong>观感像动画片</strong>，<br>未达到"几乎跟现实一样"的要求。根因不是几何，是**交付契约缺了 normal/ORM、PBR 参数一套打天下、<br>预览图无方向光<strong>。本版同时改了三件事：</strong>提示词结构 + 技术要求 + 验收标准**。<br>配套：<code>modeling-brief.md</code>（规则总纲）、<code>realism-spec.md</code>（硬指标权威）、<code>batch-01-fix.md</code>（返修清单）。</blockquote>
+<blockquote>🟡 <strong>当前状态：待返修。</strong> 已有模型在 <code>assets/models/buildings/</code>，技术合格（<code>check_assets</code> 0 FAIL），<br>写实不合格（<code>check_realism</code> 49 FAIL）。<strong>几何不用重做</strong>，按 <code>batch-01-fix.md</code> 改材质 + 补 L3。</blockquote>
+<hr>
+<h2 id="〇-通用交付要求-8-个模型都适用">〇、通用交付要求（8 个模型都适用）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>要求</th></tr></thead><tbody><tr><td>格式</td><td><code>.glb</code>（glTF 2.0），<strong>不要 FBX</strong></td></tr><tr><td>单位</td><td>米（1 unit = 1 m）</td></tr><tr><td>坐标</td><td>+Y 向上，<strong>正面朝 −Z</strong></td></tr><tr><td>轴心</td><td><strong>底面中心</strong>（贴地不用算偏移）；<code>construction</code> 例外见该条</td></tr><tr><td>单体化</td><td><strong>一个 glb = 一栋</strong>，包围盒最长边 ≤ 200 m</td></tr><tr><td>面数</td><td>T1 ≤ 表中值；同时一版 T2 低模。<strong>余量花在轮廓上</strong>（檐口、女儿墙、阳台进深、屋顶设备）</td></tr><tr><td>贴图</td><td>⭐ <strong>albedo + normal + ORM 三类都要</strong>；ORM（R=AO/G=rough/B=metal）可 2048</td></tr><tr><td>材质</td><td><strong>≤ 6 个</strong>，槽名固定 <code>body / roof / base / glass / metal / sign</code></td></tr><tr><td>PBR</td><td>⭐ <strong>按材料分别给参数</strong>（<code>realism-spec</code> §4.2），<strong>不许 8 个模型共用一套</strong></td></tr><tr><td>主色表</td><td>每个模型附 <code>.slots.json</code>（T3 降级靠它）</td></tr><tr><td>预览图</td><td><code>checks/</code> 出 <strong>t1 / t3 / t5</strong> + ⭐ <strong><code>_real.png</code></strong>（含 <strong>1.8 m 人形参照</strong>）</td></tr><tr><td>说明</td><td><code>SOURCE.md</code> ⭐ <strong>写明 normal/ORM 打包方式</strong> + 面数余量说明 + 轴心说明</td></tr><tr><td>命名</td><td><code>&amp;lt;id&amp;gt;_v01_lod0.glb</code> / <code>_lod1.glb</code>（旧名 <code>_l0/_l1</code> 见到即视为待改）</td></tr></tbody></table></div>
+<h3 id="〇-一-为什么材质槽命名必须固定">〇·一 为什么材质槽命名必须固定</h3>
+<p>游戏要给"设备差到发指"的玩家<strong>六档降级</strong>（T0 极致 → T1 高 → T2 低模 → <strong>T3 纯色</strong> → <strong>T4 主色块</strong> → <strong>T5 白模</strong>）。 T3 靠"按槽取色"，T4 靠"取面积最大的两槽合并"。<strong>槽名一乱，降级只能人工一栋栋配，238 类做不到。</strong></p>
+<h3 id="〇-二-每个模型必须附的主色表">〇·二 每个模型必须附的主色表</h3>
+<pre class="code" data-lang="json"><code>{ "slots": { "body": "#d8cfc0", "roof": "#5b5b5b", "glass": "#7fa8c9", "sign": "#c62828" } }</code></pre>
+<h3 id="〇-三-走程序化脚本路线-路线-a-的写实做法">〇·三 走程序化脚本路线（路线 A）的写实做法</h3>
+<blockquote>第一批走的就是这条。若继续走，<strong>光改提示词不够</strong>，脚本侧必须做这四件事：</blockquote>
+<div class="tw"><table><thead><tr><th>#</th><th>动作</th><th>具体</th></tr></thead><tbody><tr><td>1</td><td><strong>材质节点加污渍遮罩</strong></td><td><code>Noise Texture</code> + <code>Voronoi</code> + <code>ColorRamp</code> 混进 baseColor，按高度做渐变（墙根更脏）</td></tr><tr><td>2</td><td><strong>烘焙 normal map</strong></td><td>从位移/高度图烘（砖缝、颗粒、肋条），强度按 <code>realism-spec</code> §4.2</td></tr><tr><td>3</td><td><strong>几何加偏移噪声</strong></td><td><code>Displace</code> 极小强度（2–5 cm），墙体不再绝对平；<strong>不动 footprint</strong></td></tr><tr><td>4</td><td><strong>按材料取 PBR</strong></td><td>从 <code>matlib</code> 取，不要给所有模型写同一组 <code>metal/rough</code></td></tr></tbody></table></div>
+<h3 id="〇-四-一句检验法-交付前自己先过">〇·四 一句检验法（交付前自己先过）</h3>
+<blockquote><strong>把贴图全去掉、只留分区纯色，还能不能认出这是什么建筑？</strong><br>认不出 → 你在用贴图撑结构 → 重做。</blockquote>
+<hr>
+<h2 id="一-vlg_court-独院农房-村庄起步-最先出现">一、vlg_court 独院农房（村庄起步，最先出现）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>出现</td><td>村庄·任何年代（<code>03-zoning</code> §2.3 起步形态）</td></tr><tr><td>尺寸</td><td>占地 <strong>16 × 22 m</strong>，<strong>2 层</strong>，檐高 6.5 m</td></tr><tr><td>面数</td><td>T1 ≤ 1.2 万 / T2 ≤ 4 千</td></tr><tr><td>材质槽</td><td><code>body</code> 白瓷砖+水泥抹灰 <code>#e8e4dc</code> · <code>roof</code> 灰瓦 <code>#6b6b6b</code> · <code>base</code> 院墙水泥 <code>#d9d2c4</code> · <code>glass</code> 铝合金窗 <code>#b9c6cf</code> · <code>metal</code> 铁门 <code>#55707d</code> · <code>sign</code> 门牌 <code>#c62828</code></td></tr></tbody></table></div>
+<p><strong>提示词（复制这段）</strong></p>
+<pre class="code"><code>中国北方村庄独院农房，2000 年代农民自建，砖混结构，参考华北平原真实村落实景
+
+【体量与尺度】占地 16 × 22 m，2 层，檐高 6.5 m；开间 3.3 m，进深 6 m；
+             一层层高 3.3 m、二层 3.0 m；院墙高 1.9 m，大门宽 2.4 m
+【材料与表面】外墙贴 200×300 mm 白色小瓷砖（分格清晰，砖缝必须可见）；
+             勒脚水泥抹灰到 0.9 m 高，表面有抹刀痕与细砂颗粒；
+             灰色机平瓦坡屋顶，瓦楞朝坡向，脊瓦压顶；
+             铝合金推拉窗（窗框有氧化发白），铁艺大门（方管焊接，焊点可见）
+【脏污等级】D2（正面 D1，背阴面 D3）；农村自建房，住着人，不是废弃院
+【风化与污渍】① 檐口下方 1.5 m 内浅色雨痕（灰，不深）
+             ② 墙根 0.6 m 内溅泥发深 + 少量泛碱白斑（点状，不连片）
+             ③ 瓷砖局部 1–2 处脱落（巴掌大，露水泥底）
+             ④ 瓦面有深色水渍；背阴坡少量点状青苔
+             ⑤ 朝南墙面比朝北浅 5–8%
+             ⛔ 不要：整面流锈、大面积苔藓、墙面开裂、门窗破损
+【不规整】院墙顶面沿线起伏 ±8 cm；主房与院墙不平行，偏 1.5°；
+         雨棚（如有）向一侧歪 2°；台阶踏面有 1–2 cm 磨损凹痕
+【生活痕迹】屋顶太阳能热水器 1 台（斜置集热板 + 卧式水箱）；
+           窗下空调外机 2 台（一台在外机架上、一台直接搁在窗台板上）；
+           院内晾衣绳（横跨两墙，挂 3–5 件衣物）；院角柴火堆与农具；
+           大门旁电表箱、门牌、已褪色的对联残迹；墙根几只塑料桶
+【结构必须几何化】窗洞、门洞、檐口出挑、院墙与压顶、台阶、大门框
+                 —— 全部实体或独立面，贴图只画砖缝/污渍/锈
+【光照】晴日上午侧光（仰角 40°），明显阴影与墙角暗部，中性灰背景，1.8 m 人形参照
+【技术】米，+Y 向上，正面朝 −Z，轴心在底面中心，一 glb 一栋，
+       材质按 body/roof/base/glass/metal/sign 分六槽
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包）；checks/t1 t3 t5 + real
+【降级要求】几何必须独立表达结构（窗、门洞、檐口、栏杆都是实体或独立面），
+           不要用贴图表现结构；每槽给出主色 hex
+【负向】欧式尖顶, 罗马柱, 美式木屋, 别墅, 车库, 草坪, 玻璃幕墙, 平顶无瓦,
+       悬浮细节, 多栋拼在一起, 卡通, 塑料质感, 均匀纯色, 过于干净, 严格网格对齐</code></pre>
+<p><strong>验收</strong></p>
+<div class="tw"><table><thead><tr><th>档</th><th>看什么</th></tr></thead><tbody><tr><td>T1</td><td>白瓷砖墙 + 灰瓦 + 院墙 + 大门四件齐；<strong>能看出瓷砖分格</strong></td></tr><tr><td>T3 纯色</td><td>白墙灰顶，<strong>能看到院墙与屋顶坡度</strong>（不是一块方糖）</td></tr><tr><td>T5 白模</td><td>坡屋顶轮廓 + 院墙围合，远看像"一户人家"</td></tr><tr><td><strong>real</strong></td><td>1.8 m 人形站进去<strong>不超过两层窗高</strong>；墙根明显比上部暗；瓦面有水渍</td></tr></tbody></table></div>
+<p><strong>常见翻车</strong>：欧式小楼 / 省掉院墙 / 平顶 / 白墙均匀无污渍 / 瓷砖一块一米大。</p>
+<hr>
+<h2 id="二-city_slab-高层板楼-城市住宅主力">二、city_slab 高层板楼（城市住宅主力）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>出现</td><td>市（老城）·00s–10s</td></tr><tr><td>尺寸</td><td>占地 <strong>46 × 14 m</strong>，<strong>11 层</strong>，总高 33 m（3 个单元）</td></tr><tr><td>面数</td><td>T1 ≤ 2.5 万 / T2 ≤ 8 千</td></tr><tr><td>材质槽</td><td><code>body</code> 米黄真石漆 <code>#d8cfc0</code> · <code>roof</code> 女儿墙+深灰卷材 <code>#5b5b5b</code> · <code>base</code> 石材裙房 <code>#bfb6a6</code> · <code>glass</code> 塑钢窗 <code>#b8c4cc</code> · <code>metal</code> 阳台栏杆/空调架 <code>#8d9296</code> · <code>sign</code> 楼号牌 <code>#0d47a1</code></td></tr></tbody></table></div>
+<p><strong>提示词（复制这段）</strong></p>
+<pre class="code"><code>中国城市老城区 11 层板式住宅，2005 年前后建成，参考二三线城市真实老小区
+
+【体量与尺度】占地 46 × 14 m，11 层，总高 33 m（层高 2.9 m）；
+             3 个单元，每单元每层 2 户；阳台挑出 1.2 m
+【材料与表面】外墙米黄色真石漆（不是涂料，有细砂质感与色块分格）；
+             裙房 2 层贴石材（600×300 mm，横缝明显）；塑钢窗（框料发白）；
+             阳台铁艺栏杆（方管，间距 110 mm，有锈点）
+【脏污等级】D2（临街面 D1，因外立面整治过；背面与侧墙 D2）
+【风化与污渍】① 真石漆分格缝两侧有色差（分次施工，能看出竖条纹）
+             ② 窗台下方浅色雨痕（不深）
+             ③ 女儿墙压顶有水渍；阳台底板外沿积灰发黑
+             ④ 朝南整面比朝北浅 8%，且南面更"白"
+             ⑤ 部分窗玻璃有窗帘/贴膜遮挡，每户不同
+             ⛔ 不要：锈穿、苔藓覆盖、墙面剥落、窗玻璃破损
+【不规整】窗洞垂直位置有 ±5 cm 错位（施工误差，不要严格对齐）；
+         女儿墙顶面高低差 5–15 cm；部分阳台已封闭（玻璃+铝框，颜色比原窗新）；
+         顶层有一处加建（彩钢板小屋），材质明显不同
+【生活痕迹】⭐ 空调外机 40–60 台，位置完全随机（有的装在窗中间、有的两台并排、
+           有的没装），部分带锈的支架与冷凝水管；
+           防盗窗 1–6 层零星安装（程序化栅格）；晾衣杆从阳台伸出 20 余根；
+           单元入口有雨棚、报箱、电动车若干
+【结构必须几何化】窗洞（凹进 ≥8 cm，能看出墙厚）、阳台（挑板+栏杆）、
+                 楼梯间凸出体块、女儿墙、单元门洞 —— 全部实体
+【光照】晴日上午侧光（仰角 40°），明显阴影与墙角暗部，中性灰背景，1.8 m 人形参照
+【技术】米，+Y 向上，正面朝 −Z，轴心在底面中心，一 glb 一栋，六槽
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包）；checks/t1 t3 t5 + real
+【降级要求】几何必须独立表达结构；不要用贴图表现窗格/门洞；每槽给出主色 hex
+【负向】现代玻璃幕墙, 塔楼点式, 别墅, 草坪, 泳池, 卡通, 塑料质感,
+       立面过于干净, 空调排列整齐, 严格网格对齐, 欧美公寓</code></pre>
+<p><strong>验收</strong></p>
+<div class="tw"><table><thead><tr><th>档</th><th>看什么</th></tr></thead><tbody><tr><td>T1</td><td><strong>能数清 11 层与 3 个单元</strong>；阳台有进深差；裙房石材与上部材质分明</td></tr><tr><td>T3 纯色</td><td>窗洞凹进可见（靠阴影），阳台挑出可见</td></tr><tr><td>T5 白模</td><td>板楼比例 + 阳台轮廓 + 楼梯间凸出</td></tr><tr><td><strong>real</strong></td><td><strong>正面能数出 ≥40 台空调，任意相邻三台不在同一水平线</strong>；墙根比上部暗</td></tr></tbody></table></div>
+<p><strong>常见翻车</strong>：立面太干净 / 空调太少或排列成网格 / 做成现代公寓 / 窗是贴图平的。</p>
+<hr>
+<h2 id="三-shop_street-市区沿街商铺-最考-参差">三、shop_street 市区沿街商铺（最考"参差"）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>出现</td><td>市·90s–20s</td></tr><tr><td>尺寸</td><td>占地 <strong>36 × 12 m</strong>，<strong>2–3 层</strong>（高度参差 7.5 / 10.5 m），6 间店面</td></tr><tr><td>面数</td><td>T1 ≤ 2 万 / T2 ≤ 6 千</td></tr><tr><td>材质槽</td><td><code>body</code> 混色瓷砖涂料 <code>#cfc6b8</code> · <code>roof</code> 平顶女儿墙 <code>#8a8a85</code> · <code>base</code> 卷帘门与台阶 <code>#9aa0a6</code> · <code>glass</code> 橱窗 <code>#8fb3c8</code> · <code>metal</code> 雨棚骨架 <code>#6f7377</code> · <code>sign</code> <strong>多色招牌</strong>（主色 <code>#c62828</code>，允许副色 <code>#0d47a1</code>）</td></tr></tbody></table></div>
+<p><strong>提示词（复制这段）</strong></p>
+<pre class="code"><code>中国城市沿街商铺（底商上住），1990s–2010s 陆续建成，参考真实老街道
+
+【体量与尺度】进深 12 m，6 间店面各宽 6 m；层数 2–3 层不等（7.5 / 10.5 m 混排）；
+             一层店面层高 3.6 m，上层 2.9 m
+【材料与表面】外墙混色——有的贴 100×100 小方砖、有的涂料、有的贴石材，
+             六间各不相同（这是关键：同一栋楼被不同店主改过）；
+             一层卷帘门（帘片高 100 mm，导轨外露）；二层以上住宅窗为塑钢/铝合金
+【脏污等级】D2（一层门面 D1，因店主翻新过；二层以上 D2）
+【风化与污渍】① 卷帘门下部有轻微锈与手指油印（不整片锈）
+             ② 餐饮店面墙上有油污（从排烟口往下淌，范围 1–2 m）
+             ③ 台阶踏面被磨亮（中间深、边缘浅），边缘有小缺角
+             ④ 招牌面有褪色；一处灯箱半边不亮
+             ⑤ 二层墙根（一层雨棚上方）有积灰带
+             ⛔ 不要：整面流锈、招牌断裂残缺、玻璃破碎、门口垃圾成堆
+【不规整】⭐ 六间店面高度不齐（二层窗台高度差 10–40 cm）；
+         ⭐ 雨棚高度差 10–30 cm、倾斜 1–3°；
+         招牌大小不一（有的占满开间、有的只占一半）、高度不一；
+         卷帘门开关状态不同（至少一间半开、一间全关）；
+         台阶高度差 5–10 cm
+【生活痕迹】招牌层层叠加（主招牌 + 侧挂竖牌 + 跨街横幅 + 门贴）；
+           门口杂物：纸箱堆、塑料筐、拖把、立式广告牌、电动车、煤气罐；
+           二层空调外机 4–6 台；防盗窗零星；晾衣杆 3–5 根
+【结构必须几何化】卷帘门（凹进 15 cm，导轨实体）、雨棚（独立悬挑板+骨架）、
+                 台阶、招牌箱体、二层窗洞 —— 全部实体
+【光照】晴日上午侧光（仰角 40°），明显阴影与墙角暗部，中性灰背景，1.8 m 人形参照
+【技术】米，+Y 向上，正面朝 −Z，轴心在底面中心，一 glb 一栋，六槽
+【必须交付】albedo + normal + ORM；checks/t1 t3 t5 + real
+【降级要求】几何必须独立表达结构；六槽；每槽主色 hex
+【负向】整齐划一的商业楼, 玻璃幕墙, 统一招牌高度, 现代商业综合体,
+       卡通, 塑料质感, 干净地面, 欧美沿街店铺</code></pre>
+<p><strong>招牌文字</strong>：从 <code>config/art/shopsigns.json</code> 取（<strong>中文，不翻译</strong>）。 建议这 6 间用：兰州拉面（红底黄字横招）/ 五金建材（深灰底黄字）/ 理发（白底粉字竖招）/ 快递驿站（蓝底黄字）/ 大药房（蓝底白字）/ 小超市（红底白字）。</p>
+<p><strong>验收</strong></p>
+<div class="tw"><table><thead><tr><th>档</th><th>看什么</th></tr></thead><tbody><tr><td>T1</td><td><strong>六间高低不齐、招牌大小各异、卷帘门状态不同</strong> —— 一眼看出是六家店</td></tr><tr><td>T3 纯色</td><td>能看出"六个开间、高度不同"</td></tr><tr><td>T5 白模</td><td>不齐的轮廓线（不是一条直线天沟）</td></tr><tr><td><strong>real</strong></td><td>招牌上的中文清晰可读；台阶中间磨亮；卷帘门有锈</td></tr></tbody></table></div>
+<p><strong>常见翻车</strong>：做成一栋整齐商业楼贴六个招牌 / 招牌一样高 / 门口没有杂物 / 招牌用英文。</p>
+<hr>
+<h2 id="四-factory-门式钢架标准厂房-m-通用壳">四、factory 门式钢架标准厂房（M 通用壳）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>出现</td><td>镇/县/市·任何（说不清门类时都用它）</td></tr><tr><td>尺寸</td><td>占地 <strong>96 × 60 m</strong>，单层，檐高 9 m，屋脊 11 m</td></tr><tr><td>面数</td><td>T1 ≤ 1.5 万 / T2 ≤ 5 千</td></tr><tr><td>材质槽</td><td><code>body</code> 蓝灰彩钢板 <code>#4a6d8c</code> · <code>roof</code> 深灰屋面 <code>#565b60</code> · <code>base</code> 混凝土勒脚+月台 <code>#a8a49c</code> · <code>glass</code> 采光带 <code>#dbe6ee</code> · <code>metal</code> 卷帘门/雨落管 <code>#b0b6bc</code> · <code>sign</code> 厂名红 <code>#c62828</code></td></tr></tbody></table></div>
+<p><strong>提示词（复制这段）</strong></p>
+<pre class="code"><code>中国县镇门式钢架标准厂房，2010s 建成，参考真实开发区与乡镇工业园
+
+【体量与尺度】占地 96 × 60 m，单层，檐高 9 m，屋脊 11 m（双坡，坡度 1:10）；
+             柱距 6 m，共 16 跨；山墙设 3 樘卷帘门（4.5 × 5 m）
+【材料与表面】墙面板：蓝灰色压型彩钢板，⭐ 竖向肋条间距 250 mm（必须可辨，
+             靠几何或法线，不能只画在颜色里）；屋面板：深灰彩钢夹芯板（板缝横向）；
+             勒脚 1.2 m 高混凝土（表面有模板缝）；卷帘门为浅灰金属
+【脏污等级】D2（工业建筑耗损快，但彩钢板不许锈穿）
+【风化与污渍】① 彩钢板板缝下端有流锈（每条长 0.3–0.8 m，不连成片）
+             ② 自攻钉位置有锈点（直径 ≤3 cm）
+             ③ 朝阳面褪色发浅，背阴面颜色更深更饱和
+             ④ 勒脚下部 0.6 m 内溅泥发深
+             ⑤ 屋面有积灰与小块水渍（板缝处最明显）
+             ⛔ 不要：锈穿成洞、彩钢板大面积剥落、屋顶塌陷、杂草丛生
+【不规整】墙面沿板缝有 2–3 cm 的轻微波浪起伏（压型板本身不平）；
+         屋脊有 3–5 cm 下挠；一处墙角有彩钢板被撞凹
+【生活痕迹】山墙/檐口加装通风器 3–5 个（屋脊式）；
+           外墙附设雨落管（沿柱布置）与消防管（红色）；
+           墙角有防撞混凝土墩（2–3 个）；月台上有托盘与叉车
+【结构必须几何化】卷帘门（凹进 ≥20 cm）、月台（高出地面 1.2 m + 雨棚）、
+                 采光带（屋脊两侧）、通风器、勒脚
+【光照】晴日上午侧光（仰角 40°），明显阴影与墙角暗部，中性灰背景，1.8 m 人形参照
+【技术】米，+Y 向上，正面朝 −Z，轴心在底面中心，一 glb 一栋，六槽
+【必须交付】albedo + normal + ORM；checks/t1 t3 t5 + real
+【降级要求】几何必须独立表达结构；六槽；每槽主色 hex
+【负向】透明屋顶, 现代艺术馆, 玻璃幕墙, 圆润玩具感, 卡通, 纯蓝平涂,
+       干净无锈, 欧美工业风, 红色砖厂房</code></pre>
+<p><strong>厂名</strong>：从 <code>shopsigns.json</code> 的 <code>wall</code> 形制取，如「XX 建材」（白墙蓝字刷在彩钢板上）。</p>
+<p><strong>验收</strong></p>
+<div class="tw"><table><thead><tr><th>档</th><th>看什么</th></tr></thead><tbody><tr><td>T1</td><td><strong>能看出竖向肋条</strong>（不是一块蓝板）；月台与卷帘门分明</td></tr><tr><td>T3 纯色</td><td>双坡屋顶 + 大跨度体量 + 月台</td></tr><tr><td>T5 白模</td><td>门式刚架比例（宽扁）</td></tr><tr><td><strong>real</strong></td><td>板缝下端有流锈；南面浅北面深；肋条间距在 1.8 m 人形旁约 1/7 人身高</td></tr></tbody></table></div>
+<p><strong>常见翻车</strong>：纯蓝平涂（肋条只在颜色里）/ 没有锈 / 做成现代建筑 / 屋顶透明。</p>
+<hr>
+<h2 id="五-bus_stop-公交站台-交通识别物">五、bus_stop 公交站台（交通识别物）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>出现</td><td>镇/县/市·任何</td></tr><tr><td>尺寸</td><td>长 <strong>12 m</strong>，深 1.8 m，高 2.8 m（候车亭 + 站牌分开摆）</td></tr><tr><td>面数</td><td>T1 ≤ 4000 / T2 ≤ 1200</td></tr><tr><td>材质槽</td><td><code>body</code> 站牌蓝 <code>#0d47a1</code> · <code>roof</code> 候车亭顶 <code>#5b5b5b</code> · <code>base</code> 站台铺装边 <code>#b8b2a6</code> · <code>glass</code> 侧板玻璃 <code>#a8c4d6</code> · <code>metal</code> 立柱 <code>#8d9296</code> · <code>sign</code> 线路板 <code>#f2f2f2</code></td></tr></tbody></table></div>
+<p><strong>提示词（复制这段）</strong></p>
+<pre class="code"><code>中国城市公交候车亭与站牌，2010s 市政设施，参考真实街边站台
+
+【体量与尺度】候车亭长 12 m、深 1.8 m、檐高 2.8 m；立柱 4 根（φ100 mm 圆管）；
+             站牌单独一根（高 2.6 m，板面 900 × 1600 mm）；座椅 3 座
+【材料与表面】顶棚为铝板（有折边），侧面夹胶玻璃（半透明，可见分格），
+             立柱镀锌钢管（表面有锌花），广告灯箱铝合金边框
+【脏污等级】D1（市政设施有人清扫）
+【风化与污渍】① 玻璃下半部有手印与泥点（下深上浅）
+             ② 立柱 0.8 m 以下少量溅泥与贴纸残胶
+             ③ 顶棚内侧有轻微积灰
+             ④ 广告灯箱面有轻微划痕；站牌板面被反复触摸发亮
+             ⛔ 不要：顶棚破损、玻璃碎裂、涂鸦覆盖、垃圾堆积
+【不规整】顶棚中间下挠 2–3 cm；一处玻璃分格略歪；
+         座椅一条腿垫了块砖（真实场景常见）；站牌与原设计位置偏 10 cm
+【生活痕迹】⭐ 广告灯箱两面内容不同；站牌上贴满小广告（招租、开锁、办证），新旧叠加；
+           座椅上有报纸与饮料瓶；地面有烟头与口香糖印；旁边一辆共享单车
+【结构必须几何化】立柱、顶棚、座椅、灯箱框、站牌立杆与板面（杆与面分两个对象）
+【光照】晴日上午侧光（仰角 40°），明显阴影，中性灰背景，1.8 m 人形参照
+【技术】米，+Y 向上，正面朝 −Z，轴心在底面中心，一 glb 一栋，六槽
+【必须交付】albedo + normal + ORM；checks/t1 t3 t5 + real
+【降级要求】几何独立表达结构；六槽；每槽主色 hex
+【负向】欧式电话亭, 玻璃幕墙亭, 现代极简, 卡通, 干净无污, 无广告, 木结构</code></pre>
+<p><strong>验收</strong></p>
+<div class="tw"><table><thead><tr><th>档</th><th>看什么</th></tr></thead><tbody><tr><td>T1</td><td>候车亭与站牌<strong>两个体量分开</strong>；玻璃半透明</td></tr><tr><td>T3 纯色</td><td>亭顶 + 立柱 + 站牌杆能分清</td></tr><tr><td>T5 白模</td><td>一个扁长方体（亭）+ 一根杆（牌）</td></tr><tr><td><strong>real</strong></td><td>玻璃下半明显比上半脏；站牌上有中文小广告</td></tr></tbody></table></div>
+<hr>
+<h2 id="六-gas_station-加油站-街景强识别">六、gas_station 加油站（街景强识别）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>出现</td><td>任何·任何（每个片区都需要，密度影响货运成本）</td></tr><tr><td>尺寸</td><td>占地 <strong>40 × 25 m</strong>，罩棚高 6 m</td></tr><tr><td>面数</td><td>T1 ≤ 1.2 万 / T2 ≤ 4 千</td></tr><tr><td>材质槽</td><td><code>body</code> 罩棚白 <code>#eef0f2</code> · <code>roof</code> 罩棚底面 <code>#d5d8db</code> · <code>base</code> 混凝土场坪 <code>#a9a59d</code> · <code>glass</code> 便利店玻璃 <code>#a8c4d6</code> · <code>metal</code> 加油机与立柱 <code>#c0c4c8</code> · <code>sign</code> 品牌红条 <code>#c62828</code></td></tr></tbody></table></div>
+<p><strong>提示词（复制这段）</strong></p>
+<pre class="code"><code>中国城市加油站，2010s 建成，参考真实中石化/中石油站（但不使用其商标）
+
+【体量与尺度】占地 40 × 25 m；罩棚 24 × 18 m，檐高 6 m，板厚 0.8 m；
+             4 个加油岛（每岛 2 台加油机）；便利店 12 × 8 m，单层
+【材料与表面】罩棚为铝板包边（下沿有收边条），底面为深灰铝格栅；
+             立柱 2 根（φ600 mm，混凝土外包铝板，⭐ 下段有黄黑斜纹防撞条）；
+             场坪为混凝土（有分仓缝，缝间距 4 m）；便利店为玻璃幕墙 + 铝框
+【脏污等级】D1（商业设施必须整洁，否则没人来加油）
+【风化与污渍】① 加油岛地面有深色油渍（不规则斑块，每岛下方最重）
+             ② 场坪有轮胎印（沿车流方向，深色弧线）
+             ③ 立柱防撞条有轻微擦痕
+             ④ 便利店玻璃有促销海报胶痕
+             ⛔ 不要：地面大片油污、罩棚锈蚀、玻璃脏到看不清、设备破损
+【不规整】罩棚四角略有高低差（2–3 cm）；一处防撞柱被撞歪；
+         价格牌数字排列不齐；井盖位置不在正中（施工偏移）
+【生活痕迹】⭐ 吊装式加油机（从罩棚下悬吊，不是落地柱式）；
+           防撞柱 4 根（红白反光漆，有撞痕）；卸油口井盖 1 个；
+           便利店门口促销堆头（矿泉水、机油）；一辆正在加油的车（可选）；
+           垃圾桶、拖把、洗车水桶
+【结构必须几何化】罩棚（悬挑，板厚可见）、立柱、加油岛（高 150 mm 台）、
+                 加油机、便利店玻璃门、防撞柱
+【光照】晴日上午侧光（仰角 40°），明显阴影，中性灰背景，1.8 m 人形参照
+【技术】米，+Y 向上，正面朝 −Z，轴心在底面中心，一 glb 一栋，六槽
+【必须交付】albedo + normal + ORM；checks/t1 t3 t5 + real
+【降级要求】几何独立表达结构；六槽；每槽主色 hex
+【负向】真实品牌 logo, 中石化标识, 中石油标识, 玻璃盒子, 未来感, 卡通,
+       干净地面, 无油渍, 欧美加油站</code></pre>
+<p>⚠ <strong>涂装用"相似但虚构"的配色</strong>（红/蓝条纹即可），<strong>不许用真实商标</strong>——法律 + 美术双重原因。</p>
+<p><strong>验收</strong></p>
+<div class="tw"><table><thead><tr><th>档</th><th>看什么</th></tr></thead><tbody><tr><td>T1</td><td>罩棚 + 4 岛 + 便利店三件齐；立柱有黄黑斜纹</td></tr><tr><td>T3 纯色</td><td>大罩棚悬挑感（靠阴影）</td></tr><tr><td><strong>real</strong></td><td>⭐ <strong>地面有油渍</strong>（最容易被漏、也最能暴露"假"的一处）</td></tr></tbody></table></div>
+<hr>
+<h2 id="七-adm_fire-消防站-红色车库门是硬特征">七、adm_fire 消防站（红色车库门是硬特征）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>出现</td><td>县/市·任何</td></tr><tr><td>尺寸</td><td>占地 <strong>45 × 32 m</strong>，<strong>3 层</strong>，总高 12 m，<strong>4 个车库门</strong></td></tr><tr><td>面数</td><td>T1 ≤ 1.5 万 / T2 ≤ 5 千</td></tr><tr><td>材质槽</td><td><code>body</code> 米白墙面 <code>#e9e6e1</code> · <code>roof</code> 平顶女儿墙 <code>#b5b2ab</code> · <code>base</code> 车库门红 <code>#b3261e</code> · <code>glass</code> 窗 <code>#b8c4cc</code> · <code>metal</code> 训练塔钢构 <code>#8d9296</code> · <code>sign</code> 蓝条与标识 <code>#0d47a1</code></td></tr></tbody></table></div>
+<p><strong>提示词（复制这段）</strong></p>
+<pre class="code"><code>中国县市级消防站，2010s 建成，参考真实消防救援站
+
+【体量与尺度】占地 45 × 32 m；主体 3 层，总高 12 m（首层 4 m + 上部 3.6 m）；
+             4 樘车库门（每樘 4 × 4.5 m，间距 1 m）；训练塔 4 层（高 16 m）
+【材料与表面】外墙米白色面砖（100×200 mm）或涂料；
+             ⭐ 车库门为红色卷帘门（帘片高 120 mm，带观察窗）；
+             训练塔为钢构 + 混凝土楼板；窗为铝合金；屋顶女儿墙 1.1 m 高
+【脏污等级】D1（准军事管理，内务严格，比住宅干净）
+【风化与污渍】① 车库门下部有油污与轮迹（消防车进出必然留下）
+             ② 车库门前地面有深色轮胎痕（两条平行带，从门口延伸）
+             ③ 卷帘门有轻微擦痕（不破损）
+             ④ 门上方有轻微尾气熏黑
+             ⛔ 不要：门板凹陷断裂、墙面污渍成片、训练塔锈穿、地面垃圾
+【不规整】4 樘门高度略有差异（±3 cm）；女儿墙高低差 5–10 cm；
+         一处窗被改成空调位（后期改造）
+【生活痕迹】训练场（水泥地 + 跑道线 + 单双杠）；⭐ 晾晒架（消防员晒水带，
+           挂在两柱之间，一条条垂下）；旗杆；车库前导流线；
+           门前 2 个停车位（可留空）；墙上消防标语（红底白字）
+【结构必须几何化】⭐ 车库门必须凹进去 ≥20 cm 且是实体
+                 （本项目最容易翻车处：画成贴图的话，T3 纯色档一掉就没了，
+                  红色一没就不像消防站）；训练塔（带窗洞与外部爬梯）、雨棚、旗杆
+【光照】晴日上午侧光（仰角 40°），明显阴影，中性灰背景，1.8 m 人形参照
+【技术】米，+Y 向上，正面朝 −Z，轴心在底面中心，一 glb 一栋，六槽
+【必须交付】albedo + normal + ORM；checks/t1 t3 t5 + real
+【降级要求】几何独立表达结构；六槽；每槽主色 hex
+【负向】欧美消防站, 现代玻璃建筑, 卡通, 干净地面, 无轮胎痕,
+       车库门画成贴图, 白色车库门</code></pre>
+<p><strong>验收</strong></p>
+<div class="tw"><table><thead><tr><th>档</th><th>看什么</th></tr></thead><tbody><tr><td>T1</td><td>4 樘红门 + 训练塔 + 蓝条</td></tr><tr><td><strong>T3 纯色</strong></td><td>⭐ <strong>红门仍然在且是凹进去的</strong>（若消失 → 画成贴图了 → 重做）</td></tr><tr><td>T5 白模</td><td>主体 + 训练塔两个体量</td></tr><tr><td><strong>real</strong></td><td>门前有两条轮胎痕；门上方有熏黑</td></tr></tbody></table></div>
+<hr>
+<h2 id="八-construction-塔吊-在建体-中国城市核心符号">八、construction 塔吊 + 在建体（中国城市核心符号）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>出现</td><td>任何·任何（城市长身体的样子）</td></tr><tr><td>尺寸</td><td>在建楼 <strong>30 × 20 m</strong>，<strong>8 层</strong>（约 24 m），塔吊臂长 50 m</td></tr><tr><td>面数</td><td>T1 ≤ 1.5 万 / T2 ≤ 4 千</td></tr><tr><td>材质槽</td><td><code>body</code> 混凝土素面 <code>#a8a49c</code> · <code>roof</code> 楼板顶面 <code>#b5b1a8</code> · <code>base</code> 底部防护棚 <code>#6f7377</code> · <code>glass</code> 无（暂空缺）· <code>metal</code> <strong>塔吊黄</strong> <code>#e8b21a</code> · <code>sign</code> 安全标语红 <code>#c62828</code></td></tr></tbody></table></div>
+<p>⚠ <strong>轴心例外</strong>：轴心放在<strong>楼体 footprint 中心</strong>，<strong>不是</strong>包围盒中心 （塔吊吊臂伸出 50 m，用包围盒会偏 5+ m，自动摆放会歪）。<code>SOURCE.md</code> 必须注明。</p>
+<p><strong>提示词（复制这段）</strong></p>
+<pre class="code"><code>中国城市在建工地，塔吊 + 部分完工的混凝土楼体，参考真实住宅项目施工现场
+
+【体量与尺度】在建楼 30 × 20 m，已建 8 层（约 24 m，层高 3 m）；
+             塔吊臂长 50 m、塔身高 40 m（标准节 2.5 m/节）；
+             绿色防尘网覆盖外立面（从 3 层往上）
+【材料与表面】楼体为清水混凝土（模板缝横向，每层 2 道）；
+             ⭐ 绿色防尘网（密目网）为实体板，不是贴图，有褶皱与松弛下垂；
+             塔吊为黄漆钢构（标准节桁架，腹杆清晰）；
+             围挡为 2 m 高彩钢板 + 顶部绿植假草坪
+【脏污等级】D1（在建 = 新，脏的是泥不是老）
+【风化与污渍】① 混凝土表面有模板缝、麻面、层间色差（每层浇筑批次不同）
+             ② 防尘网褪色（朝阳面晒成浅绿，背阴面深）
+             ③ 塔吊标准节节点有少量锈
+             ④ 围挡底部溅泥、公益广告有起边与褪色
+             ⑤ 楼板外沿有水泥浆流挂（下滴痕迹）
+             ⛔ 不要：钢筋锈穿、混凝土剥落、绿色网大面积破洞、工地变成废墟
+【不规整】⭐ 各层进度不同：下部已拆模（光面）、中部有模板（木色）、顶部只有钢筋；
+         防尘网有破洞 2–3 处；一处脚手架突出；塔吊与楼体不平行（1°）
+【生活痕迹】临时板房 2 栋（蓝顶白墙，中国工地标配）；材料堆场（钢管成捆、木方、
+           砖垛、钢筋）；⭐ 沿围挡顶部喷淋降尘管（细管 + 小喷头，中国工地特征）；
+           一辆混凝土罐车或泵车（可选）；安全标语横幅（红底白字）；
+           工人 3–5 个（可选，剪影级）
+【结构必须几何化】塔吊（独立落地：基础 + 标准节 + 起重臂 + 平衡臂 + 配重 + 吊钩）、
+                 楼体（楼板出挑、柱、部分墙体）、防尘网（实体板，有褶皱）、
+                 围挡、板房、材料堆 —— 全部实体
+【光照】晴日上午侧光（仰角 40°），明显阴影，中性灰背景，1.8 m 人形参照
+【技术】米，+Y 向上，正面朝 −Z，⭐ 轴心在楼体 footprint 中心，一 glb 一栋，六槽
+【必须交付】albedo + normal + ORM；checks/t1 t3 t5 + real
+【降级要求】几何独立表达结构；六槽；每槽主色 hex
+【负向】完工建筑, 玻璃幕墙, 干净地面, 无围挡, 卡通, 现代艺术,
+       防尘网画成贴图, 塔吊悬空</code></pre>
+<p><strong>验收</strong></p>
+<div class="tw"><table><thead><tr><th>档</th><th>看什么</th></tr></thead><tbody><tr><td>T1</td><td>塔吊独立落地（自带基础+配重+吊钩）；防尘网是实体板有褶皱</td></tr><tr><td>T3 纯色</td><td>塔吊黄 + 楼体灰 + 网绿，三者分明</td></tr><tr><td>T5 白模</td><td>塔吊轮廓（细长塔身 + 长臂）+ 未完工楼体（无窗、楼板出挑）</td></tr><tr><td><strong>real</strong></td><td>各层进度不同（下拆模/中模板/顶钢筋）；防尘网朝阳面浅</td></tr></tbody></table></div>
+<p><strong>最常见翻车</strong>：做成完工建筑 / 防尘网省略 / 塔吊悬空或跟楼粘在一起。</p>
+<hr>
+<h2 id="九-交付检查表-建模组自检后再交">九、交付检查表（建模组自检后再交）</h2>
+<ul><li>[ ] 8 个模型，命名 <code>&amp;lt;id&amp;gt;_v01_lod0/lod1.glb</code>（不用旧名 <code>_l0/_l1</code>）</li><li>[ ] 每个附 <code>.slots.json</code>（6 槽 hex）</li><li>[ ] <strong>每个材质有 albedo</strong>；⭐ <strong>至少 body/roof/base 有 normal</strong>；⭐ <strong>有 ORM</strong></li><li>[ ] ⭐ <strong>PBR 参数按材料分别给</strong>（不许共用一套，<code>check_realism</code> R-4 会抓）</li><li>[ ] <code>glass</code> rough ≤ 0.15；<code>metal</code> 槽 metallic ≥ 0.70</li><li>[ ] 单位米、正面朝 −Z、轴心在底面中心（<code>construction</code> 用 footprint 中心）</li><li>[ ] 面数不超 T1 预算；同时有 T2 低模</li><li>[ ] <code>checks/</code> 有 <strong>t1 / t3 / t5</strong> + ⭐ <strong><code>_real.png</code>（含 1.8 m 人形参照）</strong></li><li>[ ] <code>SOURCE.md</code> 写明 <strong>normal/ORM 打包方式</strong> + 面数余量 + 轴心说明</li><li>[ ] 人眼 V-1~V-6 逐条打勾（<code>modeling-brief.md</code> §7.2）</li></ul>
+<pre class="code" data-lang="bash"><code>python bench/check_assets.py  assets/models/buildings
+python bench/check_realism.py assets/models/buildings</code></pre>
+<p>两项 0 FAIL 才算交付。<strong>任一项不过就退回，不许"先入库以后再说"</strong>—— 第一批就是"技术项全过就入库了"，才有了这次返修。</p>
+<hr>
+<h2 id="十-后续批次-预告-不用现在做">十、后续批次（预告，不用现在做）</h2>
+<div class="tw"><table><thead><tr><th>批</th><th>内容</th></tr></thead><tbody><tr><td>第二批</td><td>道路桥隧 6 + 车辆行人 6 + 标识 4（规格见 <code>batch-02.md</code>，已含<code>【写实】</code>行）</td></tr><tr><td>第三批</td><td>服务设施 9（幼儿园/小学/医院门诊/派出所/菜市场/地铁出入口/文化馆/图书馆/体育馆）</td></tr><tr><td>第四批</td><td>工业 8（M0 采矿 / M1b 化工 / M2 消费品）</td></tr><tr><td>第五批</td><td>构筑物 6（烟囱/冷却塔/储罐/筒仓/水塔/龙门吊）</td></tr></tbody></table></div>
+<p>⚠ <strong>V0 村庄只需要 4 类</strong>：独院农房、村道、村委会/小学、水井。上表是 R34 之后的全景， <strong>不要因为"后面还有很多"而放慢 V0</strong>。</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-24</strong>：<strong>全篇重写</strong>（开发者：第一批「像动画片」，要求「几乎跟现实一样」）。</li></ul>
+<p>  ① <strong>8 条提示词全部按新模板重写</strong>：删掉 <code>【相机】等轴测、无环境</code>（那是"无光照"指令），   改为 <code>【光照】晴日上午侧光</code>；<code>【材质】</code>拆成<code>【材料与表面】</code>+<code>【风化与污渍】</code>；   <code>【细节】</code>拆成<code>【不规整】</code>+<code>【生活痕迹】</code>；新增<code>【必须交付】</code>。   ② <strong>交付契约加三项硬要求</strong>：<strong>normal + ORM 贴图</strong> / <strong>PBR 按材料分别给</strong> / <strong><code>_real.png</code> 含 1.8 m 人形参照</strong>。   ③ 新增 §〇·三（程序化路线的四个写实动作）、§九 检查表加 4 项写实条目。   ④ <code>construction</code> 明确轴心用 footprint 中心（塔吊臂会拉偏包围盒）。   ⚠ <strong>核心判断：只改提示词治不好</strong>——旧契约里没有"交 normal"这一项，砖缝只能画在颜色里，表面还是平的。</p>
+<ul><li><strong>2026-11-23</strong>：首版。8 个模型（覆盖 7 类），含尺寸/面数/六槽 hex/提示词/T1-T5 验收/AI 常见翻车。</li></ul><div class="pager"><a href="assets-modeling-brief.html">← 建模组工作总纲（2026-11-24 重写）</a><a href="assets-batch-01-fix.html">第一批返修单（8 个模型） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#〇-通用交付要求-8-个模型都适用">〇、通用交付要求（8 个模型都适用）</a><a class="l3" href="#〇-一-为什么材质槽命名必须固定">〇·一 为什么材质槽命名必须固定</a><a class="l3" href="#〇-二-每个模型必须附的主色表">〇·二 每个模型必须附的主色表</a><a class="l3" href="#〇-三-走程序化脚本路线-路线-a-的写实做法">〇·三 走程序化脚本路线（路线 A）的写实做法</a><a class="l3" href="#〇-四-一句检验法-交付前自己先过">〇·四 一句检验法（交付前自己先过）</a><a class="l2" href="#一-vlg_court-独院农房-村庄起步-最先出现">一、vlg_court 独院农房（村庄起步，最先出现）</a><a class="l2" href="#二-city_slab-高层板楼-城市住宅主力">二、city_slab 高层板楼（城市住宅主力）</a><a class="l2" href="#三-shop_street-市区沿街商铺-最考-参差">三、shop_street 市区沿街商铺（最考"参差"）</a><a class="l2" href="#四-factory-门式钢架标准厂房-m-通用壳">四、factory 门式钢架标准厂房（M 通用壳）</a><a class="l2" href="#五-bus_stop-公交站台-交通识别物">五、bus_stop 公交站台（交通识别物）</a><a class="l2" href="#六-gas_station-加油站-街景强识别">六、gas_station 加油站（街景强识别）</a><a class="l2" href="#七-adm_fire-消防站-红色车库门是硬特征">七、adm_fire 消防站（红色车库门是硬特征）</a><a class="l2" href="#八-construction-塔吊-在建体-中国城市核心符号">八、construction 塔吊 + 在建体（中国城市核心符号）</a><a class="l2" href="#九-交付检查表-建模组自检后再交">九、交付检查表（建模组自检后再交）</a><a class="l2" href="#十-后续批次-预告-不用现在做">十、后续批次（预告，不用现在做）</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

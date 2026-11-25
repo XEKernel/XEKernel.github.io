@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" class="on" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="09-时钟与装配-时间尺度-日历-日内时段-tick-顺序-存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</h1>
+<blockquote>依据：<code>decisions.md</code> <strong>R13 + R14</strong>。<br>R14 修正了 R13 的三处：① 年改回<strong>现实 365/366 日</strong>（不用 360）② 农历<strong>要做完整算法</strong>，不只查春节<br>③ 一局不定长，改为<strong>里程碑 + 长期档（可到 400 年）</strong>；新增 ④ <strong>日内时段</strong>解决早晚高峰。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#二三个时间概念互相之间不许混">二、三个时间概念，互相之间不许混</a></li><li><a href="#三时间分层现实日历1x-基准">三、时间分层（现实日历，1x 基准）</a></li><li><a href="#四日历公历--完整农历">四、日历：公历 + 完整农历</a></li><li><a href="#五日内时段早晚高峰的唯一可行解法">五、日内时段：早晚高峰的唯一可行解法</a></li><li><a href="#五五节日-vs-昼夜让时间临时慢下来2026-11-17">五·五、节日 vs 昼夜：让时间临时慢下来（2026-11-17）</a></li><li><a href="#六各层边界的职责">六、各层边界的职责</a></li><li><a href="#七数据契约">七、数据契约</a></li><li><a href="#八验收点">八、验收点</a></li><li><a href="#九待定">九、待定</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td>两套时钟（模拟 / 视觉）与它们的边界</td><td>各系统的结算公式（在 04–08）</td></tr><tr><td>公历 + 闰年 + <strong>完整农历</strong>（含春节、中秋、端午）</td><td>天气与季节（季节是 DLC1，本篇只留字段；R27）</td></tr><tr><td><strong>日内时段</strong>的定义与产出（供交通用）</td><td>时段系数的具体数值（在 <code>08-traffic.md</code>）</td></tr><tr><td>日 / 周 / 月 / 季 / 年五个边界的职责</td><td>动画与光照实现（在 <code>view/</code>）</td></tr><tr><td>里程碑与长期档的时间预算</td><td>存档文件格式细节</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-三个时间概念-互相之间不许混">二、三个时间概念，互相之间不许混</h2>
+<p>用户 2026-11-15 的原话定下了前两个：</p>
+<blockquote>「一个游戏日为 3 秒，但是不可能太阳就要 3 秒进行升起降落，这不现实……<br>我的想法是 24 分钟为太阳降落升起周期」</blockquote>
+<blockquote>「城市发展不可能发展几十年，肯定至少得几百年（至少 CS1 是这样的，玩到物品上限大约 400 年）」</blockquote>
+<p>第三个（日内时段）是为了解决早晚高峰，见 §五。</p>
+<div class="tw"><table><thead><tr><th>概念</th><th>单位</th><th>1x 下时长</th><th>干什么</th><th>谁能读</th></tr></thead><tbody><tr><td><strong>模拟时钟</strong> <code>sim</code></td><td>日 / 周 / 月 / 季 / 年</td><td><strong>3 秒 / 日</strong></td><td>一切数值：人口、经济、生长、流量</td><td>全部系统</td></tr><tr><td><strong>视觉时钟</strong> <code>visual_day</code></td><td>昼夜相位 0–1</td><td><strong>24 分钟 / 周期</strong></td><td>光照、车灯、招牌、霓虹</td><td><strong>只有 <code>view/</code></strong></td></tr><tr><td><strong>日内时段</strong> <code>time_slot</code></td><td>0–3 四段</td><td><strong>不占真实时间</strong></td><td>交通流的时段系数</td><td><code>traffic</code> / <code>view</code></td></tr></tbody></table></div>
+<p><strong>铁律（违反即视为 bug）</strong>：</p>
+<ol><li><strong>视觉时钟不参与任何数值。</strong> <code>clock.visual_day_phase</code> 只允许被 <code>scripts/view/</code> 读；</li></ol>
+<p>   <code>scripts/sim/</code> 出现它一律回退（与宪法 §四 同源）。</p>
+<ol><li><strong>"日"永远指 <code>sim_day</code></strong>，不许指昼夜，也不许指时段。</li><li><strong>暂停时视觉时钟也暂停</strong>，否则玩家暂停后看着天黑会以为游戏没停。</li><li><strong>存档不存视觉相位</strong>，读档后固定从 0.5（正午）开始。</li><li><strong>UI 永不显示"时:分"</strong> —— 只显示日期。因为时刻会立刻暴露两个时钟的不一致</li></ol>
+<p>   （视觉上过了 1 小时，日期可能跳了 20 天）。CS 也是这么处理的。</p>
+<p>⚠ <strong>为什么昼夜与日历绝不能绑</strong>：24 分钟 = 1440 s ÷ 3 s = <strong>480 个模拟日 = 1.31 个游戏年</strong>。 绑一起就是"太阳升落一次，城市长了一年半"，比"太阳 3 秒转一圈"更荒谬。</p>
+<hr>
+<h2 id="三-时间分层-现实日历-1x-基准">三、时间分层（现实日历，1x 基准）</h2>
+<div class="tw"><table><thead><tr><th>单位</th><th>游戏内</th><th>真实时间（1x）</th><th>3x</th></tr></thead><tbody><tr><td><strong>日</strong></td><td>1 日</td><td><strong>3 s</strong></td><td>1 s</td></tr><tr><td><strong>周</strong></td><td>7 日</td><td>21 s</td><td>7 s</td></tr><tr><td><strong>月</strong></td><td><strong>28 / 29 / 30 / 31 日</strong>（现实）</td><td>84–93 s</td><td>28–31 s</td></tr><tr><td><strong>季度</strong></td><td>3 个自然月</td><td>≈ 4.6 min</td><td>≈ 1.5 min</td></tr><tr><td><strong>年</strong></td><td><strong>365 / 366 日</strong>（闰年）</td><td><strong>≈ 18.3 min</strong></td><td>≈ 6.1 min</td></tr></tbody></table></div>
+<blockquote><strong>2026-11-15 修正</strong>：R13 曾用「年 = 360 日、月 = 30 日」以便月边界等长。<br>用户否掉了：<strong>「一年 360 天我觉得还是不行，得按现实时间」</strong>。<br>改用现实日历后，月度结算的金额<strong>不按天数比例换算</strong>（月费率固定），<br>这样长短月不会导致对账误差。<strong>闰年规则</strong>：能被 4 整除且不能被 100 整除，或能被 400 整除。</blockquote>
+<h3 id="3-1-时间预算-一局能跑多久">3.1 时间预算：一局能跑多久</h3>
+<div class="tw"><table><thead><tr><th>场景</th><th>游戏年</th><th>1x 累计</th><th>3x 累计</th></tr></thead><tbody><tr><td>看得到「第一栋楼长出来」</td><td>0.5 年</td><td>9 min</td><td>3 min</td></tr><tr><td>玩到「镇」</td><td>3–10 年</td><td>1–3 h</td><td>20–60 min</td></tr><tr><td><strong>一次坐下来玩 2 小时</strong></td><td>6–7 年</td><td>—</td><td>—</td></tr><tr><td>玩到「市」（30 万）</td><td>40–60 年</td><td>12–18 h</td><td>4–6 h</td></tr><tr><td>达成 100 万</td><td>60–100 年【估算】</td><td>18–30 h</td><td>6–10 h</td></tr><tr><td><strong>物品/实体上限（长期档）</strong></td><td><strong>≈ 400 年</strong></td><td><strong>≈ 122 h</strong></td><td><strong>≈ 41 h</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>所以"一局"不是一个固定时长</strong>（<code>decisions.md</code> R14）：</p>
+<ul><li><strong>单次游玩 2 小时</strong>只需要"能看到城市明显在变"（约 6–7 游戏年）</li><li><strong>完整档</strong>可以像 CS 一样跨几百小时玩到 400 年</li><li>年数标记为【估算】，必须等 B4/B6 实测人口曲线后再定，<strong>现在不许写进验收</strong></li></ul>
+<h3 id="3-2-年边界判定-双轨-不是一条人口线">3.2 年边界判定：双轨，不是一条人口线</h3>
+<blockquote>⚠ <strong>2026-11-15 修正</strong>（<code>01-playable-definition</code> §5.2）：<br>原表按人口划分阶段，<strong>等于把"人多"当成"发展好"</strong>。CS1 就是这么做的，不成立。<br>改为<strong>双轨</strong>，两轨都在年边界判定，但含义完全不同。</blockquote>
+<p><strong>轨一 · 行政层级（人口驱动，制度性，不代表好坏）</strong></p>
+<div class="tw"><table><thead><tr><th>阶段</th><th>人口</th><th>触发的事件</th></tr></thead><tbody><tr><td>村</td><td>&lt; 3,000</td><td>第一条村道、第一批独院</td></tr><tr><td>镇</td><td>3 千–3 万</td><td>商业街出现、开始收税</td></tr><tr><td>县</td><td>3 万–30 万</td><td><strong>限高 18 层生效</strong>、第一所重点学校</td></tr><tr><td>市</td><td>&gt; 30 万</td><td>容积率上限放开、超大街区</td></tr></tbody></table></div>
+<p>⚠ <strong>2026-11-21 依 R28 删掉原第五级「都市 &gt;100 万」</strong>：R4 的规范集只做了四套， 且 <strong>100 万触发的是胜利判定，不是层级变更</strong>（<code>01-playable-definition</code> §五）。 "多中心形成"仍作为里程碑存在（<code>13-player-loop</code> §十八），与行政层级无关。</p>
+<p>⚠ 这一轨<strong>只决定"适用哪套国标"和"行政身份"</strong>，与现实一致（设镇/设市有非农人口标准）。 <strong>它不参与任何评价</strong>——人口大县经济弱、义乌县级市却很富，都是常态。</p>
+<p><strong>轨二 · 发展评级（多维，全部按人均/比率，人口不参与）</strong></p>
+<p><code>D / C / B / A / S</code> 五级，由四维加权：财政健康 30 % / 生活质量 30 % / 产业层次 25 % / 环境 15 %。 细则见 <code>01-playable-definition</code> §5.2。</p>
+<p>⚠ <strong>评级每年算一次，允许升降</strong>（与轨一的"只升不降"相反）。 一个靠卖资源撑起来的百万人城市，评级会随着枯竭一路掉——<strong>这正是要表达的</strong>。</p>
+<p><strong>城不同类型</strong>（由产业结构定，不是评价）：资源型 / 工业型 / 商贸型 / 综合型 / 创新型。</p>
+<hr>
+<h2 id="四-日历-公历-完整农历">四、日历：公历 + 完整农历</h2>
+<h3 id="4-1-公历">4.1 公历</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>纪元起点</td><td><code>epoch_year</code>，<strong>默认取开局时的现实年份</strong>（2026）</td></tr><tr><td>月份天数</td><td>1/3/5/7/8/10/12 = 31；4/6/9/11 = 30；2 月 28 或 29</td></tr><tr><td>星期</td><td>由 <code>sim_day</code> 推出，<strong>不单独维护</strong></td></tr><tr><td>纪元推进</td><td>城市可以一直发展到 2400 年以后，<strong>年份没有上限</strong></td></tr></tbody></table></div>
+<h3 id="4-2-农历-做完整算法-不只查春节">4.2 农历：<strong>做完整算法，不只查春节</strong></h3>
+<blockquote>用户 2026-11-15：「农历算法还是要做的」。</blockquote>
+<div class="tw"><table><thead><tr><th>项</th><th>做法</th></tr></thead><tbody><tr><td>数据</td><td><strong><code>config/data/lunar.json</code>（<code>chengmai-lunar-v1</code>）</strong>：每年「正月初一的公历日期 + 每个农历月的天数（29/30）」&lt;br&gt;⚠ 2026-11-22 改：原写"每年一个 u32 编码"，实际改用<strong>显式数据</strong>（春节日期 + 月长），免得运行时还要实现月序解码</td></tr><tr><td>来源</td><td><code>tools/gen_lunar.py</code>：<strong>lunar-python（寿星天文算法）计算 1900–2200</strong>，并用 <strong>zhdate / lunardate 两个独立实现逐年交叉校验</strong>（1900–2100 全一致），任一年不一致就拒绝写文件</td></tr><tr><td>覆盖</td><td><strong>1900–2200 共 301 年</strong>（125 KB）。超出范围：<code>LunarCalendar.Loaded</code> 仍为真但换算返回 false，<strong>不猜日期</strong></td></tr><tr><td>能力</td><td>任意公历日 → 农历月/日/是否闰月；反之亦然</td></tr><tr><td>用途</td><td>春节、元宵、端午、中秋、重阳的日期；<strong>节气只做清明</strong>（固定公式，误差 ±1 天可接受）</td></tr></tbody></table></div>
+<p>⚠ <strong>这不是"查表 vs 算法"的二选一</strong>：标准农历换算本来就是「编码表 + 换算函数」。 表提供月序与闰月，函数负责公历↔农历互转。约 200–250 行，<strong>不需要任何天文计算</strong>。</p>
+<p>⚠ <strong>不要尝试用 VSOP87 算真实天象</strong>（500 行以上，精度收益为零）。 游戏里没人在意 2200 年的春节是不是差一天。</p>
+<h3 id="4-3-节假日的来源">4.3 节假日的来源</h3>
+<div class="tw"><table><thead><tr><th>节日</th><th>来源</th><th>是否影响数值</th></tr></thead><tbody><tr><td>元旦 / 劳动节 / 国庆</td><td>公历固定</td><td>✅</td></tr><tr><td>春节 / 元宵 / 端午 / 中秋 / 重阳</td><td><strong>农历换算</strong></td><td>✅</td></tr><tr><td>清明</td><td>节气公式</td><td>✅</td></tr><tr><td>调休（挪周末）</td><td><strong>做</strong>（F38，本体 B4）——挪周末凑长假，会出现"连续上班 7 天"</td><td>✅</td></tr></tbody></table></div>
+<p>节假日的<strong>乘子效果</strong>不在本篇，见 <code>12-china-features.md</code> §三。</p>
+<hr>
+<h2 id="五-日内时段-早晚高峰的唯一可行解法">五、日内时段：早晚高峰的唯一可行解法</h2>
+<h3 id="5-1-问题">5.1 问题</h3>
+<p>1 日 = 3 秒 ⇒ 早高峰 2 小时 = <strong>0.25 秒</strong>。逐小时模拟不可能，也看不见。</p>
+<h3 id="5-2-解法-把-一天-切成-4-个离散时段-但不占真实时间">5.2 解法：把"一天"切成 4 个<strong>离散时段</strong>，但<strong>不占真实时间</strong></h3>
+<p><code>time_slot</code> 是一个枚举，不是计时器：</p>
+<div class="tw"><table><thead><tr><th>段</th><th>名字</th><th>覆盖时刻</th><th>用途</th></tr></thead><tbody><tr><td><strong>0</strong></td><td>早高峰</td><td>06:00–09:00</td><td>上班 + <strong>上学</strong></td></tr><tr><td><strong>1</strong></td><td>平峰</td><td>09:00–17:00</td><td>日常出行、货运</td></tr><tr><td><strong>2</strong></td><td>晚高峰</td><td>17:00–20:00</td><td>下班 + <strong>放学</strong></td></tr><tr><td><strong>3</strong></td><td>夜间</td><td>20:00–06:00</td><td>极少出行</td></tr></tbody></table></div>
+<p><strong>关键设计：时段不是"重算一遍 OD"，而是给同一份 OD 乘一个系数。</strong></p>
+<pre class="code"><code>月边界：算一次 OD 矩阵（真值，人口/就业变化才改）
+   ↓ 对 4 个时段各乘一次系数，做 4 次流量分配（每月只做 1 回）
+4 份路段流量表（早/平/晚/夜）
+   ↓ 运行时按"视觉相位"选一份
+车辆 agent 的采样来源 + 拥堵度显示</code></pre>
+<div class="tw"><table><thead><tr><th>好处</th><th>说明</th></tr></thead><tbody><tr><td>成本几乎为零</td><td>每月 4 次分配，摊到 90 秒的一个月，占比 &lt; 2 %</td></tr><tr><td>符合工程实践</td><td>交通规划里的 <strong>time-of-day factoring（时段系数法）</strong>，六十年的标准做法</td></tr><tr><td>上学放学天然成立</td><td>学生 OD 集中在 07:00–08:00 与 16:30–17:30，落在 0 段与 2 段</td></tr><tr><td>数值可复现</td><td>时段不影响 <code>sim_day</code>，存档只存 OD 与系数</td></tr></tbody></table></div>
+<h3 id="5-3-画面怎么和数值对上">5.3 画面怎么和数值对上</h3>
+<p>视觉时钟（24 分钟）走完一个昼夜时，按相位查当前属于哪个时段：</p>
+<div class="tw"><table><thead><tr><th>视觉相位</th><th>映射到</th><th>车辆密度</th></tr></thead><tbody><tr><td>06:00–09:00</td><td>段 0</td><td>早高峰（满）</td></tr><tr><td>09:00–17:00</td><td>段 1</td><td>平峰（低）</td></tr><tr><td>17:00–20:00</td><td>段 2</td><td>晚高峰（满）</td></tr><tr><td>20:00–06:00</td><td>段 3</td><td>夜间（极稀，亮车灯）</td></tr></tbody></table></div>
+<p>⚠ <strong>这只是"选哪一份流量表来采样车辆"</strong>，不改变任何数值。 玩家看到的早高峰，就是仿真里真实的早高峰流量——<strong>两者同源，不是动画</strong>。</p>
+<hr>
+<h2 id="五-五-节日-vs-昼夜-让时间临时慢下来-2026-11-17">五·五、节日 vs 昼夜：让时间临时慢下来（2026-11-17）</h2>
+<blockquote>用户先指出冲突：「明年 2 月 5 日和 6 日分别是除夕和春节，但是游戏日是 3 秒，<br>但是我们昼夜不止 3 秒，那么除夕的烟花爆竹以及一些过年的活动该怎么展示呢？」<br>随后给出解法：「**在除夕和春节的时候游戏日变成 24 分钟，但是车辆人物等 Agent<br>模拟速度不变，当然也可以选择跳过。**」<br>⇒ <strong>采纳这个解法为主方案</strong>。它比"锁定昼夜相位"彻底——不是绕过矛盾，而是让时间本身对齐。<br>相位钳制降级为"跳过模式"的备选（§5.5.6）。</blockquote>
+<h3 id="5-5-1-先把失配算清楚">5.5.1 先把失配算清楚</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>1 游戏日</td><td><strong>3 秒</strong>（R13）</td></tr><tr><td>1 昼夜周期</td><td><strong>24 分钟</strong>（R13，纯表现）</td></tr><tr><td><strong>比值</strong></td><td><strong>1 昼夜 : 480 游戏日</strong></td></tr><tr><td>1 昼夜 =</td><td><strong>1.31 游戏年</strong></td></tr><tr><td>除夕 1 日占昼夜</td><td><strong>1/480</strong></td></tr><tr><td><strong>春节 7 日 = 21 秒</strong></td><td><strong>仅为昼夜周期的 1.46 %</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>结论：整个春节在昼夜层面几乎"静止"。</strong> 如果那 21 秒里相位正好是白天，<strong>整个春节都是白天，永远等不到夜晚放烟花</strong>。</p>
+<p>⚠ 更极端的：<strong>一个月（31 日 = 93 秒）只占昼夜的 6.5 %</strong>， 所以"某个月里天一直是亮的"完全可能发生。</p>
+<h3 id="5-5-2-主方案-用户提出-节日那一天-游戏日-临时变成-24-分钟">5.5.2 ⭐ 主方案（用户提出）：节日那一天，"游戏日"临时变成 24 分钟</h3>
+<blockquote>用户：「在除夕和春节的时候游戏日变成 24 分钟，但是车辆人物等 Agent 模拟速度不变，<br>当然也可以选择跳过。」</blockquote>
+<p><strong>这个方案比"锁定昼夜相位"彻底得多</strong>，因为它不是绕过矛盾，而是<strong>让时间本身对齐</strong>。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>平时</th><th><strong>节日（除夕/春节等）</strong></th></tr></thead><tbody><tr><td>1 游戏日</td><td><strong>3 秒</strong></td><td><strong>24 分钟</strong></td></tr><tr><td>1 昼夜</td><td>24 分钟（独立循环，= 480 游戏日）</td><td><strong>24 分钟 = 正好 1 个昼夜</strong></td></tr><tr><td><strong>模拟秒 : 真实秒</strong></td><td><strong>480 : 1</strong>（快进）</td><td><strong>1 : 1（实时）</strong></td></tr><tr><td><code>sim_day</code> 推进</td><td>+1</td><td><strong>仍 +1</strong>（不加速城市生长）</td></tr><tr><td>agent 出行</td><td>不变</td><td>不变</td></tr></tbody></table></div>
+<h3 id="5-5-3-三个意外的好处">5.5.3 三个意外的好处</h3>
+<p><strong>① 4 个时段与昼夜完美对齐</strong></p>
+<p>平时 1 日 = 3 秒切 4 段，每段 0.75 秒——<strong>时段毫无意义</strong>。 节日 1 日 = 24 分钟按真实小时切，长度正好成比例：</p>
+<div class="tw"><table><thead><tr><th>时段</th><th>真实跨度</th><th>节日时长</th><th>天是什么样</th></tr></thead><tbody><tr><td>早高峰</td><td>3 h</td><td><strong>3 分钟</strong></td><td>天刚亮，真的是早高峰</td></tr><tr><td>平峰</td><td>8 h</td><td><strong>8 分钟</strong></td><td>白天</td></tr><tr><td>晚高峰</td><td>3 h</td><td><strong>3 分钟</strong></td><td>傍晚</td></tr><tr><td><strong>夜间</strong></td><td>10 h</td><td><strong>10 分钟</strong></td><td><strong>真的黑，放烟花</strong></td></tr><tr><td>合计</td><td>24 h</td><td><strong>24 分钟</strong></td><td>= 1 个昼夜 ✓</td></tr></tbody></table></div>
+<p>⭐ <strong>节日期间"早高峰真的在早晨、夜间真的在夜里"</strong> —— 这是平时永远做不到的。</p>
+<p><strong>② "Agent 速度不变"其实是"从快进切到实时"</strong></p>
+<p>⚠ 这里要精确：<strong>不是"物理速度固定"</strong>（那样平时 3 秒跑不完一天的 30 km，模拟就废了）。 <strong>而是"回放速度"变了</strong>：</p>
+<div class="tw"><table><thead><tr><th></th><th>一辆车一天跑 30 km</th></tr></thead><tbody><tr><td>平时</td><td>3 秒走完 → 视觉 10 km/s（<strong>快进</strong>，看不清车）</td></tr><tr><td>节日</td><td>24 分钟走完 → 视觉 <strong>20 m/s = 72 km/h</strong>（<strong>真实速度</strong>）</td></tr></tbody></table></div>
+<p>⭐ <strong>所以节日是把时间尺度临时对齐到"人能感知的尺度"</strong> —— 平时你是上帝俯瞰几百年，节日<strong>你真的站在街上过了一天</strong>。</p>
+<p><strong>③ 节日不需要"钳制相位"了</strong></p>
+<p>因为 1 日 = 1 昼夜，<strong>除夕自然有夜晚</strong>。原来 §5.5.4 那套 hack 可以退成备选（见 §5.5.6）。</p>
+<h3 id="5-5-4-三个必须处理的连带问题">5.5.4 ⚠ 三个必须处理的连带问题</h3>
+<p><strong>① 日级结算怎么算：仍按"1 日"，不按 24 分钟</strong></p>
+<p><code>sim_day</code> 只 +1。<strong>城市在节日那 24 分钟里不长新楼、不结算月账。</strong></p>
+<p>⚠ <strong>这不是妥协，而是自洽的</strong>：<strong>春节期间工地本来就停工</strong>（F24 已定"施工 ×0.3"）。 所以"这一天城市不动"是设计，不是 bug。</p>
+<div class="tw"><table><thead><tr><th>系统</th><th>节日日行为</th></tr></thead><tbody><tr><td><code>zoning</code> growth</td><td><strong>暂停</strong>（与 F24 施工乘子一致）</td></tr><tr><td>月结（若跨月）</td><td>仍按 1 日推进，不额外结算</td></tr><tr><td><code>traffic</code> agent</td><td><strong>照常跑</strong>（这就是本节存在的意义）</td></tr><tr><td>施工 / 工期</td><td>不推进（停工）</td></tr></tbody></table></div>
+<p><strong>② 一致性：节日延期不能改变长期数值结果</strong></p>
+<p>⚠ 这条必须写死：<strong>"跳过节日"与"体验节日"跑 10 年，宏观结果必须一致。</strong></p>
+<p>否则玩家的选择会变成"为了数值优势而跳过"，那就不是体验设计了。</p>
+<p><strong>③ 玩家预期：必须提示 + 必须能跳过</strong></p>
+<p>24 分钟对一个"3 秒/日"的游戏是<strong>巨大的节奏断裂</strong>，玩家第一反应可能是"游戏卡住了"。</p>
+<div class="tw"><table><thead><tr><th>措施</th><th>内容</th></tr></thead><tbody><tr><td>进入节日</td><td><strong>显眼提示</strong>「今天是除夕，时间放慢了。（可跳过）」+ 一个"跳过"按钮</td></tr><tr><td>跳过</td><td>立即回到 3 秒/日，节日表现降级为"快速版"（用 §5.5.6 的相位钳制）</td></tr><tr><td>3x 下</td><td>节日日 = 8 分钟（仍实时感的 1/3）</td></tr><tr><td>默认</td><td><strong>开启</strong>（这是最好的体验），但<strong>首次进入必须说明</strong>，且设置里可永久关闭</td></tr></tbody></table></div>
+<h3 id="5-5-5-沉浸内容-这-24-分钟里玩家看什么">5.5.5 沉浸内容：这 24 分钟里玩家看什么</h3>
+<p>节日日不是"空转"，它正好容纳全部节日表现：</p>
+<div class="tw"><table><thead><tr><th>时段</th><th>看到什么</th></tr></thead><tbody><tr><td>早高峰 3 min</td><td><strong>炮仗</strong>（除夕/初一/初五/元宵早）、人流上街、早市</td></tr><tr><td>平峰 8 min</td><td><strong>舞狮舞龙</strong>（广场/商业街）、庙会摊位、走亲访友</td></tr><tr><td>晚高峰 3 min</td><td>返家人流、年夜饭时段（商业峰值）</td></tr><tr><td><strong>夜间 10 min</strong></td><td><strong>烟花</strong>、灯笼全亮、<strong>可以慢慢看这座城市</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>平时不可能做这些</strong>：3 秒里放烟花，玩家只看到一帧亮光。</p>
+<h3 id="5-5-6-备选-跳过时用-相位钳制-原方案-降级保留">5.5.6 备选：跳过时用"相位钳制"（原方案，降级保留）</h3>
+<p>如果玩家选<strong>跳过</strong>（或永久关闭节日延长），则回到快速模式， 此时用相位规则保证"除夕在夜里"：</p>
+<div class="tw"><table><thead><tr><th>时点</th><th>相位</th></tr></thead><tbody><tr><td>春节前 1 日</td><td>向傍晚<strong>加速</strong>（"天暗得越来越早" = 最好的过年提示）</td></tr><tr><td>除夕</td><td><strong>锁定夜晚</strong></td></tr><tr><td>元宵 / 中秋</td><td><strong>锁定夜晚</strong>（赏月要有月）</td></tr><tr><td>清明</td><td>白天 + 灰调滤镜</td></tr></tbody></table></div>
+<p>⚠ 相位规则<strong>仍在 <code>view</code> 层</strong>：<code>sim/</code> 仍不得出现 <code>visual_day_phase</code>（CK14 守门）。</p>
+<h3 id="5-5-7-春节假期的时间结构-哪几天放慢-2026-11-17-补">5.5.7 春节假期的时间结构：哪几天放慢（2026-11-17 补）</h3>
+<blockquote>用户：「大年初五商店都开始上班了，初六初七基本上都开始返工，还有元宵节这些时间该怎么处理？」</blockquote>
+<h4 id="判据只有一条">⭐ 判据只有一条</h4>
+<blockquote><strong>放慢 = 有观赏内容的日子；正常 = 玩家要做事的日子。</strong></blockquote>
+<p>按这条排下来：</p>
+<div class="tw"><table><thead><tr><th>日期</th><th>真实习俗</th><th><strong>时长</strong></th><th>内容</th><th>为什么这么定</th></tr></thead><tbody><tr><td><strong>除夕</strong></td><td>团圆饭、守岁、烟花</td><td><strong>24 分钟</strong></td><td>夜间 10 min 烟花</td><td>全年最重要，必须有夜晚</td></tr><tr><td><strong>初一</strong></td><td>拜年、炮仗、舞狮</td><td><strong>24 分钟</strong></td><td>早晨炮仗、白天舞狮</td><td>白天活动为主，需要"完整一天"</td></tr><tr><td>初二</td><td>回娘家</td><td><strong>3 秒（正常）</strong></td><td>—</td><td>走亲戚，<strong>没有可看的东西</strong></td></tr><tr><td>初三</td><td>赤狗日（不宜出门）</td><td><strong>3 秒</strong></td><td>—</td><td>现代已淡化，无内容</td></tr><tr><td>初四</td><td>迎灶神</td><td><strong>3 秒</strong></td><td>—</td><td>同上</td></tr><tr><td><strong>初五</strong></td><td><strong>破五、商店开市、放炮"崩穷"</strong></td><td><strong>12 分钟（半长）</strong></td><td>早晨炮仗、商铺开门</td><td>⭐ <strong>年味的收尾</strong>，半天足够</td></tr><tr><td><strong>初六</strong></td><td><strong>返工开始</strong></td><td><strong>3 秒</strong></td><td>—</td><td><strong>玩家要应对拥堵，不是看风景</strong></td></tr><tr><td>初七</td><td>返程高峰</td><td><strong>3 秒</strong></td><td>—</td><td>同上，交通压力峰值</td></tr><tr><td><strong>元宵（十五）</strong></td><td>灯会、舞龙、烟花</td><td><strong>24 分钟</strong></td><td>夜间烟花、灯会</td><td><strong>春节的句号</strong>，要完整的一天</td></tr></tbody></table></div>
+<p>⚠ <strong>初五用 12 分钟（半天）而不是 24 分钟，是刻意的</strong>： 它象征"<strong>年过了一半、该收心了</strong>"。三段节奏变成 <strong>长短——长短</strong>，比全都一样长有层次。</p>
+<p>⚠ <strong>初六初七必须正常速度</strong>：这两天是<strong>返程高峰</strong>（F21 春运节后 25 天里的真正尖峰）。 玩家这时候要做的是"提前疏导道路"，<strong>不是看风景</strong>。 ⇒ <strong>放慢会剥夺玩家的应对时间</strong>，所以恰恰不能慢。</p>
+<h4 id="5-5-7-1-总时长问题-一年-84-分钟-400-年就是-560-小时">5.5.7.1 ⚠ 总时长问题：一年 84 分钟，400 年就是 560 小时</h4>
+<div class="tw"><table><thead><tr><th>档位（设置里可选，随时可改）</th><th>放慢哪些</th><th>一年时长</th></tr></thead><tbody><tr><td><strong>全沉浸</strong></td><td>除夕 + 初一 + 初五 + 元宵</td><td><strong>84 分钟（1.4 小时）</strong></td></tr><tr><td><strong>标准（默认）</strong></td><td>除夕 + 元宵</td><td><strong>48 分钟（0.8 小时）</strong></td></tr><tr><td><strong>极简</strong></td><td>都不放慢，全用相位钳制（§5.5.6）</td><td><strong>0</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>默认"标准"而不是"全沉浸"</strong>：<code>48 分钟 × 100 游戏年 = 80 小时纯观赏</code>， 对长期档玩家太多了。<strong>默认要保守，玩家自己加码。</strong></p>
+<p>⚠ <strong>改设置不影响存档数值</strong>（<code>sim_day</code> 与结算逻辑与档位无关，见 CK13）。</p>
+<p>⚠ <strong>第一次遇到春节时，给一次性的说明</strong>：「节日可以放慢时间慢慢看，也可以跳过。当前：标准。」</p>
+<h3 id="5-5-8-返工高峰-初六-初七-的机制-正好相反">5.5.8 返工高峰（初六–初七）的机制：正好相反</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>处理</th></tr></thead><tbody><tr><td>速度</td><td><strong>正常 3 秒/日</strong>（不放慢）</td></tr><tr><td>交通</td><td><strong>全年最堵的两天之一</strong>（节后返程峰值）</td></tr><tr><td>玩家该做什么</td><td>提前加宽枢纽周边道路、开临时公交</td></tr><tr><td>提示</td><td>只发"重要"级通知，不弹窗（<code>13-player-loop</code> §十二）</td></tr></tbody></table></div>
+<p>⚠ <strong>这是一次"考试"而不是"演出"</strong>： 节日放慢是让玩家欣赏，返工高峰是让玩家<strong>承受自己前期规划的后果</strong>。 两者交替出现，节奏才对。</p>
+<h3 id="5-5-9-验收点">5.5.9 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>CK10</strong></td><td><strong>体验模式</strong>下除夕当日 <code>sim_day</code> 只 +1，但真实耗时 <strong>≈ 24 分钟</strong></td><td>探针计时</td></tr><tr><td><strong>CK11</strong></td><td>体验模式下，4 时段长度比为 <strong>3:8:3:10</strong>，且与昼夜相位对齐</td><td>探针采样</td></tr><tr><td><strong>CK12</strong></td><td><strong>跳过模式</strong>下相位钳制生效，除夕必为夜晚</td><td>探针遍历 20 年</td></tr><tr><td><strong>CK13</strong></td><td><strong><code>sim_day</code> 数值结果与是否跳过无关</strong>：两种模式跑 10 年，人口/财政/评级一致</td><td>探针两支对照</td></tr><tr><td><strong>CK14</strong></td><td><code>sim/</code> 目录仍无 <code>visual_day_phase</code> 引用</td><td><code>check_contract</code></td></tr><tr><td><strong>CK15</strong></td><td>读档后相位按 <code>sim_day</code> 重算，与存档前一致</td><td>探针比对</td></tr><tr><td><strong>CK16</strong></td><td>节日自动延长<strong>默认开启</strong>，且首次进入有提示与"跳过"按钮</td><td>手动</td></tr><tr><td><strong>CK17</strong></td><td><strong>初六/初七不放慢</strong>（仍 3 秒/日），且该两日返程交通压力<strong>为全年峰值</strong></td><td>探针计时 + 流量</td></tr><tr><td><strong>CK18</strong></td><td>初五放慢 <strong>12 分钟</strong>（半天），与除夕/元宵的 24 分钟<strong>可区分</strong></td><td>探针计时</td></tr><tr><td><strong>CK19</strong></td><td>三档沉浸设置<strong>切换后不改变任何数值结果</strong></td><td>探针三档对照</td></tr></tbody></table></div>
+<p>⚠ <strong>CK12 是本节最重要的</strong>：<strong>如果"体验"和"跳过"跑出不同结果，这个设计就成了"用观感换数值"</strong>， 玩家会为了效率跳过所有节日——那节日 DLC 就白做了。 ⚠ <strong>CK13 是守门人</strong>：红了说明有人为过节把相位塞进了 sim，破 R13。</p>
+<hr>
+<h2 id="六-各层边界的职责">六、各层边界的职责</h2>
+<div class="tw"><table><thead><tr><th>边界</th><th>频率（1x）</th><th>触发什么</th><th>归属系统</th></tr></thead><tbody><tr><td><strong>每 tick</strong></td><td>每帧</td><td>车辆推进、拥堵度累加</td><td><code>traffic</code></td></tr><tr><td><strong>日</strong></td><td>3 s</td><td>建筑生长/升级/废弃、拥堵日汇总、节假日乘子切换、施工进度</td><td><code>zoning</code> / <code>clock</code></td></tr><tr><td><strong>周</strong></td><td>21 s</td><td>统计快照、服务覆盖轻量重算</td><td><code>core</code> / <code>services</code></td></tr><tr><td><strong>月</strong></td><td>84–93 s</td><td>迁入迁出、岗位匹配、学区评分、<strong>月度财政结算</strong>、<strong>OD 矩阵 + 4 时段流量分配</strong></td><td><code>population</code> <code>employment</code> <code>services</code> <code>finance</code> <code>traffic</code></td></tr><tr><td><strong>季度</strong></td><td>≈ 4.6 min</td><td>地价重估、季度报表、政策窗口（限购/限贷）</td><td><code>finance</code></td></tr><tr><td><strong>年</strong></td><td>≈ 18.3 min</td><td>年度财政结算、人口普查、<strong>行政层级判定（只升不降）+ 发展评级重算（可升可降）</strong>、春运排期、KPI</td><td><code>core</code> / <code>finance</code></td></tr></tbody></table></div>
+<p><strong>三条纪律</strong>：</p>
+<ol><li>低频系统<strong>不得自己攒 delta 判断边界</strong>，必须读 <code>clock.month_changed</code> / <code>year_changed</code>。</li><li>同一边界内按宪法 §三 顺序：<code>road → utility → zoning → population → employment → services → finance → traffic</code></li></ol>
+<p>   （<strong>8 个系统，<code>utility</code> 在 <code>zoning</code> 之前</strong>——市政容量决定地块能不能生长，见 R15）。</p>
+<ol><li><code>*_changed</code> 是<strong>当帧为真的布尔</strong>，不是累加器；系统读完不回写。</li><li><strong>读 Tick 顺序之后的系统，一律读上月值并标 <code>stale</code></strong>（R24；细则见 <code>system-boundaries</code> §四·五）。</li></ol>
+<hr>
+<h2 id="七-数据契约">七、数据契约</h2>
+<h3 id="7-1-clock-结构-scripts-core-clock-cs-r19-core-为-c">7.1 Clock 结构（scripts/core/clock.cs，R19：core/ 为 C#）</h3>
+<div class="tw"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>tick</code></td><td><code>u64</code></td><td>秒级 tick，存档只读</td></tr><tr><td><code>sim_day</code></td><td><code>u32</code></td><td>自开局天数，<strong>一切时间的根</strong></td></tr><tr><td><code>epoch_year</code></td><td><code>u16</code></td><td>开局现实年份，默认 2026</td></tr><tr><td><code>year</code> / <code>quarter</code> / <code>month</code> / <code>day_of_month</code> / <code>day_of_week</code></td><td><code>u16</code></td><td>由 <code>sim_day</code> 派生，<strong>不存</strong></td></tr><tr><td><code>lunar_month</code> / <code>lunar_day</code> / <code>is_leap_month</code></td><td><code>u8</code></td><td>由农历函数派生，<strong>不存</strong></td></tr><tr><td><code>speed</code></td><td><code>u8</code></td><td><strong>只有 1 / 3 两档</strong>（无 2x，见 <code>13-player-loop</code> §二）</td></tr><tr><td><code>paused</code></td><td><code>bool</code></td><td>—</td></tr><tr><td><code>visual_day_phase</code></td><td><code>float</code></td><td>0–1，<strong>仅表现层可读</strong>，不入存档</td></tr><tr><td><code>time_slot</code></td><td><code>u8</code></td><td>0–3，由 <code>visual_day_phase</code> 派生，<strong>仅表现与 traffic 采样用</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>只有 <code>sim_day</code> / <code>epoch_year</code> / <code>speed</code> 进存档</strong>，其余全可重算（A9 的前提）。</p>
+<h3 id="7-2-bus-key">7.2 bus key</h3>
+<div class="tw"><table><thead><tr><th>key</th><th>类型</th><th>读者</th></tr></thead><tbody><tr><td><code>clock.sim_day</code></td><td><code>u32</code></td><td>全部系统</td></tr><tr><td><code>clock.day_changed</code> / <code>month_changed</code> / <code>quarter_changed</code> / <code>year_changed</code></td><td><code>bool</code></td><td>对应频率系统</td></tr><tr><td><code>clock.is_holiday</code> / <code>clock.holiday_name</code></td><td><code>bool</code> / <code>StringName</code></td><td><code>traffic</code> <code>finance</code> <code>services</code></td></tr><tr><td><code>clock.season</code></td><td><code>u8</code></td><td><strong>预留</strong>（DLC1），基础版恒 0</td></tr><tr><td><code>clock.visual_day_phase</code> / <code>clock.time_slot</code></td><td><code>float</code> / <code>u8</code></td><td><strong>仅 <code>scripts/view/</code></strong>（<code>sim/</code> 只允许 <code>traffic</code> 读 <code>time_slot</code> 做采样）</td></tr></tbody></table></div>
+<p>⚠ 视觉相关 key <strong>故意放在同一个 bus 上</strong>，让 <code>check_contract.gd</code> 能扫到 <code>sim/</code> 的误用。 放两个地方就查不出来了。</p>
+<h3 id="7-3-config-config-sim-time-json">7.3 config（config/sim/time.json）</h3>
+<pre class="code" data-lang="json"><code>{
+  "seconds_per_day_at_1x": 3.0,
+  "days_per_year": 365,
+  "leap_year": true,
+  "visual_day_seconds_at_1x": 1440,
+  "epoch_year": 2026,
+  "lunar_table_range": [1900, 2200],
+  "time_slots": [["06:00","09:00"],["09:00","17:00"],["17:00","20:00"],["20:00","06:00"]]
+}</code></pre>
+<p>⚠ <code>3.0</code> 与 <code>1440</code> 的比例固定 <strong>1:480</strong>，改一个必须改另一个，脚本里加断言。</p>
+<h3 id="7-4-已实现接口-2026-11-22-与代码对齐">7.4 已实现接口（2026-11-22 与代码对齐）</h3>
+<blockquote>只写"有什么字段"不够，还要写"代码里叫什么"——否则下一批会重造一套。<br>代码：<code>scripts/core/*.cs</code>；断言：<code>bench/coretest</code>（10 组 138 条，<code>dotnet run --project bench/coretest</code>）。</blockquote>
+<div class="tw"><table><thead><tr><th>文档概念</th><th>代码</th><th>签名 / 要点</th></tr></thead><tbody><tr><td>模拟 + 视觉时钟</td><td><code>Core.Clock</code></td><td><code>Advance(double dtRealSeconds) → int daysCrossed</code>；<code>Paused</code>；<code>Speed</code>(1/3)</td></tr><tr><td>固定步进钩子</td><td><code>Clock.OnSecond</code> / <code>Clock.OnDay</code></td><td>秒级系统挂这里 ⇒ <strong>帧率无关</strong>（CK8 已证）</td></tr><tr><td>四个边界</td><td><code>Clock.DayChanged/MonthChanged/QuarterChanged/YearChanged</code></td><td><strong>每天开头清、当天内保持</strong>；系统不许自己攒 delta</td></tr><tr><td>派生日历</td><td><code>Clock.Year/Month/DayOfMonth/DaysThisMonth</code></td><td>现算，不入存档</td></tr><tr><td>节日/时段</td><td><code>Clock.TimeSlot</code>（0–3）、<code>Clock.SlotOfPhase(phase)</code></td><td>由视觉相位派生</td></tr><tr><td>农历</td><td><code>Core.LunarCalendar</code></td><td><code>LoadFromFile</code> / <code>TryToLunar</code> / <code>TryToSolar</code> / <code>TryGetFestival</code>（五大节日+除夕）</td></tr><tr><td>值总线</td><td><code>Bus.Publish(key, value, simDay, writer)</code></td><td>写入日用于滞后读</td></tr><tr><td><strong>滞后读（R24）</strong></td><td><code>Bus.TryGetLagged&amp;lt;T&amp;gt;(key, today, out v, out writtenDay)</code></td><td>只接受 <code>WrittenDay &amp;lt; today</code></td></tr><tr><td>缺数据判定</td><td><code>Bus.IsStale(key, today, maxAgeDays = 31)</code></td><td>对应 §四·五 的 <code>stale</code></td></tr><tr><td>调度</td><td><code>Core.Sim</code></td><td><code>Register(ISimSystem)</code>（名字必须在宪法 8 个里）/ <code>Step(dt)</code> / <code>RaiseEvent(name)</code></td></tr><tr><td><strong>月度摊平</strong></td><td><code>Sim.OnMonthWorkSlice(dayInMonth, daysInMonth)</code></td><td>每天调一次，系统自己干 1/30（不许月边界一次算完）</td></tr><tr><td>系统接口</td><td><code>ISimSystem</code></td><td><code>Name</code> / <code>Cadence</code> / <code>Step(SimContext)</code>；<code>SimContext</code> 带 Clock/Bus/年/月/日</td></tr><tr><td>存档</td><td><code>Core.SaveGame</code></td><td><code>FORMAT_VERSION = 3</code>；<code>Register(ISaveable)</code>；原子写 + <code>.bak</code>；高版本拒绝</td></tr><tr><td>断言</td><td><code>Core.Check</code> / <code>CheckSuite</code></td><td><code>AreEqual/Approx/Greater/InRange/True</code>；<code>Report()</code> 返回 0 = 全绿</td></tr></tbody></table></div>
+<p>⚠ <strong><code>road</code> 的 <code>ISimSystem</code> 在 <code>road_graph.cs</code></strong>（<code>RoadSystem</code>，<code>Cadence=Event</code>）——因为 <code>road/</code> 只有 3 个文件，没有 <code>*_system</code>。</p>
+<hr>
+<h2 id="八-验收点">八、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>CK1</strong></td><td>1x 跑 60 秒，<code>sim_day</code> 增量 <strong>20 ± 1</strong></td><td><code>probe_tick</code></td></tr><tr><td><strong>CK2</strong></td><td><code>grep -r "visual_day_phase" scripts/sim/</code> <strong>无输出</strong></td><td><code>check_contract.gd</code></td></tr><tr><td><strong>CK3</strong></td><td>月边界在一游戏月内<strong>只触发一次</strong></td><td>探针累计 = 1</td></tr><tr><td><strong>CK4</strong></td><td>年边界触发时执行里程碑判定，且等级只升不降（除失败条件）</td><td>探针 + 日志</td></tr><tr><td><strong>CK5</strong></td><td>农历换算：抽 12 个已知日期（含闰月年）公历↔农历双向一致</td><td>探针打印</td></tr><tr><td><strong>CK6</strong></td><td>闰年：2028-02-29 存在，2100-02-29 <strong>不存在</strong>（整百年不闰）</td><td>探针</td></tr><tr><td><strong>CK7</strong></td><td>存档→读档后 <code>sim_day</code> / <code>epoch_year</code> / <code>speed</code> 一致；视觉相位重置为 0.5</td><td>探针</td></tr><tr><td><strong>CK8</strong></td><td>30 / 60 / 144 fps 下 <code>sim_day</code> 推进速度一致</td><td>三档各跑 30 秒比对</td></tr><tr><td><strong>CK9</strong></td><td>4 个时段的流量表<strong>互不相同</strong>，且早/晚高峰总量 &gt; 平峰 &gt; 夜间</td><td>探针打印 4 组和</td></tr></tbody></table></div>
+<p>⚠ <strong>CK8 最关键</strong>：它保证宪法 L4 真做到了。不过关说明有系统在 <code>_process</code> 里偷算， 高刷屏玩家的一年会比 60Hz 玩家短。</p>
+<p>⚠ <strong>CK9 是"早晚高峰真的存在"的唯一证据</strong>。四条曲线如果一模一样，说明时段系数没生效。</p>
+<hr>
+<h2 id="九-待定">九、待定</h2>
+<ol><li><strong>400 年长期档的存档体积</strong>：400 年 × 365 日的统计曲线无法全存，需要降采样策略（待 B4）</li><li><strong>2200 年后的农历近似</strong>误差是否可接受（建议接受，只影响节日日期）</li><li><del><strong>调休（挪周末）</strong>是否要做</del> → <strong>已定：做</strong>（<code>12-china-features</code> F38，本体 B4）。</li></ol>
+<p>   它会让某些周出现"连续上班 7 天"，通勤曲线异常，是很强的中国特征</p>
+<ol><li><strong><code>epoch_year</code> 是否让玩家选开局年代</strong>（2026 / 1990 / 1980）—— 会影响 <code>built_year</code> 与规范谱系（R4）</li><li><strong>高考 / 中考</strong>（<code>12-china-features</code> F37）要不要单列成"事件"类型（区别于节假日）——</li></ol>
+<p>   它有独立效果（工地停工 + 禁鸣 + 考点交通管制），建议单列</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-21（R31）</strong>：⚠ <strong>本篇断言前缀统一为 <code>CK</code></strong>（原 <code>T*</code>）——<code>T</code> 与 <code>04</code> 人口/<code>01</code> 门槛的旧前缀易混。</li></ul>
+<p>  <code>CK1–CK9</code> 为主表，<code>CK10–CK19</code> 为节日章。下方历史记录里的 <code>T<em></code> 是当时的写法，已按同号映射为 <code>CK</em></code>。</p>
+<ul><li><strong>2026-11-18（补）</strong>：⚠ <strong>断言编号重编</strong>——节日章节原用 CK9–CK18，与主验收表的 CK9（时段流量）撞号。</li></ul>
+<p>  现重编为 CK10–CK19，主表 CK1–CK9 不变。</p>
+<ul><li><strong>2026-11-17（三）</strong>：新增 <strong>§5.5.7 春节假期时间结构</strong> 与 <strong>§5.5.8 返工高峰</strong>。</li></ul>
+<p>  依据用户「初五商店开始上班、初六初七开始返工、元宵怎么处理」：   ⭐ 定下唯一判据「<strong>放慢 = 有观赏内容；正常 = 玩家要做事</strong>」——   除夕 24 min / 初一 24 min / <strong>初五 12 min（半天，"年过了一半"）</strong> / 元宵 24 min；   <strong>初二–初四、初六–初七正常 3 秒</strong>。   ⚠ <strong>初六初七恰恰不能慢</strong>：那是节后返程尖峰，玩家要应对拥堵而不是看风景。   ⚠ <strong>总时长问题</strong>：全沉浸 84 min/年 × 400 年 = 560 小时 ⇒ 设三档（默认"标准" 48 min）。   新增 CK16–CK18 三条断言。</p>
+<ul><li><strong>2026-11-17（二）</strong>：<strong>§五·五 主方案改为用户提出的"节日日 = 24 分钟"</strong>。</li></ul>
+<p>  ⭐ 关键：<code>sim_day</code> 仍只 +1（城市不长新楼，与 F24 春节停工自洽），   但<strong>真实耗时 24 分钟</strong>，且 <strong>1 日 = 1 昼夜</strong> ⇒ <strong>"Agent 速度不变"实际是从 480 倍快进切到 1:1 实时</strong>   （平时车 3 秒跑完 30 km 是快进，节日 24 分钟跑完是 72 km/h 真实速度）。   三个意外好处：<strong>4 时段与昼夜完美对齐</strong>（3:8:3:10 = 24 分钟，早高峰真在早晨、夜间真在夜里）、   <strong>节日不再需要钳制相位</strong>、<strong>玩家真的在城里过了一天</strong>。   三个连带问题：日级结算仍按 1 日 / <strong>体验与跳过必须数值一致（CK12）</strong> / 必须提示且可跳过。   原相位钳制降级为"跳过模式"备选（§5.5.6）。新增 CK9–CK15 七条断言。</p>
+<ul><li><strong>2026-11-17</strong>：新增 <strong>§五·五 节日 vs 昼夜</strong>。依据用户指出的真冲突：</li></ul>
+<p>  <strong>1 昼夜 : 480 游戏日</strong>，春节 7 日只占昼夜周期的 <strong>1.46 %</strong> ——   <strong>若那 21 秒相位正好在白天，整个春节都是白天，永远等不到夜晚放烟花。</strong>   解法：<strong>相位由节日驱动，但仍在 <code>view</code> 层</strong>（R13 禁的是"sim 读相位"，   不是"view 不能自己定相位"）；给出<strong>相位规则表</strong>（除夕/元宵/中秋锁夜晚、清明加灰调）、   <strong>"春节前 1 日加速日落"</strong>（天暗得越来越早 = 最好的过年提示）、   节日自动降速到 1x（默认开但不强制）。新增 CK9–CK13 五条断言，   <strong>CK13 守门</strong>：<code>sim/</code> 仍不得出现 <code>visual_day_phase</code>。</p>
+<ul><li><strong>2026-11-15（三）</strong>：<strong>§3.2 改为双轨</strong>（用户：「里程碑不要像 CS 那样按人口来，</li></ul>
+<p>  印度人口那么多也不见得过得很好」）。轨一行政层级（人口驱动，只升不降，<strong>不代表好坏</strong>）+   轨二发展评级（多维人均指标，<strong>可升可降</strong>）。同步 §六 年边界职责。</p>
+<ul><li><strong>2026-11-15（二）</strong>：<strong>按用户四点反馈重写</strong>（<code>decisions.md</code> R14）：</li></ul>
+<p>  ① 年改回<strong>现实 365/366 日</strong>（废 360 日），月用现实天数，闰年规则明确；   ② 农历改为<strong>完整算法</strong>（编码表 + 换算函数，覆盖 1900–2200），不再只查春节；   ③ 一局改为<strong>里程碑 + 长期档</strong>（单次 2 小时 / 完整档 400 年 ≈ 122 h）；   ④ 新增 <strong>§五 日内时段</strong>：4 段离散时段 + 时段系数法，解决早晚高峰与上学放学；   ⑤ 新增铁律「UI 永不显示时:分」。</p>
+<ul><li><strong>2026-11-15</strong>：首版（AI 起草，待开发者拍板）。依据 R13 建立两个时钟的分离与四条铁律。</li></ul><div class="pager"><a href="design-08-traffic.html">← 08 · 交通流：三层模型、时段系数、分层路网、LOD</a><a href="design-10-presentation.html">10 · 表现层：视觉基准、资产管线、UI 与音效 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#二-三个时间概念-互相之间不许混">二、三个时间概念，互相之间不许混</a><a class="l2" href="#三-时间分层-现实日历-1x-基准">三、时间分层（现实日历，1x 基准）</a><a class="l3" href="#3-1-时间预算-一局能跑多久">3.1 时间预算：一局能跑多久</a><a class="l3" href="#3-2-年边界判定-双轨-不是一条人口线">3.2 年边界判定：双轨，不是一条人口线</a><a class="l2" href="#四-日历-公历-完整农历">四、日历：公历 + 完整农历</a><a class="l3" href="#4-1-公历">4.1 公历</a><a class="l3" href="#4-2-农历-做完整算法-不只查春节">4.2 农历：做完整算法，不只查春节</a><a class="l3" href="#4-3-节假日的来源">4.3 节假日的来源</a><a class="l2" href="#五-日内时段-早晚高峰的唯一可行解法">五、日内时段：早晚高峰的唯一可行解法</a><a class="l3" href="#5-1-问题">5.1 问题</a><a class="l3" href="#5-2-解法-把-一天-切成-4-个离散时段-但不占真实时间">5.2 解法：把"一天"切成 4 个离散时段，但不占真实时间</a><a class="l3" href="#5-3-画面怎么和数值对上">5.3 画面怎么和数值对上</a><a class="l2" href="#五-五-节日-vs-昼夜-让时间临时慢下来-2026-11-17">五·五、节日 vs 昼夜：让时间临时慢下来（2026-11-17）</a><a class="l3" href="#5-5-1-先把失配算清楚">5.5.1 先把失配算清楚</a><a class="l3" href="#5-5-2-主方案-用户提出-节日那一天-游戏日-临时变成-24-分钟">5.5.2 ⭐ 主方案（用户提出）：节日那一天，"游戏日"临时变成 24 分钟</a><a class="l3" href="#5-5-3-三个意外的好处">5.5.3 三个意外的好处</a><a class="l3" href="#5-5-4-三个必须处理的连带问题">5.5.4 ⚠ 三个必须处理的连带问题</a><a class="l3" href="#5-5-5-沉浸内容-这-24-分钟里玩家看什么">5.5.5 沉浸内容：这 24 分钟里玩家看什么</a><a class="l3" href="#5-5-6-备选-跳过时用-相位钳制-原方案-降级保留">5.5.6 备选：跳过时用"相位钳制"（原方案，降级保留）</a><a class="l3" href="#5-5-7-春节假期的时间结构-哪几天放慢-2026-11-17-补">5.5.7 春节假期的时间结构：哪几天放慢（2026-11-17 补）</a><a class="l4" href="#判据只有一条">⭐ 判据只有一条</a><a class="l4" href="#5-5-7-1-总时长问题-一年-84-分钟-400-年就是-560-小时">5.5.7.1 ⚠ 总时长问题：一年 84 分钟，400 年就是 560 小时</a><a class="l3" href="#5-5-8-返工高峰-初六-初七-的机制-正好相反">5.5.8 返工高峰（初六–初七）的机制：正好相反</a><a class="l3" href="#5-5-9-验收点">5.5.9 验收点</a><a class="l2" href="#六-各层边界的职责">六、各层边界的职责</a><a class="l2" href="#七-数据契约">七、数据契约</a><a class="l3" href="#7-1-clock-结构-scripts-core-clock-cs-r19-core-为-c">7.1 Clock 结构（scripts/core/clock.cs，R19：core/</a><a class="l3" href="#7-2-bus-key">7.2 bus key</a><a class="l3" href="#7-3-config-config-sim-time-json">7.3 config（config/sim/time.json）</a><a class="l3" href="#7-4-已实现接口-2026-11-22-与代码对齐">7.4 已实现接口（2026-11-22 与代码对齐）</a><a class="l2" href="#八-验收点">八、验收点</a><a class="l2" href="#九-待定">九、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

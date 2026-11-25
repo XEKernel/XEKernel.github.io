@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10 · 表现层：视觉基准、资产管线、UI 与音效 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" class="on" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="10-表现层-视觉基准-资产管线-ui-与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</h1>
+<blockquote>依据：<code>decisions.md</code> <strong>R3</strong>（自建资产管线，不用 CS1 资产）与 <strong>R4</strong>（形态按国标，分年代与行政层级）。<br>本篇只管「看起来是什么样、模型怎么进来」，不管「数值怎么算」。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#一五启动流程与品牌呈现2026-11-17-新增">一·五、启动流程与品牌呈现（2026-11-17 新增）</a></li><li><a href="#二视觉基准先有靶子再谈建模">二、视觉基准：先有靶子，再谈建模</a></li><li><a href="#三资产管线建模-agent-交接契约">三、资产管线：建模 Agent 交接契约</a></li><li><a href="#四视觉规范已拍板部分">四、视觉规范（已拍板部分）</a></li><li><a href="#四五模块化组装不做-22-个完整建筑做一套模块r17">四·五、模块化组装：不做 22 个完整建筑，做一套模块（R17）</a></li><li><a href="#五建筑谱系archetype先覆盖村庄再往上长">五、建筑谱系（archetype）：先覆盖村庄，再往上长</a></li><li><a href="#六ui数据驱动--mod-友好">六、UI：数据驱动 + Mod 友好</a></li><li><a href="#六五施工阶段的视觉03-zoning-363">六·五、施工阶段的视觉（<code>03-zoning</code> §3.6.3）</a></li><li><a href="#六六放学小吃摊与补课学生街头的活气2026-11-18">六·六、放学小吃摊与补课学生：街头的"活气"（2026-11-18）</a></li><li><a href="#七音频五条总线--分层">七、音频：五条总线 + 分层</a></li><li><a href="#七五电影相机与拍摄模式2026-11-17-新增">七·五、电影相机与拍摄模式（2026-11-17 新增）</a></li><li><a href="#八数据契约">八、数据契约</a></li><li><a href="#九验收点">九、验收点</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td>视觉基准与识别元素清单</td><td>建筑生成规则（在 <code>03-zoning.md</code>）</td></tr><tr><td><strong>资产生产管线</strong>（建模 Agent 的输入输出契约）</td><td>规模与性能预算（在 <code>11-scale.md</code>）</td></tr><tr><td>LOD 分档、图集规则、命名规范</td><td>地价/经济公式（在 <code>06-finance-land.md</code>）</td></tr><tr><td>UI 版式、配色、字体规则</td><td>音效素材采购</td></tr></tbody></table></div>
+<hr>
+<h2 id="一-五-启动流程与品牌呈现-2026-11-17-新增">一·五、启动流程与品牌呈现（2026-11-17 新增）</h2>
+<blockquote>用户：「我后面肯定得需要找人帮忙，比如采集环境音、美术素材等，<br>得先搞一个工作室名字，游戏启动还能看到的。」</blockquote>
+<h3 id="1-5-1-启动顺序-四屏-可跳过">1.5.1 启动顺序（四屏，可跳过）</h3>
+<pre class="code"><code>引擎 splash（Godot，0.5 秒，可关）
+   ↓
+工作室 Logo（3–4 秒）        ← 本节重点
+   ↓
+发行方 / 合作方 Logo（如有，2–3 秒）
+   ↓
+主菜单</code></pre>
+<div class="tw"><table><thead><tr><th>规则</th><th>说明</th></tr></thead><tbody><tr><td><strong>任意键跳过</strong></td><td>从工作室 Logo 开始就能跳</td></tr><tr><td><strong>总时长 ≤ 7 秒</strong></td><td>超过就烦人（CS 的启动也被吐槽过）</td></tr><tr><td><strong>首次启动可稍长</strong>，之后记忆跳过</td><td>玩家第二次开游戏不该再看 7 秒</td></tr><tr><td>⚠ <strong>不做不可跳过的长动画</strong></td><td>这是玩家最讨厌的设计之一</td></tr></tbody></table></div>
+<h3 id="1-5-2-工作室-logo-的技术规格">1.5.2 工作室 Logo 的技术规格</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>要求</th></tr></thead><tbody><tr><td>格式</td><td><strong>矢量源文件（SVG）+ 导出 PNG</strong>，不要只有位图</td></tr><tr><td>尺寸</td><td>至少 <strong>2048 × 2048</strong> 导出，可缩到任意大小</td></tr><tr><td>背景</td><td><strong>暗底与亮底各一版</strong>（启动画面是暗底，商店页要亮底）</td></tr><tr><td>动画</td><td><strong>可选</strong>，静止 Logo + 淡入就够；不做复杂动效</td></tr><tr><td>文件</td><td><code>assets/brand/studio_logo_{dark,light}.png</code></td></tr></tbody></table></div>
+<p>⚠ <strong>必须有矢量源</strong>：以后要印周边、做 Steam 页横幅、做视频水印， 一堆尺寸都用得上。<strong>只存 PNG 会返工。</strong></p>
+<h3 id="1-5-3-署名-credits-的呈现">1.5.3 署名（Credits）的呈现</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>内容</th></tr></thead><tbody><tr><td>主菜单 → 关于</td><td>完整 Credits（可滚动）</td></tr><tr><td>启动时</td><td><strong>不显示完整 Credits</strong>（太长，没人看）</td></tr><tr><td>游戏内</td><td>不显示</td></tr><tr><td><strong>Steam 商店页</strong></td><td>单独列"制作团队"与"特别鸣谢"</td></tr></tbody></table></div>
+<p>⚠ <strong>外部协作者必须署名</strong>，且<strong>按授权协议约定</strong>（见 <code>../credits-and-outsourcing.md</code>）。 ⚠ <strong>署名顺序与措辞要提前谈好</strong>：发售后改 Credits 要重新打包，还可能得罪人。</p>
+<h3 id="1-5-4-什么时候需要这个">1.5.4 什么时候需要这个</h3>
+<div class="tw"><table><thead><tr><th>阶段</th><th>需要什么</th></tr></thead><tbody><tr><td>B1 骨架</td><td><strong>不需要</strong>（先用占位图）</td></tr><tr><td>B7 手感</td><td><strong>需要</strong>（启动流程要能跑通）</td></tr><tr><td>上架前</td><td><strong>必须定稿</strong>（Logo、店招、署名全部）</td></tr></tbody></table></div>
+<p>⚠ <strong>Logo 可以晚做，但启动流程的代码位置要在 B1 留好</strong>—— 这和"自由相机必须进 B1"是同一个道理：<strong>表现层的插槽现在就挖，内容以后再填。</strong></p>
+<h3 id="1-5-5-主菜单背景跟随真实时间-2026-11-19-已实现">1.5.5 主菜单背景跟随真实时间（2026-11-19 已实现）</h3>
+<blockquote>用户：「开始页面的背景可以根据实时时间调节阳光位置，比如现在是晚上，<br>那么打开游戏时就是晚上的城市。」</blockquote>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>时间源</td><td><code>Time.get_time_dict_from_system()</code>（本地时间）</td></tr><tr><td>太阳方位</td><td><strong>6 点东升 / 12 点最高 / 18 点西落</strong>，高度角按 <code>sin</code> 曲线</td></tr><tr><td>⚠ 高度封顶</td><td><strong>56°</strong>。正午垂直光会把画面照平、失去明暗，斜射才有"城市感"</td></tr><tr><td>天色</td><td>10 个关键帧插值（夜 / 黎明 / 上午 / 正午 / 下午 / 黄昏 / 入夜）</td></tr><tr><td>夜间</td><td>楼窗按窗格随机点亮（约 32 % 灯率），亮窗在<strong>实例色 alpha</strong> 里做标记</td></tr><tr><td>测试</td><td><code>--hour=21.5</code> 覆盖当前时间（截图与宣传片用，见 §七·五）</td></tr></tbody></table></div>
+<p>⚠ <strong>三条实测教训（都会让画面变丑，记下来）</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>坑</th><th>正确做法</th></tr></thead><tbody><tr><td>1</td><td><strong>实例颜色是按 linear 传进自定义 shader 的</strong></td><td>调色板要 <code>.srgb_to_linear()</code>，否则整体发白、屋顶过曝</td></tr><tr><td>2</td><td><strong>不开阴影时，垂直面只收到天光 → 楼群一片蓝</strong></td><td>必须开 <code>DirectionalLight3D.shadow_enabled</code></td></tr><tr><td>3</td><td><strong>曝光白点要随时间变</strong>（白天 1.15 / 夜里 2.0）</td><td>固定 2.0 会让白天发闷，固定 1.15 会让夜景刺眼</td></tr></tbody></table></div>
+<p>⚠ <strong>面板"实度"要跟着环境调</strong>：夜里楼窗极亮、白天背景极亮， 玻璃面板必须能压暗背景（shader 里 <code>bg_dim</code>），否则按钮文字会被背景吃掉。 <strong>主菜单用 0.62，设置页用 1.0（几乎不透明）</strong>——小字多的页面不能透。</p>
+<hr>
+<h2 id="二-视觉基准-先有靶子-再谈建模">二、视觉基准：先有靶子，再谈建模</h2>
+<p>⚠ <strong>当前最大的缺口是"没有靶子"</strong>：<code>docs/reference/</code> 只有 CS1 规格，没有一张中国城市的图。 建模 Agent 如果没有参考，产出的必然是"想象中的中国"，而不是真实的中国。</p>
+<h3 id="2-1-采集清单-去现场时按这个拍">2.1 采集清单（去现场时按这个拍）</h3>
+<div class="tw"><table><thead><tr><th>组</th><th>拍什么</th><th>为什么</th></tr></thead><tbody><tr><td><strong>村庄</strong></td><td>独院农房（正面/侧面/俯视）、院墙与大门、村道、柴房/猪圈/晒场、水塘、祠堂</td><td>开局第一屏就是这个，做不像就全盘错</td></tr><tr><td><strong>镇</strong></td><td>沿街 3–5 层自建房、卷帘门商铺、招牌、菜市场、乡镇政府院</td><td>镇是"村到市"的中间态，最有辨识度</td></tr><tr><td><strong>县</strong></td><td>6 层砖混住宅排、老单位大院、县城主干道、汽车站</td><td>对应 R4 的县城限高规范</td></tr><tr><td><strong>市（老城）</strong></td><td>90 年代板楼阵列、窄巷、临街底商、骑楼/雨棚</td><td>老城肌理 = 低标准规范 + 不规则地块</td></tr><tr><td><strong>市（新区）</strong></td><td>30 层塔楼群、超大街区围墙、大门与门禁、地下车库入口、商业综合体</td><td>新区肌理 = 高标准规范 + 超大街区</td></tr><tr><td><strong>通用元素</strong></td><td>塔吊、店招、行道树、路灯、公交站牌、围墙、变电箱、晾衣杆、空调外机</td><td>"一眼中国"靠的是这些<strong>小东西</strong>，不是主楼</td></tr></tbody></table></div>
+<h3 id="2-2-采集纪律">2.2 采集纪律</h3>
+<ul><li><strong>只作参考，不入库</strong>：照片不进游戏、不做贴图（避版权与隐私）</li><li>每张照片记 <code>地点 / 年代 / 类型 / 拍摄日期</code>，存 <code>docs/reference/visual-targets/</code></li><li>建筑正面至少 1 张正视、1 张 45°，便于估比例</li></ul>
+<hr>
+<h2 id="三-资产管线-建模-agent-交接契约">三、资产管线：建模 Agent 交接契约</h2>
+<blockquote><strong>这一节是给建模 Agent 的「派活模板」</strong>，与 <code>docs/agents.md</code> §三 同级使用。<br>少了任何一条，产出的模型就进不了图集、合不了批。<br>📌 <strong>提示词怎么写、怎么保证不重样</strong> → 见 <strong><code>14-model-prompts.md</code></strong>（2026-11-23 新建）。<br>本篇管"交什么规格"，14 篇管"怎么描述出来"。<br>⚠ <strong>现有 46 个 AI 模型（2026-11-23 实测）暂时一个都不能直接进游戏</strong>：<br>一半没贴图；工业那批 22–26 MB（内嵌 32–39 张图，面数才 1.6–4.8 万）；<br>住宅那批 7–15 MB 且多为<strong>片区级</strong>（一个 glb 装整个小区，无法实例化）。<br>详见 <code>14-model-prompts.md</code> §一 —— <strong>能用的是"参考"和"配色"，不是资产本身。</strong></blockquote>
+<h3 id="3-1-输入-你给建模-agent-什么">3.1 输入（你给建模 Agent 什么）</h3>
+<pre class="code"><code>1. 参考图：docs/reference/visual-targets/&lt;类型&gt;/*.jpg（3–8 张，含正视图）
+2. 目标 archetype：见 §五 谱系表，必须指定代号
+3. 尺寸约束：占地面积、层数、层高（由 R4 的规范年代决定）
+4. 三角面预算：见 §3.3
+5. 输出路径：assets/models/buildings/&lt;archetype&gt;/</code></pre>
+<h3 id="3-2-输出规格-硬性-不满足直接退回">3.2 输出规格（硬性，不满足直接退回）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>要求</th></tr></thead><tbody><tr><td>格式</td><td><strong>glTF 2.0 / <code>.glb</code></strong>（Godot 原生支持，不引入 FBX 转换链）</td></tr><tr><td>单位</td><td><strong>米</strong>，1 unit = 1 m</td></tr><tr><td>坐标系</td><td>Godot 约定：<strong>+Y 向上，正面朝 −Z</strong></td></tr><tr><td>轴心点</td><td><strong>建筑底面中心</strong>（便于贴地，不用逐模型算偏移）</td></tr><tr><td>朝向</td><td>正面沿 −Z；行列式板楼长边沿 X</td></tr><tr><td>变换</td><td>导出前 apply all transforms，缩放必须为 1</td></tr><tr><td>材质</td><td><strong>每个模型最多 1 个材质</strong>，且贴图必须来自共享图集（§3.4）</td></tr><tr><td>命名</td><td><code>bld_&amp;lt;era&amp;gt;_&amp;lt;type&amp;gt;_&amp;lt;variant&amp;gt;.glb</code>，如 <code>bld_90s_slab_a.glb</code></td></tr><tr><td>授权</td><td>同目录附 <code>SOURCE.md</code>：自制 / 参考图出处 / 日期</td></tr></tbody></table></div>
+<h3 id="3-3-三角面预算-按-lod">3.3 三角面预算（按 LOD）</h3>
+<div class="tw"><table><thead><tr><th>LOD</th><th>距离</th><th>塔楼</th><th>板楼</th><th>独院农房</th><th>公共建筑</th></tr></thead><tbody><tr><td><strong>LOD0</strong></td><td>0–500 m</td><td>3,000–8,000</td><td>1,500–4,000</td><td>800–2,000</td><td>4,000–10,000</td></tr><tr><td><strong>LOD1</strong></td><td>0.5–2 km</td><td>400–1,200</td><td>300–900</td><td>200–500</td><td>800–2,000</td></tr><tr><td><strong>LOD2</strong></td><td>2–8 km</td><td>12–60</td><td>12–60</td><td>12–40</td><td>20–80</td></tr><tr><td><strong>LOD3</strong></td><td>&gt; 8 km</td><td>2–12</td><td>2–12</td><td>2–8</td><td>2–12</td></tr></tbody></table></div>
+<p>⚠ <strong>LOD3 不是"简化"，是"体块"</strong>。&gt;8 km 时玩家只看得见天际线轮廓， 这一档的模型就是一个带屋顶色差的盒子。<strong>不做 LOD3 的资产不许入库。</strong></p>
+<h3 id="3-4-图集规则-b3-就要定-不然-b5-必爆">3.4 图集规则（B3 就要定，不然 B5 必爆）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>图集数量</td><td><strong>≤ 2 张 4096²</strong>（建筑 / 车辆路面各一）</td></tr><tr><td>单模型 UV</td><td>必须落在图集内的矩形区，<strong>禁止跨图集</strong></td></tr><tr><td>材质数</td><td>全项目目标 ≤ 8 种</td></tr><tr><td>新增资产</td><td>先看图集有没有空位；没有就<strong>替换同类</strong>，不许新增图集</td></tr></tbody></table></div>
+<p>⚠ <strong>26 个</strong> archetype 各一张 2048² 贴图 ≈ 400 MB 显存。 <strong>图集不是优化手段，是硬约束</strong>——它同时决定了能不能合批（<code>11-scale.md</code> §10.4）。</p>
+<h3 id="3-5-入库前的五条检查">3.5 入库前的五条检查</h3>
+<ol><li>三角面在预算内，且 <strong>LOD0–LOD3 四档齐全</strong></li><li>轴心在底面中心、缩放为 1、正面朝 −Z</li><li>材质 1 个、UV 在本项目图集内</li><li>同目录有 <code>SOURCE.md</code></li><li><strong>在 <code>probe_structure.gd</code> 里能被 archetype 正确归类</strong>（归错类就不能合批）</li></ol>
+<hr>
+<h2 id="四-视觉规范-已拍板部分">四、视觉规范（已拍板部分）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th><th>来源</th></tr></thead><tbody><tr><td>直角 / 圆角</td><td><strong>直角为主</strong>，圆角仅限头像、toggle、搜索框、搜索按钮</td><td>用户长期偏好</td></tr><tr><td>主色</td><td><strong>未定 —— 按本项目自己的气质选</strong></td><td>⚠ <strong>不用 <code>#2b6cb0</code></strong>（见下）</td></tr><tr><td>明暗主题</td><td>两套都要，深色为主</td><td>用户偏好</td></tr><tr><td>阴影</td><td>克制，不用大面积软阴影</td><td>反 AI 味</td></tr></tbody></table></div>
+<p>⚠ <strong>不做赛博朋克风</strong>。中国城市夜景的基调是钠灯的暖黄 + 招牌的杂色，不是霓虹紫。</p>
+<p>⚠ <strong>配色不跨项目统一（2026-11-17 用户更正）</strong>：<code>#2b6cb0</code> 校园蓝<strong>不是用户喜欢的颜色</strong>， 原话「反而会加重 AI 味」。<strong>不同类型软件的配色本来就该不一样</strong>—— school-forum / StudyJourney 是校园工具，城脉是城市模拟，<strong>两者不该共用一套色</strong>。 ⇒ <strong>本项目的配色另立</strong>，取值方向见 §4.1。</p>
+<hr>
+<h3 id="4-0-ui-材质-磨砂玻璃-2026-11-18-用户明确">4.0 ⭐ UI 材质：磨砂玻璃（2026-11-18 用户明确）</h3>
+<blockquote>用户：「<strong>我喜欢磨砂玻璃的那种模糊效果</strong>。」</blockquote>
+<p><strong>这可能是"配色待定"的解药。</strong></p>
+<p>之前一直卡在"选什么主色"——因为<strong>任何高饱和纯色块压在城市画面上都会难看清</strong>。 <strong>磨砂玻璃的深色半透明 + 背景模糊，天然不抢画面</strong>，而且现代感强。</p>
+<div class="tw"><table><thead><tr><th>方案</th><th>效果</th><th>问题</th></tr></thead><tbody><tr><td>纯色面板（<code>#1a1f27</code> 不透明）</td><td>干净</td><td><strong>挡死 3D 画面</strong>，像贴纸</td></tr><tr><td><strong>磨砂玻璃（半透明 + 背景模糊）</strong></td><td>⭐ <strong>像一层玻璃浮在城市上</strong></td><td>有渲染成本</td></tr><tr><td>全透明（只有文字）</td><td>最不挡</td><td>可读性差</td></tr></tbody></table></div>
+<h4 id="4-0-1-参数-初始值">4.0.1 参数（初始值）</h4>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th><th>说明</th></tr></thead><tbody><tr><td>面板底色</td><td><code>rgba(18, 22, 28, 0.62)</code></td><td>深墨 + 62 % 不透明度</td></tr><tr><td>背景模糊半径</td><td><strong>12–16 px</strong></td><td>太小看不出，太大像糊了</td></tr><tr><td><strong>边缘高光</strong></td><td>1 px 内侧亮线（<code>rgba(255,255,255,0.08)</code>）</td><td>⭐ <strong>这一条决定"像不像玻璃"</strong></td></tr><tr><td>转角</td><td><strong>直角</strong>（与 §四 一致，圆角只给 toggle/搜索框）</td><td>—</td></tr><tr><td>边框</td><td>1 px <code>rgba(255,255,255,0.12)</code></td><td>极淡，不要明显描边</td></tr></tbody></table></div>
+<p>⚠ <strong>"1 px 内侧亮线"是最容易被忽略、但最出效果的一条</strong>： 真实玻璃的边缘会折射出一点光，<strong>没有这条线就只是一块半透明色块</strong>。</p>
+<h4 id="4-0-2-渲染成本-这个必须提前知道">4.0.2 ⚠ 渲染成本（这个必须提前知道）</h4>
+<p>Godot 4 <strong>没有内置 backdrop blur</strong>，要自己做：</p>
+<div class="tw"><table><thead><tr><th>做法</th><th>代价</th></tr></thead><tbody><tr><td><code>BackBufferCopy</code> + 自定义 shader 采样 <code>SCREEN_TEXTURE</code></td><td>每帧全屏采样，1080p 下 <strong>≈ 1–2 ms</strong></td></tr><tr><td>两级降采样再模糊（降采样到 1/4 再升回来）</td><td>≈ 0.4 ms，<strong>质量略降但可接受</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>推荐两级降采样</strong>：磨砂玻璃本来就看不清细节，<strong>不需要全分辨率模糊</strong>。 ⚠ <strong>Mobile / Compatibility 后端支持有限</strong>，需要在设置里降级为纯色面板（<code>§1.4</code> 的"画质档"）。</p>
+<h4 id="4-0-3-哪里用磨砂玻璃-不要到处都是">4.0.3 哪里用磨砂玻璃（不要到处都是）</h4>
+<div class="tw"><table><thead><tr><th>用</th><th>不用</th></tr></thead><tbody><tr><td>✅ 右侧信息面板</td><td>❌ 小型 tooltip（成本不值）</td></tr><tr><td>✅ 顶部状态栏</td><td>❌ 热力图图例（要清晰读数）</td></tr><tr><td>✅ 模态对话框（设置/存档/关于）</td><td>❌ 大量列表项（每项一个 blur 会爆）</td></tr><tr><td>✅ 主菜单按钮区</td><td>❌ 3D 世界内的标注</td></tr></tbody></table></div>
+<p>⚠ <strong>原则：大面积、少量、静态的元素用磨砂；小面积、大量、动态的元素用纯色</strong>。 <strong>每个 UI 元素都套一层 blur，帧率直接腰斩。</strong></p>
+<hr>
+<h3 id="4-1-配色方向-提案-待定稿">4.1 配色方向（提案，待定稿）</h3>
+<p>⚠ <strong>不是"选一个好看的主色"，而是"让界面不抢城市的戏"</strong>。 城建游戏的 UI 每天都压在 3D 画面上，<strong>任何高饱和主色都会疲劳</strong>。</p>
+<div class="tw"><table><thead><tr><th>原则</th><th>说明</th></tr></thead><tbody><tr><td><strong>低饱和</strong></td><td>主色饱和度建议 &lt; 45 %，用在中性灰底上</td></tr><tr><td><strong>不做品牌色统治</strong></td><td>主色只出现在<strong>选中态 / 关键数字 / 主按钮</strong>，不要到处刷</td></tr><tr><td><strong>深色为默认</strong></td><td>城市夜景与灯光是卖点，深色底更能衬托</td></tr><tr><td><strong>让位给画面</strong></td><td>UI 的对比度来自<strong>明度差</strong>，不是色相差</td></tr><tr><td><strong>数据色单独一套</strong></td><td>热力图/图表用色阶（红-黄-绿等），与 UI 主色分离</td></tr></tbody></table></div>
+<p>⚠ <strong>热力图配色要遵守中国习惯</strong>：<strong>涨/高 = 红，跌/低 = 绿</strong>（<code>regional_conventions</code>）。 <strong>不要用国外的红跌绿涨。</strong></p>
+<p>⚠ 具体色值<strong>等美术方向定了一起定</strong>，现在不锁。 <strong>先锁"原则"，不锁"色号"</strong> —— 色号过早定死，后面一定返工。</p>
+<hr>
+<h3 id="4-2-交互反馈-悬停与点击都必须有回应-2026-11-18-用户明确">4.2 ⭐ 交互反馈：悬停与点击都必须有回应（2026-11-18 用户明确）</h3>
+<blockquote>用户：「<strong>按钮等鼠标悬停以及点击都要有反馈</strong>。」</blockquote>
+<p><strong>这不是"锦上添花"，这是"这个软件是不是活的"的判据。</strong> 一个没有 hover 反馈的按钮，玩家会怀疑"能不能点"。</p>
+<h4 id="4-2-1-三态-每态都要有明显变化">4.2.1 三态，每态都要有明显变化</h4>
+<div class="tw"><table><thead><tr><th>态</th><th>变化</th><th>时长</th></tr></thead><tbody><tr><td>常态</td><td>底 <code>rgba(255,255,255,0.06)</code></td><td>—</td></tr><tr><td><strong>悬停</strong></td><td>底 → <code>0.12</code>，<strong>边框出现</strong>，文字亮度 +10 %</td><td><strong>120 ms</strong> 过渡</td></tr><tr><td><strong>按下</strong></td><td>底 → <code>0.20</code>，<strong>整体下沉 1 px</strong>，缩放 0.98</td><td><strong>60 ms</strong></td></tr><tr><td>禁用</td><td>不透明度 0.35，<strong>无 hover 反应</strong></td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>必须用过渡动画，不能瞬间切换</strong>：瞬间变化会有"闪"的感觉。 ⚠ <strong>120 ms 是甜点</strong>：再快感觉不到，再慢觉得迟钝。 ⚠ <strong>按下下沉 1 px</strong> 比"变色"更有"按到了"的实感——这是物理隐喻。</p>
+<h4 id="4-2-2-音效配合">4.2.2 音效配合</h4>
+<div class="tw"><table><thead><tr><th>事件</th><th>声音</th></tr></thead><tbody><tr><td>悬停</td><td><strong>极轻的"嗒"</strong>（音量 −24 dB）</td></tr><tr><td>点击</td><td>短促确认音（−12 dB）</td></tr><tr><td>禁用项悬停</td><td><strong>无声</strong>（不要让玩家以为能点）</td></tr></tbody></table></div>
+<p>⚠ <strong>悬停音必须极轻且可关</strong>：连续划过一排按钮会变成噪音。 ⚠ <strong>不做"每帧 hover 都响"</strong>——只在<strong>进入</strong>时响一次。</p>
+<h4 id="4-2-3-键盘与手柄也必须有三态">4.2.3 键盘与手柄也必须有三态</h4>
+<p>⚠ <strong>只做鼠标反馈是常见疏漏</strong>：键盘导航时"当前焦点"必须同样明显 （用<strong>外发光边框</strong>而不是底色，因为底色可能被选中态占用）。</p>
+<h4 id="4-2-4-验收点">4.2.4 验收点</h4>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>UI1</strong></td><td>所有可点元素有<strong>悬停/按下/禁用</strong>三态，且<strong>有过渡动画</strong>（非瞬变）</td></tr><tr><td><strong>UI2</strong></td><td>禁用项<strong>无悬停反应、无音效</strong></td></tr><tr><td><strong>UI3</strong></td><td>键盘导航的当前焦点<strong>与鼠标悬停同样明显</strong></td></tr><tr><td><strong>UI4</strong></td><td>悬停音效只在<strong>进入</strong>时播放，连续划过不叠加</td></tr></tbody></table></div>
+<h3 id="4-3-关于页-电影片尾式滚动字幕-2026-11-18-用户明确">4.3 关于页：电影片尾式滚动字幕（2026-11-18 用户明确）</h3>
+<blockquote>用户：「<strong>关于页是滚动字幕，类似于电影放完后后面展示演员导演等内容</strong>。」</blockquote>
+<h4 id="4-3-1-形式">4.3.1 形式</h4>
+<pre class="code"><code>        （背景：缓慢横移的城市夜景，与主菜单一致）
+
+                    城  脉
+                 CITY VEINS
+
+                   —— 出品 ——
+
+                   X E K e r n e l
+
+                   —— 设计 ——
+                    徐尔康
+
+                   —— 程序 ——
+                    徐尔康
+
+                   —— 特别鸣谢 ——
+                   （八语玩家名单）
+                        ↑
+                     向上滚动</code></pre>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>滚动方向</td><td>从下往上，<strong>匀速</strong></td></tr><tr><td>速度</td><td>约 <strong>40 px/s</strong>（读完约 2–3 分钟）</td></tr><tr><td>背景</td><td><strong>与主菜单同一套 3D 场景</strong>（连续性）</td></tr><tr><td><strong>可加速</strong></td><td>按住 Shift 或滚轮 → ×4</td></tr><tr><td><strong>可跳到末尾</strong></td><td>有"↓ 到底部"按钮（有人只想看版本号）</td></tr><tr><td>末尾</td><td><strong>停在版本信息与链接</strong>，不自动返回</td></tr></tbody></table></div>
+<p>⚠ <strong>必须能跳过</strong>：2–3 分钟的字幕，第二次进来没人想看。但<strong>默认不跳</strong>—— <strong>第一次看片尾是仪式感，自动跳过就没了。</strong></p>
+<p>⚠ <strong>不要做成"可滚动列表"</strong>：那是设置页。片尾是<strong>一维向上流动</strong>的。</p>
+<h4 id="4-3-2-内容顺序-按重要性-不按字母">4.3.2 内容顺序（按重要性，不按字母）</h4>
+<div class="tw"><table><thead><tr><th>顺序</th><th>内容</th></tr></thead><tbody><tr><td>1</td><td>标题（城脉 / CITY VEINS）</td></tr><tr><td>2</td><td><strong>工作室</strong>（XEKernel + mark）</td></tr><tr><td>3</td><td>设计与程序（主要作者，<strong>放最前</strong>）</td></tr><tr><td>4</td><td>美术 / 音乐 / 音效 / 配音</td></tr><tr><td>5</td><td><strong>第三方素材</strong>（⚠ CC-BY 必须署名，法律要求）</td></tr><tr><td>6</td><td>特别鸣谢（测试玩家、社区）</td></tr><tr><td>7</td><td><strong>版本信息 + 链接 + 复制诊断信息按钮</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>第 5 项不是装饰，是义务</strong>（<code>credits-and-outsourcing.md</code> §五）。 ⚠ <strong>第 7 项放最后</strong>：滚动结束停在这里，玩家可以复制版本号。</p>
+<h4 id="4-3-3-验收点">4.3.3 验收点</h4>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>UI5</strong></td><td>片尾<strong>匀速向上滚动</strong>，背景与主菜单一致</td></tr><tr><td><strong>UI6</strong></td><td>可按住加速（×4）且有"跳到末尾"</td></tr><tr><td><strong>UI7</strong></td><td>滚到末尾<strong>停在版本信息与链接</strong>，不自动返回</td></tr><tr><td><strong>UI8</strong></td><td>第三方 CC-BY 素材<strong>全部列出</strong></td></tr></tbody></table></div>
+<hr>
+<h2 id="四-五-模块化组装-不做-22-个完整建筑-做一套模块-r17">四·五、模块化组装：不做 22 个完整建筑，做一套模块（R17）</h2>
+<blockquote>用户 2026-11-16：「CS1 的建筑其实可以拆成多个模块，然后按需求组装在一起形成不同风格。」</blockquote>
+<p><strong>这条改变了建模 Agent 的派活方式</strong>：不是"做 22 个建筑模型"， 而是"做 4 组模块 + 一套组合规则"。</p>
+<h3 id="4-5-1-四组模块">4.5.1 四组模块</h3>
+<div class="tw"><table><thead><tr><th>组</th><th>模块</th><th>变体数</th><th>说明</th></tr></thead><tbody><tr><td><strong>楼体</strong> <code>body</code></td><td>box / slab（板式）/ tower（点式）/ L 形 / U 形</td><td>5</td><td>决定体量与层数比例</td></tr><tr><td><strong>屋顶</strong> <code>roof</code></td><td>平顶 / 坡顶 / 女儿墙 / 塔冠 / 楼梯间突出</td><td>5</td><td><strong>北方坡顶多、南方平顶多</strong>（<code>climate_zone</code>）</td></tr><tr><td><strong>底层</strong> <code>base</code></td><td>底商 / 门厅 / 车库入口 / 架空层 / 无</td><td>5</td><td>沿街面用底商，内部用门厅</td></tr><tr><td><strong>附属</strong> <code>attach</code></td><td>围墙 / 大门 / 空调外机阵列 / 晾衣杆 / 招牌 / 水箱</td><td>6</td><td><strong>"一眼中国"全靠这组</strong></td></tr></tbody></table></div>
+<p>⇒ <strong>21 个模块</strong>，组合出上百种形态。比 22 个完整建筑<strong>资产量少一半，形态多五倍</strong>。</p>
+<h3 id="4-5-2-组合规则-config-assets-compose-json">4.5.2 组合规则（config/assets/compose.json）</h3>
+<pre class="code" data-lang="json"><code>{
+  "archetype": {
+    "vlg_court":     { "body": ["box"], "roof": ["slope","flat"], "base": ["none"], "attach": ["wall","gate","tank"] },
+    "county_walkup": { "body": ["slab"], "roof": ["flat","parapet"], "base": ["entry"], "attach": ["ac_unit","hanger"] },
+    "city_tower":    { "body": ["tower"], "roof": ["crown","parapet"], "base": ["podium","lobby"], "attach": ["signage"] },
+    "town_shop":     { "body": ["box","slab"], "roof": ["flat"], "base": ["shopfront"], "attach": ["signage","ac_unit"] }
+  },
+  "era_gate": { "1960-1989": ["slab"], "1990-2009": ["slab","box"], "2010-2026": ["tower","slab"] }
+}</code></pre>
+<p>⚠ <strong>规则只是"允许集"，具体选哪个由生成器按 <code>era</code> + 沿街等级 + 随机种子决定</strong>。 同一 archetype 的相邻建筑必须不完全相同（否则一排楼一模一样，像游戏不像城市）。</p>
+<h3 id="4-5-3-三个好处-都不是可选的">4.5.3 三个好处（都不是可选的）</h3>
+<div class="tw"><table><thead><tr><th>好处</th><th>说明</th></tr></thead><tbody><tr><td><strong>图集压力大降</strong></td><td>模块复用材质，21 个模块的 UV 能塞进 2 张 4096²，而 22 个完整建筑很难</td></tr><tr><td><strong>天然适配 MultiMesh 合批</strong></td><td>同一模块 = 同一 mesh → 相同模块的实例可直接合批（<code>11-scale.md</code> §10.4）</td></tr><tr><td><strong>可组合出"加建"感</strong></td><td>中国建筑最大的特征是<strong>加建痕迹</strong>（上面加一层、阳台封起来、楼顶搭彩钢房）。&lt;br&gt;模块化天然能表达，完整模型表达不了</td></tr></tbody></table></div>
+<p>⚠ <strong>第三点是我认为最重要的</strong>：一排"每栋都不一样、都有一点乱"的房子，才是中国城市。 完整模型无论做多少个，都会显得太整齐。</p>
+<h3 id="4-5-4-对入库检查的影响">4.5.4 对入库检查的影响</h3>
+<p>原来的"五条检查"（§3.5）改为按模块检查：</p>
+<ol><li>每个模块四档 LOD 齐全</li><li>轴心统一（楼体在底面中心，附属件在自身接点）</li><li>每个模块 1 个材质、UV 在本项目图集内</li><li><code>SOURCE.md</code></li><li><strong>能被 <code>compose.json</code> 正确引用</strong>（模块名与规则表对得上）</li></ol>
+<hr>
+<h2 id="五-建筑谱系-archetype-先覆盖村庄-再往上长">五、建筑谱系（archetype）：先覆盖村庄，再往上长</h2>
+<blockquote><strong>每行一个 archetype，建模 Agent 按行派活。</strong><br><code>era</code> 对应 R4 的规范年代；同一 type 的旧年代版本与新年代表现必须不同。<br>📌 <strong>本节是"起步集"（26 类，够跑通 B3/B6）</strong>；<strong>全集是 257 类 / 18 组，见 <code>15-model-inventory.md</code></strong><br>（除建筑外，道路与桥隧、车辆、交通设施与标识、招牌都在那篇里）。<br>两份清单必须对得上号：<strong>新增一类先加到 15 篇，再回来同步这里的组标题</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>archetype</th><th>名称</th><th>出现层级</th><th>era</th><th>关键特征</th></tr></thead><tbody><tr><td><code>vlg_court</code></td><td>独院农房</td><td>村庄</td><td>任何</td><td>15–25 m 宽，带院墙、大门、平顶或坡顶</td></tr><tr><td><code>vlg_shed</code></td><td>柴房/猪圈/附属</td><td>村庄</td><td>任何</td><td>低矮、坡顶、贴院墙</td></tr><tr><td><code>vlg_house_row</code></td><td>沿村道联排</td><td>村庄→镇</td><td>任何</td><td>2–3 层，贴红线，无前后院</td></tr><tr><td><code>town_shop</code></td><td>乡镇沿街商铺</td><td>镇</td><td>90s–10s</td><td>3–5 层，底层卷帘门 + 招牌</td></tr><tr><td><code>town_selfbuilt</code></td><td>自建房</td><td>镇</td><td>90s–10s</td><td>参差高度，平顶，加建痕迹</td></tr><tr><td><code>county_walkup</code></td><td>6 层砖混排楼</td><td>县</td><td>90s–00s</td><td><strong>南北向成排</strong>，山墙相接，无电梯</td></tr><tr><td><code>county_danwei</code></td><td>单位大院</td><td>县</td><td>60s–90s</td><td>围合院落 + 公共建筑</td></tr><tr><td><code>city_slab</code></td><td>高层板楼</td><td>市（老城）</td><td>00s–10s</td><td>11–18 层，长条形，行列式</td></tr><tr><td><code>city_tower</code></td><td>高层塔楼</td><td>市（新区）</td><td>10s–20s</td><td>18–33 层，点式，间距大</td></tr><tr><td><code>city_podium</code></td><td>底商+住宅</td><td>市</td><td>90s–20s</td><td>底层商业裙房</td></tr><tr><td><code>cbd_office</code></td><td>写字楼</td><td>市</td><td>10s–20s</td><td>玻璃幕墙，塔冠</td></tr><tr><td><code>mall</code></td><td>商业综合体</td><td>市</td><td>10s–20s</td><td>大体量，无窗墙</td></tr><tr><td><code>school</code></td><td>中小学</td><td>县/市</td><td>任何</td><td>教学楼 + 操场（R3 学区载体）</td></tr><tr><td><code>market</code></td><td>菜市场</td><td>镇/市</td><td>任何</td><td>大棚或低矮厅式</td></tr><tr><td><strong><code>transit_hub</code></strong></td><td><strong>火车站 / 长途汽车站</strong></td><td>镇/县/市</td><td>任何</td><td><strong>站房 + 前广场 + 落客区</strong>。⚠ 春运拥堵的载体，没有它春运只剩数字（<code>12-china-features</code> §3.5）</td></tr><tr><td><strong><code>hsr_station</code></strong></td><td><strong>高铁站</strong></td><td>市</td><td>任何</td><td>站房 + 高架站台 + 站前广场。⚠ <strong>"高铁新城"的锚点</strong>：建站 → 周边容积率放开 → 卖地回本（<code>12-china-features</code> F31）</td></tr><tr><td><strong><code>factory</code></strong></td><td><strong>标准厂房 / 仓储</strong></td><td>镇/县/市</td><td>任何</td><td>大面积单层或 3–4 层厂房 + 围墙 + 货车场。开发区的主力（F42）</td></tr><tr><td><strong><code>chem_plant</code></strong></td><td><strong>化工厂（石化 / 煤化工）</strong></td><td>市</td><td>任何</td><td>塔罐林立 + 管廊 + 火炬。⚠ <strong>与 <code>factory</code> 明显不同</strong>，是重工业天际线的一部分（F90）</td></tr><tr><td><strong><code>data_center</code></strong></td><td><strong>数据中心</strong></td><td>市</td><td>任何</td><td>低矮、无窗、大屋面 + 冷却塔 + 变电设施。⚠ <strong>看着像仓库，但是"算力城市"的标志</strong>（F92）</td></tr><tr><td><strong><code>metro_station</code></strong></td><td><strong>地铁站</strong>（含地面出入口）</td><td>市</td><td>任何</td><td>出入口小体量 + 风亭 + 无障碍电梯。⚠ <strong>地下不建模</strong>（R18），线路走地图叠层</td></tr><tr><td><strong><code>metro_viaduct</code></strong></td><td><strong>地铁高架/地面段</strong>（桥墩 + 轨道梁 + 声屏障）</td><td>市</td><td>任何</td><td>⚠ <strong>地下段不建模，但高架/地面段必须建</strong>（<code>08-traffic</code> §3.5.4）。模块化：桥墩/梁/声屏障三件</td></tr><tr><td><strong><code>bus_stop</code></strong></td><td>公交站台</td><td>镇/县/市</td><td>任何</td><td>站牌 + 候车亭 + 广告位。⚠ <strong>要能一眼看出"中国公交站"</strong>（站牌样式强特征）</td></tr><tr><td><strong><code>utility_plant</code></strong></td><td><strong>水厂 / 变电站 / 燃气站 / 通信机房</strong></td><td>任何</td><td>任何</td><td>小体量 + 围墙 + 管网出口。⚠ <strong>一处要能表现四种</strong>（<code>07-services</code> §4.1），图集里共用一套贴图</td></tr><tr><td><strong><code>stadium</code></strong></td><td><strong>体育场 / 体育馆 / 演出场馆</strong></td><td>市</td><td>任何</td><td>大体量壳体 + 广场 + 雨棚。⚠ <strong>F115</strong>：演出日人流峰值 + 夜间噪音邻避</td></tr><tr><td><strong><code>park</code></strong></td><td>公园 / 街头绿地 / 广场</td><td>任何</td><td>任何</td><td>树 + 铺装 + 少量设施。<code>G</code> 类用地（<code>03-zoning</code> §2.1）</td></tr><tr><td><code>construction</code></td><td>塔吊 + 在建体</td><td>任何</td><td>任何</td><td><strong>施工中的城市是中国城市的核心视觉符号</strong></td></tr></tbody></table></div>
+<p>⚠ 上表是<strong>起步集</strong>（26 类），<strong>不是全集</strong>——全集 257 类见 <code>15-model-inventory.md</code>。新增一类必须同时满足：① 图集有空位 ② LOD3 已做 ③ 不与已有 archetype 的合批类别冲突。</p>
+<p>⚠ <strong><code>transit_hub</code> 是 2026-11-15 为春运补的</strong>：春运的全部戏份在"枢纽周边被挤爆"， 没有站房建筑，春运就只是一个人口曲线。<strong>B3 做资产时必须一起做，不能等 B7 再补</strong>。</p>
+<p>⚠ <strong><code>hsr_station</code> 同日补的</strong>：它是"高铁新城"的锚点（<code>12-china-features</code> F31）。 高铁站在中国城市里<strong>体量巨大、位置显眼</strong>，是天际线上的识别物，不能做成普通建筑。</p>
+<hr>
+<h2 id="六-ui-数据驱动-mod-友好">六、UI：数据驱动 + Mod 友好</h2>
+<blockquote>用户 2026-11-16：「我们的 UI Mod 支持，界面布局。」<br><strong>核心判断：UI 必须是数据驱动的，不能硬编码。</strong> 理由有两个——<br>① 让 Mod 能改（CS 的 UI Mod 生态是它长寿的重要原因）；<br>② <strong>让我们自己能快速调</strong>（布局改了不用改代码 = 不用重编译）。</blockquote>
+<h3 id="6-1-三个数据文件">6.1 三个数据文件</h3>
+<div class="tw"><table><thead><tr><th>文件</th><th>内容</th><th>Mod 可覆盖</th></tr></thead><tbody><tr><td><strong><code>config/ui/theme.json</code></strong></td><td>颜色、字体、圆角、间距、阴影</td><td>✅ <strong>接线状态见 §6.1.1</strong></td></tr><tr><td><strong><code>config/ui/layout.json</code></strong></td><td>面板位置、尺寸、层级、对齐</td><td>✅</td></tr><tr><td><strong><code>config/ui/panels.json</code></strong></td><td><strong>面板注册表</strong>（有哪些面板、什么时候显示）</td><td>✅ 可新增</td></tr></tbody></table></div>
+<pre class="code" data-lang="json"><code>// config/ui/theme.json（节选）
+{
+  "color": { "primary": null, "accent": "#d2382c", "bg": "#12161c", "text": "#f0ede8" },
+  "radius": { "panel": 0, "button": 0, "toggle": 14, "search": 6 },
+  "font_size": { "title": 20, "body": 14, "number": 14 },
+  "shadow": "minimal"
+}</code></pre>
+<p>⚠ <code>radius.panel = 0</code> 是<strong>直角规范</strong>的落地方式（用户长期偏好）。 Mod 可以改成圆角，但<strong>默认必须是直角</strong>。</p>
+<h3 id="6-1-1-接线状态-2026-11-22-实测核对">6.1.1 接线状态（2026-11-22 实测核对）</h3>
+<blockquote>⚠ 这一节存在的理由：<strong>这个文件曾经整整一周是"零引用"的</strong> —— 它自己写着"改这个文件就换肤"，<br>但代码里 69 处 <code>Color(...)</code> 全是硬编码。<code>B1-4</code> 的验收（改 token → 界面变）当时<strong>必然失败</strong>。<br>现在接上了，<code>theme.json</code> 的 <code>_wired</code> 字段逐块标注了状态，<strong>改之前先看它</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>块</th><th>状态</th><th>实现位置</th></tr></thead><tbody><tr><td><code>color.*</code></td><td>✅ 已接线</td><td><code>scripts/ui/ui_style.gd</code> → <code>ui_kit.gd</code> / 主菜单 / 设置 / 关于</td></tr><tr><td><code>material.panel.shader.*</code></td><td>✅ 已接线（<code>tint</code> / <code>tint_mix</code> / <code>bg_dim</code> 三参数按 solidity 插值）</td><td><code>ui_kit.glass_panel()</code></td></tr><tr><td><code>radius.button</code></td><td>✅ 已接线</td><td><code>ui_kit.menu_button()</code></td></tr><tr><td><code>interaction.states.*.duration_ms</code></td><td>🟡 部分接线（时长接上，缓动曲线仍写死 <code>TRANS_CUBIC/EASE_OUT</code>）</td><td><code>menu_button.gd</code></td></tr><tr><td><code>font_size.<em></code> / <code>spacing.</em></code></td><td>⚠ <strong>只是登记值，未接线</strong></td><td>字号/间距目前写在各页里</td></tr><tr><td><code>credits.*</code></td><td>⚠ <strong>只是登记值，未接线</strong></td><td>片尾滚动速度写死在 <code>about_page.gd</code></td></tr><tr><td><code>heatmap.*</code></td><td>⚠ 未接线（热力图本身还没做）</td><td>—</td></tr></tbody></table></div>
+<p><strong>三条硬规则</strong>（由 <code>bench/lint_docs.py</code> 第 8 组守着）</p>
+<div class="tw"><table><thead><tr><th>#</th><th>规则</th><th>违规会怎样</th></tr></thead><tbody><tr><td>1</td><td><strong><code>scripts/ui/</code> 里不许出现硬编码 <code>Color(...)</code></strong>（阴影 <code>Color(0,0,0,·)</code> 与全透明除外）</td><td>皮肤改不动，且会出现三套几乎一样的"近白"</td></tr><tr><td>2</td><td><strong><code>Style.color("x")</code> 的 key 必须真的在 <code>theme.json</code> 里</strong></td><td>会静默走 fallback，最难查</td></tr><tr><td>3</td><td>改完 token <strong>必须重渲染截图</strong>，并用固定 <code>--hour</code> 做前后对比</td><td>见下</td></tr></tbody></table></div>
+<p><strong>截图必须固定天光</strong>：主菜单/设置/关于的背景按<strong>真实时钟</strong>算天色，两次渲染只要差几分钟， 整屏像素都会变。所以对比截图一律带 <code>--hour=</code>：</p>
+<pre class="code" data-lang="bash"><code>godot --path . res://scenes/ui/main_menu.tscn -- --shot=build/shots/a.png --shot-frame=24 --hour=21.5
+# 实测：同一 --hour 的两次渲染逐像素完全一致（max diff = 0），可直接做回归比对</code></pre>
+<p>⚠ <strong><code>--headless</code> 出不了图</strong>（不渲染），截图必须开窗（<code>plan.md</code> 批次纪律第 6 条）。</p>
+<h3 id="6-1-2-layout-json-panels-json-的接线-2026-11-22-同日按开发者要求重排">6.1.2 layout.json / panels.json 的接线（2026-11-22，⭐ 同日按开发者要求重排）</h3>
+<blockquote>⚠ 这两个文件此前和 <code>theme.json</code> 一个病：<strong>文件在、没人读</strong>，HUD 五个脚本全是占位。<br>现在由 <code>scripts/ui/ui_layout.gd</code> 读取、<code>hud.gd</code> 生成。</blockquote>
+<p><strong>布局分工（2026-11-22 开发者定，取代"左工具栏 / 右面板"的旧方案）：</strong></p>
+<div class="tw"><table><thead><tr><th>区域</th><th>放什么</th><th>数据</th></tr></thead><tbody><tr><td><strong>顶部</strong></td><td>数据条：<strong>日期 / 收入 / 人口 / 温度</strong>。只放"随时要瞄一眼"的数，不放能点的东西</td><td><code>top_bar.items</code></td></tr><tr><td><strong>底部</strong></td><td><strong>所有"建"与"规划"</strong>：修路 / 划区 / 摆建筑 / 市政 / 服务 / 产业 / 地形 / 拆除。两行：上=当前组的子工具，下=工具组</td><td><code>bottom_toolbar.groups</code> + <code>.tools</code></td></tr><tr><td><strong>左侧</strong></td><td><strong>信息视图</strong>（2026-11-22 扩到 <strong>27 个 / 8 组</strong>）：竖条第一列选组、第二列选视图，点开在右边展开；全是"看"，不改任何东西</td><td><code>left_panels.groups</code></td></tr><tr><td><strong>右侧</strong></td><td><strong>待定（留白）</strong>。<code>right_panels.list</code> 为空 ⇒ 整块区域不生成</td><td><code>right_panels.list</code></td></tr></tbody></table></div>
+<p><strong>左侧 27 个信息视图 / 8 组</strong>（<code>panels.json</code> 的 <code>rows</code> 决定每张面板列哪几行）：</p>
+<div class="tw"><table><thead><tr><th>面板</th><th>回答什么问题</th><th>面板</th><th>回答什么问题</th></tr></thead><tbody><tr><td><code>city</code> 城市</td><td>我的城市卡在哪</td><td><code>land</code> 土地</td><td>地值不值钱</td></tr><tr><td><code>population</code> 人口</td><td>人在哪、还在来吗</td><td><code>zoning</code> 区划</td><td>地都划成什么了</td></tr><tr><td><code>age</code> 年龄结构</td><td>这城年轻还是老</td><td><code>road</code> 道路</td><td>路够不够</td></tr><tr><td><code>employment</code> 就业</td><td>岗位够不够</td><td><code>transit</code> 公共交通</td><td>公交地铁够不够</td></tr><tr><td><code>finance</code> 财政</td><td>钱从哪来、到哪去</td><td><code>utility</code> 市政</td><td>水电够不够</td></tr><tr><td><code>service</code> 公共服务</td><td>学校医院公园够不够</td><td><code>environment</code> 环境</td><td>住得舒不舒服</td></tr></tbody></table></div>
+<p>⚠ <strong>一张面板 = <code>panels.json</code> 的一条记录</strong>（<code>title</code> / <code>answers</code> / <code>short</code> / <code>rows</code> / <code>requires</code> / 可选 <code>highlight</code>）， <strong>不需要写脚本</strong>。12 张面板共用一个 <code>panel_info.gd</code>；专属脚本只留给"有专属交互"的面板 （比如以后的地价热力图、年龄金字塔）。</p>
+<p>⚠ <strong><code>highlight</code> 是硬要求</strong>：财政面板的「卖地占收入」必须单独用强调色高亮 ——不做这个显示，玩家感知不到 R1 的土地财政，胜利条件就成了黑箱。</p>
+<p><strong>底部 8 个工具组</strong>（每组有自己的子工具，<code>layout.json</code> 的 <code>tools</code>）：</p>
+<div class="tw"><table><thead><tr><th>组</th><th>子工具</th></tr></thead><tbody><tr><td><code>road</code> 道路</td><td>直路 / 曲线 / 高架 / 跨江桥 / 人行横道 / 单行</td></tr><tr><td><code>zone</code> 区划</td><td>住宅 / 商业 / 工业 / 办公 / 农业</td></tr><tr><td><code>building</code> 建筑</td><td>地标 / 公共建筑 / 自建</td></tr><tr><td><code>utility</code> 市政</td><td>电力 / 供水 / 污水 / 燃气 / 垃圾</td></tr><tr><td><code>service</code> 服务</td><td>学校 / 医院 / 公园 / 菜市场 / 公交站 / 地铁站</td></tr><tr><td><code>industry</code> 产业</td><td>工业园 / 开发区 / 资源点</td></tr><tr><td><code>terrain</code> 地形</td><td>平整 / 填挖 / 水域</td></tr><tr><td><code>demolish</code> 拆除</td><td>推平</td></tr></tbody></table></div>
+<p>⚠ <strong>都是片区级刷子，不是单格</strong>（中国式超大街区）。B1 只到"能点、能切组"，刷子逻辑属 B2（road）/ B3（zoning）。</p>
+<p>⚠ <strong>默认面板不可删除，只能隐藏</strong>：装坏 Mod 也得能点到退出。</p>
+<p><strong>守卫</strong>（<code>bench/lint_docs.py</code> 第 9 组）：面板注册一致 / <code>default_open</code> 合法 / 顶栏 4 项 / 底部分组与 <code>default_group</code> 合法 / 每组必有子工具 / <code>highlight</code> 必须是本面板的行 / 以及<strong>从 json 反推出来的所有文案 key 在 zh 与 en 里都要有</strong>。</p>
+<h3 id="6-1-3-图标化-可点的东西只有图标-文字进悬停提示-2026-11-22">6.1.3 图标化：可点的东西只有图标，文字进悬停提示（2026-11-22）</h3>
+<blockquote>开发者原话：「不要文字，文字太占空间了，所有文字全部用图标（先占位或者用 emoji）代替，<br>但是鼠标悬浮在图标上时会显示文字和描述。」</blockquote>
+<div class="tw"><table><thead><tr><th>位置</th><th>形态</th><th>文字在哪</th></tr></thead><tbody><tr><td>顶栏 4 项</td><td>图标 + 数值（<code>📅 2026-01-01</code>）</td><td>悬停："日期" + 说明</td></tr><tr><td>底部工具组</td><td>只有图标，38–42 px 方钮</td><td>悬停："道路" + 该组包含哪些子工具</td></tr><tr><td>底部子工具</td><td>只有图标</td><td>悬停：子工具名</td></tr><tr><td>左侧信息竖条</td><td>只有图标，46 px 方钮</td><td>悬停：面板名 + "这张面板回答什么问题"</td></tr><tr><td>右侧（待定）</td><td>—</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>文字不进按钮，但必须进 tooltip</strong>：图标化之后 tooltip 是<strong>唯一的信息来源</strong>， 所以每个可点元素都必须有名称（<code>icon_button()</code> 的参数是必填，不是可选）。</p>
+<p>⚠ <strong>tooltip 的中文</strong>：Godot 内置主题字体不含 CJK，靠 <code>ThemeDB.fallback_font</code> 逐字回退。 <code>ui_kit.font()</code> 里顺手把它设成同一个中文字体，否则悬停提示是一片方框（实测过：不设就废）。</p>
+<p>⚠ <strong>底边图标的 tooltip 会自动翻到上方</strong>（Godot 会做屏幕内钳制）——底栏贴着屏幕下沿也不怕，实测过。</p>
+<p>⚠ <strong>图标目前是占位 emoji</strong>（<code>layout.json</code> 的 <code>icons</code> / <code>tool_icons</code>，<code>panels.json</code> 的 <code>icon</code>）。 真图标做好后放 <code>assets/ui/</code>，<strong>只改 json，代码不用动</strong>。 ⚠ emoji 是彩色的，和"低饱和深色底"的调性不完全一致 —— 这是<strong>占位期的已知代价</strong>，不是最终形态。</p>
+<p>⚠ <strong>面板内部的文字保留</strong>：面板是"内容"不是"按钮"，行名去掉就只剩一排破折号，没法读。 竖条上只显示图标，面板标题与行名照旧。</p>
+<p>⚠ 顶栏最左是<strong>当前存档的城市名</strong>（<code>TopBar.set_city_name()</code>；B1 没有存档系统时显示"未命名城市"）。</p>
+<h3 id="6-1-4-路名牌的文字是动态的-2026-11-25">6.1.4 路名牌的文字是<strong>动态</strong>的（2026-11-25）</h3>
+<blockquote>开发者：路名随机生成、可修改，路牌要跟着显示对应文字。</blockquote>
+<div class="tw"><table><thead><tr><th>做法</th><th>结论</th></tr></thead><tbody><tr><td>文字烘进贴图</td><td>⛔ <strong>禁止</strong>——改名要重烘全城，Mod 也是死路</td></tr><tr><td>每块牌一个 <code>Label3D</code></td><td>⛔ <strong>禁止</strong>——几千节点 + 几千次字形重排</td></tr><tr><td><strong>SDF + 动态图集槽位 + MultiMesh</strong></td><td>✅ 用这个：1–2 张 4096² 图集、<strong>2 个 draw call</strong>、改名只重画 1 个 256×64 槽位</td></tr></tbody></table></div>
+<p>⚠ 完整设计（三层数据、命名规则、LRU 淘汰、距离分层）见 <strong><code>18-signage.md</code></strong>。 ⚠ 与 <code>§6.1.3</code> 的区别：那里的"文字进 tooltip"管的是 <strong>UI</strong>；这里的路名牌是<strong>场景里的物件</strong>， 文字来自<strong>数据</strong>（路名实体），不是 UI 文案。</p>
+<hr>
+<h3 id="6-2-mod-加载优先级">6.2 Mod 加载优先级</h3>
+<pre class="code"><code>默认 config/ui/*.json
+   ↓ 被覆盖
+mods/&lt;mod_name&gt;/config/ui/theme.json      （只覆盖写了的键，深合并）
+   ↓ 被覆盖
+mods/&lt;mod_name&gt;/config/ui/layout.json
+   ↓
+mods/&lt;mod_name&gt;/config/ui/panels.json     （只能新增面板，不能删默认面板）</code></pre>
+<p>⚠ <strong>深合并而不是整文件替换</strong>：否则一个小 Mod 会把主题全冲掉。 ⚠ <strong>默认面板不可删除</strong>，只能隐藏——否则玩家装了坏 Mod 会连退出按钮都没有。</p>
+<h3 id="6-3-三条边界-mod-不许越过的线">6.3 三条边界（Mod 不许越过的线）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>边界</th><th>原因</th></tr></thead><tbody><tr><td>1</td><td><strong>UI Mod 只能改表现，不能碰 <code>sim/</code></strong></td><td>与宪法 L2 一致。改数值的 Mod 必须走"模组数据包"（改 <code>config/</code>），不是改代码</td></tr><tr><td>2</td><td>Mod 面板只能<strong>读</strong> bus key，不能写</td><td>否则会绕过系统边界表</td></tr><tr><td>3</td><td><strong>版本化</strong>：<code>ui_api_version</code> 不匹配时拒绝加载并给出提示</td><td>防止主版本升级后 Mod 静默崩溃</td></tr></tbody></table></div>
+<p>⚠ <strong>第 1 条最容易被破坏</strong>：一旦允许 UI Mod 改数值，所有验收断言就失去意义了 （和沙盒开关污染断言是同一类问题）。</p>
+<h3 id="6-4-布局基线">6.4 布局基线</h3>
+<div class="tw"><table><thead><tr><th>区域</th><th>内容</th><th>备注</th></tr></thead><tbody><tr><td><strong>顶栏</strong></td><td>人口 / 财政 / 收支 / 日期（<strong>4 项</strong>）</td><td>多了就是噪音；<code>tax_self_sufficiency</code> 建议进财政面板</td></tr><tr><td><strong>左侧工具栏</strong></td><td>道路 / 分区（6 类）/ 市政 / 服务 / 产业</td><td><strong>片区级刷子</strong>，不是单点（<code>11-scale.md</code> §七 IM7）</td></tr><tr><td><strong>底部信息条</strong></td><td>当前工具提示 + 选区统计</td><td>—</td></tr><tr><td><strong>右侧面板</strong></td><td>城市 / 财政 / 学校（<strong>3 个</strong>）</td><td><code>plan.md</code> B6 已定</td></tr><tr><td><strong>热力图切换</strong></td><td>地价 / 可达性 / 覆盖 / 拥堵（4 种，可叠加 2 层）</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>UI 永不显示"时:分"</strong>（R13 铁律）：只显示日期。昼夜相位不暴露给玩家。</p>
+<p>⚠ <strong>面板里显示什么，以 <code>13-player-loop</code> §十四 为准</strong>（那一篇定义了每个面板"回答什么问题"）。 本节的表只定位置与骨架，<strong>内容不在这里重复定义</strong>，避免两处说法打架。</p>
+<hr>
+<h2 id="六-五-施工阶段的视觉-03-zoning-3-6-3">六·五、施工阶段的视觉（03-zoning §3.6.3）</h2>
+<blockquote>四阶段的画面完全不同，<strong>这是"中国城市"最有辨识度的一段过程</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>阶段</th><th>要画什么</th><th>archetype / 效果</th></tr></thead><tbody><tr><td>0 挖基坑</td><td><strong>大坑 + 土方车 + 堆土 + 围挡</strong></td><td><code>construction</code> 变体 + <code>dump_truck</code></td></tr><tr><td>1 地下室</td><td>坑里铺满钢筋 + 泵车</td><td>贴图变体</td></tr><tr><td>2 地上主体</td><td><strong>塔吊群</strong>（一小区 5–15 台）+ 逐层升高</td><td><code>crane</code>（已有 F7）</td></tr><tr><td>3 覆土配套</td><td>回填、铺路、<strong>种灌木</strong>（不是大树）、砌围墙</td><td><code>park</code> 变体 + 灌木</td></tr></tbody></table></div>
+<p>⚠ <strong>阶段 0 的渣土车要能上路</strong>（走 <code>traffic</code> 的货运通道）， 这是工地周边道路被重碾、夜间运输、扬尘的真实来源。 ⚠ <strong>阶段 2 的塔吊群是核心符号</strong>：一个 500 m 见方的小区同时十几台塔吊——<strong>CS 全球都没这画面</strong>。 ⚠ <strong>阶段 3 只能种灌木</strong>（覆土 1.2 m 的限制），<strong>这是中国小区的真实样貌</strong>。</p>
+<hr>
+<h2 id="六-六-放学小吃摊与补课学生-街头的-活气-2026-11-18">六·六、放学小吃摊与补课学生：街头的"活气"（2026-11-18）</h2>
+<blockquote>依据 <code>07-services</code> §三·六。<strong>这两样都是"不占正规用地但有真实人流"的东西。</strong></blockquote>
+<h3 id="6-6-1-放学小吃摊-纯-view-层">6.6.1 放学小吃摊（纯 view 层）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>触发</td><td><strong>附近 300 m 有学校</strong> + 当前时段 <strong>15:30–18:00</strong></td></tr><tr><td>数量</td><td>3–8 个</td></tr><tr><td>位置</td><td>沿人行道排开（校门两侧）</td></tr><tr><td>道具</td><td>三轮车 / 小推车 / 遮阳伞 / 蒸笼 / 烤肠机</td></tr><tr><td>雨天</td><td>减少或消失</td></tr></tbody></table></div>
+<p>⚠ <strong>不进 <code>sim</code></strong>：摊贩不占永久用地、不是设施、不改任何数值。 <strong>由已有数据（学校位置 + 时段）推导即可</strong> —— 这是宪法 L2 的正面例子。</p>
+<p>⚠ <strong>必须"廉价但准确"</strong>：5–8 个简单道具轮流复用，靠<strong>位置和密度</strong>营造， 不要每个摊贩都做独特模型。</p>
+<h3 id="6-6-2-补课学生-tutoring-od-的视觉">6.6.2 补课学生（tutoring OD 的视觉）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>时段</td><td><strong>傍晚 17–21 点、周末、寒暑假</strong> ⚠ 与上学高峰完全不同</td></tr><tr><td>数量</td><td>约为学期同期的 <strong>15–25 %</strong>（<code>07-services</code> §3.6.2）</td></tr><tr><td>外观</td><td><strong>背书包的学生</strong>（比普通行人小一号，背上有方块）</td></tr><tr><td>目的地</td><td>三种补习班形态（小区里 / 临街门面 / 专门机构）</td></tr></tbody></table></div>
+<p>⭐ <strong>"假期街上还有背书包的孩子"是中国城市最强的日常符号之一</strong>—— 如果寒暑假街上没有学生，玩家会立刻觉得"这不是中国"。</p>
+<p>⚠ <strong>书包的视觉很关键</strong>：一个方块挂在背后，小尺寸也能认出是学生。 <strong>这个细节比建模精度重要得多。</strong></p>
+<hr>
+<h2 id="七-音频-五条总线-分层">七、音频：五条总线 + 分层</h2>
+<blockquote>用户 2026-11-17：「我的配音就是城市的市民碎片语音，以及假设城市有演唱会之类等需要配音；<br>一些环境音也需要准备；然后就是背景音乐，由于我没有音乐创作的经验，<br>但是像城市模拟这种纯音乐即可，除非还是刚才那个演唱会，需要人声。」</blockquote>
+<h3 id="7-1-五条总线-各自独立音量-缺一条都不行">7.1 五条总线（各自独立音量，缺一条都不行）</h3>
+<div class="tw"><table><thead><tr><th>总线</th><th>内容</th><th>默认音量</th><th>可关</th></tr></thead><tbody><tr><td><strong>Music</strong></td><td>BGM（纯音乐）</td><td><strong>40 %</strong>（刻意偏低）</td><td>✅</td></tr><tr><td><strong>Ambience</strong></td><td>环境音（车流 / 施工 / 市场 / 虫鸣 / 雨）</td><td>70 %</td><td>✅</td></tr><tr><td><strong>SFX</strong></td><td>音效（建成、告警、机械）</td><td>80 %</td><td>✅</td></tr><tr><td><strong>Voice</strong></td><td>播报 + 市民碎片 + 演出人声</td><td><strong>0 %（默认关）</strong></td><td>✅</td></tr><tr><td><strong>UI</strong></td><td>点击、拖拽、确认</td><td>60 %</td><td>✅</td></tr></tbody></table></div>
+<p>⚠ <strong>Voice 默认 0 %</strong>（<code>13-player-loop</code> §20.1）：城建玩家经常边玩边听播客，语音抢耳朵是减分。 ⚠ <strong>Music 默认 40 %</strong>：<strong>BGM 是最容易被关掉的一层</strong>，音量压低是尊重玩家。</p>
+<h3 id="7-2-环境音-这一层最值得投入-而且我们有别人没有的优势">7.2 环境音：这一层最值得投入，而且我们有别人没有的优势</h3>
+<p><strong>环境音是城建游戏"活着"的主要来源，比 BGM 重要得多。</strong></p>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>驱动变量</th></tr></thead><tbody><tr><td><strong>底噪</strong></td><td>城市嗡鸣</td><td>人口密度、时段</td></tr><tr><td><strong>交通层</strong></td><td>车流、喇叭、地铁进站</td><td>相机附近的路段流量</td></tr><tr><td><strong>施工层</strong></td><td>打桩、切割、塔吊</td><td>附近 <code>compound</code> 的阶段（0–2）</td></tr><tr><td><strong>生活层</strong></td><td>菜市场叫卖、店铺音响</td><td>附近 <code>B2</code> / <code>B1</code> 密度</td></tr><tr><td><strong>自然层</strong></td><td>虫鸣、鸟、风、雨</td><td>绿地率、天气（DLC2）</td></tr><tr><td><strong>事件层</strong></td><td>烟花、炮仗、龙舟鼓声、演出</td><td>节日与活动</td></tr></tbody></table></div>
+<p>⚠ <strong>音效跟相机，不跟模拟</strong>（R2 的延伸）：只播<strong>相机附近</strong>的声源， 不播全城 2000 个市场。这是性能底线，也是音频版的"相机边界"。</p>
+<h4 id="素材来源-自己录-这是低成本高回报的差异点">⭐ 素材来源：自己录（这是低成本高回报的差异点）</h4>
+<div class="tw"><table><thead><tr><th>来源</th><th>评价</th></tr></thead><tbody><tr><td>freesound.org（CC0/CC-BY）</td><td>✅ 通用声（雨、风、车流）够用</td></tr><tr><td>商业音效库</td><td>✅ 但贵，且<strong>没有中国特有的声音</strong></td></tr><tr><td><strong>自己用手机录</strong></td><td>⭐ <strong>强烈推荐</strong></td></tr></tbody></table></div>
+<p><strong>素材库里完全没有的中国声音</strong>： 电动车警报（那种循环的"滴滴滴"）、菜市场讨价还价、广场舞音响、 洒水车的音乐、收废品的喇叭、装修电钻、小区门口的广播……</p>
+<p>⚠ <strong>这些声音比任何模型都更能让人认出"这是中国"。</strong> 一部手机 + 一天时间就能录一批。</p>
+<h3 id="7-3-bgm-少-可关-随城市规模变化">7.3 BGM：少、可关、随城市规模变化</h3>
+<blockquote>「我没有音乐创作的经验，但是像城市模拟这种纯音乐即可。」</blockquote>
+<div class="tw"><table><thead><tr><th>项</th><th>方案</th></tr></thead><tbody><tr><td>数量</td><td><strong>2–3 首</strong>循环，不做多（玩家会关掉）</td></tr><tr><td>来源</td><td>免版权库（Kevin MacLeod / Pixabay / FMA）/ <strong>AI 生成</strong>（Suno 等，<strong>必须确认商用条款</strong>）/ 委托作曲</td></tr><tr><td>风格</td><td><strong>纯音乐、无人声、克制</strong>（不要史诗管弦，那是 4X 游戏）</td></tr><tr><td>动态</td><td><strong>按城市规模分层</strong>（见下）</td></tr></tbody></table></div>
+<p><strong>⭐ 分层音乐：这比"一首曲子循环到底"高级得多</strong></p>
+<div class="tw"><table><thead><tr><th>城市阶段</th><th>音乐构成</th></tr></thead><tbody><tr><td>村（&lt;3000）</td><td><strong>几乎没有 BGM</strong>，以环境音为主（风声、虫鸣、狗叫）</td></tr><tr><td>镇</td><td>加一层简单旋律（吉他/钢琴独奏）</td></tr><tr><td>县</td><td>加入弦乐与低音</td></tr><tr><td>市（&gt;30万）</td><td>完整配器</td></tr></tbody></table></div>
+<p>⚠ 实现上是<strong>同一首曲子的多层轨道（stems）按规模渐入</strong>，不是四首不同的曲子。 这样过渡自然，且素材量只有一首的 4 倍轨道数。</p>
+<p>⚠ <strong>这个设计的意义</strong>：玩家会<strong>在不知不觉中感觉到"我的城市长大了"</strong>—— 不是靠数字，是靠声音变厚了。这是很划算的情绪设计。</p>
+<h3 id="7-4-演唱会-演出-人声怎么解决">7.4 演唱会 / 演出：人声怎么解决</h3>
+<blockquote>「除非还是刚才那个演唱会，需要人声。」</blockquote>
+<p><strong>关键判断：演唱会的声音不需要"听懂唱什么"，只需要"知道有演出"。</strong></p>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>做法</th></tr></thead><tbody><tr><td>音乐主体</td><td>低频轰鸣 + 鼓点</td><td>免版权音乐，低通滤波（像从场外听到）</td></tr><tr><td><strong>人声</strong></td><td><strong>模糊的吟唱/和声</strong></td><td><strong>免版权 vocal 采样</strong>（不需要歌词）</td></tr><tr><td>观众</td><td>欢呼、合唱、哨声</td><td>采样循环</td></tr><tr><td>空间</td><td>大混响 + 远处衰减</td><td>混响处理</td></tr></tbody></table></div>
+<p>⚠ <strong>不要试图用 TTS 唱歌</strong>：歌声合成（SVS）是另一门技术，TTS 念白做不出演唱效果。 <strong>用免版权的人声采样 + 效果处理就够了</strong>——因为你听到的本来就不清晰。</p>
+<p>⚠ <strong>现场演唱会从场外听，人声本来就是模糊的</strong>。这一点让"没有歌词"完全不成问题。</p>
+<h3 id="7-5-演出的机制面-不只音频">7.5 演出的机制面（不只音频）</h3>
+<p>⚠ 演出是<strong>事件</strong>，不只是声音。见 <code>12-china-features</code> <strong>F115</strong>：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>效果</th></tr></thead><tbody><tr><td>场馆</td><td><code>stadium</code> 原型（体育场/体育馆）</td></tr><tr><td>演出日</td><td>大量人流涌入 → <strong>交通压力峰值</strong> → 周边拥堵</td></tr><tr><td>夜间演出</td><td><strong>噪音 → 邻避投诉</strong>（F97）</td></tr><tr><td>收益</td><td>门票税 + 周边消费 + 城市活力（评级加分）</td></tr></tbody></table></div>
+<p>⚠ <strong>这是"必要但扰民"的典型</strong>：城市需要文化设施，但没人想住在体育馆旁边。</p>
+<h3 id="7-6-性能约束">7.6 性能约束</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>约束</th></tr></thead><tbody><tr><td>同时播放</td><td>≤ 32 个 <code>AudioStreamPlayer</code>（Godot 默认）</td></tr><tr><td>3D 音效</td><td><strong>只在相机 200 m 内</strong>用 <code>AudioStreamPlayer3D</code>，其余用 2D 混音</td></tr><tr><td>环境音</td><td>固定 4–6 个循环播放器，<strong>靠音量淡入淡出切换</strong>，不动态创建</td></tr><tr><td>音频线程</td><td>不阻塞主线程；<code>sim</code> 层完全不碰音频（宪法 L2）</td></tr></tbody></table></div>
+<p>⚠ <strong>不许为每个声源创建播放器</strong>：2000 个菜市场 × 1 个播放器 = 直接崩。</p>
+<hr>
+<h2 id="七-五-电影相机与拍摄模式-2026-11-17-新增">七·五、电影相机与拍摄模式（2026-11-17 新增）</h2>
+<blockquote>用户：「慢镜头什么时候让玩家自己决定，可能玩家想拍视频等，<br>对了，预留一些接口，后续城脉开发完成时要使用地图内容制作宣传片以及实际演示，<br>并且开放给玩家做出自己想要的视频。」</blockquote>
+<h3 id="7-5-1-一句话原则-慢镜头由玩家主动触发-不由系统打断">7.5.1 ⭐ 一句话原则：<strong>慢镜头由玩家主动触发，不由系统打断</strong></h3>
+<div class="tw"><table><thead><tr><th>谁决定</th><th>场景</th></tr></thead><tbody><tr><td><strong>玩家主动</strong>（热键即可，不进菜单）</td><td><strong>任何时候</strong>——想拍就拍</td></tr><tr><td>系统自动（节日）</td><td>只在那几天，<strong>且可关</strong>（<code>09-core-tick</code> §5.5.7）</td></tr><tr><td>⚠ 冲突时</td><td><strong>玩家主动优先</strong>。玩家按了慢镜头，节日的自动设置不覆盖</td></tr></tbody></table></div>
+<p>⚠ <strong>不设"慢镜头额度"</strong>：玩家想拍多久拍多久。 ⚠ <strong>不弹窗问"要不要看"</strong>：玩家按了才有，不按就没有。</p>
+<h3 id="7-5-2-三层能力-分层做-别一次做完">7.5.2 三层能力（分层做，别一次做完）</h3>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>批次</th><th>为什么分层</th></tr></thead><tbody><tr><td><strong>① 自由相机</strong></td><td>六自由度、任意高度、可穿建筑、可调 FOV、可脱离鼠标限制</td><td><strong>B1</strong>（和相机一起做）</td><td>后期加要重写相机</td></tr><tr><td><strong>② 拍摄模式</strong></td><td>隐藏 UI、暂停/极慢速、景深、运动模糊、稳定器</td><td>B7</td><td>纯表现，不影响模拟</td></tr><tr><td><strong>③ 路径动画</strong></td><td>关键帧相机路径、录放、导出</td><td>打磨年</td><td>宣传片才需要</td></tr></tbody></table></div>
+<p>⚠ <strong>①必须进 B1</strong>：自由相机与普通相机<strong>共用同一套渲染与裁剪管线</strong>， B1 不做，后面加等于重写 <code>camera_rig.gd</code>。</p>
+<h3 id="7-5-3-预留接口清单-这是本文档最重要的一节">7.5.3 预留接口清单（这是本文档最重要的一节）</h3>
+<blockquote>目的：<strong>发售后能自己做宣传片，玩家能自己做视频。</strong></blockquote>
+<div class="tw"><table><thead><tr><th>接口</th><th>形式</th><th>用途</th></tr></thead><tbody><tr><td><strong>相机脚本控制</strong></td><td><code>view/cinematic.set_pose(pos, rot, fov, roll)</code></td><td>外部脚本摆机位</td></tr><tr><td><strong>时间脚本控制</strong></td><td><code>core/clock.set_speed(0.0 ~ 10.0)</code></td><td>慢镜头 / 超快进</td></tr><tr><td><strong>UI 显隐</strong></td><td><code>ui.set_visible_all(bool)</code></td><td>干净画面</td></tr><tr><td><strong>事件钩子</strong></td><td><code>bus</code> 上的只读事件流</td><td>脚本可"等到某事件发生再开拍"</td></tr><tr><td><strong>确定性重放</strong></td><td>种子 + 操作序列 → 同一段画面</td><td><strong>宣传片必须能重跑同一段</strong></td></tr><tr><td><strong>无损录制</strong></td><td>Godot <code>--write-movie</code> 启动参数</td><td>开发/宣传用，不打包给玩家</td></tr><tr><td><strong>截图</strong></td><td><code>--screenshot</code> 参数 + 超采样倍数</td><td>静态图</td></tr></tbody></table></div>
+<p>⚠ <strong>"确定性重放"是宣传片的地基</strong>：如果同一段画面不能重跑， 拍错了就得重玩一遍城市。<strong>K7（1x/3x 结果一致）已经是它的前提。</strong></p>
+<p>⚠ <strong>这些接口全部在 <code>view/</code> 与 <code>core/</code>，<code>sim/</code> 不加任何东西</strong>（宪法 L2）。</p>
+<h3 id="7-5-4-10x-超快进-延时摄影的代价">7.5.4 ⚠ 10x 超快进：延时摄影的代价</h3>
+<p>拍"城市生长"的延时，需要比 3x 快得多。但：</p>
+<div class="tw"><table><thead><tr><th>速度</th><th>后果</th></tr></thead><tbody><tr><td>1x / 3x</td><td>模拟完整（<code>11-scale.md</code> §6.3）</td></tr><tr><td><strong>10x</strong></td><td><strong>月度摊平失效</strong>（66 ms × 10 = 660 ms/日），会卡顿，<strong>模拟精度下降</strong></td></tr></tbody></table></div>
+<p>⇒ <strong>规则</strong>：</p>
+<ol><li><strong>10x 只在拍摄模式里可用</strong>，正常游玩上限仍是 3x</li><li>进入 10x 时<strong>明确提示</strong>「10x 会降低模拟精度，适合拍摄，不适合正常游玩」</li><li>存档打标记（同 <code>sandbox_flags</code> 思路），<strong>该档不记录里程碑/成就</strong></li><li><strong>卡顿可以接受</strong>：录屏是"拍下来后期加速"，不是"实时玩"</li></ol>
+<p>⚠ <strong>不要为了 10x 优化模拟</strong>：那是把拍摄需求当成游玩需求，会让整个预算体系变形。</p>
+<h3 id="7-5-5-玩家做视频-能给到什么程度">7.5.5 玩家做视频：能给到什么程度</h3>
+<div class="tw"><table><thead><tr><th>能力</th><th>给不给</th><th>说明</th></tr></thead><tbody><tr><td>自由相机 + 隐藏 UI + 慢镜头</td><td>✅</td><td>本体就给，这是基础体验</td></tr><tr><td>相机路径动画</td><td>⭕ 打磨年</td><td>进阶，需要 UI</td></tr><tr><td>游戏内录屏</td><td>❌</td><td><strong>让玩家用 OBS 等外部工具</strong>，不自己做</td></tr><tr><td>视频导出</td><td>❌</td><td>同上</td></tr></tbody></table></div>
+<p>⚠ <strong>不做游戏内录屏</strong>：录制编码是另一个工程（分辨率/码率/编码器/磁盘）， 收益低（玩家都有 OBS），成本高。<strong>给好画面，不给录制器。</strong></p>
+<h3 id="7-5-6-验收点">7.5.6 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>CAM1</strong></td><td>B1 的自由相机可到<strong>任意高度与角度</strong>，且<strong>可穿建筑</strong></td><td>手动</td></tr><tr><td><strong>CAM2</strong></td><td>按热键<strong>立即进入慢镜头</strong>，不弹窗、不进菜单</td><td>手动</td></tr><tr><td><strong>CAM3</strong></td><td>玩家主动慢镜头时，<strong>节日自动设置不覆盖</strong></td><td>探针</td></tr><tr><td><strong>CAM4</strong></td><td>拍摄模式下 UI 可完全隐藏，<strong>画面无任何 HUD</strong></td><td>截图</td></tr><tr><td><strong>CAM5</strong></td><td><strong>同种子 + 同操作序列，两次拍摄画面逐帧一致</strong></td><td>探针录两遍比对</td></tr><tr><td><strong>CAM6</strong></td><td>10x 只在拍摄模式可用，且<strong>进入时提示 + 存档打标记</strong></td><td>探针</td></tr><tr><td><strong>CAM7</strong></td><td><code>sim/</code> 未因本节新增任何内容（仍无相机/渲染引用）</td><td><code>check_contract</code></td></tr></tbody></table></div>
+<p>⚠ <strong>CAM5 是宣传片能不能拍的前提</strong>：不能重跑，就只能一条过。</p>
+<hr>
+<h2 id="八-数据契约">八、数据契约</h2>
+<blockquote>表现层也有契约：<strong>它决定了 <code>zoning</code> 能长出什么，以及能不能合批</strong>。<br>这里的结构一旦定死，建模 Agent 才能批量派活。</blockquote>
+<h3 id="8-1-资产注册表-assets-registry-json">8.1 资产注册表（assets/registry.json）</h3>
+<div class="tw"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>archetype</code></td><td>见 §五 两张表，<strong>共 26 类</strong>（住宅 15 + 设施 11；<code>assets/registry.json</code> 同源）</td></tr><tr><td><strong><code>mode</code></strong></td><td><strong><code>composed</code></strong>（模块组装，本体用）/ <strong><code>whole</code></strong>（整体模型，社区 Mod 用）—— R18</td></tr><tr><td><code>modules</code></td><td><code>composed</code> 时必填，引用 <code>compose.json</code> 的模块组合</td></tr><tr><td><code>model_path</code></td><td><code>whole</code> 时必填，单个整体模型路径</td></tr><tr><td><code>era_gate</code></td><td>允许出现的年代区间</td></tr><tr><td><code>lod_paths</code></td><td>四档 LOD 的文件路径</td></tr><tr><td><code>atlas</code></td><td>使用的图集编号（0 或 1）</td></tr><tr><td><code>tri_budget</code></td><td>四档三角面上限（§3.3）</td></tr><tr><td><code>source</code></td><td><code>SOURCE.md</code> 路径</td></tr></tbody></table></div>
+<p>⚠ <strong>基础版只实现 <code>composed</code>，但 schema 必须从 B3 就支持 <code>whole</code></strong>（§18.5）。 否则以后加社区古建要改整个注册表<strong>和存档格式</strong>。</p>
+<h3 id="8-1-1-可动模型-节日-dlc-用-f108">8.1.1 可动模型（节日 DLC 用，F108）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>允许骨骼动画的只有 3 个：<strong>舞狮 / 舞龙 / 龙舟</strong></td><td>其余全是静态装饰件</td></tr><tr><td>骨骼数上限 <strong>≤ 10</strong></td><td>不做布料、毛发、真实人群</td></tr><tr><td><strong>只在 LOD0/LOD1 出现</strong></td><td>LOD2 起换成静态姿态</td></tr><tr><td>同类实例同时 ≤ 8 组</td><td>全城庙会也不会同时出现几十条龙</td></tr></tbody></table></div>
+<p>⚠ <strong>这条是为了守住渲染预算</strong>（<code>11-scale.md</code> §6.3.4）：骨骼动画一多，CPU 蒙皮会吃掉 <code>traffic</code> agent 的余量。<strong>三个就够"年味"，不需要更多。</strong></p>
+<p>⚠ <strong><code>zoning</code> 不直接引用模型文件</strong>，只引用 <code>archetype</code> 枚举值（<code>u8</code>）。 模型路径的解析全在 <code>view/</code> 侧——这样换模型不用动模拟层（宪法 L2）。</p>
+<h3 id="8-2-与-zoning-的唯一接口">8.2 与 zoning 的唯一接口</h3>
+<div class="tw"><table><thead><tr><th>方向</th><th>内容</th></tr></thead><tbody><tr><td><code>zoning</code> → <code>view</code></td><td><code>building.archetype(u8)</code> + <code>floors(u8)</code> + <code>state(u8)</code>（在建/正常/废弃）</td></tr><tr><td><code>view</code> → <code>zoning</code></td><td><strong>无</strong>。表现层不许回写任何东西</td></tr></tbody></table></div>
+<p>⚠ <strong><code>view</code> 不许回写</strong>：这是 R2（相机只管表现）在资产层的体现。</p>
+<h3 id="8-3-图集预算-硬约束">8.3 图集预算（硬约束）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>上限</th><th>超了怎么办</th></tr></thead><tbody><tr><td>图集张数</td><td><strong>2 张 4096²</strong></td><td>不加图集，换掉同类模块</td></tr><tr><td>全项目材质数</td><td><strong>8 种</strong></td><td>合并材质</td></tr><tr><td>单模块 UV</td><td>必须完整落在某一张图集内</td><td>禁止跨图集拆分</td></tr></tbody></table></div>
+<hr>
+<h2 id="九-验收点">九、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>AR1</strong></td><td>开局村庄画面里，<strong>能数出院墙、大门、巷道</strong>，不是一排格子房</td><td>截图 + 人工判定</td></tr><tr><td><strong>AR2</strong></td><td>任一建筑资产有 LOD0–LOD3 四档，且三角面在 §3.3 预算内</td><td><code>probe_structure.gd</code> 打印</td></tr><tr><td><strong>AR3</strong></td><td>全项目材质数 ≤ 8，图集 ≤ 2 张 4096²</td><td>探针遍历 <code>assets/</code></td></tr><tr><td><strong>AR4</strong></td><td>同一 archetype 的 1000 个实例只产生 1 次 draw call（按区块）</td><td>Godot 帧调试器</td></tr><tr><td><strong>AR5</strong></td><td>5 万栋建筑在 30 fps 下稳定（<code>11-scale.md</code> §六 预算）</td><td><code>probe_tick</code></td></tr><tr><td><strong>AR6</strong></td><td><strong>近景可数</strong>：同种子同机位的 1:1 截图里，<strong>能数出窗格、招牌、车道线、行道树</strong>（不是糊成一片色块）</td><td>截图人工判定（3 个机位）</td></tr><tr><td><strong>AR7</strong></td><td><strong>远景可读</strong>：最高视角下能看出 <strong>≥3 种屋顶类型</strong> 与 <strong>≥2 处地标</strong>（不靠 UI 标注）</td><td>截图人工判定</td></tr></tbody></table></div>
+<p>⚠ <strong>AR6 / AR7 是"画质"的可执行定义</strong>（2026-11-22 补）： 不追求"像照片"，追求"<strong>截图能直接发出去</strong>"。这两条不过，就不要急着加更多建筑原型—— 先修模块化与 LOD，因为糊成一团通常是<strong>尺度与合批问题，不是材质问题</strong>。</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-23（二）</strong>：§三 开头接入 <code>14-model-prompts.md</code>，并写明现有 46 个 AI 模型的实测结论</li></ul>
+<p>  （无贴图 / 太重 / 片区级 ⇒ 只能当参考，不能当资产）。</p>
+<ul><li><strong>2026-11-22（五）</strong>：左侧从 12 个平铺视图改为 <strong>27 个 / 8 组的两级竖条</strong>（组 → 视图）；</li></ul>
+<p>  底部工具 8 → 13 组。结构与理由见 <code>13-player-loop</code> §14.3。</p>
+<ul><li><strong>2026-11-22（四）</strong>：新增 <strong>§6.1.3 图标化</strong> —— 可点元素只显示图标、文字进 tooltip；</li></ul>
+<p>  顶栏加存档城市名；tooltip 中文靠 <code>ThemeDB.fallback_font</code>（实测不设就是方框）。</p>
+<ul><li><strong>2026-11-22（三）</strong>：<strong>布局重排</strong>（开发者要求）：顶部数据 / 底部建造 / 左侧信息 / 右侧待定；</li></ul>
+<p>  左侧扩到 12 个信息视图、底部 8 个工具组（含子工具），全部由 json 驱动；面板改为单一 <code>panel_info.gd</code>。</p>
+<ul><li><strong>2026-11-22（二）</strong>：新增 <strong>§6.1.2 layout.json / panels.json 接线</strong> —— 这两个文件此前同样零引用，</li></ul>
+<p>  HUD 五个脚本全是占位。现由 <code>ui_layout.gd</code> + <code>hud.gd</code> 消费，并加了自动守卫。</p>
+<ul><li><strong>2026-11-22</strong>：新增 <strong>AR6 / AR7</strong> 两条画质判据（近景可数 / 远景可读），</li></ul>
+<p>  依据「城脉也要追求画质」（<code>reports/2026-11-21-引擎选型评估.md</code> §四·五）。   ⚠ 明确<strong>画质 ≠ 写实</strong>：密度、灯火、天际线是主分，材质分辨率不是。</p>
+<ul><li><strong>2026-11-19</strong>：新增 <strong>§1.5.5 主菜单背景跟随真实时间</strong>（已实现）。太阳方位/天色/夜间亮窗</li></ul>
+<p>  按本地时间计算，<code>--hour=</code> 可覆盖。记下三条实测坑：<strong>实例颜色是 linear 的</strong>、   <strong>不开阴影楼群一片蓝</strong>、<strong>白点要随时间变</strong>；以及<strong>面板实度要能压暗背景</strong>。</p>
+<ul><li><strong>2026-11-18（五）</strong>：新增 <strong>§4.0 磨砂玻璃 / §4.2 交互反馈 / §4.3 片尾滚动字幕</strong></li></ul>
+<p>  （用户三条明确的视觉偏好）：   ① ⭐ <strong>磨砂玻璃</strong>（<code>rgba(18,22,28,0.62)</code> + 12–16 px 背景模糊 + <strong>1 px 内侧亮线</strong>）——   <strong>这可能是"配色待定"的解药</strong>：半透明 + 模糊天然不抢 3D 画面；   ⚠ 但 Godot 4 <strong>无内置 backdrop blur</strong>，需 <code>BackBufferCopy</code> + shader，   全分辨率约 <strong>1–2 ms/帧</strong> ⇒ <strong>推荐两级降采样（≈0.4 ms）</strong>；   ⚠ <strong>只用于大面积少量元素</strong>（面板/顶栏/模态框），<strong>不要每个元素套一层</strong>；   ② ⭐ <strong>交互三态</strong>（悬停 120 ms / 按下下沉 1 px / 禁用无反应）+ 音效（悬停音只在<strong>进入</strong>时响）；   ⚠ <strong>键盘与手柄也必须有三态</strong>（用外发光边框，不用底色，避免与选中态冲突）；   ③ ⭐ <strong>关于页改为电影片尾式滚动</strong>（40 px/s、可 ×4 加速、<strong>可跳到末尾</strong>、末尾停在版本信息）；   ⚠ <strong>默认不自动跳过</strong>——第一次看片尾是仪式感。   新增 UI1–UI8 八条断言。</p>
+<ul><li><strong>2026-11-18（四）</strong>：新增 <strong>§六·六 放学小吃摊与补课学生</strong>。依据用户</li></ul>
+<p>  「假期时间还是能看到学生背书包去补课；放学时学校门口必有小吃摊」：   ① <strong>小吃摊纯 view 层</strong>（附近 300 m 有学校 + 15:30–18:00，3–8 个道具），   ⚠ <strong>不进 <code>sim</code></strong> —— 宪法 L2 的正面例子；   ② <strong>补课学生</strong>：傍晚/周末/寒暑假，数量为学期同期 15–25%，   ⚠ <strong>"假期街上还有背书包的孩子"是中国城市最强的日常符号</strong>，   <strong>书包的视觉比建模精度重要</strong>。</p>
+<ul><li><strong>2026-11-17（三）</strong>：新增 <strong>§一·五 启动流程与品牌呈现</strong>。依据用户</li></ul>
+<p>  「得先搞一个工作室名字，游戏启动还能看到的」：   四屏启动顺序（引擎 splash → <strong>工作室 Logo</strong> → 发行方 → 主菜单）、   <strong>任意键跳过 + 总时长 ≤ 7 秒 + 第二次启动记忆跳过</strong>（⚠ 不做不可跳过的长动画）；   Logo 技术规格（<strong>必须留矢量源</strong>，暗/亮两版，≥2048 px）；   Credits 呈现位置（主菜单/Steam 店页，<strong>启动时不显示</strong>）。   ⚠ 关键：<strong>Logo 可以晚做，但启动流程的代码插槽要在 B1 留好</strong>。</p>
+<ul><li><strong>2026-11-17（二）</strong>：新增 <strong>§七·五 电影相机与拍摄模式</strong>。依据用户</li></ul>
+<p>  「慢镜头什么时候让玩家自己决定，可能玩家想拍视频；预留接口，后续用地图内容做宣传片与实际演示，   并开放给玩家做出自己想要的视频」：   ⭐ 原则 <strong>慢镜头由玩家主动触发、不由系统打断</strong>，且<strong>玩家主动优先于节日自动</strong>；   三层能力（<strong>自由相机必须进 B1</strong>，否则后期要重写 <code>camera_rig.gd</code>；拍摄模式 B7；路径动画打磨年）；   <strong>七个预留接口</strong>（相机脚本控制 / 时间控制 / UI 显隐 / 事件钩子 / <strong>确定性重放</strong> /   <code>--write-movie</code> / 截图），其中<strong>确定性重放是宣传片的地基</strong>；   ⚠ <strong>10x 只在拍摄模式可用</strong>（月度摊平失效会卡顿，明确提示 + 存档打标记）；   ⚠ <strong>不做游戏内录屏</strong>（收益低，玩家都有 OBS）。新增 CAM1–CAM7 七条断言。</p>
+<ul><li><strong>2026-11-17</strong>：<strong>§七 重写为完整音频架构</strong>（用户明确配音范围：市民碎片 + 演出人声；</li></ul>
+<p>  环境音要准备；BGM 无创作经验用纯音乐）。内容：<strong>五条总线</strong>（Music 默认 40 %、   <strong>Voice 默认 0 %</strong>）、六层环境音（底噪/交通/施工/生活/自然/事件）、   ⭐ <strong>素材来源建议"自己录"</strong>（电动车警报、菜市场、广场舞——素材库没有的中国声音）、   <strong>BGM 少而可关 + 按城市规模分层渐入</strong>（村几乎无 BGM → 市完整配器）、   <strong>演唱会人声用免版权 vocal 采样 + 低通 + 混响</strong>（<strong>不要用 TTS 唱歌</strong>）、   以及性能约束（≤32 播放器、只给相机 200 m 内建 3D 音源）。   另加 <code>stadium</code> 原型（26 类）。</p>
+<ul><li><strong>2026-11-16（三）</strong>：<strong>§8.1 资产注册表加 <code>mode</code> 字段</strong>（<code>composed</code> / <code>whole</code>）+ 新增 <strong>§8.1.1 可动模型约束</strong>。</li></ul>
+<p>  依据 <code>decisions.md</code> R18：① 社区古建走 <code>whole</code> 模式（整体模型，不拆模块），   <strong>schema 必须从 B3 支持，否则以后要改存档</strong>；② 节日 DLC 的骨骼动画<strong>只许 3 个</strong>   （舞狮/舞龙/龙舟，≤10 骨，只在 LOD0/1，同类同时 ≤8 组）——为守住 <code>traffic</code> agent 的渲染余量。</p>
+<ul><li><strong>2026-11-16（二）</strong>：<strong>§六 UI 重写为「数据驱动 + Mod 友好」</strong>（用户提出 UI Mod 支持与布局）。</li></ul>
+<p>  三份 JSON（<code>theme</code> / <code>layout</code> / <code>panels</code>）+ Mod 深合并覆盖 + <strong>三条边界</strong>   （只能改表现不能碰 sim / 面板只读不写 / 版本化）+ 布局基线。   顺带把 §八 拆成「八 数据契约」与「九 验收点」，补上资产注册表与图集预算。</p>
+<ul><li><strong>2026-11-16</strong>：新增 <strong>§四·五 模块化组装</strong>（<code>decisions.md</code> R17）。</li></ul>
+<p>  建筑生产从"22 个完整模型"改为 <strong>4 组 21 个模块 + 组合规则</strong>   （楼体/屋顶/底层/附属），资产量少一半、形态多五倍；   并指出模块化最重要的好处是<strong>能表达"加建痕迹"</strong>——中国建筑的真实特征，完整模型做不到。   §3.5 入库检查改为按模块检查。</p>
+<ul><li><strong>2026-11-15</strong>：首版（AI 起草，待开发者拍板）。依据 R3 / R4 建立资产管线：</li></ul>
+<p>  采集清单与纪律、建模 Agent 交接契约（格式/坐标系/轴心/命名/预算/图集/授权）、   四档 LOD 三角面预算、15 类起步 archetype（村庄→县→市）、UI 片区级工具单位、5 条验收断言。</p><div class="pager"><a href="design-09-core-tick.html">← 09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a><a href="design-13-player-loop.html">13 · 玩家循环与游戏逻辑：怎么转起来 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#一-五-启动流程与品牌呈现-2026-11-17-新增">一·五、启动流程与品牌呈现（2026-11-17 新增）</a><a class="l3" href="#1-5-1-启动顺序-四屏-可跳过">1.5.1 启动顺序（四屏，可跳过）</a><a class="l3" href="#1-5-2-工作室-logo-的技术规格">1.5.2 工作室 Logo 的技术规格</a><a class="l3" href="#1-5-3-署名-credits-的呈现">1.5.3 署名（Credits）的呈现</a><a class="l3" href="#1-5-4-什么时候需要这个">1.5.4 什么时候需要这个</a><a class="l3" href="#1-5-5-主菜单背景跟随真实时间-2026-11-19-已实现">1.5.5 主菜单背景跟随真实时间（2026-11-19 已实现）</a><a class="l2" href="#二-视觉基准-先有靶子-再谈建模">二、视觉基准：先有靶子，再谈建模</a><a class="l3" href="#2-1-采集清单-去现场时按这个拍">2.1 采集清单（去现场时按这个拍）</a><a class="l3" href="#2-2-采集纪律">2.2 采集纪律</a><a class="l2" href="#三-资产管线-建模-agent-交接契约">三、资产管线：建模 Agent 交接契约</a><a class="l3" href="#3-1-输入-你给建模-agent-什么">3.1 输入（你给建模 Agent 什么）</a><a class="l3" href="#3-2-输出规格-硬性-不满足直接退回">3.2 输出规格（硬性，不满足直接退回）</a><a class="l3" href="#3-3-三角面预算-按-lod">3.3 三角面预算（按 LOD）</a><a class="l3" href="#3-4-图集规则-b3-就要定-不然-b5-必爆">3.4 图集规则（B3 就要定，不然 B5 必爆）</a><a class="l3" href="#3-5-入库前的五条检查">3.5 入库前的五条检查</a><a class="l2" href="#四-视觉规范-已拍板部分">四、视觉规范（已拍板部分）</a><a class="l3" href="#4-0-ui-材质-磨砂玻璃-2026-11-18-用户明确">4.0 ⭐ UI 材质：磨砂玻璃（2026-11-18 用户明确）</a><a class="l4" href="#4-0-1-参数-初始值">4.0.1 参数（初始值）</a><a class="l4" href="#4-0-2-渲染成本-这个必须提前知道">4.0.2 ⚠ 渲染成本（这个必须提前知道）</a><a class="l4" href="#4-0-3-哪里用磨砂玻璃-不要到处都是">4.0.3 哪里用磨砂玻璃（不要到处都是）</a><a class="l3" href="#4-1-配色方向-提案-待定稿">4.1 配色方向（提案，待定稿）</a><a class="l3" href="#4-2-交互反馈-悬停与点击都必须有回应-2026-11-18-用户明确">4.2 ⭐ 交互反馈：悬停与点击都必须有回应（2026-11-18 用户明确）</a><a class="l4" href="#4-2-1-三态-每态都要有明显变化">4.2.1 三态，每态都要有明显变化</a><a class="l4" href="#4-2-2-音效配合">4.2.2 音效配合</a><a class="l4" href="#4-2-3-键盘与手柄也必须有三态">4.2.3 键盘与手柄也必须有三态</a><a class="l4" href="#4-2-4-验收点">4.2.4 验收点</a><a class="l3" href="#4-3-关于页-电影片尾式滚动字幕-2026-11-18-用户明确">4.3 关于页：电影片尾式滚动字幕（2026-11-18 用户明确）</a><a class="l4" href="#4-3-1-形式">4.3.1 形式</a><a class="l4" href="#4-3-2-内容顺序-按重要性-不按字母">4.3.2 内容顺序（按重要性，不按字母）</a><a class="l4" href="#4-3-3-验收点">4.3.3 验收点</a><a class="l2" href="#四-五-模块化组装-不做-22-个完整建筑-做一套模块-r17">四·五、模块化组装：不做 22 个完整建筑，做一套模块（R17）</a><a class="l3" href="#4-5-1-四组模块">4.5.1 四组模块</a><a class="l3" href="#4-5-2-组合规则-config-assets-compose-json">4.5.2 组合规则（config/assets/compose.json）</a><a class="l3" href="#4-5-3-三个好处-都不是可选的">4.5.3 三个好处（都不是可选的）</a><a class="l3" href="#4-5-4-对入库检查的影响">4.5.4 对入库检查的影响</a><a class="l2" href="#五-建筑谱系-archetype-先覆盖村庄-再往上长">五、建筑谱系（archetype）：先覆盖村庄，再往上长</a><a class="l2" href="#六-ui-数据驱动-mod-友好">六、UI：数据驱动 + Mod 友好</a><a class="l3" href="#6-1-三个数据文件">6.1 三个数据文件</a><a class="l3" href="#6-1-1-接线状态-2026-11-22-实测核对">6.1.1 接线状态（2026-11-22 实测核对）</a><a class="l3" href="#6-1-2-layout-json-panels-json-的接线-2026-11-22-同日按开发者要求重排">6.1.2 layout.json / panels.json 的接线（2026-11-</a><a class="l3" href="#6-1-3-图标化-可点的东西只有图标-文字进悬停提示-2026-11-22">6.1.3 图标化：可点的东西只有图标，文字进悬停提示（2026-11-22）</a><a class="l3" href="#6-1-4-路名牌的文字是动态的-2026-11-25">6.1.4 路名牌的文字是动态的（2026-11-25）</a><a class="l3" href="#6-2-mod-加载优先级">6.2 Mod 加载优先级</a><a class="l3" href="#6-3-三条边界-mod-不许越过的线">6.3 三条边界（Mod 不许越过的线）</a><a class="l3" href="#6-4-布局基线">6.4 布局基线</a><a class="l2" href="#六-五-施工阶段的视觉-03-zoning-3-6-3">六·五、施工阶段的视觉（03-zoning §3.6.3）</a><a class="l2" href="#六-六-放学小吃摊与补课学生-街头的-活气-2026-11-18">六·六、放学小吃摊与补课学生：街头的"活气"（2026-11-18）</a><a class="l3" href="#6-6-1-放学小吃摊-纯-view-层">6.6.1 放学小吃摊（纯 view 层）</a><a class="l3" href="#6-6-2-补课学生-tutoring-od-的视觉">6.6.2 补课学生（tutoring OD 的视觉）</a><a class="l2" href="#七-音频-五条总线-分层">七、音频：五条总线 + 分层</a><a class="l3" href="#7-1-五条总线-各自独立音量-缺一条都不行">7.1 五条总线（各自独立音量，缺一条都不行）</a><a class="l3" href="#7-2-环境音-这一层最值得投入-而且我们有别人没有的优势">7.2 环境音：这一层最值得投入，而且我们有别人没有的优势</a><a class="l4" href="#素材来源-自己录-这是低成本高回报的差异点">⭐ 素材来源：自己录（这是低成本高回报的差异点）</a><a class="l3" href="#7-3-bgm-少-可关-随城市规模变化">7.3 BGM：少、可关、随城市规模变化</a><a class="l3" href="#7-4-演唱会-演出-人声怎么解决">7.4 演唱会 / 演出：人声怎么解决</a><a class="l3" href="#7-5-演出的机制面-不只音频">7.5 演出的机制面（不只音频）</a><a class="l3" href="#7-6-性能约束">7.6 性能约束</a><a class="l2" href="#七-五-电影相机与拍摄模式-2026-11-17-新增">七·五、电影相机与拍摄模式（2026-11-17 新增）</a><a class="l3" href="#7-5-1-一句话原则-慢镜头由玩家主动触发-不由系统打断">7.5.1 ⭐ 一句话原则：慢镜头由玩家主动触发，不由系统打断</a><a class="l3" href="#7-5-2-三层能力-分层做-别一次做完">7.5.2 三层能力（分层做，别一次做完）</a><a class="l3" href="#7-5-3-预留接口清单-这是本文档最重要的一节">7.5.3 预留接口清单（这是本文档最重要的一节）</a><a class="l3" href="#7-5-4-10x-超快进-延时摄影的代价">7.5.4 ⚠ 10x 超快进：延时摄影的代价</a><a class="l3" href="#7-5-5-玩家做视频-能给到什么程度">7.5.5 玩家做视频：能给到什么程度</a><a class="l3" href="#7-5-6-验收点">7.5.6 验收点</a><a class="l2" href="#八-数据契约">八、数据契约</a><a class="l3" href="#8-1-资产注册表-assets-registry-json">8.1 资产注册表（assets/registry.json）</a><a class="l3" href="#8-1-1-可动模型-节日-dlc-用-f108">8.1.1 可动模型（节日 DLC 用，F108）</a><a class="l3" href="#8-2-与-zoning-的唯一接口">8.2 与 zoning 的唯一接口</a><a class="l3" href="#8-3-图集预算-硬约束">8.3 图集预算（硬约束）</a><a class="l2" href="#九-验收点">九、验收点</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

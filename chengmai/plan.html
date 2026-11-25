@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>v2 推进规划 · 按批次 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" class="on" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 计划与纪律</div><h1 id="v2-推进规划-按批次">v2 推进规划 · 按批次</h1>
+<blockquote>📌 <strong>涉及性能取舍时，结论统一登记在 <code>docs/design/19-tradeoffs.md</code></strong>；本文只说明"要什么"，不重复决定"砍什么"。</blockquote>
+<blockquote><strong>一批 = 一个能演示的东西 + 一条能跑命令的验收 + 一个不许跳的停止条件。</strong><br>三样缺任何一样，就不算"一批"，只是一堆改动。<br>排期对齐 <code>design/01-playable-definition.md</code> §六 的四季度倒推；本文件把它拆成可执行的批次。<br><strong>本文件是活文档</strong>，每批完成后改勾选并在文末签日期。</blockquote>
+<hr>
+<h2 id="一-为什么会-盲目指挥">一、为什么会"盲目指挥"</h2>
+<p>用户 2026-11-15 原话：「<strong>刚做的时候我还犯了个错误就是盲目指挥导致后面就乱了</strong>」。 v1 的 <code>04-collaboration.md</code> §一 把这件事拆成过四条根因，v2 直接继承：</p>
+<div class="tw"><table><thead><tr><th>症状</th><th>根因</th><th>v2 的对策</th></tr></thead><tbody><tr><td>两个代理先后改装配文件，一合并就丢东西</td><td>共享文件被多方写</td><td>装配只由 <code>core/sim.cs</code> 改，其它系统只交子场景</td></tr><tr><td>A 系统改了字段名，B 系统运行时才崩</td><td>系统之间直接 <code>get_node</code></td><td>跨系统只走 <code>bus</code>（宪法 L3）</td></tr><tr><td>每个系统都往同一个文件里加两行</td><td>没有所有权边界</td><td>目录级所有权（宪法 L1）</td></tr><tr><td>谁都说"我的跑通了"，合起来不对</td><td>没有统一验收</td><td>每批一条可执行验收，不过不签收</td></tr></tbody></table></div>
+<p><strong>但 v2 还要补第四条 v1 没有的：批次顺序。</strong> v1 的乱有一半不是并行造成的，是<strong>下游系统建立在上游还没验收的东西上</strong>。 所以本文件的核心不是"分工"，是"<strong>什么顺序、什么时候停</strong>"。</p>
+<hr>
+<h2 id="二-8-个批次总表">二、8 个批次总表</h2>
+<div class="tw"><table><thead><tr><th>批次</th><th>目标（一句话）</th><th>交付</th><th>验收（可跑）</th><th>并行</th><th>季度</th></tr></thead><tbody><tr><td><strong>B0 立法</strong> ✅</td><td>把"不许做什么"和"谁是主线"定死</td><td>18 条裁定 + <strong>8 系统边界表</strong> + 九篇契约</td><td>待拍板 ⬜ = 0（已过）</td><td>不写代码</td><td>—</td></tr><tr><td><strong>B1 骨架</strong></td><td>能打开、能看、相机能飞</td><td><code>core/</code> <strong>5 文件</strong> + 相机 + 地形 + UI 数据驱动骨架</td><td>四条验收（含改 theme.json 变色）</td><td>单代理</td><td>—</td></tr><tr><td><strong>B1.5 地图编辑器</strong></td><td>能画出能玩的图</td><td>程序化生成 + 手绘刷子 + 地图格式</td><td>M1–M4（<strong>M4 双向读写</strong>）</td><td>单代理</td><td>R17</td></tr><tr><td><strong>B2 路网</strong></td><td>能画出一条曲线路</td><td><code>road/</code> 3 文件 + <code>road_view</code></td><td>拖出曲线、宽度对、能拆 + <strong>围合面</strong></td><td><strong>单代理（不许并行）</strong></td><td>R6</td></tr><tr><td><strong>B3 分区生长</strong></td><td>画区就长楼</td><td><code>zoning/</code> 3 文件 + 建筑模块化装配</td><td>60 游戏日内出现建筑并升级</td><td>单代理</td><td>R4</td></tr><tr><td><strong>B4 数字活了</strong></td><td>顶栏不再是"—"</td><td><code>population</code> <code>employment</code> <code>finance</code> + 顶栏</td><td>人口 = 家庭之和，可复核（PP1–PP9）</td><td><strong>可开 2 个</strong></td><td>R14</td></tr><tr><td><strong>B5 交通</strong></td><td>车在跑，堵得住，<strong>地铁能分流</strong>，⭐ <strong>车道级连接（R35）</strong></td><td><code>traffic/</code> 3 文件 + <code>vehicle_view</code> + 地铁/公交 + <strong>Lv1 转向配置 + Lv2 路口连接</strong></td><td>TR1–TR10 + <strong>RD-L1~L5</strong></td><td>单代理</td><td>R18</td></tr><tr><td><strong>B6a 核心循环</strong></td><td>卖地赚钱、卖完就慌</td><td><code>land_value</code> <code>land_sale</code> <code>school</code> + 2 面板</td><td>断言 A3–A6 全绿</td><td>可开 2 个（有耦合，慎）</td><td>—</td></tr><tr><td><strong>B6b 市政配套</strong></td><td>没水没电就长不出楼</td><td><code>utility/</code> 3 文件 + 覆盖</td><td>SV4/SV9/SV24–SV27</td><td><strong>可与 B6a 并行</strong>（目录不重叠）</td><td>R15</td></tr><tr><td><strong>B7 手感</strong></td><td>玩满 2 小时，输了知道为什么</td><td>引导 + 失败反馈 + 音效</td><td>A1–A10 全绿 + 陌生人试玩</td><td>不并行</td><td>—</td></tr></tbody></table></div>
+<h2 id="二-一-v-切片-可玩里程碑-r34-2026-11-24">二·一 V 切片：可玩里程碑（R34，2026-11-24）</h2>
+<blockquote><strong>B 批次 = 纵向的能力批次；V 切片 = 横向的可玩里程碑。两者不是二选一。</strong><br>每片都穿越所有系统，但每条都浅；<strong>B 批次不取消</strong>（取消就回到 v1 的"系统做一半就切走"）。<br>方案正本见 <code>design/16-progressive-play.md</code>。</blockquote>
+<div class="tw"><table><thead><tr><th>切片</th><th>城市形态</th><th>人口</th><th>需要的 B 批次（深度）</th><th>验收</th><th>状态</th></tr></thead><tbody><tr><td><strong>V0 村庄</strong></td><td>独院 + 村道 + 田</td><td>&lt; 3000</td><td>B1 完整（含<strong>存档迁移链</strong>）· B2 只直路/曲线 + 围合面 · B3 只独院 + 沿街自建 · B4 <strong>完整</strong> · B6a 最小（人头税 + 建设支出 + 小学）</td><td><strong>P-1</strong> 30 分钟不出错 · <strong>P-2</strong> 财政由负转正 · <strong>P-3</strong> 存档能升到 V1</td><td>🔴 <strong>当前目标</strong></td></tr><tr><td>V1 镇</td><td>沿街自建 + 十字街</td><td>3000–3 万</td><td>B2 补曲线与路口 · B3 补镇级原型 · B5 最小（车在跑）· B6b 水电</td><td>P-1/P-2/P-3（升到 V2）</td><td>⬜</td></tr><tr><td>V2 县</td><td>6 层为主 + 老单位大院</td><td>3 万–30 万</td><td>B2 补高架/桥 · B3 补板楼 · B5 公交 · B6 完整</td><td>P-1/P-2/P-3（升到 V3）</td><td>⬜</td></tr><tr><td>V3 市</td><td>高层 + 高架 + 地铁</td><td>&gt; 30 万</td><td>全部 + B7 手感</td><td>P-1/P-2/P-3 + A1–A10</td><td>⬜</td></tr></tbody></table></div>
+<p><strong>P-3 是生命线</strong>：该片存档必须在下一片版本打开并继续跑 100 游戏日。 前两片过了 P-1/P-2 但 P-3 不过，整个方案作废。</p>
+<p>⚠ <strong>"能浅 / 绝不能浅"（R34 第 5 条）</strong>：</p>
+<ul><li>能浅：路网<strong>类型</strong>、建筑原型、服务种类、UI 面板（加类型不用改架构）</li><li><strong>绝不能浅</strong>：<strong><code>road_data</code> 的 SoA 布局与围合面生成</strong>（B2，6 个系统全依赖）、</li></ul>
+<p>  <strong>parcel 数据结构</strong>、<strong>Tick 顺序</strong>、<strong>bus 契约</strong>、<strong>存档格式</strong> —— 一改就全线返工</p>
+<p>⚠ <strong>别把"B2 只直路/曲线"理解成 B2 可以做浅</strong>：V0 少的只是<strong>道路类型数量</strong>（不做高架/立交/桥）， 而 <strong>SoA 布局、围合面生成、路段拆分</strong> 必须一次做对——它们是下游 6 个系统的地基。</p>
+<p>⚠ <strong>每片结束必须"回填"</strong>（<code>16</code> §5.4）：把为快而浅的实现换成正式实现，<strong>不是往上堆功能</strong>。</p>
+<p>⚠ <strong>从 V0 起分主档/试验档</strong>：主档干净给宣传片用，试验档随便玩。成本极低，别省。</p>
+<hr>
+<h2 id="三-每批的细节">三、每批的细节</h2>
+<h3 id="b0-立法-不写一行代码">B0 · 立法（不写一行代码）</h3>
+<p><strong>输入</strong>：无 <strong>交付</strong>（2026-11-16 修订，按实际执行的交付物）：</p>
+<ol><li><code>docs/decisions.md</code> 的 Q1–Q14 <strong>全部拍板</strong>（R1–R17）✅</li><li><code>docs/design/00-constitution.md</code> 定稿 ✅</li><li><strong><code>docs/design/system-boundaries.md</code>：8 系统边界表</strong> ✅</li></ol>
+<p>   （每个系统「拥有什么 / 读谁 / 写谁 / 走哪个 bus key / 文件清单 / 频率」+ 依赖方向 + 归属判定四步）</p>
+<ol><li><strong><code>design/02</code>–<code>10</code> 每篇的「数据契约 + 验收点」两节</strong> ✅（九篇；02/04/05/06 于 2026-11-16 补齐）</li></ol>
+<p><strong>验收</strong>（两条都要过）：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td>1</td><td>`grep -E "^\</td><td>\<em>\</em>Q[0-9]+" docs/decisions.md \</td><td>grep -c "⬜"` 输出 <strong>0</strong></td></tr><tr><td>2</td><td><strong><code>design/02</code>–<code>10</code> 九篇</strong>每篇都同时有「数据契约」与「验收点」两节（11/12 是横切篇，不强制）</td></tr></tbody></table></div>
+<p>⚠ <strong>原验收 <code>grep -c "⬜" docs/decisions.md</code> 作废</strong>：它把正文里"拍板栏 ⬜ 是历史标记" 那句话也算进去了，永远归不了零（这个坑 2026-11-15 就发现，现在正式改掉）。</p>
+<p><strong>停止条件</strong>：两条验收任一不过，不许进 B1。 ⚠ B0 最容易跳过，因为它不产出任何可见的东西 —— <strong>但 v1 的乱全部起源于此。</strong></p>
+<hr>
+<h3 id="b1-骨架">B1 · 骨架</h3>
+<p><strong>输入</strong>：B0 完成 ✅（2026-11-16）</p>
+<blockquote>⚠ <strong>语言分工（<code>decisions.md</code> R19，2026-11-17）</strong>：<br><strong><code>scripts/sim/</code> 与 <code>core/</code> 用 C#（<code>.cs</code>）</strong>，<code>view/</code> <code>ui/</code> <code>tools/</code> 用 GDScript（<code>.gd</code>）。<br>依据 <code>11-scale</code> §6.4 实测：GDScript 做 15 万 agent 要 43 ms、1000 万月结要 3.1 秒，C# 是 ~25 ms 与 71 ms。<br>⇒ <strong>项目必须开 mono</strong>；<code>sim</code> 改动要 <code>dotnet build</code>（几秒），<strong>迭代慢于 GDScript</strong>。<br>三条硬约束：<strong>禁 <code>Vector3</code>（用 <code>float[]</code>）/ <code>MultiMesh</code> 用 <code>Buffer</code> 批量 / 跨语言只传整块数组。</strong><br>⚠ <strong>R32（2026-11-22）</strong>：语言不换成 Rust——C# 月结 71 ms / 预算 400 ms，余量 5.6×。<br>Rust 只在三条门槛全过时<strong>局部</strong>下沉（<code>cdylib</code>+P/Invoke），<strong>不进每帧路径</strong>。</blockquote>
+<p><strong>目标</strong>：一个"什么都没有但什么都能接上去"的壳。<strong>不实现任何业务逻辑。</strong></p>
+<p><strong>交付（八项）</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>交付物</th><th>内容</th></tr></thead><tbody><tr><td>0</td><td><strong>C# 工程</strong> ✅</td><td><code>Chengmai.csproj</code>（<code>Godot.NET.Sdk/4.7.1</code> / <code>net8.0</code> / 排除 <code>bench/</code>）+ <code>Chengmai.sln</code>（三档配置）+ <code>project.godot</code> 的 <code>assembly_name</code> <strong>三处一致</strong>。&lt;br&gt;⚠ <strong>2026-11-22 由 CLI 建好，不需要在编辑器里点「项目 → 工具 → C#」</strong>；<code>dotnet build</code> 0 警告 0 错误，Godot 无头实测加载到 <code>Chengmai.dll</code> 并跑通 8 系统注册。细则见 <code>handoff.md</code> §四·五</td></tr><tr><td>1</td><td><strong><code>core/</code> 5 文件</strong> ✅</td><td><code>clock.cs</code>（两个时钟 + 日历 + <strong>农历数据槽</strong>）· <code>bus.cs</code>（发布订阅 + <code>*_changed</code> + <strong>R24 滞后读</strong>）· <code>sim.cs</code>（Tick 调度 + 8 系统注册 + <strong>月度摊平</strong>）· <code>save_game.cs</code>（只存真值 + 版本迁移 + 原子写）· <code>check.cs</code>（断言框架）&lt;br&gt;✅ <strong>2026-11-22 已落地，10 组 138 条断言全绿</strong>（<code>dotnet run --project bench/coretest</code>）；农历数据在 <code>config/data/lunar.json</code>（301 年，双源校验），<code>CK5</code> 49 条实测</td></tr><tr><td>2</td><td><strong><code>tools/check_contract.gd</code></strong> ✅</td><td>宪法 §六 <strong>九条全部可跑</strong>（2026-11-24）。⭐ <strong>验收方式是自检</strong>：<code>-- --self-test</code> 往临时工程注入 9 种违规 → <strong>9 种全部报出、干净基线 0 误报</strong>；注释与字符串不误报（空桩注释里写着「禁止 Vector3」不算违规）。顺带抓到并修掉一处既有 L7 违规：<code>ui/city_backdrop.gd</code> 逐个 <code>set_instance_transform</code>（3249 实例）→ 改 <code>buffer</code> 批量，<strong>改前改后渲染逐像素 0 差</strong>（1600×900，<code>--hour=12</code> 锁光）</td></tr><tr><td>3</td><td><strong><code>tools/acceptance.gd</code></strong></td><td>断言框架 + 第一批断言（CK1 <code>sim_day</code> 推进 / CK2 无 <code>visual_day_phase</code>）</td></tr><tr><td>4</td><td><strong><code>scripts/sim/</code> 8 个目录 / 24 文件</strong> ✅</td><td>2026-11-22 已按 <code>system-boundaries</code> 的规范文件名落 <strong>24 个 <code>.cs</code> 空桩</strong>；<code>*System</code> 实现 <code>ISimSystem</code>（<code>Name</code>+<code>Cadence</code>），<code>DG4</code> 断言兜住</td></tr><tr><td>5</td><td><strong><code>view/</code> 4 文件</strong> 🟡</td><td><code>camera_rig.gd</code>（WASD + 滚轮 + 俯仰 + <strong>自由相机</strong>）· <code>cinematic.gd</code>（<strong>拍摄接口</strong>，2026-11-22 已建占位）· <code>terrain_view.gd</code> · <code>main.tscn</code>；<strong>相机与地形仍未实现</strong></td></tr><tr><td>6</td><td><strong>UI 数据驱动骨架</strong> ✅</td><td>① <strong>外壳三页已实现并视觉定稿</strong>（主菜单 / 设置 / 关于）&lt;br&gt;② <strong><code>theme.json</code> 真接线</strong>：<code>ui_style.gd</code> → <code>ui_kit</code> 与各页，<code>scripts/ui</code> <strong>0 处硬编码颜色</strong>&lt;br&gt;③ <strong>HUD 布局按开发者要求重排（2026-11-22）</strong>：<strong>顶部=数据</strong>（日期/收入/人口/温度）· <strong>底部=建造</strong>（8 组 × 子工具）· <strong>左侧=信息</strong>（12 个视图）· <strong>右侧=待定</strong>&lt;br&gt;④ 12 张信息面板与 8 个工具组全部由 <code>panels.json</code> / <code>layout.json</code> 生成（单一 <code>panel_info.gd</code>，无专属脚本）；数值全是 <code>—</code>，等 B4/B6 接 bus key&lt;br&gt;⑤ <strong>图标化（2026-11-22）</strong>：可点元素只显示图标（占位 emoji），名称与说明走悬停提示；顶栏加存档城市名&lt;br&gt;⚠ 由 <code>bench/lint_docs.py</code> 第 8/9 组守卫（硬编码颜色 / token / 面板注册 / 分组与子工具 / 文案覆盖）</td></tr><tr><td>7</td><td><strong>游戏状态机</strong></td><td><code>Boot → MainMenu → Playing ⇄ Paused → GameOver</code>（<code>13-player-loop</code> §一），暂停时 sim 不推进但可建造</td></tr></tbody></table></div>
+<p><strong>验收（六条，全过才算完成）</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>命令</th></tr></thead><tbody><tr><td><strong>B1-1</strong></td><td>打开窗口 → 出地形 + 相机可 WASD/滚轮，<strong>帧率 ≥ 60</strong>（⚠ <strong>必须开窗测</strong>；<code>--headless</code> 的帧率无效）</td><td><code>godot --path .</code></td></tr><tr><td><strong>B1-2</strong></td><td>契约检查<strong>九条</strong>全绿（含自检：注入 9 种违规全部报出）</td><td><code>godot --headless --path . --script tools/check_contract.gd</code>&lt;br&gt;<code>... -- --self-test</code>（2026-11-24 已过）</td></tr><tr><td><strong>B1-3</strong></td><td>断言框架能跑，CK1（1x 跑 60 秒 <code>sim_day</code> 增量 20±1）通过</td><td><code>godot --headless --script tools/acceptance.gd</code></td></tr><tr><td><strong>B1-4</strong></td><td><strong>改 <code>ui/theme.json</code> 的任一色 token，界面颜色跟着变</strong>（证明 UI 是数据驱动的，不是硬编码）</td><td>手动改一行 + 重开&lt;br&gt;✅ <strong>2026-11-22 已实测通过</strong>：<code>color.accent</code> 红→绿，重渲染后<strong>只有标题下那根短横的 66 个像素变了</strong>（<code>200,54,43</code> → <code>29,126,70</code>），其余零变化</td></tr><tr><td><strong>B1-5</strong></td><td><strong>自由相机可到任意高度/角度、可穿建筑</strong>（CAM1）</td><td>手动</td></tr><tr><td><strong>B1-6</strong></td><td><strong>C# 与 GDScript 能互相调到</strong>：<code>sim</code> 里一个 C# 方法，<code>view</code> 的 GDScript 调通</td><td>手动</td></tr></tbody></table></div>
+<p>⚠ <strong>B1-4 是给 Mod 支持做的验证</strong>：如果六条验收里有任何一条要改 <code>.gd</code> 代码，说明 UI 没做到数据驱动， 后面整个 Mod 体系要推倒。</p>
+<p><strong>停止条件</strong>：</p>
+<div class="tw"><table><thead><tr><th>条件</th><th>说明</th></tr></thead><tbody><tr><td><code>core/</code> 任一文件 <strong>&gt; 150 行</strong></td><td>停，说明职责没切干净</td></tr><tr><td>B1-4 需要改代码才能变色</td><td>停，回头重做 UI 层</td></tr><tr><td>8 个系统空壳里有任何业务逻辑</td><td>停，那是 B2 之后的事</td></tr></tbody></table></div>
+<p>⚠ <strong>本批不写任何业务逻辑</strong>：不画路、不分区、不生成人口。 <strong>只做"能接上去的壳"</strong>——这一步偷懒，后面每一批都要还债。</p>
+<hr>
+<h3 id="b1-5-地图编辑器最小可用版-r17-新增-b2-之前必须完成">B1.5 · 地图编辑器最小可用版（R17 新增，B2 之前必须完成）</h3>
+<blockquote>⚠ <strong>2026-11-16 新增（R17）</strong>：原计划把地图编辑器推到打磨年，<strong>这是错的</strong>——<br>初版必须有一张能玩的地图，而且得由开发者自己画出来。<br><strong>没有这一批，B2 画路时脚下是空的。</strong></blockquote>
+<p><strong>输入</strong>：B1 完成（有地形视图与相机）</p>
+<p><strong>交付</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>交付物</th><th>内容</th></tr></thead><tbody><tr><td>1</td><td><strong>程序化生成</strong></td><td>种子 + 参数（起伏度 / 水体密度 / 资源丰度）→ 50×50 km 地形</td></tr><tr><td>2</td><td><strong>手绘刷子</strong></td><td>高程升降、水体涂抹、平整、资源点放置（六种）</td></tr><tr><td>3</td><td><strong>地图存档格式</strong></td><td>与游戏存档分离（<code>map/*.json</code> + 高度图），<strong>可被游戏读入</strong></td></tr><tr><td>4</td><td><strong>地图元数据</strong></td><td><code>climate_zone</code>（R16 前置）、面积、种子、作者</td></tr></tbody></table></div>
+<p><strong>验收（四条）</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>M1</strong></td><td>用种子生成一张图，<code>--headless</code> 与开窗下<strong>地形完全一致</strong>（同种子同结果）</td></tr><tr><td><strong>M2</strong></td><td>刷一条河 → 存档 → 重开 → 河还在，且 <code>water</code> 数据正确（抽水站能判定临水）</td></tr><tr><td><strong>M3</strong></td><td>放一个煤点 → 存档 → 游戏读入后 <code>employment.resource_site</code> 能读到它</td></tr><tr><td><strong>M4</strong></td><td><strong>同一张地图能被游戏与编辑器双向读写</strong>（不是两套格式）</td></tr></tbody></table></div>
+<p>⚠ <strong>M4 是这一批的关键</strong>：如果编辑器存的图和游戏读的图不是同一份格式， 以后每次改地形都要写两遍转换代码——<strong>这个坑一旦踩上就再也拔不出来</strong>。</p>
+<p>⚠ <strong>本批不做</strong>：模组上传、创意工坊、多人共享、地图内预设建筑。 <strong>只做"开发者能画出几张能玩的图"</strong>。</p>
+<hr>
+<h3 id="b2-路网">B2 · 路网</h3>
+<p><strong>输入</strong>：B1 完成 <strong>交付</strong>：<code>road/road_graph.cs</code> <code>road/block_face.cs</code> <code>road/accessibility.cs</code> + <code>view/road_view.gd</code> <strong>验收</strong>：</p>
+<ul><li>拖拽能画出曲线路段（不是方格）</li><li>路宽随等级变化（支路/次干/主干）</li><li>能拆除，拆除后寻路图连通性正确</li><li><code>tools/probe_tick.gd</code> 打印路网寻路耗时</li></ul>
+<p><strong>⚠ 这是全项目最关键的一批。</strong> <code>road_data</code> 的 SoA 布局一旦定下，后面 6 个系统全部依赖它，改不动。</p>
+<p><strong>停止条件</strong>：<code>road_graph.cs</code> 里出现 <code>Node3D</code>/<code>Vector3</code> → 立即回退（违反宪法 §四）</p>
+<hr>
+<h3 id="b3-分区与生长">B3 · 分区与生长</h3>
+<p><strong>输入</strong>：B2 完成（路网数据稳定） <strong>交付</strong>：<code>zoning/zoning_system.cs</code> <code>zoning/parcel_subdiv.cs</code> <code>zoning/growth.cs</code> + <code>view/building_view.gd</code> <strong>验收</strong>：画 20 格住宅区 → 60 游戏日内出现建筑 → 12 游戏月内至少一栋升到 2 级 <strong>停止条件</strong>：<code>building_view.gd</code> 里出现逐建筑 <code>Node3D</code> → 停（必须 MultiMesh）</p>
+<hr>
+<h3 id="b4-数字活了-本批最容易乱">B4 · 数字活了（本批最容易乱）</h3>
+<p><strong>输入</strong>：B3 完成 <strong>交付</strong>：<code>population/</code>(2) + <code>employment/</code>(2) + <code>finance/</code>(3) + <code>ui/top_bar.gd</code> + <code>ui/ui_text.gd</code> <strong>验收</strong>：</p>
+<ul><li>顶栏人口数 = 所有家庭人数之和（<code>tools/acceptance.gd</code> 断言相等）</li><li>连续 12 游戏月收支记录完整、余额可对账</li><li>每个家庭有通勤路径，通勤时间来自真实寻路</li></ul>
+<p><strong>并行</strong>：可开 2 个（人口 + 财政），<strong>就业必须等人口</strong>。 ⚠ 本批跨 3 个系统 + UI，是 8 批里耦合最重的一批。<strong>宁可分两次提交，也不要一次提交三个系统。</strong></p>
+<blockquote>⚠ <strong>2026-11-21 依 R25 改写</strong>：原写「<code>native/sim_core</code> 必须在 B4 之前可用」，<br>依据是"GDScript 月结约 10 s"的<strong>估算</strong>；实测（<code>11-scale</code> §6.4.1）<strong>C# 月结 71 ms / 预算 400 ms</strong>。<br>⇒ <strong>本批输入条件 = <code>sim/</code> 走 C#（R19），不前置 native。</strong><br>native 只在"某一块实测超预算"时<strong>局部</strong>下沉（首选 OD 分配），见 <code>11-scale</code> §6.4.1。</blockquote>
+<hr>
+<h3 id="b5-交通">B5 · 交通</h3>
+<p><strong>输入</strong>：B4 完成（有通勤需求） <strong>交付</strong>：<code>traffic/traffic_system.cs</code> <code>traffic/od_matrix.cs</code> <code>traffic/flow_assign.cs</code> + <code>view/vehicle_view.gd</code> <strong>验收</strong>（2026-11-15 依 R1 修订，原「1000 辆车 30 fps」已作废）：</p>
+<ul><li><strong>① 变换填充</strong>：25 万实例（20 万车 + 5 万行人），填充耗时 <strong>≤ 15 ms</strong>（C# + <code>Buffer</code> 批量实测 ≈ 13.7 ms）</li></ul>
+<p>  —— ⚠ <strong>2026-11-21 修订</strong>：原写「&lt; 4 ms」，已被 <code>11-scale</code> §6.4.9 实测否掉（超 3.4 倍）。   <strong>4 ms 降级为"未达成的目标值"</strong>，不作为验收线；不减可见性。</p>
+<ul><li><strong>② 裁剪后帧率</strong>：视锥裁剪生效，画面 30 fps</li><li><strong>③ 流量一致性</strong>：微观拥堵度与宏观路段饱和度同源（<code>11-scale.md</code> §四）</li><li><strong>④ 规模台阶</strong>：<strong>8 万活跃 agent（首发基线，R26）</strong>下不超预算；15 万为能力上限，不计入验收线</li></ul>
+<p>  —— ⚠ 验收必须写明硬件档位（<code>08-traffic</code> §七） <strong>停止条件 / 优化顺序（不许跳步）</strong>： ① 先<strong>报数字</strong>（<code>probe_tick</code> 打印，注明开窗还是 headless） ② 再<strong>并行</strong>（OD 分配 2500 个起点互不依赖，<code>Parallel.For</code> 预期 3–4×） ③ 再<strong>降频率</strong>（4 时段 → 只跑早晚高峰） ④ 还超才谈 <strong>native</strong>（Rust 准入三条门槛：实测超 2× / 纯计算无回调 / ≤每日一次且 &lt;20 MB，见 <code>reports/2026-11-22-语言策略.md</code>）</p>
+<blockquote>⚠ <strong>2026-11-16 依 R18 扩范围</strong>：本批新增 <strong>公交 + 地铁</strong>（原属 DLC，现回归本体）。<br><strong>实现方式见 <code>08-traffic.md</code> §三·五</strong>：地铁<strong>不做车辆 agent、不挖隧道</strong>，只做"运力分流"；<br>公交<strong>占道路容量</strong>、地铁<strong>不占</strong>。<br>新增两条验收（<code>08-traffic.md</code> TR9/TR10）：<br>- <strong>TR9</strong> 地铁覆盖主要走廊后，该走廊公路流量下降 &gt; 20 %，<code>avg_commute_s</code> 下降<br>- <strong>TR10</strong> 加公交线公路拥堵<strong>上升或持平</strong>，加地铁<strong>下降</strong>（证明两者本质区别）<br>交付文件<strong>不增加</strong>：地铁/公交的分担逻辑并入 <code>flow_assign.cs</code>（它本来就是"把 OD 变成路段流量"，<br>多一种方式只是多一个分支）。<strong><code>traffic/</code> 仍是 3 个文件</strong>（DG5 不破）。</blockquote>
+<hr>
+<h3 id="b6-核心循环-总览-已拆为-b6a-b6b">B6 · 核心循环（总览，已拆为 B6a / B6b）</h3>
+<p><strong>输入</strong>：B5 完成 + B0 的 R1R2R3 已拍板 <strong>交付</strong>：<code>finance/land_value.cs</code>（R1）<code>finance/land_sale.cs</code>（R2）<code>services/school.cs</code>（R3）</p>
+<ul><li><code>ui/panel_finance.gd</code> <code>ui/panel_school.gd</code></li></ul>
+<p><strong>验收</strong>（对应 <code>01-playable-definition</code> §八）：</p>
+<ul><li><strong>A3</strong> 铺路前后地块地价可测量地变化</li><li><strong>A4</strong> 卖地后财政增量 = 出让金公式值（误差 &lt; 1 元）</li><li><strong>A5</strong> 学校建成 12 月内周边 500 m 地价上升 &gt; 10%</li><li><strong>A6</strong> 故意不卖地只收税，12 个月后财政为负</li></ul>
+<p><strong>⚠ A6 是最重要的一条</strong>：它证明 R2 是必要的。<strong>如果 A6 不绿，说明核心循环是假的。</strong></p>
+<blockquote>⚠ <strong>2026-11-16 定案：B6 拆成 B6a / B6b。</strong> 本批带的东西已经太多<br>（地价 + 学区 + 2 面板 + A3–A6 + 7 条特色 + <code>utility</code> 六个子领域），<strong>不拆必崩</strong>。</blockquote>
+<h3 id="b6a-核心循环-r1r2r3">B6a · 核心循环（R1R2R3）</h3>
+<p><strong>交付</strong>：<code>finance/land_value.cs</code>（R1）<code>finance/land_sale.cs</code>（R2）<code>services/school.cs</code>（R3）</p>
+<ul><li><code>ui/panel_finance.gd</code> <code>ui/panel_school.gd</code></li></ul>
+<p><strong>验收</strong>：<strong>A3 / A4 / A5 / A6</strong> 四条（见上）。<strong>A6 不绿，说明核心循环是假的。</strong></p>
+<h3 id="b6b-市政与配套-utility-服务扩展">B6b · 市政与配套（utility + 服务扩展）</h3>
+<p><strong>交付</strong>：<code>utility/utility_system.cs</code> <code>utility/power_grid.cs</code> <code>utility/utility_chain.cs</code></p>
+<ul><li><code>services/coverage.cs</code>（含菜市场 F62）+ <code>ui/panel_city.gd</code></li></ul>
+<p><strong>范围</strong>（六个子领域 + 五条生命周期）： 电力（四级杆塔 + 链路 + 峰值）· 供水链（抽水站→净水厂→泵房）· 污水 · <strong>雨水</strong> · 通信 · 燃气 · 垃圾</p>
+<ul><li><strong>设施老化（<code>age</code>/<code>design_life</code>，F94）</strong> + <strong>邻避（F97）</strong></li></ul>
+<p><strong>验收</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>来源</th></tr></thead><tbody><tr><td><strong>SV4</strong></td><td>无市政覆盖的 parcel <strong>无法生长</strong></td><td><code>07-services</code></td></tr><tr><td><strong>SV9</strong></td><td>断开一条 <code>power_link</code>，下游杆塔容量归零</td><td><code>07-services</code></td></tr><tr><td><strong>SV24</strong></td><td>设施 <code>age</code> 超 80 % 寿命 → 故障率上升，且维护成本显著上升</td><td>F94</td></tr><tr><td><strong>SV25</strong></td><td>垃圾焚烧厂周边 500 m <strong>地价 −30 %</strong>，且有抗议事件</td><td>F97</td></tr><tr><td><strong>SV26</strong></td><td>暴雨超过雨水管网设计标准 → 内涝，路段通行能力下降</td><td>F95</td></tr><tr><td><strong>SV27</strong></td><td>夏季峰值负荷超容量 → 限电，部分建筑停产</td><td>F98</td></tr></tbody></table></div>
+<p>⚠ <strong>B6b 的前提</strong>：<code>age</code> / <code>design_life</code> <strong>必须在这一批就进每一个设施结构</strong>。 后补要动所有存档格式（<code>07-services</code> 变更记录已注）。</p>
+<p>⚠ <strong>b 批可以和 a 批并行</strong>（改的目录不重叠：<code>finance/</code> + <code>services/school</code> vs <code>utility/</code> + <code>services/coverage</code>）， 但<strong>必须 a 先跑通 A6</strong> 再开 b——否则核心循环没验证就去堆市政，会把问题掩盖住。</p>
+<hr>
+<h3 id="b7-手感与验收">B7 · 手感与验收</h3>
+<p><strong>输入</strong>：B6a + B6b 完成 <strong>交付</strong>：新手引导、失败通知文案、音效接入、<code>tools/acceptance.gd</code> 全绿、 <code>tools/balance_run.gd</code>（基准城市）、存档版本迁移 <strong>验收</strong>：</p>
+<ul><li><strong>A1–A10 全绿</strong> + <strong>A10 找个没看过文档的人 5 分钟内铺出第一条路</strong></li><li><strong>K4–K19</strong>（<code>13-player-loop</code> §九 + §十六）：暂停冻结、暂停可建造、错误提示带数字、</li></ul>
+<p>  <strong>1x/3x 结果一致</strong>、三种失败有预警、存档不被覆盖、派生量不入档、版本迁移、提示不轰炸、基准曲线可导出；   <strong>诊断能给出唯一第一阻碍</strong>、诊断能一步跳工具、提示不打断操作、同类通知合并、   财政面板显示卖地占比、六个政策旋钮都有代价；   <strong>K20–K24</strong>：24 条里程碑各能达成且不重复、<strong>里程碑不给数值奖励</strong>、城市史时间轴、   断网隐藏视频入口、内置图文离线可看</p>
+<ul><li><strong>K1–K3 平衡回归</strong>：1000 万不崩 / A6 仍成立 / 村庄 30 年内能到镇</li><li><strong>CAM2–CAM6 拍摄能力</strong>（<code>10-presentation</code> §7.5.6）：热键进慢镜头不弹窗、玩家主动优先于节日、</li></ul>
+<p>  UI 可全隐、<strong>同种子两次拍摄逐帧一致</strong>、10x 仅拍摄模式且存档打标记 <strong>停止条件</strong>：A10 不过 → 不是 bug，是设计问题，回到 B1 反思交互</p>
+<hr>
+<h2 id="四-批次纪律-五条-缺一条就会重蹈-v1">四、批次纪律（五条，缺一条就会重蹈 v1）</h2>
+<ol><li><strong>一批一个 tag</strong>：<code>v0.1-b0</code> … <code>v0.1-b7</code>。tag 之间的 diff 就是这一批的全部内容</li><li><strong>一批一段视频</strong>：30 秒，录不出来 = 这批没完成。<strong>"代码写了但没接起来"不算</strong></li><li><strong>验收不过不签收</strong>：不许"先合进来，下一批修"</li><li><strong>不许跨批</strong>：B2 没验收就开 B3，等于把房子盖在没验收的地基上</li><li><strong>每批结束改本文件的勾选 + 签日期</strong></li><li><strong>测什么用什么跑</strong>（2026-11-22 新增，见下表）——<strong>measurement 用错模式，等于没测</strong></li></ol>
+<h3 id="测量纪律-什么时候用无头-什么时候必须开窗">测量纪律：什么时候用无头，什么时候必须开窗</h3>
+<div class="tw"><table><thead><tr><th>要证明的事</th><th>用什么跑</th><th>为什么</th></tr></thead><tbody><tr><td>时间推进 / 月边界 / 闰年 / 日历 / 农历</td><td>✅ <code>--headless</code> 或纯 .NET</td><td>纯数值，不碰 GPU</td></tr><tr><td>存档往返 / 版本迁移 / 数据契约</td><td>✅ <code>--headless</code></td><td>无渲染、无输入</td></tr><tr><td>系统顺序 / bus 读写 / 降级规则</td><td>✅ <code>--headless</code></td><td>逻辑</td></tr><tr><td><strong>CI 上"逻辑没退化"</strong></td><td>✅ <code>--headless</code>（<strong>CI 就该这么跑</strong>）</td><td>无显卡也能跑，几十秒出结果</td></tr><tr><td><strong>帧率 / 单帧预算 / draw call / 填充耗时</strong></td><td>❌ <strong>必须开窗</strong></td><td>headless 不建渲染器、不提交 draw call、不等 GPU，测出来的数<strong>无效</strong></td></tr><tr><td>画面正确性（LOD 切换、闪烁、z-fighting）</td><td>❌ <strong>必须开窗 + 截图</strong></td><td>只有窗口有画面</td></tr><tr><td>输入手感（相机、刷子、拖拽）</td><td>❌ <strong>必须开窗手动</strong></td><td>手感的唯一判据是人</td></tr></tbody></table></div>
+<p>⚠ <strong>硬规则</strong>：任何写进文档的 FPS / ms 数字，<strong>必须注明是"开窗"还是"headless"</strong>。 只写"测得 60 fps"而不说是哪种，三个月后没人知道它能不能信。 ⚠ <strong>空场景的帧率不算数</strong>：B1-1 的 ≥60 fps 要在<strong>地形与相机就位后</strong>测；B3 之后再测一次有建筑的。</p>
+<hr>
+<h2 id="五-派活前必须回答的七问-防-盲目指挥">五、派活前必须回答的七问（防"盲目指挥"）</h2>
+<p>给任何 AI 工具（含子代理）派活前，<strong>七个问题缺一个就会乱</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>问题</th><th>不回答的后果</th></tr></thead><tbody><tr><td>1</td><td><strong>你只能写哪个目录？</strong></td><td>它会顺手改你的基类</td></tr><tr><td>2</td><td><strong>你依赖谁的什么数据？走哪个 bus key？</strong></td><td>它自己造一套，和你并行造的另一套打架</td></tr><tr><td>3</td><td><strong>你的验收命令是什么？</strong></td><td>它说"跑通了"，你不知道通没通</td></tr><tr><td>4</td><td><strong>你要产出哪些文件？精确到文件名</strong></td><td>它会新建一堆你没规划的文件（v1 的 ui 目录 27 个文件就这么来的）</td></tr><tr><td>5</td><td><strong>你不许碰什么？</strong></td><td>它会"顺便优化"别人的代码</td></tr><tr><td>6</td><td><strong>完成后报告什么？</strong></td><td>你无法判断能不能合</td></tr><tr><td>7</td><td><strong>你和谁共享契约？</strong>（要动哪个 bus key / 结构字段 / 断言，谁受影响）</td><td>并行时两套字段对不上，运行期才崩（<code>agents.md</code> §二·六）</td></tr></tbody></table></div>
+<p><strong>反面例子</strong>（v1 犯过的）：</p>
+<blockquote>❌「帮我做一个住房系统」← 六问全缺，产出一定是缝合怪</blockquote>
+<p><strong>正面例子</strong>：</p>
+<blockquote>✅「只写 <code>scripts/sim/population/</code> 下三个文件 <code>population_system.cs</code> <code>household.cs</code> <code>migration.cs</code>。<br><strong>先读</strong> <code>docs/contracts/population.md</code>（契约卡）+ <code>zoning.md</code>（上游）+ <code>09-core-tick</code> §7.4（别重造 core）。<br>依赖：bus 的 <code>zoning.buildings</code>（住房容量）、<code>traffic.avg_commute_s</code>（<strong>上月值，R24</strong>）与 <code>config/sim/population.json</code>。<br>产出文件仅这三个。不许碰 <code>core/</code>、<code>zoning/</code>、<code>ui/</code>。<br>契约：<strong>不改任何 bus key / 结构字段</strong>；如必须改，先停下来提裁定。<br>验收：<code>godot --headless --script tools/acceptance.gd -- --case=population</code>，要求 <code>PP1</code>–<code>PP15</code> 全绿并打印人口与容量。<br>报告：探针输出原文 + <strong>接口变更（没改就写"无"）</strong> + 未完成项 + 需要协调者做什么。」</blockquote>
+<hr>
+<h2 id="六-并行度上限">六、并行度上限</h2>
+<div class="tw"><table><thead><tr><th>情况</th><th>上限</th><th>理由</th></tr></thead><tbody><tr><td>默认</td><td><strong>1 个（串行）</strong></td><td>单人 + AI 的瓶颈是集成，不是产出速度</td></tr><tr><td>B4 / B6</td><td><strong>2 个</strong></td><td>这两个批次内部有真正独立的子任务</td></tr><tr><td>任何批次</td><td><strong>不超过 3 个</strong></td><td>超过就变成互相等（v1 已验证）</td></tr></tbody></table></div>
+<p>⚠ <strong>并行不是效率手段，是风险手段。</strong> 只有在"两个任务改的文件完全不重叠且不互相等"时才开。</p>
+<hr>
+<h2 id="七-进度表-每批完成后填">七、进度表（每批完成后填）</h2>
+<div class="tw"><table><thead><tr><th>批次</th><th>状态</th><th>完成日期</th><th>视频</th><th>备注</th></tr></thead><tbody><tr><td>B0 立法</td><td>✅ 2026-11-16</td><td></td><td>—</td><td></td></tr><tr><td>B1 骨架</td><td>🟡 进行中</td><td></td><td></td><td><code>C# 工程</code> ✅；<code>core/</code> ✅ 5 文件（138 条断言）；<code>sim/</code> ✅ 24 空桩；<strong>UI</strong> ✅ 三页 + 三配置全接线 + HUD 新布局（顶数据/底建造/左信息）；<strong><code>check_contract</code></strong> ✅ 九条 + 自检 9/9；<code>save</code> ✅ 迁移链（<code>FORMAT_VERSION=3</code>）；<strong>待做</strong>：<code>acceptance</code> / <code>view</code> 相机与地形</td></tr><tr><td>B1.5 地图编辑器</td><td>⬜</td><td></td><td></td><td></td></tr><tr><td>B2 路网</td><td>⬜</td><td></td><td></td><td></td></tr><tr><td>B3 分区生长</td><td>⬜</td><td></td><td></td><td></td></tr><tr><td>B4 数字活了</td><td>⬜</td><td></td><td></td><td></td></tr><tr><td>B5 交通</td><td>⬜</td><td></td><td></td><td></td></tr><tr><td>B6 核心循环</td><td>⬜</td><td></td><td></td><td></td></tr><tr><td>B7 手感</td><td>⬜</td><td></td><td></td><td></td></tr></tbody></table></div>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-24（二）</strong>：<code>tools/check_contract.gd</code> 落地（B1 交付项 #2），B1-2 验收从「七条」改为</li></ul>
+<p>  <strong>「九条 + 自检」</strong>（与 <code>00-constitution</code> §六 现行条文对齐）。修掉进度表里一条过时描述：   <code>save</code> 迁移链其实已存在（<code>FORMAT_VERSION=3</code>，见 <code>NEXT.md</code> 实测表），不再是待做项。</p>
+<ul><li><strong>2026-11-15（二）</strong>：<strong>依 <code>decisions.md</code> R1 修订</strong>。B5 验收由「1000 车 30 fps」改为</li></ul>
+<p>  变换填充 &lt; 4 ms + 裁剪后帧率 + 流量一致性 + 8 万 agent 台阶四条；B4 增注「<code>native/sim_core</code> 为输入条件」。   理由：规模目标改为 2500 km² / 100 万（打磨年 1000 万），原数字只覆盖 11% 车流。</p>
+<ul><li><strong>2026-11-15</strong>：首版（AI 起草，待开发者拍板）。8 批次、批次纪律五条、派活六问、并行度上限。</li></ul><div class="pager"><a href="design-19-tradeoffs.html">← 19 · 取舍登记册：性能 vs 现实 vs 效果</a><a href="handoff.html">交接单（HANDOFF） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-为什么会-盲目指挥">一、为什么会"盲目指挥"</a><a class="l2" href="#二-8-个批次总表">二、8 个批次总表</a><a class="l2" href="#二-一-v-切片-可玩里程碑-r34-2026-11-24">二·一 V 切片：可玩里程碑（R34，2026-11-24）</a><a class="l2" href="#三-每批的细节">三、每批的细节</a><a class="l3" href="#b0-立法-不写一行代码">B0 · 立法（不写一行代码）</a><a class="l3" href="#b1-骨架">B1 · 骨架</a><a class="l3" href="#b1-5-地图编辑器最小可用版-r17-新增-b2-之前必须完成">B1.5 · 地图编辑器最小可用版（R17 新增，B2 之前必须完成）</a><a class="l3" href="#b2-路网">B2 · 路网</a><a class="l3" href="#b3-分区与生长">B3 · 分区与生长</a><a class="l3" href="#b4-数字活了-本批最容易乱">B4 · 数字活了（本批最容易乱）</a><a class="l3" href="#b5-交通">B5 · 交通</a><a class="l3" href="#b6-核心循环-总览-已拆为-b6a-b6b">B6 · 核心循环（总览，已拆为 B6a / B6b）</a><a class="l3" href="#b6a-核心循环-r1r2r3">B6a · 核心循环（R1R2R3）</a><a class="l3" href="#b6b-市政与配套-utility-服务扩展">B6b · 市政与配套（utility + 服务扩展）</a><a class="l3" href="#b7-手感与验收">B7 · 手感与验收</a><a class="l2" href="#四-批次纪律-五条-缺一条就会重蹈-v1">四、批次纪律（五条，缺一条就会重蹈 v1）</a><a class="l3" href="#测量纪律-什么时候用无头-什么时候必须开窗">测量纪律：什么时候用无头，什么时候必须开窗</a><a class="l2" href="#五-派活前必须回答的七问-防-盲目指挥">五、派活前必须回答的七问（防"盲目指挥"）</a><a class="l2" href="#六-并行度上限">六、并行度上限</a><a class="l2" href="#七-进度表-每批完成后填">七、进度表（每批完成后填）</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

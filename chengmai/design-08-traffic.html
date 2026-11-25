@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>08 · 交通流：三层模型、时段系数、分层路网、LOD — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" class="on" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="08-交通流-三层模型-时段系数-分层路网-lod">08 · 交通流：三层模型、时段系数、分层路网、LOD</h1>
+<blockquote>📌 <strong>涉及性能取舍时，结论统一登记在 <code>docs/design/19-tradeoffs.md</code></strong>；本文只说明"要什么"，不重复决定"砍什么"。</blockquote>
+<blockquote>依据：<code>decisions.md</code> <strong>R1</strong>（规模）/ <strong>R2</strong>（相机边界）/ <strong>R5</strong>（U3 15 万签收）/ <strong>R6</strong>（地块由路网生成）/<br><strong>R13+R14</strong>（时间尺度与日内时段）。<br>规模前提：2500 km² / 100 万可玩 / 1000 万挑战 → <code>11-scale.md</code> §四。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#二三层模型千万人口能跑的唯一结构">二、三层模型（千万人口能跑的唯一结构）</a></li><li><a href="#三双层流量宏观全量--微观代表">三、双层流量：宏观全量 + 微观代表</a></li><li><a href="#三五多方式-od地铁与公交怎么接进来r18">三·五、多方式 OD：地铁与公交怎么接进来（R18）</a></li><li><a href="#三六-多路径分配不重蹈-cs1-的只走最近路2026-11-18-定">三·六、⭐ 多路径分配：不重蹈 CS1 的"只走最近路"（2026-11-18 定）</a></li><li><a href="#三七铁路为什么堵火车是对的2026-11-19-新增">三·七、铁路：为什么"堵火车"是对的（2026-11-19 新增）</a></li><li><a href="#三八航空dlc但本体必须留三样东西2026-11-19-新增">三·八、航空：DLC，但本体必须留三样东西（2026-11-19 新增）</a></li><li><a href="#三九水运与港口地图给的不是玩家修的2026-11-20-新增">三·九、水运与港口：地图给的，不是玩家修的（2026-11-20 新增）</a></li><li><a href="#四时段系数早晚高峰的实现">四、时段系数（早晚高峰的实现）</a></li><li><a href="#四五实现约束实例数据怎么写远景怎么画2026-11-17-实测后补">四·五、实现约束：实例数据怎么写、远景怎么画（2026-11-17 实测后补）</a></li><li><a href="#五分层路网分层寻路的前提">五、分层路网（分层寻路的前提）</a></li><li><a href="#六数据契约">六、数据契约</a></li><li><a href="#七lod-与激活r2--r5">七、LOD 与激活（R2 / R5）</a></li><li><a href="#八验收点">八、验收点</a></li><li><a href="#九待定">九、待定</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td>出行需求（OD 矩阵）与路段流量分配</td><td>人口与就业的生成（在 04 / 05）</td></tr><tr><td>拥堵度、行程时间、服务水平的产出</td><td>道路几何与拓扑（在 02）</td></tr><tr><td>车辆 / 行人 agent 的激活与推进</td><td>渲染（在 <code>view/vehicle_view</code>）</td></tr><tr><td>4 个日内时段的流量表</td><td>时段与昼夜的映射（在 <code>09-core-tick</code> §五）</td></tr><tr><td>双层模型的边界（宏观全量 / 微观代表）</td><td>公交与地铁的<strong>车辆 agent</strong>（R18：本体只做"OD 分流"，地铁不跑车；扩展轨道方式归 DLC5）</td></tr><tr><td><strong>铁路的运行</strong>（区间占用 / 堵火车 / 平交道口）</td><td><strong>铁路干线的走向</strong>（地图预置，玩家不可改）</td></tr><tr><td><strong>航空的机制设计</strong>（DLC，本篇只留接口）</td><td>机场建模与航班生成（DLC）</td></tr><tr><td><strong>水运</strong>（港口吞吐 / 航道等级 / 轮渡）</td><td><strong>水域的生成</strong>（地图提供；玩家画不出江）</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-三层模型-千万人口能跑的唯一结构">二、三层模型（千万人口能跑的唯一结构）</h2>
+<pre class="code"><code>① 需求层  OD 矩阵        2500 个交通小区（TA，1 km²）→ 非零 OD 对约 50–80 万
+            ↓ 月边界算一次
+② 流量层  时段分配       同一份 OD × 4 个时段系数 → 4 次分配 → 4 份路段流量表
+            ↓ 输出：每条路段的饱和度 / 速度 / 行程时间
+③ 表现层  代表性 agent   车辆 ≤ 20 万、行人 ≤ 5 万（从流量表抽样）</code></pre>
+<p><strong>为什么必须这样</strong>：1000 万人 × 2 次出行/日 = 2000 万次。 1 游戏日 = 3 秒 ⇒ 需 <strong>667 万次寻路/秒</strong>，每次 3 μs 就是 <strong>2000 % 单核</strong>。 ⇒ 逐人寻路不是"慢"，是<strong>复杂度上不可能</strong>（<code>11-scale.md</code> §1.2 有完整测算）。</p>
+<p><strong>同一对 OD 的 1000 个人走同一条路</strong> —— 这不是偷懒，是交通规划六十年的标准做法 （TransCAD / EMME 都这么算），也是 CS1 只需要 65,536 个 agent 的真实原因。</p>
+<hr>
+<h2 id="三-双层流量-宏观全量-微观代表">三、双层流量：宏观全量 + 微观代表</h2>
+<div class="tw"><table><thead><tr><th>层</th><th>规模</th><th>参与数值</th><th>参与渲染</th></tr></thead><tbody><tr><td><strong>宏观</strong>（路段流量）</td><td><strong>全量</strong>：15 万段 × 4 时段</td><td>✅ 决定拥堵度、行程时间、地价影响</td><td>❌（用热力/着色表达）</td></tr><tr><td><strong>微观</strong>（车辆 agent）</td><td>≤ 20 万（U4），活跃 ≤ 15 万（U3，R5 签收）</td><td>❌</td><td>✅</td></tr></tbody></table></div>
+<p>⚠ <strong>这是最容易搞错的一处</strong>：宏观层才是"真值"，微观 agent 只是让它<strong>看得见</strong>。 删掉全部 agent，拥堵度、通勤时间、地价一分不变（R2 相机边界的直接推论）。</p>
+<hr>
+<h2 id="三-五-多方式-od-地铁与公交怎么接进来-r18">三·五、多方式 OD：地铁与公交怎么接进来（R18）</h2>
+<blockquote>地铁回归本体之后，OD 不再只有"开车"一种方式。<br>⚠ <strong>这里有一个决定成本的关键取舍，先说清楚。</strong></blockquote>
+<h3 id="3-5-1-地铁不做车辆-agent-只做-分流">3.5.1 地铁不做车辆 agent，只做"分流"</h3>
+<div class="tw"><table><thead><tr><th>做法</th><th>成本</th><th>采纳</th></tr></thead><tbody><tr><td>挖隧道 + 地铁车跑 agent + 站内换乘动线</td><td>极高（等于再做半个交通系统）</td><td>❌</td></tr><tr><td><strong>只做"运力分流"</strong>：一部分 OD 转走轨道，不生成车</td><td>低（流量分配多一条方式）</td><td>✅</td></tr></tbody></table></div>
+<p>⚠ <strong>地铁在游戏里的价值是"分流 OD"，不是"开地铁看车跑"。</strong> 玩家的决策是"修这条线能不能缓解这条主干道的拥堵"，而不是"看地铁准不准点"。 ⇒ 画面用<strong>车站 + 地面出入口</strong>表达（地下不显示，CS1 也这么干）。</p>
+<h3 id="3-5-2-方式分担模型">3.5.2 方式分担模型</h3>
+<pre class="code"><code>对每一对 OD：
+  1. 步行/骑行可达（&lt; 1.5 km）        → 非机动（占用骑手/行人通道，不影响机动车流量）
+  2. 轨道可达（起点 800 m + 终点 800 m 内有站）→ 按轨道优势度决定分担率
+  3. 其余                              → 走公路网（原有 flow_assign）</code></pre>
+<div class="tw"><table><thead><tr><th>方式</th><th>判定</th><th>参数</th></tr></thead><tbody><tr><td><code>walk/ebike</code></td><td>距离 &lt; 1.5 km</td><td>固定比例</td></tr><tr><td><strong><code>metro</code></strong></td><td>两端各有站点 ≤ <strong>800 m</strong> 且<strong>无需换乘或换乘 ≤ 1 次</strong></td><td>分担率 = f(轨道时间 / 公路时间)</td></tr><tr><td><code>bus</code></td><td>沿线有站，共享路网（<strong>占道路容量</strong>）</td><td>分担率 = f(班次密度)</td></tr><tr><td><code>car</code></td><td>其余全部</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong><code>bus</code> 与 <code>metro</code> 的本质区别</strong>：公交<strong>占道路容量</strong>（会加剧拥堵），地铁<strong>不占</strong>。 这个区别必须在模型里体现，否则"建公交治堵"会变成真的治堵——那是错的。</p>
+<h3 id="3-5-3-轨道线路的数据结构-极简">3.5.3 轨道线路的数据结构（极简）</h3>
+<div class="tw"><table><thead><tr><th>结构</th><th>字段</th><th>上限</th></tr></thead><tbody><tr><td><code>metro_line</code></td><td><code>id</code> <code>stop_range(u32,u16)</code> <code>is_loop</code></td><td>≤ 64 条</td></tr><tr><td><code>metro_stop</code></td><td><code>id</code> <code>cell_x/y</code> <code>line_ids(2×u8)</code> <code>parcel_id</code></td><td>≤ 2,000 站</td></tr><tr><td><strong><code>metro_span</code></strong></td><td><code>from_stop</code> <code>to_stop</code> <strong><code>alignment(u8)</code></strong> <code>length_dm</code> <code>cost</code></td><td>≤ 4,000 段</td></tr></tbody></table></div>
+<p>⚠ <strong>不做轨道几何</strong>（不存曲线、不存隧道）。站与站之间按"直线距离 × 绕行系数"算时间。 ⚠ <strong>换乘上限 1 次</strong>：超过就退回公路。否则换乘搜索会吃掉整个分配预算。</p>
+<h3 id="3-5-4-三种敷设方式-地形说了算-2026-11-16-补充">3.5.4 三种敷设方式：地形说了算（2026-11-16 补充）</h3>
+<blockquote>用户：「地铁有时候并不完全在地下，有时候受地形影响还是要到地面的。」</blockquote>
+<p><strong>这条纠正了我上一轮"一律不建地上部分"的说法。</strong> 中国的"地铁"实际是<strong>城市轨道交通</strong>， 包含三种敷设方式，而且<strong>地形是主要决定因素</strong>。</p>
+<div class="tw"><table><thead><tr><th>敷设</th><th><code>alignment</code></th><th>造价系数</th><th>占地</th><th>噪音</th><th>沿线地价</th><th>典型场景</th></tr></thead><tbody><tr><td><strong>地下</strong></td><td>0</td><td><strong>1.00</strong></td><td>无（只有出入口）</td><td>无</td><td>0</td><td>平原市区、老城核心</td></tr><tr><td><strong>高架</strong></td><td>1</td><td><strong>0.60</strong></td><td>桥墩 + 声屏障</td><td><strong>有</strong></td><td><strong>−10 %</strong>（200 m 内）</td><td>跨江、软土、郊区、山地</td></tr><tr><td><strong>地面</strong></td><td>2</td><td><strong>0.35</strong></td><td>路基走廊</td><td>有</td><td>−15 %</td><td>利用旧铁路、远郊</td></tr></tbody></table></div>
+<p>⭐ <strong>地形第一次成为"交通成本"的变量</strong>（此前地形只影响水源与景观）：</p>
+<div class="tw"><table><thead><tr><th>地形条件</th><th>强制/倾向</th></tr></thead><tbody><tr><td>河流 / 湖泊 / 海湾</td><td><strong>跨江段必须高架或桥隧</strong>，造价 ×1.8</td></tr><tr><td>山体 / 陡坡（坡度 &gt; 8 %）</td><td><strong>必须隧道或高架</strong>，地下段不能浅埋</td></tr><tr><td>软土地基（沿海）</td><td>地下段造价 ×1.3（需加固）</td></tr><tr><td>平整平原（华北/长江中下游）</td><td><strong>默认全地下</strong>，最省事</td></tr><tr><td>旧铁路走廊</td><td>地面段造价 ×0.6（可直接利用）</td></tr></tbody></table></div>
+<p>⚠ <strong>这解释了重庆为什么是"8D 魔幻城市"</strong>：山地 + 两江，逼出大量高架与穿楼而过的站 （李子坝那个"轻轨穿楼"就是地形逼出来的结果，不是设计师的浪漫）。</p>
+<p>⚠ <strong>玩家会有真实的取舍</strong>：</p>
+<ul><li>全地下 → 贵，但沿线不闹、地价不跌</li><li>高架 → 便宜四成，但<strong>沿线居民会反对</strong>（接 F97 邻避），且地价跌</li><li>地面 → 最便宜，但把城市切开（类似铁路的"割裂效应"）</li></ul>
+<p>⚠ <strong>默认策略</strong>：生成时按地形自动推荐（平原→地下、跨江→高架、山地→高架/隧道）， <strong>玩家可以改，但改了要付相应造价</strong>。</p>
+<p>⚠ <strong>视觉规则</strong>：</p>
+<ul><li><strong>地下段不建模</strong>（只画车站出入口 + 地图叠层显示线位）</li><li><strong>高架段建模</strong>：桥墩 + 轨道梁 + 声屏障（<code>metro_viaduct</code> 模块）</li><li><strong>地面段建模</strong>：路基 + 围栏 + 平交道口（<code>metro_viaduct</code> 复用地表形态）</li></ul>
+<h3 id="3-5-5-工期-不能照搬现实">3.5.5 工期：不能照搬现实</h3>
+<p>⚠ <strong>现实地铁一条线要修 5 年 = 游戏 91 分钟（1x）</strong>，玩家等不起。</p>
+<div class="tw"><table><thead><tr><th>做法</th><th>结果</th></tr></thead><tbody><tr><td>照搬现实（5 年）</td><td>91 分钟没收益，玩家会以为功能坏了</td></tr><tr><td><strong>压缩到 1–2 游戏年</strong></td><td>18–37 分钟，可接受</td></tr><tr><td><strong>分段开通</strong>（每通一段就有收益）</td><td>最好的做法：先通一段，玩家立刻看到分流效果</td></tr></tbody></table></div>
+<p>⇒ <strong>采纳：工期 1–2 游戏年 + 分段开通</strong>。 ⚠ 这与"村庄 30 年变镇"是同一个道理：<strong>真实节奏在游戏里会杀死体验</strong>， 必须在"真实"与"可玩"之间做减法，并且<strong>明确知道自己在减什么</strong>。</p>
+<h3 id="3-5-6-对拥堵的反哺">3.5.6 对拥堵的反哺</h3>
+<p>地铁分流之后，公路网的流量下降 → 拥堵下降 → <code>avg_commute_s</code> 下降 → 地价上升。 <strong>这条闭环是"地铁一响黄金万两"在数值上的实现</strong>。</p>
+<p>⚠ 但要注意：<strong>地铁修错地方（没有 OD 经过）会白花钱</strong>，还占财政。 这是玩家必须面对的真实决策。</p>
+<h2 id="三-六-多路径分配-不重蹈-cs1-的-只走最近路-2026-11-18-定">三·六、⭐ 多路径分配：不重蹈 CS1 的"只走最近路"（2026-11-18 定）</h2>
+<blockquote>用户：「CS1 有一个让人诟病的问题，就是<strong>只走最近的路</strong>，然后<strong>还只走一个车道</strong>。<br>虽然这在性能上是最好的优化，但是在模拟上是很糟糕的。」</blockquote>
+<p><strong>这是必须避开的第一号问题。</strong> 它有两个层面，解法不同。</p>
+<h3 id="3-6-1-层面一-路径-不能-100-给最短路">3.6.1 层面一：路径——不能 100 % 给最短路</h3>
+<h4 id="all-or-nothing-会出什么事">❌ all-or-nothing 会出什么事</h4>
+<div class="tw"><table><thead><tr><th>现象</th><th>玩家看到</th></tr></thead><tbody><tr><td>所有 OD 100 % 走最短路</td><td><strong>一条主干道堵死，旁边平行的路空着</strong></td></tr><tr><td>玩家加宽那条路</td><td>更堵（诱导需求），<strong>旁边还是空</strong></td></tr><tr><td>玩家在平行路上修同样的路</td><td><strong>没人走</strong>（因为不是"最短"）</td></tr></tbody></table></div>
+<p>⚠ <strong>这直接摧毁"规划"这个玩法</strong>：玩家做的所有分流都没有正反馈。</p>
+<h4 id="解法-增量分配-dial-似然分配">✅ 解法：<strong>增量分配 + Dial 似然分配</strong></h4>
+<pre class="code"><code>cost = 自由流成本（初始）
+
+for k in 1..K:                        # K = 3~4 轮
+    对每个起点 TA 跑一次 Dijkstra（分层路网）→ 得到最短路树 + 每节点 cost
+    在该树上用 Dial 算法把 OD 量按似然分到多条合理路径
+    按 BPR 函数更新路段 cost</code></pre>
+<div class="tw"><table><thead><tr><th>环节</th><th>作用</th></tr></thead><tbody><tr><td><strong>Dijkstra（分层）</strong></td><td>只跑 <strong>2500 次</strong>（每起点一次），不是每个 OD 对跑一次</td></tr><tr><td><strong>Dial 似然分配</strong></td><td>在<strong>同一棵最短路树上</strong>把流量摊到多条路径，<strong>几乎不增加成本</strong></td></tr><tr><td><strong>增量 K 轮</strong></td><td>每轮用更新后的 cost 重算 ⇒ 拥堵会"推"车去别的路</td></tr></tbody></table></div>
+<p>⭐ <strong>关键：多路径 ≠ 更慢。</strong> Dial 算法在<strong>已经算好的最短路树上</strong>做分配，<strong>不需要额外求最短路</strong>。 <strong>成本增加几乎全部来自 K 轮迭代</strong>，不是来自"多路径"本身。</p>
+<h4 id="成本预算">成本预算</h4>
+<div class="tw"><table><thead><tr><th>项</th><th>估算</th></tr></thead><tbody><tr><td>一次全图 Dijkstra（分层，2500 起点）</td><td>≈ 150–250 ms（C#）</td></tr><tr><td>× K=3 轮</td><td>≈ 450–750 ms</td></tr><tr><td>4 时段</td><td><strong>超出原预算 800 ms</strong> ⚠</td></tr></tbody></table></div>
+<p>⇒ <strong>取舍（三选一，B5 实测后定）</strong>：</p>
+<div class="tw"><table><thead><tr><th>方案</th><th>成本</th><th>真实度</th></tr></thead><tbody><tr><td>K=3，4 时段全跑</td><td>~3 s/月</td><td>⚠ 需摊平到更多天</td></tr><tr><td><strong>K=3，只跑 2 个高峰时段，平峰复用</strong></td><td>~1.5 s/月</td><td>✅ <strong>推荐</strong>（平峰差异小）</td></tr><tr><td>K=1 + Dial（只摊流量不迭代）</td><td>~800 ms</td><td>⚠ 拥堵不会"推"车改道</td></tr></tbody></table></div>
+<p>⚠ <strong>推荐第二方案</strong>：早高峰 / 晚高峰各跑一次，平峰用早高峰的结果缩放。 <strong>平峰的路径选择与早高峰高度相似</strong>，省一半算力几乎无损。</p>
+<h3 id="3-6-2-层面二-车道-不能所有车都叠在中心线">3.6.2 层面二：车道——不能所有车都叠在中心线</h3>
+<p><strong>CS1 的问题</strong>：车选一条车道就不换，导致<strong>一条车道排满、旁边车道空</strong>。</p>
+<h4 id="我们的做法-简化-不做逐车变道">我们的做法（简化，不做逐车变道）</h4>
+<div class="tw"><table><thead><tr><th>项</th><th>做法</th></tr></thead><tbody><tr><td>车道归属</td><td><strong>agent 生成时按 OD 方向定一次</strong>（左转靠左 / 右转靠右 / 直行居中）</td></tr><tr><td>横向位置</td><td><code>车道号 × 车道宽 + 抖动</code>，段内<strong>不变</strong></td></tr><tr><td>变道</td><td>❌ <strong>不做</strong></td></tr><tr><td>路口内</td><td>按 OD 方向直接转（§3.6.5b）</td></tr></tbody></table></div>
+<p>⚠ <strong>"抖动"很重要</strong>：即使同车道，也不要在完全相同的横向坐标上—— 否则视角稍微斜一点就看出一串"穿在一起的塑料车"。</p>
+<p>⚠ <strong>不做变道是刻意的</strong>：逐车变道要维护"目标车道 + 相邻车道占用 + 换道时机"， <strong>这是 CS1 花了很多代码做的事，而视觉收益很小</strong>。</p>
+<h3 id="3-6-3-三层-车道级细节-的取舍表">3.6.3 ⭐ 三层"车道级细节"的取舍表</h3>
+<div class="tw"><table><thead><tr><th>层</th><th>CS1</th><th>我们</th><th>代价</th></tr></thead><tbody><tr><td>路径选择</td><td>最短路（all-or-nothing）</td><td><strong>多路径（Dial + 增量）</strong></td><td>+K 轮 Dijkstra</td></tr><tr><td>段内车道</td><td>选定不变</td><td><strong>生成时定 + 抖动</strong></td><td>≈ 0</td></tr><tr><td><strong>转向车道配置</strong></td><td>无此概念</td><td>⭐ <strong>有</strong>（<code>n_l / n_s / n_r</code>，<code>02-road</code> §3.6.5b Lv1）</td><td>低（3 个数）</td></tr><tr><td><strong>路口内车道连接</strong></td><td>逐车道</td><td>⭐ <strong>做</strong>（Lv2，<strong>2026-11-25 改</strong>，原为"不做"）</td><td>中（Bezier + 稀疏覆盖）</td></tr><tr><td>段内逐车变道</td><td>运行时不换道</td><td>❌ <strong>不做</strong>（Lv3）</td><td>高（与代表性 agent 冲突）</td></tr></tbody></table></div>
+<p>⚠ <strong>这张表 2026-11-25 改过</strong>：路口连接从"不做"改成"做"（<strong>R35</strong>）。 原来写"把算力花在路径上、省在车道"——<strong>后半句撤回</strong>：车道连接影响 <strong>标线一致性 / 多向右转是否打结 / 排队形态</strong>，这些都是<strong>玩家一眼能看出的</strong>， 不只是"微观细节"。</p>
+<p>⚠ <strong>但"省钱"的部分仍然成立</strong>：<code>lane_links</code> <strong>由规则推导、只存覆盖</strong>（<code>02-road</code> §3.6.5b）， 所以是"做车道级观感"，不是"存一张百万级的车道图"。</p>
+<p>⚠ <strong>仍然不做的是"段内逐车变道"</strong>：维持"生成时定 + 抖动"， 因为逐车变道要维护车道级队列与相邻占用，那是逐车模拟的活（<code>§3.6.2</code>）。</p>
+<h3 id="3-6-4-广义成本-为什么-最近的路-不一定是-走的路">3.6.4 ⭐ 广义成本：为什么"最近的路"不一定是"走的路"</h3>
+<blockquote>用户：「在现实中每辆车的速度是不一样的，有的会超车等，假如看到前方堵车就知道要绕路，<br>或者其他因素并不会走最近的路（<strong>比如最近的路红绿灯多</strong>）。」</blockquote>
+<p><strong>"红绿灯多"这条点出了一个缺项</strong>：我们原来只算了行驶时间 + 拥堵，<strong>没算交叉口</strong>。</p>
+<h4 id="广义成本-四项相加">广义成本 = 四项相加</h4>
+<pre class="code"><code>cost(path) = Σ 自由流时间
+           + Σ 拥堵延误(BPR)
+           + Σ 交叉口延误          ← 2026-11-18 新增
+           + Σ 转向惩罚</code></pre>
+<div class="tw"><table><thead><tr><th>项</th><th>取值</th><th>说明</th></tr></thead><tbody><tr><td>自由流时间</td><td>长度 ÷ 限速</td><td>已有</td></tr><tr><td>拥堵延误</td><td><code>t0 × (1 + 0.15·(v/c)^4)</code></td><td>已有（BPR）</td></tr><tr><td><strong>交叉口延误</strong></td><td><strong>直行 +8 s / 右转 +5 s / 左转 +15 s / 无信号 +3 s</strong></td><td>⭐ <strong>新增</strong></td></tr><tr><td><strong>转向惩罚</strong></td><td>左转额外 +5 s，掉头 +20 s</td><td>⭐ 新增</td></tr></tbody></table></div>
+<p>⚠ <strong>不模拟红绿灯配时</strong>，只用<strong>每个路口的固定延误</strong>近似。 理由：配时是纯细节，<strong>加起来的总量才是玩家感知到的东西</strong>。</p>
+<p>⚠ <strong>左转最贵（+15 s + 惩罚）</strong>是因为中国的实际情况：左转有<strong>专用相位</strong>， 一个信号周期只放行一次，等待时间远大于直行。<strong>这是"中国城市"的一部分，不是通用交通模型。</strong></p>
+<p>⭐ <strong>这一改就把"最近的路红绿灯多"体现出来了</strong>： 同样 1 km，一条直路无路口，一条穿过 6 个路口——<strong>后者贵 48 s</strong>，自然被绕开。</p>
+<h3 id="3-6-5-异质驾驶者-四个廉价参数">3.6.5 异质驾驶者：四个廉价参数</h3>
+<div class="tw"><table><thead><tr><th>参数</th><th>范围</th><th>作用</th><th>成本</th></tr></thead><tbody><tr><td><strong><code>speed_factor</code></strong></td><td><strong>0.85 – 1.15</strong></td><td>每辆车速度不同。<strong>所有车同速一眼看出是程序</strong></td><td>≈ 0</td></tr><tr><td><strong><code>depart_offset</code></strong></td><td>时段内 <strong>±10 min</strong></td><td>出发时间抖动。<strong>否则早高峰所有车同一秒涌出</strong></td><td>≈ 0</td></tr><tr><td><strong><code>lane_by_speed</code></strong></td><td>快车内侧 / 慢车外侧</td><td><strong>代替"超车"</strong>，见下</td><td>≈ 0</td></tr><tr><td><code>route_theta_bias</code></td><td>0.7 – 1.3</td><td>个体对"绕路"的容忍度不同</td><td>≈ 0</td></tr></tbody></table></div>
+<p>⭐ <strong>这四个都是"生成时定一次、之后不变"，成本几乎为零，但视觉效果完全不同。</strong></p>
+<h3 id="3-6-6-超车-占用率驱动的-能超就超-车多就排">3.6.6 超车：<strong>占用率驱动的"能超就超、车多就排"</strong></h3>
+<blockquote>⚠ <strong>本节 2026-11-18 修正过。</strong> 初版写的是"按速度分车道（快车内侧、慢车外侧）"，<br><strong>这是错的</strong>。用户指出：「快车总会找机会超车，况且<strong>在市区内速度一般快不起来</strong>，<br><strong>车少好超，但是车多就不好超</strong>，会选择绕路或者继续走，你说的慢车道和快车道是高速上的做法。」</blockquote>
+<p><strong>完全正确。</strong> "按速度分车道"是<strong>高速/快速路</strong>的规则（且靠法规维持）， 市区道路没有这种分工，<strong>超车是驾驶行为，不是车道规则</strong>。</p>
+<h4 id="真正的机制-超车需要-空隙">真正的机制：超车需要"空隙"</h4>
+<pre class="code"><code>能不能超 = f(该方向 / 对向的占用率)</code></pre>
+<div class="tw"><table><thead><tr><th>占用率 <code>v/c</code></th><th>行为</th><th>画面</th></tr></thead><tbody><tr><td><strong>&lt; 0.4（车少）</strong></td><td><strong>自由超越</strong>：快车横向错位越过慢车</td><td>空旷路上有车来回穿</td></tr><tr><td>0.4 – 0.7（过渡）</td><td><strong>概率超越</strong>：按 <code>(0.7 − v/c) / 0.3</code> 决定</td><td>偶尔超一下</td></tr><tr><td><strong>&gt; 0.7（车多）</strong></td><td><strong>强制跟车</strong>：速度 = 该路段实际速度</td><td><strong>排队，谁也不能超</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>这个模型自动产生了"车多就不好超"的效果</strong>——不需要额外的判断逻辑。</p>
+<h4 id="关键-用-路段饱和-近似-不做逐车前车检测">⭐ 关键：用"路段饱和"近似，不做逐车前车检测</h4>
+<p><strong>逐车检测的代价</strong>：需要知道每条路段、每个车道上<strong>有哪些车、顺序如何</strong>， 每帧排序 = 15 万 × log(n) 的开销，还要维护车道级队列。</p>
+<p><strong>我们的近似</strong>（与"宏观分配 + 代表性 agent"的架构一致）：</p>
+<div class="tw"><table><thead><tr><th>输入</th><th>来源</th><th>成本</th></tr></thead><tbody><tr><td>该方向 <code>v/c</code></td><td><strong><code>flow_assign</code> 已经算好了</strong></td><td><strong>0</strong></td></tr><tr><td>agent 的 <code>speed_factor</code></td><td>生成时定</td><td>0</td></tr></tbody></table></div>
+<pre class="code"><code>实际速度 = min(自身期望速度, 路段实际速度)
+横向偏移 = 能超 ? (随机 ±半车道宽) : 0</code></pre>
+<p>⚠ <strong><code>min(自身, 路段实际速度)</code> 是核心</strong>： 路段实际速度已经由 <strong>BPR 从 <code>v/c</code> 算出</strong>，它天然包含"车多就慢"。 ⇒ <strong>agent 只要不"超过路段整体速度"，宏观与微观就永远自洽。</strong></p>
+<p>⭐ <strong>这比 CS1 的逐车模拟更省，而且更难出错</strong>： CS1 要维护车与车的跟驰关系，一旦参数调不好就出现"幽灵堵车"； 我们的速度<strong>直接由宏观饱和决定</strong>，<strong>不可能出现宏观说畅通、微观却排队的矛盾</strong>。</p>
+<h4 id="市区里-speed_factor-的视觉价值比高速低">⚠ 市区里 speed_factor 的视觉价值比高速低</h4>
+<div class="tw"><table><thead><tr><th>场景</th><th>绝对速度差（0.85 vs 1.15）</th></tr></thead><tbody><tr><td>高速 80 km/h</td><td><strong>24 km/h</strong>（很明显）</td></tr><tr><td>市区 40 km/h</td><td><strong>12 km/h</strong>（近景能看出，远看差不多）</td></tr><tr><td>拥堵 15 km/h</td><td><strong>4.5 km/h</strong>（几乎看不出）</td></tr></tbody></table></div>
+<p>⇒ <strong><code>speed_factor</code> 仍然要</strong>，但它的主要价值是<strong>"不至于所有车完全同步"</strong>， 而不是制造肉眼可见的超车大戏。</p>
+<p>⚠ <strong>想要"超车大戏"，必须靠"占用率低时允许横向错位"</strong>（上表第一行）， 而不是靠加大速度差。</p>
+<h4 id="车多时选择绕路">"车多时选择绕路"</h4>
+<p>⚠ <strong>这是 en-route reroute，我们仍然不做</strong>（§3.6.7）。 玩家感知到的"堵了以后分流"由<strong>时段级增量分配</strong>提供。</p>
+<h3 id="3-6-7-看到堵车就绕路-不做逐车实时重路由">3.6.7 "看到堵车就绕路"：不做逐车实时重路由</h3>
+<div class="tw"><table><thead><tr><th>方案</th><th>成本</th><th>玩家能否感知</th></tr></thead><tbody><tr><td>逐车每帧查前方饱和度再重算</td><td>15 万 × 每秒</td><td>❌ 成本极高</td></tr><tr><td><strong>时段级重算（已有，§3.6.1 增量分配）</strong></td><td>0</td><td>✅ <strong>感知得到</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>关键判断：玩家感知不到"当场绕路"，但能感知"堵了以后慢慢分流"。</strong></p>
+<p>后者已经由<strong>增量分配的 K 轮迭代</strong>提供了——第 2 轮看到第 1 轮堵了就会推开。 <strong>只是延迟到"下一轮"而不是"当场"。</strong></p>
+<p>⚠ 如果将来要做"逐车 reroute"，<strong>只给一小部分 agent</strong>（如每秒 0.1 % 触发）， 成本可控，且能制造"有车突然变道"的偶发现象。<strong>推打磨年再说。</strong></p>
+<h3 id="3-6-8-验收点">3.6.8 验收点</h3>
+<p>本节断言并入 <strong>§八 主验收表</strong>（TR11–TR19）。 ⚠ <strong>TR13（平行路分流有效）是本节的存在理由</strong> —— 如果"修平行路"没有正反馈， 整个交通系统的玩法就废了。 ⚠ <strong>TR14 专门反 CS1</strong>：CS1 里加宽主干道只会更堵，旁边永远空着。</p>
+<hr>
+<h2 id="三-七-铁路-为什么-堵火车-是对的-2026-11-19-新增">三·七、铁路：为什么"堵火车"是对的（2026-11-19 新增）</h2>
+<blockquote>用户：「CS1 中你甚至能看到'堵火车'的现象。」</blockquote>
+<p><strong>那不是 bug，是铁路的本质。</strong> 公路和铁路的拥堵机制根本不同：</p>
+<div class="tw"><table><thead><tr><th></th><th>公路</th><th>铁路</th></tr></thead><tbody><tr><td>通行能力</td><td><strong>连续</strong>（随密度下降）</td><td><strong>离散</strong>（区间占用，一格一列）</td></tr><tr><td>冲突解决</td><td>交叉口按信号分配</td><td><strong>闭塞 + 进路</strong></td></tr><tr><td>拥堵表现</td><td>车速下降</td><td><strong>列车停在区间外等</strong></td></tr></tbody></table></div>
+<p>⇒ ⚠ <strong>铁路不能套用 BPR</strong>。<code>link_flow</code> 那套连续模型对它无效，必须换成<strong>占用式</strong>。</p>
+<h3 id="3-7-1-三层结构-与公路完全分开">3.7.1 三层结构（与公路完全分开）</h3>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th></tr></thead><tbody><tr><td><strong>轨道网络</strong></td><td><code>rail_link</code>（两节点间一段轨道），<strong>不进 <code>road_graph</code></strong></td></tr><tr><td><strong>列车</strong></td><td><code>train</code>（<strong>一列 = 一个实体</strong>，不是一节车皮）</td></tr><tr><td><strong>占用</strong></td><td>列车进区间时占、出区间时释放；<strong>同一区间同时只能有一列</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>为什么不复用 <code>road_graph</code></strong>：铁轨没有车道、没有转向、没有红绿灯。 共用一张图只会让 <code>road_graph</code> 到处长出 <code>if is_rail</code>，最后两边都改不动。</p>
+<h3 id="3-7-2-三种-堵-的来源-都是真实的">3.7.2 三种"堵"的来源（都是真实的）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>机制</th><th>表现</th></tr></thead><tbody><tr><td>1</td><td><strong>单线区间</strong></td><td>双向共用 → 一方必须在车站<strong>待避</strong></td></tr><tr><td>2</td><td><strong>客货混跑</strong></td><td>货车 80 km/h、客车 160 km/h → <strong>慢车压住快车</strong></td></tr><tr><td>3</td><td><strong>到发线不足</strong></td><td>车站股道不够 → 列车在<strong>站外排队</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>第 2 条是中国普速线最典型的</strong>：大批干线是客货混跑， <strong>一列货车会让后面一串客车一起慢下来</strong>——玩家看到的就是"堵火车"。</p>
+<h3 id="3-7-3-参数-初始值-b5-实测后调">3.7.3 参数（初始值，B5 实测后调）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>客车速度</td><td><strong>120–160 km/h</strong>（普速）</td></tr><tr><td>货车速度</td><td><strong>80 km/h</strong></td></tr><tr><td>最小追踪间隔</td><td>自动闭塞 <strong>5 min</strong> / 半自动闭塞 <strong>10 min</strong></td></tr><tr><td>平交道口封闭</td><td><strong>40–90 s</strong>（一列车通过的时间）</td></tr><tr><td>单线待避</td><td>一方进侧线，等对向通过</td></tr></tbody></table></div>
+<h3 id="3-7-4-对城市的三重影响-这才是它值得做的理由">3.7.4 对城市的三重影响（这才是它值得做的理由）</h3>
+<h4 id="①-平交道口堵车-玩家直接看得见">① 平交道口堵车 —— 玩家直接看得见</h4>
+<div class="tw"><table><thead><tr><th>项</th><th>机制</th></tr></thead><tbody><tr><td>道口</td><td><code>rail_link</code> 与 <code>road segment</code> <strong>平面相交</strong></td></tr><tr><td>列车通过</td><td>道口<strong>封闭</strong> 40–90 s</td></tr><tr><td>后果</td><td>汽车排队 → 该路段饱和瞬到 <strong>1.0</strong> → <strong>上游跟着堵</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>这是"铁路分割城市"最具体的表现</strong>，比任何数字都直观。 ⚠ <strong>不做道口的话，铁路就只剩一条画在地图上的线</strong>——玩家感受不到它的存在。</p>
+<h4 id="②-铁路分割-可达性直接掉">② 铁路分割 —— 可达性直接掉</h4>
+<p>铁路两侧的可达性<strong>不连续</strong>，跨线通道往往每隔 1–3 km 才有一个。</p>
+<p>⇒ 直线距离 800 m 的两点，实际要绕 2 km。</p>
+<p>⭐ <strong>实现上不需要任何特殊逻辑</strong>：只要<strong>铁路不可穿越</strong>， <code>accessibility</code> 的栅格扩散（<code>02-road</code>）自然就绕开了。<strong>白拿的机制。</strong></p>
+<h4 id="③-噪音与邻避">③ 噪音与邻避</h4>
+<p>铁路两侧 30 m 内不能建住宅（与 <code>12-china-features</code> F97 邻避同一套）。</p>
+<h3 id="3-7-5-玩家能做什么-四条-都不改干线">3.7.5 玩家能做什么（四条，都不改干线）</h3>
+<p>⚠ <strong>干线走向是固定的</strong>（地图预置）——铁路是<strong>国家层面</strong>的，城市规划只能"接入"。 这既是中国的现实，也是很好的约束：<strong>玩家不能把铁路挪走，只能应对它。</strong></p>
+<div class="tw"><table><thead><tr><th>手段</th><th>效果</th><th>成本</th></tr></thead><tbody><tr><td><strong>跨线桥 / 地道</strong></td><td>消除分割，可达性恢复</td><td>中</td></tr><tr><td><strong>道口立交化</strong></td><td>消除等待，不再堵车</td><td>中高</td></tr><tr><td><strong>货运外绕线</strong></td><td>把货车引到城外，客车不再被压</td><td><strong>高</strong></td></tr><tr><td><strong>新建车站</strong></td><td>提高本地接入（TOD 催化，F31）</td><td>中</td></tr></tbody></table></div>
+<p>⭐ <strong>"货运外绕线"是真实存在的中国方案</strong>（多个城市做过）， 它同时解决"堵"和"分割"两件事，是这套系统里的<strong>高级玩法</strong>： 前期忍着，中后期一次性花钱解决。</p>
+<h3 id="3-7-6-模拟成本-很小">3.7.6 模拟成本（很小）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>量级</th></tr></thead><tbody><tr><td>轨道段</td><td><strong>≤ 2 000</strong></td></tr><tr><td>列车</td><td><strong>≤ 300</strong>（一条干线日 100 对 = 200 列）</td></tr><tr><td>同屏最多</td><td><strong>20–30 列</strong></td></tr><tr><td>更新频率</td><td><strong>每 0.5 s 一次</strong>（不是每帧）</td></tr></tbody></table></div>
+<p>⚠ <strong>列车不进 15 万 agent 池</strong>：班次级实体，数量少、逻辑简单，独立更新循环。 ⚠ <strong>列车不寻路</strong>：走固定线路，每步只判"下一区间是否空闲"。</p>
+<h3 id="3-7-7-边界-高铁不进本体">3.7.7 边界：高铁不进本体</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>归属</th></tr></thead><tbody><tr><td>普速铁路（客货混跑）+ 火车站 + 平交道口</td><td><strong>本体</strong></td></tr><tr><td><strong>高铁站建筑 <code>hsr_station</code> + 站前地面交通峰值</strong></td><td><strong>本体</strong>（R29）：不模拟班次，客流按"对外客运量 = 人口 × 常量 × 节日乘子"折算</td></tr><tr><td><strong>高铁班次表 / 城际通勤 / 跨城 OD</strong></td><td><strong>DLC4 都市圈</strong>（F32、R29）</td></tr></tbody></table></div>
+<p>理由与 <code>12-china-features</code> §2.3「高铁拆成 本体 + DLC」一致： <strong>站点催化进本体，班次与跨城 OD 进 DLC4</strong>（R29）。⚠ 本体的春运峰值来自"站前地面交通"，<strong>不是班次</strong>。</p>
+<hr>
+<h2 id="三-八-航空-dlc-但本体必须留三样东西-2026-11-19-新增">三·八、航空：DLC，但本体必须留三样东西（2026-11-19 新增）</h2>
+<blockquote>用户：「在交通中一直没说飞机这个交通工具。」</blockquote>
+<p><strong>结论：航空进 DLC，但接口现在就要留。</strong> 按 <code>12-china-features</code> §4.1 的三条标准判：</p>
+<div class="tw"><table><thead><tr><th>标准</th><th>判断</th></tr></thead><tbody><tr><td>① 缺了它循环还闭合吗</td><td>✅ <strong>闭合</strong>。城市不靠机场也能运转</td></tr><tr><td>② 能玩还是更多玩法</td><td><strong>更多玩法</strong>（不是核心循环）</td></tr><tr><td>③ 单卖得动吗</td><td>✅ <strong>卖得动</strong>（CS1 的 Airports DLC 就是先例）</td></tr></tbody></table></div>
+<p>⚠ <strong>但它和别的 DLC 不一样：机场会永久改变城市形态</strong>（限高、噪音、占地）。 所以有三样东西<strong>必须从 B3 就留</strong>，否则以后加机场要回头动 <code>zoning</code>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>现在就要留的</th><th>留在哪</th></tr></thead><tbody><tr><td>1</td><td><strong>净空限高字段</strong> <code>airport_clearance</code></td><td><code>03-zoning</code> 的限高判定</td></tr><tr><td>2</td><td><strong><code>T</code> 类用地能容纳跑道</strong>（长条、无高度限制）</td><td><code>03-zoning</code> 用地表</td></tr><tr><td>3</td><td><strong><code>purpose=airport</code> 枚举值</strong></td><td>本篇 §6.1.1</td></tr></tbody></table></div>
+<h3 id="3-8-1-机场最中国的约束-净空限高">3.8.1 ⭐ 机场最中国的约束：净空限高</h3>
+<p><strong>这是本节最有价值的一条。</strong></p>
+<p>机场周边有一组<strong>障碍物限制面</strong>（锥形面 / 水平面 / 进近面），起坡通常 <strong>1:20</strong> 左右。 ⇒ <strong>机场周围几公里内不能建高楼。</strong></p>
+<p>真实后果（都是真的）：</p>
+<div class="tw"><table><thead><tr><th>城市</th><th>发生了什么</th></tr></thead><tbody><tr><td>昆明</td><td>巫家坝机场被城市包围 → 2012 整体搬迁，原址变 CBD</td></tr><tr><td>广州</td><td>白云机场 2004 搬迁，老白云变白云新城</td></tr><tr><td>多数城市</td><td>CBD 被迫限高，高楼只能建在机场的反方向</td></tr></tbody></table></div>
+<p>⭐ <strong>这制造了一个非常好的两难</strong>： <strong>机场带来客流与产业，但锁死了一个方向的天际线。</strong> 玩家会自己算"这个机场值不值那片地"。</p>
+<p>⚠ <strong>这也正是"机场搬迁"的真实逻辑</strong>：不是机场变差了， 而是<strong>地价超过了机场的价值</strong>。这个判断玩家能自己算出来，非常有说服力。</p>
+<h3 id="3-8-2-噪音等值线">3.8.2 噪音等值线</h3>
+<div class="tw"><table><thead><tr><th>区</th><th>限制</th></tr></thead><tbody><tr><td><strong>75 dB 等值线内</strong></td><td><strong>不能建住宅</strong>（可建工业 / 仓储 / 商业）</td></tr><tr><td>65–75 dB</td><td>可建住宅，但<strong>地价 −30 %</strong> + 满意度惩罚</td></tr></tbody></table></div>
+<p>⚠ 与 F97 邻避同一套机制，只是<strong>半径是 km 级</strong>（不是工厂那种 500 m）。</p>
+<h3 id="3-8-3-航空-od-的边界-机场不进市内-od-矩阵">3.8.3 ⚠ 航空 OD 的边界：机场不进市内 OD 矩阵</h3>
+<p><strong>这是最容易搞错的一点。</strong></p>
+<div class="tw"><table><thead><tr><th>出行</th><th>进不进市内 OD</th></tr></thead><tbody><tr><td><strong>跨城航空出行</strong>（飞去另一个城市）</td><td>❌ <strong>不进</strong> —— 它不是市内交通</td></tr><tr><td><strong>进出机场的地面交通</strong>（自驾 / 出租 / 机场线）</td><td>✅ <strong>进</strong>，<code>purpose = airport</code></td></tr></tbody></table></div>
+<p>⚠ <strong>所以机场的真实压力在"地面"</strong>：机场高速、机场专线、出租车排队。 <strong>航空本身不占路网，占路的是一车车去机场的人。</strong></p>
+<h3 id="3-8-4-飞机不进-agent-池">3.8.4 飞机不进 agent 池</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>量级</th></tr></thead><tbody><tr><td>班次</td><td>一座 4E 机场日 <strong>300–500 架次</strong></td></tr><tr><td>同屏</td><td><strong>3–5 架</strong></td></tr><tr><td>模拟</td><td>班次级插值（滑行 → 起飞 → 爬升 → 消失）</td></tr></tbody></table></div>
+<p>⚠ <strong>不做领空、不做航路、不做空管</strong> —— 收益为零，成本很高。</p>
+<h3 id="3-8-5-货运-与高新产业联动">3.8.5 货运：与高新产业联动</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>说明</th></tr></thead><tbody><tr><td>货类</td><td>高价值、低重量（电子、医药、生鲜）</td></tr><tr><td>联动</td><td><code>M3h</code> / <code>M3</code> 的<strong>出口通道</strong>（<code>05-employment</code> §4.5.2 第 4 条"产业链配套"）</td></tr><tr><td>效果</td><td>有航空货运 → 高新产业的"交通可达"条件更容易满足</td></tr></tbody></table></div>
+<p>⚠ <strong>早期机场是负资产</strong>：占 20–30 km²、限高、噪音，但税收与产业升级是长期的。 <strong>这跟真实的"机场先建在城外、后来被城市包围"完全一致。</strong></p>
+<h2 id="三-九-水运与港口-地图给的-不是玩家修的-2026-11-20-新增">三·九、水运与港口：地图给的，不是玩家修的（2026-11-20 新增）</h2>
+<blockquote>用户：「交通还剩一个明显的空白：水运与港口。」</blockquote>
+<p>⚠ <strong>水运和前面所有交通方式都不一样：它是地图给的。</strong> 没有水域就没有水运，玩家画不出江来。</p>
+<div class="tw"><table><thead><tr><th>类型</th><th>典型</th><th>谁决定</th></tr></thead><tbody><tr><td><strong>沿海</strong></td><td>上海、宁波舟山、深圳、青岛、天津</td><td>地图是不是沿海</td></tr><tr><td><strong>沿江 / 内河</strong></td><td>武汉、南京、重庆、苏州</td><td>地图有没有大江</td></tr><tr><td><strong>运河</strong></td><td>京杭运河沿线（济宁、淮安、杭州）</td><td>地图预置</td></tr><tr><td><strong>无</strong></td><td>内陆平原城市</td><td><strong>就没有，也不该硬给</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>"没有水运"是正常状态</strong>，不是缺陷。华北平原的选择就是靠铁路。</p>
+<h3 id="3-9-1-水运是大宗货物的唯一经济选择-这才是它的价值">3.9.1 ⭐ 水运是大宗货物的唯一经济选择（这才是它的价值）</h3>
+<div class="tw"><table><thead><tr><th>方式</th><th>单位成本（元/吨公里，相对公路）</th></tr></thead><tbody><tr><td><strong>公路</strong></td><td><strong>1.00</strong></td></tr><tr><td>铁路</td><td><strong>≈ 0.40</strong></td></tr><tr><td><strong>水运</strong></td><td><strong>≈ 0.15–0.20</strong></td></tr></tbody></table></div>
+<p>⇒ <strong>煤、矿石、砂石、粮食、水泥</strong>这类"低值、大宗、不着急"的货， <strong>有水运就一定走水运</strong>，走公路是亏钱的。</p>
+<p>⭐ <strong>由此得到一个很重要的结论</strong>： <strong>沿江沿海城市的重工业成本天然低 10–20 %。</strong></p>
+<p>⇒ <strong>这让"选哪张地图"有了真实的经济后果</strong>，而不是换个背景图：</p>
+<div class="tw"><table><thead><tr><th>地图</th><th>重工业</th><th>高新产业</th></tr></thead><tbody><tr><td><strong>江南水网</strong></td><td>✅ <strong>成本优势</strong>（砂石、煤走水运）</td><td>一般</td></tr><tr><td><strong>华北平原</strong></td><td>一般（靠铁路）</td><td>一般</td></tr><tr><td><strong>西南山地</strong></td><td>劣势（运输困难）</td><td>一般</td></tr><tr><td><strong>沿海</strong>（若有）</td><td>✅ 最强（可进出口）</td><td>✅ 强</td></tr></tbody></table></div>
+<p>⚠ <strong>这条不需要额外系统</strong>：<code>05-employment</code> 的建材成本（<code>material_chain</code>）里， <strong>把"是否有水路"作为一个运费系数乘进去就行</strong>。一行代码，但改变了整局的经济底色。</p>
+<h3 id="3-9-2-港口的真实约束是-集疏运-不是-岸线">3.9.2 港口的真实约束是"集疏运"，不是"岸线"</h3>
+<p><strong>最常见的误解</strong>：以为有好岸线就能建大港。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>是不是瓶颈</th></tr></thead><tbody><tr><td>岸线 / 水深</td><td>是<strong>前置条件</strong>，但不够</td></tr><tr><td><strong>集疏运（后方铁路 / 公路）</strong></td><td>⭐ <strong>这才是真瓶颈</strong></td></tr><tr><td>腹地产业</td><td>决定有没有货</td></tr></tbody></table></div>
+<p>⚠ <strong>"死港"就是集疏运没跟上</strong>：码头建了，货卸下来运不走，堆在港区。 真实案例不少（很多地方港口建成后吞吐上不去，因为疏港铁路没修）。</p>
+<p><strong>机制</strong>：</p>
+<pre class="code"><code>港口实际吞吐 = min(泊位能力, 疏港通道能力, 腹地货源)</code></pre>
+<p>⚠ <strong>三个都卡</strong>。玩家只建码头不修疏港路，吞吐上不去——<strong>这是正确的，也是真实的</strong>。 ⚠ <strong>疏港铁路</strong>：正好接上 §三·七 的铁路系统（货运外绕线也可以兼作疏港线）。</p>
+<h3 id="3-9-3-港口三级">3.9.3 港口三级</h3>
+<div class="tw"><table><thead><tr><th>级</th><th>吨级</th><th>泊位</th><th>典型</th></tr></thead><tbody><tr><td><strong>内河港</strong></td><td>3 000–5 000 吨</td><td>2–8</td><td>长江中上游、运河</td></tr><tr><td><strong>沿海支线港</strong></td><td>1–3 万吨</td><td>4–15</td><td>地级市港</td></tr><tr><td><strong>枢纽港</strong></td><td>10 万吨+</td><td>20+</td><td>上海、宁波舟山</td></tr></tbody></table></div>
+<p>⚠ <strong>吨级由航道等级决定，不是玩家选</strong>（与 <code>02-road</code> §3.7.1 的"桥型由跨度决定"同一逻辑）。</p>
+<h3 id="3-9-4-桥的净空决定航道等级-与-02-road-3-7-3-闭环">3.9.4 ⭐⭐ 桥的净空决定航道等级（与 02-road §3.7.3 闭环）</h3>
+<p><strong>这是本章最值得写的一条联动。</strong></p>
+<p>内河航道分 Ⅰ–Ⅶ 级，每一级对应一个<strong>通航净空要求</strong>：</p>
+<div class="tw"><table><thead><tr><th>航道等级</th><th>通航船舶</th><th>需要的净空</th><th>对应桥型</th></tr></thead><tbody><tr><td>Ⅰ 级</td><td>3 000 吨级</td><td><strong>≥ 24 m</strong></td><td>斜拉 / 悬索</td></tr><tr><td>Ⅱ 级</td><td>2 000 吨级</td><td>≥ 18 m</td><td>斜拉</td></tr><tr><td>Ⅲ 级</td><td>1 000 吨级</td><td>≥ 12 m</td><td>连续梁</td></tr><tr><td>Ⅳ 级及以下</td><td>500 吨以下</td><td>≥ 8 m</td><td>梁桥</td></tr></tbody></table></div>
+<p>⇒ ⚠ <strong>一座桥的 <code>clearance_m</code> 就是它上游航道的上限。</strong></p>
+<p>⭐ <strong>这正是南京长江大桥的真实问题</strong>：净空 24 m，把万吨级海轮挡在了下游， <strong>长江上游的港口因此长期吃亏</strong>（这是被讨论了几十年的真问题）。</p>
+<p><strong>玩法价值</strong>：玩家为了省钱建了一座 12 m 净空的桥（连续梁，便宜）， <strong>十年后发现上游港口发展不起来</strong>——而拆桥重建的成本远超当初省下的钱。</p>
+<p>⚠ <strong>这个机制不需要新代码</strong>：<code>02-road</code> 已有 <code>clearance_m</code>， 这里只是给它一个<strong>下游后果</strong>。<strong>这就是好机制的样子——同一份数据，两处后果。</strong></p>
+<h3 id="3-9-5-客运-轮渡-便宜-直观-有画面">3.9.5 客运：轮渡（便宜、直观、有画面）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>说明</th></tr></thead><tbody><tr><td>场景</td><td><strong>桥少的地方</strong>，轮渡是唯一过江方式（武汉、南京、上海黄浦江、广州珠江）</td></tr><tr><td>运量</td><td>小（单船 300–800 人）</td></tr><tr><td>频率</td><td>高（10–20 分钟一班）</td></tr><tr><td>成本</td><td><strong>极低</strong>（码头 + 船，没有桥墩）</td></tr><tr><td>视觉</td><td>⭐ <strong>夜景里最出彩的元素之一</strong>（船灯 + 倒影）</td></tr></tbody></table></div>
+<p>⚠ <strong>轮渡是"穷人的过江方案"</strong>：修不起桥的时候，它让两岸先连起来。 <strong>这给了早期城市一个可负担的跨江选项</strong>，而不是"要么桥要么没有"。</p>
+<h3 id="3-9-6-老港区搬迁-滨江-cbd-与-f4-联动-推打磨年">3.9.6 老港区搬迁 → 滨江 CBD（与 F4 联动，推打磨年）</h3>
+<p><strong>这是中国城市最典型的空间变迁之一</strong>：</p>
+<pre class="code"><code>港口建在城外 → 城市长过去把港口包围 → 
+集装箱船太大进不来 → 港口搬到深水外港 → 
+原址变成滨江 CBD / 滨江公园</code></pre>
+<div class="tw"><table><thead><tr><th>城市</th><th>老港区</th><th>现在</th></tr></thead><tbody><tr><td>上海</td><td>十六铺、北外滩、世博园区</td><td>滨江商务区</td></tr><tr><td>广州</td><td>黄沙、员村</td><td>白鹅潭商务区</td></tr><tr><td>武汉</td><td>汉口沿江</td><td>江滩公园 + 商务区</td></tr></tbody></table></div>
+<p>⭐ <strong>机制</strong>：老港区地块在港口外迁后，<strong>容积率上限 +1.0、用途转 <code>B</code></strong>， 但<strong>必须先付拆迁与治污成本</strong>（老港区土壤污染是真的）。</p>
+<p>⚠ <strong>推打磨年</strong>：它依赖 F4 老城更新的整套流程，现在做只能是空壳。</p>
+<h3 id="3-9-7-模拟成本">3.9.7 模拟成本</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>量级</th></tr></thead><tbody><tr><td>港口</td><td><strong>≤ 200</strong>（点设施，月结产出）</td></tr><tr><td>航道段</td><td>≤ 500</td></tr><tr><td>船舶（货运）</td><td><strong>只做表现</strong>，同屏 &lt; 20 艘</td></tr><tr><td>轮渡</td><td>同屏 &lt; 10</td></tr><tr><td>更新</td><td>船舶每 0.5 s 一次（与列车同源）</td></tr></tbody></table></div>
+<p>⚠ <strong>货运船不进 agent 池，也不参与路网分配</strong>：它的量在 <code>port</code> 的月结里已经算完了， 船只是<strong>让港口看起来在运转</strong>的表现。</p>
+<h3 id="3-9-8-边界">3.9.8 边界</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>归属</th></tr></thead><tbody><tr><td>港口（货运）+ 航道 + 轮渡</td><td><strong>本体</strong></td></tr><tr><td><strong>老港区搬迁 / 滨江 CBD</strong></td><td>打磨年（依赖 F4）</td></tr><tr><td><strong>游船 / 邮轮母港 / 海岛旅游</strong></td><td><strong>DLC（未排期）</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>游船纯旅游</strong>：长江游轮、珠江夜游、邮轮母港——好看，但对核心循环没有贡献， 按 §4.1 三条标准应当 DLC。</p>
+<hr>
+<h2 id="四-时段系数-早晚高峰的实现">四、时段系数（早晚高峰的实现）</h2>
+<blockquote>定义在 <code>09-core-tick.md</code> §五；本篇负责<strong>系数取值与分配</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>段</th><th>名字</th><th>通勤 OD 系数</th><th>货运系数</th><th>备注</th></tr></thead><tbody><tr><td>0</td><td>早高峰 06–09</td><td><strong>1.00</strong></td><td>0.30</td><td>上班 + <strong>上学</strong>（学生 07:00–08:00 集中）</td></tr><tr><td>1</td><td>平峰 09–17</td><td>0.45</td><td><strong>1.00</strong></td><td>日常出行、配送</td></tr><tr><td>2</td><td>晚高峰 17–20</td><td><strong>0.95</strong></td><td>0.25</td><td>下班 + <strong>放学</strong>（16:30–17:30）</td></tr><tr><td>3</td><td>夜间 20–06</td><td>0.08</td><td>0.35</td><td>夜间货运比例高，这是真实现象</td></tr></tbody></table></div>
+<p>⚠ <strong>系数从 <code>config/sim/traffic.json</code> 读，不写死</strong>（宪法 L5）。 ⚠ 学生 OD 单独一类（<code>purpose=school</code>），否则"上学放学"会被通勤系数淹没。</p>
+<div class="tw"><table><thead><tr><th>出行目的 <code>purpose</code></th><th>时段分布</th></tr></thead><tbody><tr><td><code>commute</code>（上班）</td><td>0 段 0.55 / 2 段 0.45</td></tr><tr><td><strong><code>school</code>（上学）</strong></td><td><strong>0 段 0.90 / 2 段 0.10</strong>（放学略早，单峰）</td></tr><tr><td><code>shopping</code>（购物）</td><td>平峰与晚高峰为主</td></tr><tr><td><code>freight</code>（货运）</td><td>平峰与夜间为主</td></tr><tr><td><strong><code>tutoring</code>（补习）</strong></td><td><strong>2 段 + 夜间为主，周末全天</strong> ⚠ 与 <code>school</code> 完全不同（<code>07-services</code> §3.6）</td></tr><tr><td><strong><code>airport</code>（去机场）</strong></td><td>全时段，早高峰略高。⚠ <strong>DLC 才产出，基础版为 0</strong>（§3.8.3）</td></tr></tbody></table></div>
+<p>⚠ <strong>寒暑假期间 <code>school</code> 类 OD 归零</strong> —— 这一条会让总通勤下降约 25% （<code>12-china-features.md</code> §3.3）。<strong>A5 断言必须标明在学期内测</strong>，否则测不出学区效果。</p>
+<p>⚠ <strong>但 <code>tutoring</code> 在寒暑假不归零</strong>（保留 15–25 %，<code>07-services</code> §3.6.2）—— <strong>如果全清，假期街上就没有背书包的孩子</strong>，这在中国城市里不可能出现。</p>
+<hr>
+<h2 id="四-五-实现约束-实例数据怎么写-远景怎么画-2026-11-17-实测后补">四·五、实现约束：实例数据怎么写、远景怎么画（2026-11-17 实测后补）</h2>
+<blockquote>依据 <code>11-scale.md</code> §6.4.5–6.4.8 的实测（<code>bench/sim/</code> 与 <code>bench/sim_cs/</code>）。</blockquote>
+<h3 id="4-5-1-multimesh-buffer-vs-逐个写入-取决于语言-且正好相反">4.5.1 ⚠ MultiMesh.Buffer vs 逐个写入：<strong>取决于语言，且正好相反</strong></h3>
+<div class="tw"><table><thead><tr><th>语言</th><th>更快的方式</th><th>10 万实体实测</th><th>50 万实体实测</th></tr></thead><tbody><tr><td><strong>GDScript</strong></td><td><strong>逐个 <code>set_instance_transform</code></strong></td><td>9.40 ms</td><td>47.23 ms</td></tr><tr><td>GDScript</td><td><code>mm.buffer = buf</code>（批量）</td><td><strong>50.26 ms</strong> ❌</td><td><strong>255.74 ms</strong> ❌</td></tr><tr><td><strong>C#</strong></td><td><strong><code>mm.Buffer = buf</code>（批量）</strong></td><td><strong>5.49 ms</strong> ✅</td><td><strong>29.33 ms</strong> ✅</td></tr><tr><td>C#</td><td>逐个 <code>SetInstanceTransform</code></td><td>9.79 ms</td><td>47.99 ms</td></tr></tbody></table></div>
+<p>⭐ <strong>原因</strong>：</p>
+<ul><li><strong>GDScript</strong>：每条语句都贵，批量要写 16 个 float/实例 = 16 条语句</li><li><strong>C#</strong>：语句便宜，但 <code>SetInstanceTransform</code> <strong>每次跨 C#/C++ 边界约 90 ns</strong>，</li></ul>
+<p>  与 GDScript 的调用开销同量级 —— <strong>换语言救不了</strong></p>
+<ul><li><code>buffer</code> 只有<strong>一次</strong> interop，之后是引擎内部 <code>memcpy</code></li></ul>
+<p>⚠ <strong>规则（按最终语言二选一，不要两套都写）</strong>：</p>
+<ul><li>若 <code>traffic</code> 用 <strong>C#</strong> → <strong>必须用 <code>Buffer</code> 批量</strong>，禁用逐个 API</li><li>若用 <strong>GDScript</strong> → 用逐个 API（但仍会超预算，见 §4.5.2）</li></ul>
+<h3 id="4-5-2-15-万-agent-的实测成本-c-buffer-外推">4.5.2 ⚠ 15 万 agent 的实测成本（C# + Buffer 外推）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>15 万</th><th>说明</th></tr></thead><tbody><tr><td>agent 推进</td><td><strong>≈ 4.1 ms</strong></td><td>⚠ 必须用 <code>float[]</code> 而不是 <code>Vector3</code>（差 21 倍）</td></tr><tr><td>变换填充</td><td><strong>≈ 8.2 ms</strong></td><td><code>Buffer</code> 批量</td></tr><tr><td>渲染</td><td><strong>≈ 12.6 ms</strong></td><td>GPU 侧，与语言无关</td></tr><tr><td><strong>合计</strong></td><td><strong>≈ 25 ms（40 fps）</strong></td><td>过 B5 的 30 fps 线，<strong>不到 60 fps</strong></td></tr></tbody></table></div>
+<p>⚠ <strong><code>sim</code> 层不许用 <code>Vector3</code></strong>：实测 <code>Vector3</code> 运算 C# 只比 GDScript 快 2.1 倍， 而纯 <code>float[]</code> 快 <strong>44 倍</strong>。<strong>这正好就是宪法 §四"空间用整数坐标"的要求。</strong></p>
+<h3 id="4-5-3-远景-impostor-把-可见-和-可模拟-解耦">4.5.3 远景：impostor 把"可见"和"可模拟"解耦</h3>
+<p><strong>问题</strong>：2500 km² 要"全城都能看到车"，需要约 100 万个实例，15 万铺不满。</p>
+<div class="tw"><table><thead><tr><th>距离</th><th>用什么</th><th>CPU 成本</th></tr></thead><tbody><tr><td><strong>近景</strong>（相机 ~500 m）</td><td>真 agent（MultiMesh，跑逻辑）</td><td>15 万上限</td></tr><tr><td>中景（500 m – 3 km）</td><td><strong>impostor</strong>（广告牌 + 车流贴图）</td><td>极低</td></tr><tr><td>远景（&gt; 3 km）</td><td><strong>impostor + shader 动画</strong></td><td><strong>≈ 0</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>远景假车流几乎免费</strong>：shader 里用「时间 + 噪声」算位置，CPU 一帧都不写。 <strong>视觉上像有 100 万辆，逻辑上只有 15 万辆是真的。</strong> ⚠ 这是行业标准做法（CS1 远处同样是低模），玩家俯瞰时分辨不出。</p>
+<p>⚠ <strong>impostor 只在打磨年做</strong>：首发 100 万人口时 15 万 agent 足够，不空。</p>
+<h2 id="五-分层路网-分层寻路的前提">五、分层路网（分层寻路的前提）</h2>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>节点数（2500 km² 估计）</th></tr></thead><tbody><tr><td><strong>H</strong></td><td>快速路 / 环线 / 高速</td><td>2,000–5,000</td></tr><tr><td><strong>M</strong></td><td>主干 / 次干</td><td>20,000–50,000</td></tr><tr><td><strong>L</strong></td><td>支路</td><td>50,000–150,000</td></tr></tbody></table></div>
+<p>长距离出行 = <code>L 入口 → M → H → M → L 出口</code>。把 A* 的搜索空间从 15 万节点压到几千。 ⚠ <strong>这要求 <code>02-road.md</code> 定义第 4 级道路（快速路）</strong>，否则没有 H 层可用。</p>
+<hr>
+<h2 id="六-数据契约">六、数据契约</h2>
+<h3 id="6-1-核心结构-全部-soa-禁止逐对象">6.1 核心结构（全部 SoA，禁止逐对象）</h3>
+<div class="tw"><table><thead><tr><th>结构</th><th>字段</th><th>单位</th><th>上限</th></tr></thead><tbody><tr><td><code>od_matrix</code></td><td><code>origin_ta, dest_ta, purpose, trips</code></td><td>个/日</td><td>非零对 ≤ 100 万</td></tr><tr><td><code>link_flow[4]</code></td><td><code>segment_id, saturation, speed_kmh, travel_time_s</code></td><td>—</td><td>15 万段 × 4 时段</td></tr><tr><td><code>vehicle_agent</code></td><td><code>segment_id, lane, progress, speed, vehicle_type</code></td><td>m, m/s</td><td>20 万</td></tr><tr><td><code>pedestrian_agent</code></td><td><code>segment_id, offset, progress</code></td><td>m</td><td>5 万</td></tr><tr><td><strong><code>rail_link</code></strong></td><td><code>node_a, node_b, length_dm, speed_limit_kmh, tracks(u8), occupied_by(u32)</code></td><td>—</td><td>≤ 2 000</td></tr><tr><td><strong><code>train</code></strong></td><td><code>route_id, link_idx, progress, speed_kmh, type(u8), priority(u8), wait_s</code></td><td>—</td><td>≤ 300</td></tr><tr><td><strong><code>port</code></strong></td><td><code>node_id, kind(u8), berths(u8), draft_dm, capacity_t_month, hinterland_ok(bool)</code></td><td>t/月</td><td>≤ 200</td></tr><tr><td><strong><code>waterway</code></strong></td><td><code>node_a, node_b, grade(u8), clearance_need_m, length_dm</code></td><td>—</td><td>≤ 500</td></tr><tr><td><strong><code>ship</code></strong></td><td><code>route_id, link_idx, progress, kind(u8)</code>（<strong>纯表现，不进分配</strong>）</td><td>—</td><td>≤ 30</td></tr></tbody></table></div>
+<p>⚠ 索引一律 <strong><code>u32</code></strong>（R1：突破 65536）。</p>
+<h3 id="6-1-1-交通参与者类型-vehicle_type-枚举">6.1.1 交通参与者类型（vehicle_type 枚举）</h3>
+<div class="tw"><table><thead><tr><th>值</th><th>类型</th><th>走哪条道</th><th>占 U3 预算</th><th>说明</th></tr></thead><tbody><tr><td>0</td><td><code>car</code> 小汽车</td><td>机动车道</td><td>✅ 是</td><td>通勤主体</td></tr><tr><td>1</td><td><code>truck</code> 货车</td><td>机动车道</td><td>✅ 是</td><td>平峰与夜间为主</td></tr><tr><td>2</td><td><strong><code>taxi</code> 出租车</strong></td><td>机动车道</td><td>✅ 是</td><td>巡游空驶（F34），<code>12-china-features</code></td></tr><tr><td>3</td><td><code>bus</code> 公交</td><td>机动车道</td><td>✅ 是</td><td><strong>本体就有</strong>（R18）。⚠ 公交<strong>占道路容量</strong>，地铁不占</td></tr><tr><td>4</td><td><strong><code>ebike</code> 外卖/快递骑手</strong></td><td><strong>非机动车道</strong></td><td>❌ <strong>否</strong></td><td>F33。见下方预算说明</td></tr><tr><td>5</td><td><code>pedestrian</code> 行人</td><td>人行道</td><td>❌ 否</td><td>沿路径插值</td></tr></tbody></table></div>
+<p>⚠ <strong><code>ebike</code> 与 <code>pedestrian</code> 不占 U3 预算</strong>： 它们不需要个体寻路，只沿已知路径插值推进，用<strong>独立 MultiMesh + 独立更新循环</strong>。 否则外卖骑手会把 15 万活跃 agent 的名额吃掉一半，而它们对数值的影响只是一行"通行能力折减"。</p>
+<p>⚠ <strong>基础版有 <code>bus</code></strong>（R18：地铁+公交回本体）。原写"基础版没有 bus"已于 2026-11-21 依 R18/R27 改正。</p>
+<p>⚠ <strong><code>purpose</code> 枚举现在就要留 <code>airport</code> 值</strong>（§3.8.3）： 它是空值不影响任何逻辑，但<strong>以后加机场 DLC 时不用改 OD 表结构</strong>。 同理留 <code>tutoring</code>（<code>07-services</code> §3.6）。 枚举里留位置，是为了 DLC 载入时不用改数据结构。</p>
+<h3 id="6-2-bus-key">6.2 bus key</h3>
+<div class="tw"><table><thead><tr><th>key</th><th>方向</th><th>内容</th></tr></thead><tbody><tr><td><code>traffic.od_matrix</code></td><td>写</td><td>月更新</td></tr><tr><td><code>traffic.link_flow</code></td><td>写</td><td>4 时段，月更新</td></tr><tr><td><code>traffic.congestion</code></td><td>写</td><td>当前时段的加权拥堵度 0–1</td></tr><tr><td><code>traffic.avg_commute_s</code></td><td>写</td><td>平均通勤时间，供 <code>employment</code> / <code>finance</code> 读</td></tr><tr><td><code>traffic.metro_lines</code> / <code>metro_stops</code></td><td>写</td><td><strong>地铁线路与站点</strong>（R18，本体就有）</td></tr><tr><td><code>traffic.mode_share</code></td><td>写</td><td>各方式分担率（walk/ebike/metro/bus/car）</td></tr><tr><td><code>traffic.corridor</code> / <code>traffic.stop</code></td><td><strong>预留</strong></td><td>扩展轨道（轻轨/城际/磁浮），<strong>DLC5（空字段）</strong></td></tr><tr><td>读</td><td>—</td><td><code>road.<em></code>（拓扑）、<code>clock.time_slot</code>、<code>population.</em></code>、<code>employment.*</code></td></tr></tbody></table></div>
+<p>⚠ <strong><code>traffic</code> 是唯一允许读 <code>clock.time_slot</code> 的系统</strong>（<code>09-core-tick</code> §七）。 其他系统读它一律违规。</p>
+<h3 id="6-3-预算-11-scale-md-六">6.3 预算（11-scale.md §六）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>预算</th><th>2026-11-18 修订</th></tr></thead><tbody><tr><td>月度 OD 分配（1 次）</td><td>≤ 200 ms</td><td>—</td></tr><tr><td><strong>4 时段分配合计</strong>（1 次/月）</td><td>≤ 800 ms</td><td>⚠ <strong>改：只跑早晚高峰，平峰复用 ≈ 1.5 s</strong>（§3.6.1）</td></tr><tr><td>车辆推进（15 万活跃）</td><td>≤ 4 ms / tick</td><td>⚠ <strong>实测 C# ≈ 4.1 ms</strong>，勉强达标（<code>11-scale</code> §6.4.8）</td></tr><tr><td>变换填充（20 车 + 5 万人）</td><td>≤ 2 ms / frame</td><td>⚠ <strong>实测 C# + Buffer ≈ 8.2 ms</strong>（超 4 倍），见 §3.6.3</td></tr></tbody></table></div>
+<p>⚠ <strong>后两项是 2026-11-17 实测后修正的</strong>：原预算偏乐观。 <code>11-scale</code> §6.4.8 的结论是 <strong>15 万 agent 合计 ≈ 25 ms（40 fps）</strong>—— <strong>过 B5 的 30 fps 线，但不到 60 fps</strong>。</p>
+<hr>
+<h2 id="七-lod-与激活-r2-r5">七、LOD 与激活（R2 / R5）</h2>
+<div class="tw"><table><thead><tr><th>条件</th><th>车辆</th><th>行人</th><th>依据</th></tr></thead><tbody><tr><td>距离 &gt; 8 km（最高视角）</td><td><strong>完全不渲染</strong></td><td>不渲染</td><td><code>11-scale.md</code> §10.2</td></tr><tr><td>距离 2–8 km</td><td>不渲染，只显示路段流量着色</td><td>不渲染</td><td>同上</td></tr><tr><td>距离 500 m–2 km</td><td>简化盒体</td><td>不渲染</td><td>同上</td></tr><tr><td>距离 &lt; 500 m</td><td>全模型</td><td>✅ 渲染</td><td>同上</td></tr></tbody></table></div>
+<p>⚠ <strong>活跃 agent 上限随硬件档位变化</strong>（R5）：低 / 中 / 高 / 极限。 开局跑 <code>tools/benchmark.gd</code> 自动落档，<strong>验收必须写清在哪个档位</strong>。</p>
+<hr>
+<h2 id="八-验收点">八、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>TR1</strong></td><td>4 个时段的路段流量表<strong>互不相同</strong>，且 早/晚高峰总量 &gt; 平峰 &gt; 夜间</td><td>探针打印 4 组和</td></tr><tr><td><strong>TR2</strong></td><td>学生 OD 在 0 段占 90 % 以上（学期内），寒假期间为 <strong>0</strong></td><td>探针断言</td></tr><tr><td><strong>TR3</strong></td><td>删掉全部车辆 agent 后，<code>traffic.congestion</code> 与 <code>avg_commute_s</code> <strong>完全不变</strong></td><td>探针跑两支对照</td></tr><tr><td><strong>TR4</strong></td><td>同一 OD 对重复查询返回同一条路径（路径缓存生效）</td><td>探针比对</td></tr><tr><td><strong>TR5</strong></td><td>15 万活跃 agent 下车辆推进 ≤ 4 ms/tick，30 fps 稳定</td><td><code>probe_tick</code></td></tr><tr><td><strong>TR6</strong></td><td>最高视角下车辆 agent 数 = 0（U3 归零合法）</td><td>探针 + 截图</td></tr><tr><td><strong>TR7</strong></td><td>断一条主干路，受影响 OD 的行程时间上升 &gt; 20 %（分层寻路真在绕行）</td><td>探针对照</td></tr><tr><td><strong>TR8</strong></td><td>存档 → 读档后 <code>link_flow</code> 与 <code>od_matrix</code> 完全一致</td><td>探针断言</td></tr><tr><td><strong>TR9</strong></td><td>一条地铁线覆盖主要通勤走廊后，<strong>被覆盖走廊的公路流量下降 &gt; 20 %</strong>，且 <code>avg_commute_s</code> 下降</td><td>探针对照建线前后</td></tr><tr><td><strong>TR10</strong></td><td><strong>公交（占道）与地铁（不占道）行为不同</strong>：加公交线后公路拥堵<strong>上升或持平</strong>，加地铁后<strong>下降</strong></td><td>探针三组对照</td></tr><tr><td><strong>TR11</strong></td><td>同一 OD 对的所有流量<strong>不 100 % 集中在最短路</strong>（次短路分到 ≥ 10 %）</td><td>探针统计</td></tr><tr><td><strong>TR12</strong></td><td>agent 在路段上<strong>横向分布</strong>，不全部叠在中心线</td><td>俯视截图</td></tr><tr><td><strong>TR13</strong></td><td>⭐ <strong>平行路分流有效</strong>：两条平行路都通时，平均通勤<strong>下降 &gt; 15 %</strong></td><td>探针三组对照</td></tr><tr><td><strong>TR14</strong></td><td>⭐ 加宽唯一的那条路后，<strong>平行路开始分到流量</strong>（增量分配生效）</td><td>探针两支对照</td></tr><tr><td><strong>TR15</strong></td><td>⭐ <strong>红绿灯多的短路被绕开</strong>：1 km 直路（0 路口）比 1 km 穿 6 路口的路<strong>被选率高 &gt; 30 %</strong></td><td>探针同起终点两支</td></tr><tr><td><strong>TR16</strong></td><td><strong>车辆速度有差异</strong>（<code>speed_factor</code> 0.85–1.15），不是同速</td><td>探针采样</td></tr><tr><td><strong>TR17</strong></td><td><strong>车流不集中在同一秒涌出</strong>（<code>depart_offset</code> ±10 min 生效）</td><td>探针时段分布</td></tr><tr><td><strong>TR18</strong></td><td>⭐ <strong>车少能超 / 车多排队</strong>：<code>v/c=0.2</code> 有横向错位超越，<code>v/c=0.9</code> <strong>全部同速跟车</strong></td><td>探针两支对照</td></tr><tr><td><strong>TR19</strong></td><td><strong>agent 速度永不超过该路段实际速度</strong>（BPR 值），宏观微观自洽</td><td>探针断言</td></tr><tr><td><strong>TR20</strong></td><td>⭐ <strong>同一 <code>rail_link</code> 不会被两列车同时占用</strong>（占用式模型成立）</td><td>探针断言</td></tr><tr><td><strong>TR21</strong></td><td>⭐ <strong>客货混跑会压速</strong>：货车前方 30 s 内出发的客车，平均速度下降 <strong>&gt; 30 %</strong></td><td>探针两支对照</td></tr><tr><td><strong>TR22</strong></td><td>⭐ <strong>平交道口封闭时该路段饱和 = 1.0</strong>，解除后 10 s 内恢复</td><td>探针时间序列</td></tr><tr><td><strong>TR23</strong></td><td><strong>铁路分割可达性</strong>：跨越铁路的最短路径成本 <strong>&gt; 绕行通道的 2 倍</strong></td><td>探针采样</td></tr><tr><td><strong>TR24</strong></td><td>拆掉一段铁路后，两侧可达性<strong>显著上升</strong>（分割效应是真的，不是画上去的）</td><td>探针两支</td></tr><tr><td><strong>TR25</strong></td><td><code>purpose</code> 枚举含 <code>airport</code>，但<strong>基础版产出的 OD 里没有该值</strong>（空接口 ≠ 启用）</td><td><code>check_contract</code></td></tr><tr><td><strong>TR26</strong></td><td>无水域地图上 <code>port</code> 数量 = <strong>0</strong> 且不报错（没有水运是正常状态）</td><td>探针</td></tr><tr><td><strong>TR27</strong></td><td>⭐ <strong>建低净空桥后，上游航道等级下降</strong>，该段 <code>port</code> 吞吐随之下降</td><td>探针两支对照</td></tr><tr><td><strong>TR28</strong></td><td>⭐ 只建码头不修疏港通道时，<strong>实际吞吐被卡在 min(通道能力)</strong></td><td>探针</td></tr><tr><td><strong>TR29</strong></td><td>大宗货类（煤/矿/砂石）的<strong>单位运费：水运 &lt; 铁路 &lt; 公路</strong></td><td>探针算成本</td></tr><tr><td><strong>TR30</strong></td><td>拆掉限制航道的那座桥后，<strong>航道等级恢复</strong>（证明限制来自桥，不是别的）</td><td>探针</td></tr></tbody></table></div>
+<p>⚠ <strong>TR27 / TR30 是 §3.9 水运的核心</strong>：它们把"桥的净空"和"航道等级"接上， 让 <code>02-road</code> 已有的 <code>clearance_m</code> 产生了<strong>下游后果</strong>——不做这条，桥的净空就只是个数字。</p>
+<p>⚠ <strong>TR20–TR24 是 §3.7 铁路的骨架</strong>：它们合起来证明"堵火车"不是画出来的动画， 而是<strong>占用模型自然产生</strong>的结果。<strong>TR21 是最中国的那一条</strong>（客货混跑压速）。</p>
+<p>⚠ <strong>TR3 是全篇最重要的一条</strong>：它证明"微观 agent 是表现，宏观流量是真值"。 如果删掉 agent 拥堵度变了，说明有人在用 agent 反算流量，架构立刻退化成 v1。</p>
+<hr>
+<h2 id="九-待定">九、待定</h2>
+<ol><li><del>OD 分配算法</del> → <strong>已定：增量分配 + Dial 似然分配</strong>（§3.6.1）。SUE 太贵，不做</li><li><strong><code>shopping</code> / <code>freight</code> 的 OD 从哪来</strong>：目前只有通勤有明确来源（家→工作地），其余需在 <code>05-employment</code> 定</li><li><strong>行人是否值得做</strong>：5 万行人只影响观感，成本不小，可能在打磨年才做</li><li><strong>地铁造价曲线</strong>：越深越贵？还是按长度线性？建议线性 + 过江/过河加价</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-20</strong>：新增 <strong>§三·九 水运与港口</strong>。依据用户「交通还剩一个明显的空白：水运与港口」：</li></ul>
+<p>  ① ⚠ <strong>水运是地图给的，不是玩家修的</strong> —— 没有水域就没有，<strong>"没有水运"是正常状态</strong>；   ② ⭐ <strong>水运是大宗货物的唯一经济选择</strong>（单位成本 公路 1.0 / 铁路 0.4 / <strong>水运 0.15–0.2</strong>）      ⇒ <strong>沿江沿海城市重工业成本天然低 10–20 %</strong> ⇒ <strong>地图选择有了真实的经济后果</strong>      （只需在 <code>material_chain</code> 里乘一个运费系数，一行代码）；   ③ ⚠ <strong>港口的真瓶颈是集疏运不是岸线</strong>：<code>吞吐 = min(泊位, 疏港通道, 腹地货源)</code>，      <strong>只建码头不修疏港路 = 死港</strong>（真实存在）；   ④ ⭐⭐ <strong>桥的净空决定航道等级</strong>（与 <code>02-road</code> §3.7.3 闭环）：一座 12 m 连续梁省钱，      但<strong>堵死上游港口十年</strong>；南京长江大桥 24 m 挡住万吨轮是真实案例。      <strong>同一份 <code>clearance_m</code> 数据，两处后果</strong>；   ⑤ <strong>轮渡是"穷人的过江方案"</strong>：修不起桥时让两岸先连起来，给早期城市一个可负担选项；   ⑥ <strong>老港区搬迁 → 滨江 CBD</strong>（上海十六铺 / 广州黄沙 / 武汉汉口），推打磨年，依赖 F4；   ⑦ <strong>游船 / 邮轮 DLC</strong>。新增 <code>port</code> / <code>waterway</code> / <code>ship</code> 三条契约、TR26–TR30 五条断言。</p>
+<ul><li><strong>2026-11-19</strong>：新增 <strong>§三·七 铁路</strong> 与 <strong>§三·八 航空</strong>。依据用户</li></ul>
+<p>  「交通中一直没说飞机这个交通工具」+「CS1 中甚至能看到'堵火车'」：   ① ⚠ <strong>铁路不能用 BPR 模型</strong> —— 公路是连续流、铁路是<strong>区间占用</strong>（一格一列），     必须独立建模（<code>rail_link</code> + <code>train</code>，不进 <code>road_graph</code>）；   ② <strong>"堵火车"的三种真实来源</strong>：单线区间待避 / <strong>客货混跑（货车 80 vs 客车 160）</strong> /      到发线不足。第 2 条是中国普速线的典型现象；   ③ <strong>平交道口封闭 40–90 s</strong> 是"铁路分割城市"最直观的表现，不做道口铁路就只是一条线；   ④ <strong>铁路分割白拿机制</strong>：只要铁路不可穿越，<code>accessibility</code> 的栅格扩散自然绕开；   ⑤ <strong>玩家四条应对</strong>：跨线桥 / 道口立交化 / <strong>货运外绕线</strong>（最值）/ 新建车站 ——      ⚠ <strong>干线走向不可改</strong>（国家层面，这是中国的现实也是好约束）；   ⑥ <strong>航空进 DLC</strong>（三条标准全指向 DLC），但<strong>本体必须从 B3 就留三样</strong>：      <code>airport_clearance</code> 净空限高 / <code>T</code> 类用地容跑道 / <code>purpose=airport</code> 枚举；   ⑦ ⭐ <strong>机场最中国的约束是净空限高（限制面 1:20）</strong>：锁死一个方向的天际线，      <strong>真实逻辑是"地价超过机场价值 → 搬迁"</strong>（昆明巫家坝 / 广州白云都是这样）；   ⑧ ⚠ <strong>航空 OD 的边界</strong>：跨城航空<strong>不进</strong>市内 OD，但<strong>进出机场的地面交通要进</strong> ——      <strong>航空不占路网，占路的是一车车去机场的人</strong>。   另把 §三·六 从 §四 之后移回 §四 之前（原顺序错乱）。新增 <code>rail_link</code> / <code>train</code> 两条契约。   另把 TR11–TR19 从 §3.6.8 并入主验收表（原来散在正文里，与"主表 + 指针"的约定不符）。</p>
+<ul><li><strong>2026-11-18（四）</strong>：⚠ <strong>§3.6.6 修正</strong>——初版写的"按速度分车道（快车内侧/慢车外侧）"<strong>是错的</strong>。</li></ul>
+<p>  用户指出「快车总会找机会超车，市区内速度一般快不起来，<strong>车少好超、车多不好超</strong>，   慢车道快车道是<strong>高速上的做法</strong>」。   改为 <strong>占用率驱动的超车模型</strong>：<strong>能不能超 = f(该方向 <code>v/c</code>)</strong>——   <code>v/c &amp;lt; 0.4</code> 自由超越（横向错位）/ <code>0.4–0.7</code> 概率超越 / <strong><code>&amp;gt; 0.7</code> 强制跟车</strong>。   ⭐ 核心规则 <strong><code>实际速度 = min(自身期望, 路段实际速度)</code></strong>：   路段实际速度已由 BPR 从 <code>v/c</code> 算出 ⇒ <strong>宏观与微观永远自洽，不可能出现幽灵堵车</strong>。   ⚠ <strong>不做逐车前车检测</strong>（那是 CS1 的成本与风险来源），只读 <code>flow_assign</code> 已算好的 <code>v/c</code>。   并说明 <strong>市区 <code>speed_factor</code> 的视觉价值低于高速</strong>（40km/h 下只差 12km/h），   它的主要作用是"不至于所有车完全同步"。TR18 改为"车少能超 / 车多排队"，新增 TR19（速度上限自洽）。</p>
+<ul><li><strong>2026-11-18（三）</strong>：新增 <strong>§三·六 多路径分配</strong>。依据用户指出 CS1 的头号缺陷</li></ul>
+<p>  「<strong>只走最近的路，还只走一个车道</strong>——性能好但模拟糟糕」：   ① <strong>路径层</strong>：不做 all-or-nothing，改 <strong>增量分配（K=3~4 轮）+ Dial 似然分配</strong>。   ⭐ <strong>关键：多路径 ≠ 更慢</strong> —— Dial 在<strong>已算好的最短路树上</strong>摊流量，不额外求最短路；   成本增加几乎全来自 K 轮迭代。   ⚠ 成本超原预算（4 时段全跑约 3 s）⇒ <strong>推荐只跑早晚高峰、平峰复用</strong>（~1.5 s）。   ② <strong>车道层</strong>：agent 生成时按 OD 方向定车道 + <strong>横向抖动</strong>，<strong>不做变道</strong>（视觉收益小、成本高）。   ③ 定下核心取舍：<strong>把算力花在"路径"上，省在"车道"上</strong>——理由：   <strong>路径选择影响玩家决策，车道细节不影响</strong>。   新增 TR11–TR14 四条断言，其中 <strong>TR13（平行路分流有效，通勤降 15 %) 是本节的存在理由</strong>。   §九 待定第 1 条（增量 vs SUE）结案。</p>
+<ul><li><strong>2026-11-17（二）</strong>：新增 <strong>§四·五 实现约束</strong>（依 <code>11-scale</code> §6.4 实测）：</li></ul>
+<p>  ① ⚠ <strong><code>Buffer</code> 批量 vs 逐个 API 哪个快取决于语言且正好相反</strong> ——   GDScript 用逐个（批量慢 5 倍）、<strong>C# 用 <code>Buffer</code>（快 9 倍）</strong>；   原因：C# 的 <code>SetInstanceTransform</code> 每次跨边界约 90 ns，与 GDScript 调用开销同量级。   ② <strong>15 万 agent 实测外推 ≈ 25 ms（40 fps）</strong>，过 30 fps 线但不到 60；   ⚠ <strong><code>sim</code> 层禁用 <code>Vector3</code></strong>（C# 下只快 2.1 倍，纯 <code>float[]</code> 快 44 倍）。   ③ 新增 <strong>impostor 三级 LOD</strong>（近景真 agent / 中景广告牌 / 远景 shader 动画，CPU ≈ 0），   把"可见"与"可模拟"解耦；⚠ 但 impostor <strong>只在打磨年做</strong>。</p>
+<ul><li><strong>2026-11-16（二）</strong>：新增 <strong>§3.5.4 三种敷设方式（地下/高架/地面）</strong>。</li></ul>
+<p>  依据用户「地铁有时候并不完全在地下，受地形影响还是要到地面的」——   <strong>修正上一轮"一律不建地上部分"</strong>。给出造价系数（1.00 / 0.60 / 0.35）、   沿线地价影响（0 / −10 % / −15 %）、<strong>地形决定表</strong>（跨江必高架、坡度 &gt;8 % 必隧道或高架、   软土 ×1.3、旧铁路走廊 ×0.6），并解释"重庆 8D 魔幻城市是地形逼出来的"。   视觉规则：<strong>地下不建模，高架与地面必须建模</strong>（<code>metro_viaduct</code>）。</p>
+<ul><li><strong>2026-11-16</strong>：新增 <strong>§三·五 多方式 OD</strong>（<code>decisions.md</code> R18：地铁回归本体）。</li></ul>
+<p>  关键取舍：<strong>地铁不做车辆 agent，只做"运力分流"</strong>（不挖隧道、不做换乘动线）；   方式分担（walk/ebike/metro/bus/car）；轨道数据结构极简（≤64 线 / ≤2000 站 / 换乘 ≤1 次）；   新增 TR9/TR10 两条断言——<strong>其中 TR10 证明"公交占道、地铁不占道"这个本质区别</strong>。</p>
+<ul><li><strong>2026-11-15（二）</strong>：新增 <strong>§6.1.1 交通参与者类型枚举</strong>（<code>car</code> / <code>truck</code> / <code>taxi</code> / <code>bus</code>（DLC1）/</li></ul>
+<p>  <strong><code>ebike</code> 外卖骑手</strong> / <code>pedestrian</code>）。明确 <strong><code>ebike</code> 与 <code>pedestrian</code> 不占 U3 寻路预算</strong>，   用独立 MultiMesh 与独立更新循环（<code>12-china-features</code> F33）。</p>
+<ul><li><strong>2026-11-15</strong>：首版（AI 起草，待开发者拍板）。按 R10 补齐「数据契约 + 验收点」两节，</li></ul>
+<p>  并落实 R1/R2/R5/R13+R14：三层模型、双层流量（宏观真值 / 微观代表）、   4 时段系数法（含学生 OD 单列）、分层路网 H/M/L、LOD 四档、8 条验收断言。</p><div class="pager"><a href="design-07-services.html">← 07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a><a href="design-09-core-tick.html">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#二-三层模型-千万人口能跑的唯一结构">二、三层模型（千万人口能跑的唯一结构）</a><a class="l2" href="#三-双层流量-宏观全量-微观代表">三、双层流量：宏观全量 + 微观代表</a><a class="l2" href="#三-五-多方式-od-地铁与公交怎么接进来-r18">三·五、多方式 OD：地铁与公交怎么接进来（R18）</a><a class="l3" href="#3-5-1-地铁不做车辆-agent-只做-分流">3.5.1 地铁不做车辆 agent，只做"分流"</a><a class="l3" href="#3-5-2-方式分担模型">3.5.2 方式分担模型</a><a class="l3" href="#3-5-3-轨道线路的数据结构-极简">3.5.3 轨道线路的数据结构（极简）</a><a class="l3" href="#3-5-4-三种敷设方式-地形说了算-2026-11-16-补充">3.5.4 三种敷设方式：地形说了算（2026-11-16 补充）</a><a class="l3" href="#3-5-5-工期-不能照搬现实">3.5.5 工期：不能照搬现实</a><a class="l3" href="#3-5-6-对拥堵的反哺">3.5.6 对拥堵的反哺</a><a class="l2" href="#三-六-多路径分配-不重蹈-cs1-的-只走最近路-2026-11-18-定">三·六、⭐ 多路径分配：不重蹈 CS1 的"只走最近路"（2026-11-18 定）</a><a class="l3" href="#3-6-1-层面一-路径-不能-100-给最短路">3.6.1 层面一：路径——不能 100 % 给最短路</a><a class="l4" href="#all-or-nothing-会出什么事">❌ all-or-nothing 会出什么事</a><a class="l4" href="#解法-增量分配-dial-似然分配">✅ 解法：增量分配 + Dial 似然分配</a><a class="l4" href="#成本预算">成本预算</a><a class="l3" href="#3-6-2-层面二-车道-不能所有车都叠在中心线">3.6.2 层面二：车道——不能所有车都叠在中心线</a><a class="l4" href="#我们的做法-简化-不做逐车变道">我们的做法（简化，不做逐车变道）</a><a class="l3" href="#3-6-3-三层-车道级细节-的取舍表">3.6.3 ⭐ 三层"车道级细节"的取舍表</a><a class="l3" href="#3-6-4-广义成本-为什么-最近的路-不一定是-走的路">3.6.4 ⭐ 广义成本：为什么"最近的路"不一定是"走的路"</a><a class="l4" href="#广义成本-四项相加">广义成本 = 四项相加</a><a class="l3" href="#3-6-5-异质驾驶者-四个廉价参数">3.6.5 异质驾驶者：四个廉价参数</a><a class="l3" href="#3-6-6-超车-占用率驱动的-能超就超-车多就排">3.6.6 超车：占用率驱动的"能超就超、车多就排"</a><a class="l4" href="#真正的机制-超车需要-空隙">真正的机制：超车需要"空隙"</a><a class="l4" href="#关键-用-路段饱和-近似-不做逐车前车检测">⭐ 关键：用"路段饱和"近似，不做逐车前车检测</a><a class="l4" href="#市区里-speed_factor-的视觉价值比高速低">⚠ 市区里 speed_factor 的视觉价值比高速低</a><a class="l4" href="#车多时选择绕路">"车多时选择绕路"</a><a class="l3" href="#3-6-7-看到堵车就绕路-不做逐车实时重路由">3.6.7 "看到堵车就绕路"：不做逐车实时重路由</a><a class="l3" href="#3-6-8-验收点">3.6.8 验收点</a><a class="l2" href="#三-七-铁路-为什么-堵火车-是对的-2026-11-19-新增">三·七、铁路：为什么"堵火车"是对的（2026-11-19 新增）</a><a class="l3" href="#3-7-1-三层结构-与公路完全分开">3.7.1 三层结构（与公路完全分开）</a><a class="l3" href="#3-7-2-三种-堵-的来源-都是真实的">3.7.2 三种"堵"的来源（都是真实的）</a><a class="l3" href="#3-7-3-参数-初始值-b5-实测后调">3.7.3 参数（初始值，B5 实测后调）</a><a class="l3" href="#3-7-4-对城市的三重影响-这才是它值得做的理由">3.7.4 对城市的三重影响（这才是它值得做的理由）</a><a class="l4" href="#①-平交道口堵车-玩家直接看得见">① 平交道口堵车 —— 玩家直接看得见</a><a class="l4" href="#②-铁路分割-可达性直接掉">② 铁路分割 —— 可达性直接掉</a><a class="l4" href="#③-噪音与邻避">③ 噪音与邻避</a><a class="l3" href="#3-7-5-玩家能做什么-四条-都不改干线">3.7.5 玩家能做什么（四条，都不改干线）</a><a class="l3" href="#3-7-6-模拟成本-很小">3.7.6 模拟成本（很小）</a><a class="l3" href="#3-7-7-边界-高铁不进本体">3.7.7 边界：高铁不进本体</a><a class="l2" href="#三-八-航空-dlc-但本体必须留三样东西-2026-11-19-新增">三·八、航空：DLC，但本体必须留三样东西（2026-11-19 新增）</a><a class="l3" href="#3-8-1-机场最中国的约束-净空限高">3.8.1 ⭐ 机场最中国的约束：净空限高</a><a class="l3" href="#3-8-2-噪音等值线">3.8.2 噪音等值线</a><a class="l3" href="#3-8-3-航空-od-的边界-机场不进市内-od-矩阵">3.8.3 ⚠ 航空 OD 的边界：机场不进市内 OD 矩阵</a><a class="l3" href="#3-8-4-飞机不进-agent-池">3.8.4 飞机不进 agent 池</a><a class="l3" href="#3-8-5-货运-与高新产业联动">3.8.5 货运：与高新产业联动</a><a class="l2" href="#三-九-水运与港口-地图给的-不是玩家修的-2026-11-20-新增">三·九、水运与港口：地图给的，不是玩家修的（2026-11-20 新增）</a><a class="l3" href="#3-9-1-水运是大宗货物的唯一经济选择-这才是它的价值">3.9.1 ⭐ 水运是大宗货物的唯一经济选择（这才是它的价值）</a><a class="l3" href="#3-9-2-港口的真实约束是-集疏运-不是-岸线">3.9.2 港口的真实约束是"集疏运"，不是"岸线"</a><a class="l3" href="#3-9-3-港口三级">3.9.3 港口三级</a><a class="l3" href="#3-9-4-桥的净空决定航道等级-与-02-road-3-7-3-闭环">3.9.4 ⭐⭐ 桥的净空决定航道等级（与 02-road §3.7.3 闭环）</a><a class="l3" href="#3-9-5-客运-轮渡-便宜-直观-有画面">3.9.5 客运：轮渡（便宜、直观、有画面）</a><a class="l3" href="#3-9-6-老港区搬迁-滨江-cbd-与-f4-联动-推打磨年">3.9.6 老港区搬迁 → 滨江 CBD（与 F4 联动，推打磨年）</a><a class="l3" href="#3-9-7-模拟成本">3.9.7 模拟成本</a><a class="l3" href="#3-9-8-边界">3.9.8 边界</a><a class="l2" href="#四-时段系数-早晚高峰的实现">四、时段系数（早晚高峰的实现）</a><a class="l2" href="#四-五-实现约束-实例数据怎么写-远景怎么画-2026-11-17-实测后补">四·五、实现约束：实例数据怎么写、远景怎么画（2026-11-17 实测后补）</a><a class="l3" href="#4-5-1-multimesh-buffer-vs-逐个写入-取决于语言-且正好相反">4.5.1 ⚠ MultiMesh.Buffer vs 逐个写入：取决于语言，且正好相反</a><a class="l3" href="#4-5-2-15-万-agent-的实测成本-c-buffer-外推">4.5.2 ⚠ 15 万 agent 的实测成本（C# + Buffer 外推）</a><a class="l3" href="#4-5-3-远景-impostor-把-可见-和-可模拟-解耦">4.5.3 远景：impostor 把"可见"和"可模拟"解耦</a><a class="l2" href="#五-分层路网-分层寻路的前提">五、分层路网（分层寻路的前提）</a><a class="l2" href="#六-数据契约">六、数据契约</a><a class="l3" href="#6-1-核心结构-全部-soa-禁止逐对象">6.1 核心结构（全部 SoA，禁止逐对象）</a><a class="l3" href="#6-1-1-交通参与者类型-vehicle_type-枚举">6.1.1 交通参与者类型（vehicle_type 枚举）</a><a class="l3" href="#6-2-bus-key">6.2 bus key</a><a class="l3" href="#6-3-预算-11-scale-md-六">6.3 预算（11-scale.md §六）</a><a class="l2" href="#七-lod-与激活-r2-r5">七、LOD 与激活（R2 / R5）</a><a class="l2" href="#八-验收点">八、验收点</a><a class="l2" href="#九-待定">九、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

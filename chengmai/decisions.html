@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>v2 裁定记录 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" class="on" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 立法与裁定</div><h1 id="v2-裁定记录">v2 裁定记录</h1>
+<blockquote>📌 <strong>涉及性能取舍时，结论统一登记在 <code>docs/design/19-tradeoffs.md</code></strong>；本文只说明"要什么"，不重复决定"砍什么"。</blockquote>
+<blockquote><strong>这是 v2 唯一的裁定入口。</strong> v1 的裁定散在 <code>design/README.md</code> 里，v2 集中在此。<br>新裁定必须签日期，并写清「背景 / 裁定 / 影响」。</blockquote>
+<h2 id="待拍板-开工前必须清空">待拍板（开工前必须清空）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>问题</th><th>状态</th></tr></thead><tbody><tr><td>Q1</td><td>R1 路网密度 / R2 土地财政 / R3 学区，三条是否成立（含<strong>拆迁收储是否进可玩版</strong>）</td><td>✅ <strong>R7</strong>（三条全立，R3 最小实现；<strong>收储进可玩版</strong>）</td></tr><tr><td>Q2</td><td><code>cs1_replica</code> 是否只读保留、代码不搬</td><td>✅ <strong>R8</strong>（只读保留，一行不引）</td></tr><tr><td>Q3</td><td>7 个功能系统 + core 的划分是否成立</td><td>✅ <strong>R9</strong>（7 个，<code>employment</code> 独立）→ <strong>后由 R15 改为 8 个</strong>（加 <code>utility</code>）</td></tr><tr><td>Q4</td><td>可玩版是否确定不用任何 CS1 资产</td><td>✅ <strong>R3</strong>（自建资产管线，建模 Agent 生产）</td></tr><tr><td>Q5</td><td>地图尺度能否承载目标人口</td><td>✅ <strong>R1</strong>（2500 km² / 100 万 / 1000 万）</td></tr><tr><td>Q6</td><td>九篇空设计文档要不要纳入 B0 交付</td><td>✅ <strong>R10</strong>（A′：只先写「数据契约 + 验收点」）</td></tr><tr><td>Q7</td><td>是否加 DG9/DG10 两条「中国性」判据</td><td>✅ <strong>R4</strong>（按国标，且分年代与行政层级）</td></tr><tr><td>Q8</td><td>U3 活跃 agent 目标定多少（15 万 / 30 万 / 50 万）</td><td>✅ <strong>R5</strong>（先 15 万，终局 50 万，随硬件可配）</td></tr><tr><td>Q9</td><td>L0 用地格用 20 m 还是 25 m</td><td>⬜ <strong>问题本身作废</strong> → 见 <strong>R6</strong>（地块由道路围合，不用固定格）</td></tr><tr><td>Q10</td><td>相机边界：哪些跟视角走、哪些不跟</td><td>✅ <strong>R2</strong>（相机只管表现，不管权威）</td></tr><tr><td><strong>Q11</strong></td><td>中国时间维度（春运 / 节假日 / 寒暑假）与<strong>南北城市选择</strong>：进可玩版还是打磨年</td><td>✅ <strong>R16</strong>（三个时间维度进可玩版；南北与编辑器推打磨年）</td></tr><tr><td><strong>Q12</strong></td><td>3 秒/日 下一局只有 13–20 年（1x），与「一局 50–80 年」冲突</td><td>✅ <strong>R14</strong>（一局不定长，改里程碑 + 长期档到 400 年）</td></tr><tr><td><strong>Q13</strong></td><td>基础设施（水/电/气/网）塞进 <code>services</code> 还是做第 8 个系统</td><td>⬆ <strong>已升级为 Q14</strong>（基础设施涨到 6 个子领域，4 文件方案不够）</td></tr><tr><td><strong>Q14</strong></td><td><strong>系统数：7 个还是 8 个</strong>（拆 <code>utility</code>）</td><td>✅ <strong>R15</strong>（改 8 个，Tick 加 <code>utility</code>）</td></tr></tbody></table></div>
+<p>⚠ 任一 ⬜ 超过 30 天未决，按 D7 必须拍板或删掉。 ⚠ <strong>冻结期例外（2026-11-15 记）</strong>：工程冻结至 2027-06 高考后，D7 的 30 天计时<strong>从复工日起算</strong>， 不追溯冻结期。冻结期内不得为了凑 D7 而草率拍板或删条目。</p>
+<hr>
+<h2 id="已裁定总表-r1-r32">已裁定总表（R1–R32）</h2>
+<blockquote>一屏看完所有已定的事。<strong>详情见文末各条</strong>，改任何一条都要走宪法 §五 的流程。</blockquote>
+<div class="tw"><table><thead><tr><th>#</th><th>一句话</th><th>关键数字 / 内容</th><th>日期</th></tr></thead><tbody><tr><td><strong>R1</strong></td><td><strong>规模目标</strong></td><td>地图 2500 km²（50×50 km）· 可玩版 100 万 · 打磨年 1000 万 · agent 突破 65,536</td><td>11-15</td></tr><tr><td><strong>R2</strong></td><td><strong>相机边界</strong></td><td>相机只管表现，<strong>权威数值不跟相机</strong>（否则转身城市停长、headless 断言失效）</td><td>11-15</td></tr><tr><td><strong>R3</strong></td><td><strong>资产自建</strong></td><td>绝不用 CS1 资产；专门建模 Agent 生产；实拍照片<strong>只作参考不上传</strong></td><td>11-15</td></tr><tr><td><strong>R4</strong></td><td><strong>形态按国标、分年代</strong></td><td>老城按当年规范、新城按现行规范 → 城市长出<strong>年代层理</strong>；村/镇/县/市规范不同</td><td>11-15</td></tr><tr><td><strong>R5</strong></td><td><strong>活跃 agent 上限</strong></td><td>先 <strong>15 万</strong>签收 · 终局 <strong>50 万</strong> · <strong>随硬件可配</strong>（需 benchmark + 档位）⚠ 签收口径已由 <strong>R26</strong> 细化为「8 万基线 / 15 万上限」</td><td>11-15</td></tr><tr><td><strong>R6</strong></td><td><strong>空间模型</strong></td><td><strong>地块由道路围合生成</strong>（parcel 多边形），不用固定网格；栅格降为 50 m 派生索引</td><td>11-15</td></tr><tr><td><strong>R7</strong></td><td><strong>核心循环</strong></td><td>R1 路网密度 + R2 土地财政 + R3 学区<strong>全立</strong>；<strong>拆迁收储进可玩版</strong></td><td>11-15</td></tr><tr><td><strong>R8</strong></td><td><strong>cs1_replica</strong></td><td>只读保留，<strong>代码一行不搬</strong></td><td>11-15</td></tr><tr><td><strong>R9</strong></td><td><strong>系统划分</strong>（已被 R15 修正）</td><td>原定 <strong>7 个</strong>功能系统 + core；<code>employment</code> 必须独立</td><td>11-15</td></tr><tr><td><strong>R10</strong></td><td><strong>B0 交付口径</strong></td><td>九篇设计文档只先写「<strong>数据契约 + 验收点</strong>」两节</td><td>11-15</td></tr><tr><td><strong>R11</strong></td><td><strong>开局</strong></td><td><strong>空白地图 + 启动资金</strong>（同 CS）；村庄是玩家建出来的形态，不是初始状态</td><td>11-15</td></tr><tr><td><strong>R12</strong></td><td><strong>DLC 策略</strong></td><td><strong>砍掉清单 = DLC 池</strong>；DLC 只能走子模块，<strong>不得新增 sim 目录</strong></td><td>11-15</td></tr><tr><td><strong>R13</strong></td><td><strong>时间尺度</strong>（已被 R14 修正 3 处）</td><td>1 日 = 3 秒 · 昼夜 24 分钟纯表现 · 两者<strong>永不混</strong></td><td>11-15</td></tr><tr><td><strong>R14</strong></td><td><strong>时间尺度修正</strong></td><td>年 = <strong>现实 365/366 日</strong> · <strong>完整农历</strong>（1900–2200）· <strong>里程碑 + 长期档 400 年</strong> · <strong>日内 4 时段</strong></td><td>11-15</td></tr><tr><td><strong>R15</strong></td><td><strong>系统数 7 → 8</strong></td><td>新增 <strong><code>utility</code></strong>（电/水/污水/通信/燃气）；Tick 加在 <code>zoning</code> <strong>之前</strong>；DG4 改「= 8」</td><td>11-15</td></tr><tr><td><strong>R16</strong></td><td><strong>时间维度到底做哪些</strong></td><td>节假日 / 寒暑假 / 春运<strong>进可玩版</strong>（B4/B5/B6/B7）；南北城市<strong>推打磨年</strong></td><td>11-16</td></tr><tr><td><strong>R17</strong></td><td><strong>地图编辑器前置 + 建筑模块化</strong></td><td>编辑器<strong>B3 前可用</strong>（修正 R16）；程序化生成与手绘并存；建筑拆<strong>四组模块</strong>组装</td><td>11-16</td></tr><tr><td><strong>R18</strong></td><td><strong>地铁回归本体</strong></td><td>地铁+公交进本体（CS1 都有，缺了是硬伤）；<strong>简化实现</strong>（不挖隧道，只做 OD 分流）；古建交社区</td><td>11-16</td></tr><tr><td><strong>R19</strong></td><td><strong>主语言分工</strong></td><td><code>sim/</code> + <code>core/</code> 用 <strong>C#</strong>，<code>view/</code> <code>ui/</code> <code>tools/</code> 用 GDScript；配套 L6–L8 三条硬约束</td><td>11-17</td></tr><tr><td><strong>R20</strong></td><td><strong>多语言八语</strong></td><td>简中/繁中/英/日/韩/俄/西/葡；阿语暂不做但<strong>预留 RTL</strong>；UI 宽度按俄语设计</td><td>11-17</td></tr><tr><td><strong>R21</strong></td><td><strong>ECS 数据布局，不用 ECS 框架</strong></td><td>只借 SoA + 句柄池 + 稳定 ID；<strong>不引入完整 ECS 框架</strong></td><td>11-18</td></tr><tr><td><strong>R22</strong></td><td><strong>配音只有中文</strong></td><td>其余语言无语音、不需字幕（信息在 UI 上）</td><td>11-18</td></tr><tr><td><strong>R23</strong></td><td><strong>cs1_replica 归档</strong></td><td>复刻版效果不佳，<strong>不再参考</strong>；CS1 设计改从逆向源码 <code>cs1-decomp</code> 学</td><td>11-18</td></tr><tr><td><strong>R24</strong></td><td><strong>反向读统一用上月值</strong></td><td>读 Tick 顺序之后的系统 ⇒ <strong>一律读上月值</strong>（<code>stale</code> 标记），不读本月值</td><td>11-21</td></tr><tr><td><strong>R25</strong></td><td><strong>native 降为应急</strong></td><td>C# 已达预算（月结 71 ms / 400 ms）⇒ <strong>B4 不前置 <code>native/sim_core</code></strong>；只在某块实测超预算时局部下沉</td><td>11-21</td></tr><tr><td><strong>R26</strong></td><td><strong>agent 双档口径</strong></td><td><strong>15 万 = 能力上限</strong>（R5），<strong>8 万 = 首发验收基线</strong>；签收写"X 档硬件 ≥8 万且 30 fps，掉档需解释"</td><td>11-21</td></tr><tr><td><strong>R27</strong></td><td><strong>DLC 编号以 <code>12 §4.5</code> 为唯一基准</strong></td><td>DLC1 环境季节 / DLC2 节日 / DLC3 城中村 / DLC4 都市圈 / DLC5 轨道与新型出行 / DLC6 治理 / DLC7 灾害</td><td>11-21</td></tr><tr><td><strong>R28</strong></td><td><strong>行政层级保持四级</strong></td><td>村/镇/县/市（R4）；<strong>不新增"都市"层</strong>，&gt;100 万只是胜利条件</td><td>11-21</td></tr><tr><td><strong>R29</strong></td><td><strong>高铁：站进本体、班次进 DLC4</strong></td><td>本体做 <code>hsr_station</code> 建筑 + 站前地面交通峰值（对外客运量按人口常量折算）；班次表与跨城 OD 归 DLC4</td><td>11-21</td></tr><tr><td><strong>R30</strong></td><td><strong>OD 月边界算一次</strong></td><td>与人口/就业同频（月更）；不做日更。<code>11-scale §4</code> 原"每日一次"作废</td><td>11-21</td></tr><tr><td><strong>R32</strong></td><td><strong>语言策略：C# 为主，Rust 只做局部下沉</strong></td><td>保持 R19；Rust 仅在「实测超预算 2× / 纯计算无回调 / ≤每日一次且 &lt;20 MB」<strong>三条全过</strong>时以 <code>cdylib</code>+P/Invoke 局部下沉，<strong>绝不进每帧路径</strong></td><td>11-22</td></tr></tbody></table></div>
+<p>⚠ <strong>R13 被 R14 修正了三处</strong>（360 日 → 365/366、农历查表 → 完整算法、固定局长 → 里程碑）， 但 R13 的核心判断仍然有效：<strong>两个时钟必须分开</strong>。</p>
+<hr>
+<h2 id="待拍板-决策备忘">待拍板 · 决策备忘</h2>
+<blockquote>⚠ <strong>2026-11-15 状态说明</strong>：下面的 Q1–Q10 与 Q12 <strong>已全部裁定</strong>（见文末 R1–R14）。<br>正文与「拍板栏」原样保留，作为<strong>决策留痕</strong>（为什么这么选、当时否掉了什么）。<br><strong>拍板栏里的 ⬜ 是历史标记，不代表未决。</strong> <strong>Q1–Q14 已全部裁定，待拍板表已清零。</strong><br>本节由 AI 起草，只做「摆选项 + 摆后果」，<strong>不构成裁定</strong>（宪法 §五：AI 可提方案，不能拍板）。<br>每条末尾有「拍板栏」，你只需在 2027-06 复工时把 ⬜ 改成 ✅/❌ 并在「已裁定」里签日期。<br><strong>目的：让 B0 从「要读 300 KB 文档才能选」变成「一眼能选」。</strong></blockquote>
+<h3 id="q1-r1-路网密度-r2-土地财政-r3-学区-三条是否成立">Q1 · R1 路网密度 / R2 土地财政 / R3 学区，三条是否成立</h3>
+<p><strong>背景</strong> <code>01-playable-definition.md</code> §四 把 v1 的 14 条中国特色收敛到 3 条，作为核心循环（§4.2）的载体。 它们不是三个功能，是<strong>同一条因果链的三个环节</strong>：铺路 → 可达性↑ → 地价↑ → 卖地得钱 → 建学校 → 学区↑ → 地价↑↑。 若三条不成立，<code>02</code>–<code>10</code> 八篇设计文档的靶子全部落空。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>内容</th><th>后果</th></tr></thead><tbody><tr><td><strong>A</strong></td><td>R1 + R2 + R3 全立</td><td>B6 交付 3 个 <code>.gd</code> + 2 个面板；A3/A4/A5/A6 四条断言全部有对应实现；8 个系统全部有事干</td></tr><tr><td><strong>B</strong></td><td>只立 R1 + R2，学校推到打磨年</td><td>B6 减负约 1/3，<code>services/</code> 降为单文件；但 <strong>A5 断言作废</strong>，P4「成长质变」少一个杠杆，循环缺正反馈加速器</td></tr><tr><td><strong>C</strong></td><td>只立 R2 土地财政</td><td>循环退化成纯卖地游戏；A3（R1 生效）作废，B2 路网失去设计理由，只剩「能画线」</td></tr><tr><td><strong>D</strong></td><td>三条全否，另定循环</td><td><code>02</code>–<code>10</code> 需整体重写，B0 回到零，工期 +2~3 月</td></tr></tbody></table></div>
+<p><strong>AI 建议：A，但 R3 用最小实现。</strong> 理由：R3 的真实成本不在机制，在于容易写成「教师-生源-设施」三本账（v1 就是这么膨胀的）。 最小实现 = <strong>一个标量评分 + 半径衰减函数</strong>（<code>school_score = f(投入) × exp(-dist/500m)</code>）， 不建账本、不做教师个体。这样 A5 可测，成本可控在 1 个文件内。</p>
+<blockquote>⚠ <strong>2026-11-15 复查补注（不改本条结论，只补一个漏项）</strong>：<br>R2 目前只有「卖」，没有「收」。地是<strong>凭空出现</strong>的。真实的土地财政是<br><strong>收储（拆迁补偿）→ 一级开发 → 招拍挂 → 出让</strong>，中间有一大块成本。<br>缺这一环的直接后果是 <strong>A6 断言会假绿</strong> —— 成本项少一半，「只收税当然容易亏」这个结论不再有力。<br>拍板 Q1 时请一并明确：<strong>拆迁收储是进可玩版，还是用「地块默认已收储」简化掉</strong>。<br>详见 <code>reports/2026-11-15-缺口审查.md</code> §2.2 F5。</blockquote>
+<p><strong>拍板栏</strong>：⬜ 待你填（建议在此签名 + 日期 + 选的方案）</p>
+<hr>
+<h3 id="q2-cs1_replica-是否只读保留-代码不搬">Q2 · cs1_replica 是否只读保留、代码不搬</h3>
+<p><strong>背景</strong> <code>cs1_replica</code> 用 3 天 64 次提交做出 74 个 <code>.gd</code>，功能到 DLC 级（Snowfall / Industries / Campus / Parklife）， 但<strong>它的 <code>docs/design/</code> 里没有 master、没有 simulation、没有 performance、没有裁定记录</strong> —— 有行无法。 且它的尺度（区划格 8 m / 地图 2 km）与 v2 已建目录所假定的尺度不同，直接搬会连尺度一起搬。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>内容</th><th>后果</th></tr></thead><tbody><tr><td><strong>A</strong></td><td>只读保留，v2 一行不引，需要时照逻辑重写</td><td>仓库干净；B2/B5 要多花约 2–3 周重写，但换来的代码天然满足 L2/L4（headless 可跑）</td></tr><tr><td><strong>B</strong></td><td>部分搬运（如 <code>traffic/</code> 直接拿）</td><td>省 1–2 周；但会把 v1 的 SoA 布局与未记录的隐式契约带进 v2，<strong>B2 的「数据结构已定死」风险从"我们定的"变成"继承来的、没人说得清"</strong></td></tr><tr><td><strong>C</strong></td><td>删除该目录</td><td>不可逆，丢掉「这条路能走通」的验证价值；且 v1 的 8 条坑记录失去对照物</td></tr></tbody></table></div>
+<p><strong>AI 建议：A。</strong> 理由：v1 的代码价值在「证明能跑」，不在「能复用」；而 B2 的 SoA 布局一旦定下六个系统全依赖它， <strong>不能是一个没人能完整解释来源的布局</strong>。</p>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q3-7-个功能系统-core-的划分是否成立">Q3 · 7 个功能系统 + core 的划分是否成立</h3>
+<p><strong>背景</strong> v1 的 <code>00-master</code> §四 按 Tick 粒度平铺 16 个系统，是「乱」的根源（README 证据 7）。 v2 按「能不能形成玩家决策」筛到 7 个。现值：<code>road</code> <code>zoning</code> <code>population</code> <code>employment</code> <code>finance</code> <code>services</code> <code>traffic</code>。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>变更</th><th>后果</th><th>对 DG4 判据</th></tr></thead><tbody><tr><td><strong>A</strong></td><td>7 个（现值）</td><td>每个都对应至少一条验收断言</td><td>✅ 恰为 7</td></tr><tr><td><strong>B</strong></td><td>6 个（<code>employment</code> 并入 <code>population</code>）</td><td>通勤路径归属变模糊：人口月更、通勤要每日重算，两个频率塞一个系统会打架（v1 踩过月份边界对不齐）</td><td>✅ 但 B4 反而更难拆</td></tr><tr><td><strong>C</strong></td><td>8 个（加 <code>environment</code>）</td><td>环境不在可玩版验收内（§七 砍掉清单），加了就是「加功能不加收敛」复发</td><td>❌ 破 DG4</td></tr></tbody></table></div>
+<p><strong>AI 建议：A。</strong> 关键理由是 <code>employment</code> 必须独立 —— 它是 <strong>R1（可达性）到 <code>traffic</code>（拥堵）之间唯一的桥</strong>， 拆掉它，A3 的「地价变化」就找不到传导路径。</p>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q4-可玩版是否确定不用任何-cs1-资产">Q4 · 可玩版是否确定不用任何 CS1 资产</h3>
+<p><strong>背景</strong> CS1 13,101 个模型版权不可发布；已导出 845。<code>01-playable-definition.md</code> §七 已列入砍掉清单。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>内容</th><th>后果</th></tr></thead><tbody><tr><td><strong>A</strong></td><td>全不用，方块 + 程序化生成</td><td>风格天然统一（直角；主色 <code>#2b6cb0</code> <strong>已于 2026-11-17 作废</strong>，见 <code>10-presentation</code> §四）；视觉朴素，P4「肉眼可见质变」只能靠<strong>密度与高度差</strong>表达，不能靠美术</td></tr><tr><td><strong>B</strong></td><td>本地用了但不上传/不发布</td><td>自己看着爽；一旦仓库公开或发视频就踩版权，且会诱导后续所有资产决策走捷径</td></tr><tr><td><strong>C</strong></td><td>另找 CC0 资产包</td><td>需额外选型与适配工期，且风格裂开的风险比重建还高</td></tr></tbody></table></div>
+<p><strong>AI 建议：A。</strong> 理由：P4 的质变本来就该靠「低层→高层、单中心→多中心」这种<strong>结构变化</strong>， 而不是靠模型精度；把资产砍掉反而逼着机制去承担表现力。</p>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q5-地图尺度装不下-30-万人口-已裁定-见下-r1"><del>Q5 · 地图尺度装不下 30 万人口</del> → <strong>已裁定，见下 R1</strong></h3>
+<blockquote>2026-11-15 用户直接给出规模目标：**地图 50 km × 50 km = 2500 km²，可玩版人口 ≥ 100 万，<br>打磨年挑战 1000 万，且 agent 数必须突破 CS1 的 65,536。**<br>原 Q5 的四个候选（26.2 / 10.2 / 1.6 km²）全部作废，实际取的是远超 A 的量级。<br>由此产生的架构方案见 <strong><code>docs/design/11-scale.md</code></strong>（新建），新待决项见下方 Q8 / Q9。</blockquote>
+<hr>
+<h3 id="q6-九篇设计文档是空模板-但已是子代理的-唯一需求来源-2026-11-15-复查新增">Q6 · 九篇设计文档是空模板，但已是子代理的「唯一需求来源」（2026-11-15 复查新增）</h3>
+<p><strong>背景（已核实，不是推测）</strong> <code>docs/design/02</code>–<code>10</code> <strong>九篇全部为空模板</strong>（每篇 ≈ 500 字节，只有标题 + 「待写」+ 四个空标题）。 而 <code>agents.md</code> §三 派活模板第 2 项写的是「<code>docs/design/&amp;lt;nn&amp;gt;-&amp;lt;系统&amp;gt;.md</code> ← <strong>是你的唯一需求来源</strong>」。 <code>plan.md</code> B0 的交付物却是「4 条裁定 + 宪法定稿 + 7 系统边界表」，<strong>不含这九篇</strong>。</p>
+<p>⇒ B0 验收通过（⬜ 归零）后立刻进 B1，而 B1 的子代理拿到的是空文件。 这精确复现 v1 的失败模式：<strong>没有需求来源 → 自己编 → 缝合怪</strong>。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>内容</th><th>代价</th></tr></thead><tbody><tr><td><strong>A</strong></td><td>九篇全写满，纳入 B0 交付物</td><td>B0 从约 3 天变 10–15 天，最稳</td></tr><tr><td><strong>A′</strong></td><td>每篇只先写「<strong>数据契约 + 验收点</strong>」两节（<code>范围</code>/<code>更新流程</code> 边做边补），纳入 B0</td><td>B0 只多约 5 天，子代理已有硬约束可依</td></tr><tr><td><strong>B</strong></td><td>B0 不变，改为「每批开工前写该批那一篇」</td><td>写文档推到用的前一刻，风险是赶工写空</td></tr></tbody></table></div>
+<p><strong>AI 建议：A′。</strong> 理由：<code>数据契约</code> 与 <code>验收点</code> 恰好是子代理唯一必须遵守的两节； <code>范围</code> 和 <code>更新流程</code> 可以在实现过程中补，不必前置。</p>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q7-八条判据全在-防乱-没有一条在-证明这是中国城市-2026-11-15-复查新增">Q7 · 八条判据全在「防乱」，没有一条在「证明这是中国城市」（2026-11-15 复查新增）</h3>
+<p><strong>背景</strong> README §三 的 D1–D8 全部是可 grep 的<strong>防复发</strong>判据。但项目定位是「<strong>中国版城市天际线</strong>」， 按当前文档走到 B7，能验收出一款"结构干净、能跑、能玩"的城市建造游戏， <strong>但不保证它不是一个通用的欧美城市模拟器</strong>。CS 的北美郊区模型可以轻松通过 D1–D8 全部八条。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>内容</th><th>后果</th></tr></thead><tbody><tr><td><strong>A</strong></td><td>加 <strong>DG9</strong>：<code>A11 断言 —— 同一地块容积率从 2 调到 6，建筑层数与天际线高度必须可测地变化</code></td><td>用一条可执行断言把「中国性」钉进机制；前提是 <code>03-zoning.md</code> 先定义 FAR（见 Q6）</td></tr><tr><td><strong>B</strong></td><td>加 DG9 且再加 DG10：<code>街区平均边长 ∈ [200, 500] m</code>（超大街区判据）</td><td>更强；但要先有 <code>block</code> 概念，<code>glossary.md</code> 需补</td></tr><tr><td><strong>C</strong></td><td>不加判据，只在 <code>10-presentation.md</code> 写视觉规范</td><td>最省事；但视觉规范是形容词，不可验收，等于没加</td></tr></tbody></table></div>
+<p><strong>AI 建议：B。</strong> 两条都是数字，都能 grep 或断言，且正好对应中西方城市形态最根本的两个差异 （容积率决定高度、街区尺度决定肌理）。CS 两条都做不到。</p>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q8-突破-65536-到底要突破到多少-2026-11-15-规模目标定下后新增">Q8 · 「突破 65536」到底要突破到多少（2026-11-15 规模目标定下后新增）</h3>
+<p><strong>背景</strong> <code>11-scale.md</code> §五 把"上限"拆成四个：U1 索引位宽 / U2 在册人口 / U3 同时活跃 agent / U4 同屏实例。 <strong>U1、U2、U4 都能轻松超过 65,536；只有 U3 是真正的瓶颈。</strong> v1 实测 7 万实体 = 5.70 ms（Rust 整体赋值版），线性外推：</p>
+<div class="tw"><table><thead><tr><th>U3 目标</th><th>预估耗时</th><th>代价</th></tr></thead><tbody><tr><td>15 万（2.3×）</td><td>≈ 12 ms</td><td>稳妥，B7 可达成</td></tr><tr><td><strong>30 万（4.6×）</strong></td><td>≈ 24 ms</td><td>需分帧摊销 + 视锥裁剪 + 瓦片激活三件套齐备</td></tr><tr><td>50 万（7.6×）</td><td>≈ 40 ms</td><td><strong>必须 GPU 计算着色器接管车辆积分</strong>（v1 设计过、未实现，风险最高）</td></tr></tbody></table></div>
+<p><strong>AI 建议：可玩版按 15 万签收，打磨年冲 30 万，50 万作"如果 GPU 那条路通了"的加分项。</strong> 理由：U3 一旦定得太高，B5 会为了凑数字牺牲别的预算；而定得太低，"突破 65536" 就只是口头目标。</p>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q9-l0-用地格用-20-m-还是-25-m-2026-11-15-规模目标定下后新增">Q9 · L0 用地格用 20 m 还是 25 m（2026-11-15 规模目标定下后新增）</h3>
+<div class="tw"><table><thead><tr><th>方案</th><th>格数</th><th>内存</th><th>后果</th></tr></thead><tbody><tr><td><strong>A · 20 m</strong></td><td>2,500 × 2,500 = <strong>625 万</strong></td><td>≈ 95 MB</td><td>一格 400 m²，比中国控规地块更细；地块边界更平滑</td></tr><tr><td><strong>B · 25 m</strong></td><td>2,000 × 2,000 = <strong>400 万</strong></td><td>≈ 61 MB</td><td>省 34 MB，但街区/地块边界明显更粗，2500 km² 下看得出来</td></tr></tbody></table></div>
+<p><strong>AI 建议：A（20 m）。</strong> 34 MB 在 32 GB 机器上不是问题，而边界粗糙是<strong>每帧都看得见</strong>的代价。 ⚠ 无论选哪个，<strong>8 m 一律废弃</strong>（那是 <code>cs1_replica</code> 的遗产尺度，2500 km² 用 8 m 要 3906 万格 / 600 MB）。</p>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q10-相机边界-哪些跟着视角走-哪些不跟-已裁定-见下-r2"><del>Q10 · 相机边界：哪些跟着视角走，哪些不跟</del> → <strong>已裁定，见下 R2</strong></h3>
+<blockquote>2026-11-15 用户拍板：<strong>「Q10 就这样」</strong>，即采纳 <strong>A（相机只管表现）+ C（相机只影响瓦片计算优先级）</strong>。<br>细则见 <code>docs/design/11-scale.md</code> §10.1 / §10.2。</blockquote>
+<h3 id="q11-中国时间维度与南北差异-进可玩版还是打磨年-已裁定-见下-r16"><del>Q11 · 中国时间维度与南北差异，进可玩版还是打磨年</del> → <strong>已裁定，见下 R16</strong></h3>
+<blockquote>2026-11-16 用户拍板：<strong>「其他照做」</strong>，即三个时间维度进可玩版、南北与地图编辑器推打磨年。<br>细则见文末 R16 与 <code>design/12-china-features.md</code> §3.6。</blockquote>
+<p><strong>背景</strong> 用户 2026-11-15 提出：① 开局可选<strong>北方城市 / 南方城市</strong>（并自己判断"应该在后期打磨里"）； ② 中国特色还有<strong>春运、节假日、寒暑假</strong>；③ <strong>DLC 要扩展玩法</strong>。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>项</th><th>进可玩版</th><th>推打磨年</th><th>AI 判断</th></tr></thead><tbody><tr><td><strong>节假日</strong>（春节/国庆/五一）</td><td>日历上一个乘子，成本极低</td><td>—</td><td>✅ <strong>进可玩版</strong></td></tr><tr><td><strong>寒暑假</strong></td><td>学校开关 + 通勤乘子，约 1 天工作量</td><td>—</td><td>✅ <strong>进可玩版</strong></td></tr><tr><td><strong>春运</strong></td><td>流动人口 + 年度需求峰值，是<strong>交通系统的终极压力测试</strong></td><td>—</td><td>✅ <strong>进可玩版</strong>（但依赖 B5 完成）</td></tr><tr><td><strong>南北城市选择</strong></td><td>需两套气候区参数、两套建筑谱系、北方还要集中供暖</td><td>成本高</td><td>⏳ <strong>推打磨年</strong>（用户判断正确）</td></tr><tr><td><strong>地图编辑器</strong></td><td>CS 有，用户明确要</td><td>2500 km² 的编辑器工作量极大</td><td>⏳ <strong>推打磨年</strong>，但<strong>地形数据契约从 B1 就要支持外部地图</strong></td></tr></tbody></table></div>
+<p><strong>AI 建议</strong>：三个时间维度进可玩版（合计约 6 天），南北与地图编辑器推打磨年， 但<strong>都必须在数据契约里预留字段</strong>（<code>climate_zone</code> / 外部地形源）。</p>
+<p><strong>批次规划（AI 提议，细则在 <code>design/12-china-features.md</code> §3.6–3.7）</strong></p>
+<blockquote>关键判断：<strong>三个时间维度不能塞进同一批</strong>，因为它们的下游系统还没成型。<br>每条放在"能被验证"的那一批。</blockquote>
+<div class="tw"><table><thead><tr><th>批次</th><th>内容</th><th>验收</th></tr></thead><tbody><tr><td><strong>B4</strong></td><td>日历：公历 + 闰年 + 完整农历 + 节日表 + 寒暑假判定（只出 flag，不接乘子）</td><td>打印一年节日清单，与公开日历一致</td></tr><tr><td><strong>B5</strong></td><td>交通侧：节假日出行 ×1.5–2、<code>school</code> OD 寒暑假归零</td><td>学期 / 暑假两份 4 时段流量表不同</td></tr><tr><td><strong>B6</strong></td><td>财政与生长侧：商业 ×1.3–1.8、施工 ×0.3、学校学期开关</td><td>春节那个月税收显著高于平常月</td></tr><tr><td><strong>B7</strong></td><td><strong>春运</strong>：流动人口返乡 + 枢纽峰值 + 通知文案</td><td><code>transit_hub</code> 周边饱和度 ≥ 平日 2 倍</td></tr></tbody></table></div>
+<p>⚠ <strong>三个前置动作，不做就返工</strong>（各约半天，不增加 B1/B3 工作量）：</p>
+<ol><li><strong><code>transit_hub</code> 建筑原型现在就加进谱系</strong> → 已在 <code>10-presentation</code> §五 加上。</li></ol>
+<p>   没有站房，春运就只是一个人口曲线，没有"枢纽被挤爆"这件事。</p>
+<ol><li><strong><code>climate_zone</code> 字段从 B1 就存在</strong>（哪怕只有一个值）。</li><li><strong>日照系数 <code>k</code> 做成"按 climate_zone 查表"，不能是常量</strong> —— 打磨年加南北差异时才不用重写 zoning。</li></ol>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q12-3-秒-日-下一局只有-13-20-个游戏年-已裁定-见下-r14"><del>Q12 · 3 秒/日 下一局只有 13–20 个游戏年</del> → <strong>已裁定，见下 R14</strong></h3>
+<blockquote>用户 2026-11-15 的答复实际上否掉了「一局固定 50–80 年」这个前提：<br><strong>「城市发展不可能发展几十年，肯定至少得几百年（CS1 玩到物品上限约 400 年）」。</strong><br>⇒ 一局不定长，改里程碑 + 长期档，见 R14 第 3 条。下面保留原分析作为留痕。</blockquote>
+<p><strong>背景（纯算术，不是偏好）</strong> 1 模拟日 = 3 秒 ⇒ 1 游戏年（360 日）= <strong>18 分钟</strong>。于是：</p>
+<div class="tw"><table><thead><tr><th>一局时长</th><th>1x</th><th>2x</th><th>3x</th></tr></thead><tbody><tr><td>4 小时</td><td>13 年</td><td>27 年</td><td>40 年</td></tr><tr><td><strong>5 小时</strong></td><td><strong>17 年</strong></td><td>33 年</td><td>50 年</td></tr><tr><td>6 小时</td><td>20 年</td><td>40 年</td><td>60 年</td></tr></tbody></table></div>
+<p>而 <code>01-playable-definition</code> §五 现在写的是「一局 4–6 小时（游戏内约 50–80 年）」—— <strong>这两个数不可能同时成立</strong>，除非全程 3x。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>内容</th><th>后果</th></tr></thead><tbody><tr><td><strong>A</strong></td><td><strong>保留 3 秒/日</strong>，把一局年数改为 <strong>15–25 年（1x 基准）</strong>，城市成长曲线按 20 年设计</td><td>节奏快、爽；「村→100 万」在 20 年内完成（比深圳快约 8 倍/年，但这是游戏）</td></tr><tr><td><strong>B</strong></td><td>日改 <strong>2 秒</strong>，一局 = 20–30 年（1x）</td><td>多 50% 年数，节奏略慢；昼夜比例相应变 720:1</td></tr><tr><td>C</td><td>保留「50–80 年」，则一局需 <strong>15–24 小时</strong></td><td>❌ 与「2 小时能玩爽」的 P 门槛冲突</td></tr><tr><td>D</td><td>缩短一游戏年为 <strong>240 日</strong>（月仍 30 日，8 个月）</td><td>年数 ↑ 50%，但"8 个月的年份"违反常识，且季度划分变形</td></tr></tbody></table></div>
+<p><strong>AI 建议：A。</strong> 理由：3 秒/日 是用户亲自定的手感数，不该为了"年数好看"去动它； 而「50–80 年」是我上一轮自己写的、没有依据的数。 <strong>20 年从 200 人长到 100 万，作为游戏节奏是成立的</strong>（深圳用 40 年做到 1756 万，游戏压缩一半合理）。</p>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h3 id="q13-基础设施怎么放-已升级为-q14-2026-11-15"><del>Q13 · 基础设施怎么放</del> → <strong>已升级为 Q14</strong>（2026-11-15）</h3>
+<blockquote>本条的结论（<strong>电力做真网络，水/气/通信做容量法</strong>）已进入 <code>07-services.md</code> §4.0，<br>分界线"<strong>可见的才值得画</strong>"保留。<br>但用户随后补充「水要建抽水站、泵房、污水处理厂」「通信要建基站」，<br>基础设施从 4 个子领域变成 6 个，<code>services/</code> 要 7 个文件 —— <strong>4 文件方案不够了</strong>。<br>真正的决定改为 <strong>Q14：7 系统还是 8 系统</strong>。</blockquote>
+<hr>
+<h3 id="q14-系统数-7-个还是-8-个-2026-11-15-新增-推翻-r9-的候选">Q14 · 系统数：7 个还是 8 个（2026-11-15 新增，推翻 R9 的候选）</h3>
+<p><strong>背景（事实，不是偏好）</strong> 按 <code>07-services.md</code> §四 算下来，基础设施需要 <strong>7 个文件</strong>：</p>
+<div class="tw"><table><thead><tr><th>文件</th><th>结构类型</th></tr></thead><tbody><tr><td><code>power_grid</code> 电力（四级杆塔 + 链路）</td><td><strong>图</strong></td></tr><tr><td><code>water_chain</code> 抽水站 → 净水厂 → 泵房</td><td><strong>链 + 地理约束</strong></td></tr><tr><td><code>sewage</code> 污水收集 → 处理厂 → 排放</td><td>链 + 地理约束</td></tr><tr><td><code>comm_tower</code> 机房 → 基站</td><td>点 + 半径</td></tr><tr><td><code>utility</code> 燃气</td><td>点 + 半径</td></tr><tr><td><code>service_system</code> 框架</td><td>—</td></tr><tr><td><code>school</code> 学区（R3）</td><td>点 + 半径</td></tr></tbody></table></div>
+<p><strong>DG5 上限是 3 个文件。7 不是"破例"，是"这个边界画错了"。</strong></p>
+<p>⚠ <strong>R9 是在"基础设施只做学校"的假设下定下的 7 系统。</strong> 现在基础设施有 6 个子领域、三种数据结构（图 / 链 / 点），已经不是 <code>services</code> 的附属品。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>内容</th><th>后果</th></tr></thead><tbody><tr><td><strong>A</strong></td><td><strong>拆第 8 个系统 <code>utility</code></strong>（电/水/污水/通信/燃气）。<code>services</code> 回归公共服务（学校/医院/公园/菜市场）</td><td>8 系统；DG4 改「= 8」；宪法 §二 需修订（<code>4 个裁定 + 1 条宪法条文</code>）；职责干净，每个系统 ≤3 文件</td></tr><tr><td>B</td><td>保留 7 系统，<code>services</code> 硬塞 7 文件</td><td>不破 DG4，但破 DG5；<strong>这正是 v1 的 <code>ui/</code> 27 文件、<code>services/</code> 11 文件的成因</strong></td></tr><tr><td>C</td><td>砍基础设施：只做电力，水/气/通信退回"全城一个数字"</td><td>保 7 系统；但丢掉"必须临水建城""污水厂在下游""基站覆盖"三个真机制</td></tr><tr><td>D</td><td>基础设施并入 <code>road</code>（都是网络）</td><td>语义不符（路是交通，管是市政），且 road 已经很重</td></tr></tbody></table></div>
+<p><strong>AI 建议：A。</strong> 三个理由：</p>
+<ol><li><strong>三种数据结构（图/链/点）没有共享代码</strong>，硬塞就是一个系统住三间屋；</li><li><strong>Tick 顺序本来就需要它</strong>：市政要在 <code>zoning</code> <strong>之前</strong>算（决定这块地能不能建设），</li></ol>
+<p>   塞在 <code>services</code> 里则按现行顺序排在 <code>finance</code> 之后，<strong>时序是错的</strong>；</p>
+<ol><li>8 个系统仍是收敛后的数量（v1 是 16 个），DG5「每系统 ≤3 文件」在 8 系统下更守得住。</li></ol>
+<p><strong>如果采纳 A，需要同时改的三处</strong>：</p>
+<ul><li>宪法 §二：<code>scripts/sim/</code> 恰为 <strong>8</strong> 个目录（新增 <code>utility</code>）</li><li>宪法 §三 Tick 顺序：<code>road → utility → zoning → population → employment → services → finance → traffic</code></li><li>DG4 判据：<code>ls scripts/sim/ | wc -l</code> <strong>= 8</strong></li></ul>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h4 id="q13-原分析-留痕-结论已并入-07-services-4-0-与-q14">Q13 原分析（留痕，结论已并入 07-services §4.0 与 Q14）</h4>
+<p><strong>背景</strong> 用户先提出「我们一直都没有聊水电工业网络」，补了一句关键纠正： <strong>「水路管路也是重要的东西，尤其是电网，中国电网的电塔有多种，并且能够承载不同的容量（老城区常见）」</strong>。 我第一版方案是"全部容量法、不建管网"，错在<strong>把基础设施当成一类东西</strong>。</p>
+<p><strong>分界线（本方案的核心）</strong>：</p>
+<div class="tw"><table><thead><tr><th>设施</th><th>看得见吗</th><th>做法</th></tr></thead><tbody><tr><td><strong>电力</strong></td><td>✅ 电线杆 / 铁塔 / 变压器 / 架空线</td><td><strong>真实网络</strong>（四级杆塔 + 链路 + 容量衰减）</td></tr><tr><td>水 / 燃气 / 通信</td><td>❌ 埋地下</td><td>容量 + 覆盖半径</td></tr></tbody></table></div>
+<p>⇒ <strong>可见的才值得画。</strong> CS1 的水管被玩家讨厌，不是因为它复杂，是因为<strong>它埋在地下，画完就再也看不见了</strong>。</p>
+<p><strong>候选</strong></p>
+<div class="tw"><table><thead><tr><th>方案</th><th>内容</th><th>后果</th></tr></thead><tbody><tr><td><strong>A</strong></td><td><code>services/</code> 放宽到 <strong>4 个文件</strong>（<code>service_system</code> / <code>school</code> / <code>utility</code> / <strong><code>power_grid</code></strong>）：电做图结构，水气网做点结构</td><td><strong>破 DG5（单系统 ≤3 文件）一次，需签裁定</strong>；但换来电塔景观、断线黑掉、老城电网改造三个机制</td></tr><tr><td>B</td><td>保持 3 文件，<strong>电力也走容量法</strong></td><td>不破 DG5；但丢掉电塔视觉（中国县城最强识别符号之一）、丢掉"断一根线下游黑掉"、丢掉老城改造题材</td></tr><tr><td>C</td><td>独立成第 8 个系统 <code>utility</code></td><td>直接推翻 R9 与宪法 §二</td></tr><tr><td>D</td><td>不做基础设施</td><td>城市没有"通水通电才能建设"的门槛，等于放弃"七通一平"的开发区逻辑</td></tr></tbody></table></div>
+<p><strong>AI 建议：A。</strong> 理由：</p>
+<ol><li>电力是<strong>图结构</strong>，水气通信是<strong>点结构</strong>，两者没有共享代码。硬塞进一个文件会变成两个系统住一间屋。</li><li>断线黑掉（SV9）与容量衰减（SV10）是两个很好的机制，容量法给不了。</li><li><strong>老城电网改造</strong>（低矮杆塔 → 地埋电缆）是真实的城市更新题材：花钱 + 施工扰民 → 换地价与视觉。</li></ol>
+<p>⚠ 附带两个必须同时定的落地细节：</p>
+<ul><li><strong>B3 阶段市政视为"无限供应"，B6 才接容量约束</strong>（否则 B3 的"60 日长出第一栋楼"会因缺水永不过）</li><li><code>services/</code> 4 个文件<strong>需要一次 DG5 破例的裁定记录</strong>，不能默默破</li></ul>
+<p><strong>拍板栏</strong>：⬜ 待你填</p>
+<hr>
+<h2 id="已裁定">已裁定</h2>
+<h3 id="r1-规模目标-2500-km²-100-万可玩-1000-万挑战-突破-65-536">R1 · 规模目标：2500 km² / 100 万可玩 / 1000 万挑战 / 突破 65,536</h3>
+<ul><li><strong>裁定人</strong>：开发者（XEKernel）</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「我的目标是能够模拟超过 100 万人口，如果可能，还想挑战千万人口，</li></ul>
+<p>  地图大小为 50×50 为 2500 平方公里，然后车辆模拟，人物模拟等要突破 CS1 的 65536 上限。」</p>
+<ul><li><strong>内容</strong>：</li><li>地图 <strong>50 km × 50 km = 2500 km²</strong></li><li>可玩版人口目标 <strong>≥ 100 万</strong>；打磨年挑战 <strong>1000 万</strong></li><li>车辆 / 行人 agent 数<strong>必须突破 CS1 的 65,536</strong></li><li><strong>影响</strong>：</li><li>新建 <code>docs/design/11-scale.md</code>（规模架构），<code>02</code>–<code>10</code> 全部受其约束</li><li><code>native/sim_core</code> 由「可选」变为 <strong>B4 之前必需</strong></li><li><code>plan.md</code> B5 验收要改（单车数验收 → 变换填充耗时 + 裁剪后帧率两段）</li><li><code>01-playable-definition.md</code> 胜利条件 30 万 → <strong>100 万</strong>；「千万人口」由砍掉清单移入打磨年</li><li><code>02-road.md</code> 必须加<strong>快速路</strong>（否则分层寻路无 H 层）</li><li>UI 操作单位由「格」升到「街区/片区」（千万人口下不可能逐格操作）</li><li>密度核对：1000 万 / 2500 km² = 4,000 人/km² ≈ 上海全域，<strong>数学上成立</strong></li><li>逐人寻路经测算不可行（200 %–1333 % 单核），<strong>出行必须走 OD 聚合</strong>（<code>11-scale.md</code> §四）</li></ul>
+<h3 id="r2-相机边界-相机只管表现-不管权威">R2 · 相机边界：相机只管表现，不管权威</h3>
+<ul><li><strong>裁定人</strong>：开发者（XEKernel）</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「Q10 就这样」</li><li><strong>内容</strong>（采纳 Q10 的 <strong>A + C</strong>）：</li><li><strong>权威模拟不受相机影响</strong>：人口 / 家庭 / 收入 / 满意度 / 建筑生长 / 宏观路网流量，</li></ul>
+<p>     一律按瓦片全跑，<code>--headless</code> 下结果与开窗一致</p>
+<ol><li><strong>表现层跟相机</strong>：车辆 / 行人个体 agent、建筑与车辆渲染实例，随视锥与距离启停</li><li><strong>相机可影响瓦片计算优先级</strong>（先算哪片、算多细），<strong>但不能决定算不算</strong></li><li><strong>影响</strong>：</li><li><code>11-scale.md</code> §10.1 的边界表生效；§10.2 四档距离分档生效</li><li>宪法 §四（模拟层不认识引擎）继续有效，<strong>A2 / A4 / A6 三条 headless 断言保留</strong></li><li>U3（活跃 agent）在最高视角归零是<strong>合法</strong>的，因为 agent 是纯表现</li></ol>
+<h3 id="r3-资产-自建管线-不用任何-cs1-资产-原-q4">R3 · 资产：自建管线，不用任何 CS1 资产（原 Q4）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「Q4 会专门有 Agent 负责建模，我会出去采集一些现实中的建筑样式供建模 Agent 参考」</li><li><strong>内容</strong>：</li><li><strong>不使用任何 CS1 资产</strong>（版权不可发布，且风格不符）</li><li>由<strong>专门的建模 Agent</strong> 生产自有资产</li><li>现实采集的建筑照片<strong>只作参考</strong>，不直接入库、不当贴图用（避开版权与隐私）</li><li>资产必须按 <strong><code>archetype</code> 分类</strong>，满足 <code>11-scale.md</code> §10.4 的 MultiMesh 合批要求</li><li><strong>影响</strong>：</li><li><code>10-presentation.md</code> 需定义<strong>资产规范</strong>（多边形预算 / 图集 / LOD / 命名 / 轴心点 / 授权记录）</li><li>需要一份<strong>建模 Agent 交接规范</strong>（输入什么、输出什么格式、怎么验收）</li><li><strong>B3 之前必须先有第一批建筑资产</strong>，否则「画区就长楼」无法验收</li><li>原 <code>01-playable-definition</code> §七「全部 CS1 资产 / 一律方块 + 程序化」的措辞作废</li></ul>
+<h3 id="r4-形态参数按国标-且分年代-分行政层级-原-q7">R4 · 形态参数按国标，且分年代、分行政层级（原 Q7）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「Q7 按照国标来，由于不同年代的国标不一样，老城区和新城区还是有区别的」</li></ul>
+<p>  +「建筑样式我会参考一些中国农村建筑，开局从建村庄开始，到镇，县，市」</p>
+<ul><li><strong>内容</strong>：</li><li>建筑形态参数（日照间距、容积率、建筑密度、限高、绿地率）<strong>不拍脑袋，取中国规范</strong></li><li><strong>规范有版本</strong>：老城区按建成年代的规范，新城区按现行规范 ⇒ 城市自然长出<strong>年代层理</strong></li><li><strong>行政层级适用不同规范</strong>：村庄 / 镇 / 县 / 市（如县城住宅以 6 层为主、限高 18 层）</li><li><strong>影响</strong>：</li><li><code>Q7</code> 的 DG9/DG10 判据升级为「<strong>按年代规范可断言</strong>」：同一地块，把规范版本从 1990 切到 2020，楼高与楼间距必须变化</li><li>新建 <code>docs/reference/gb-standards.md</code>（国标摘录与年代对照，<strong>须逐条核对</strong>，标注【确认】/【推测】）</li><li><code>03-zoning.md</code> 需要 <code>code_era</code>（规范年代）字段</li><li><strong><code>01-playable-definition.md</code> 的开局必须改</strong>：从「空地 + 建城市」改为「村庄 → 镇 → 县 → 市」四级演进</li></ul>
+<h3 id="r5-u3-先-15-万签收-终局-50-万-上限随硬件可配-原-q8">R5 · U3：先 15 万签收，终局 50 万，上限随硬件可配（原 Q8）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「Q8，先完成 A，最终目标是 C，不过这个上限不同玩家电脑性能不一样，</li></ul>
+<p>  像 CS 这种游戏理论上说用线程撕裂者玩才最爽」</p>
+<ul><li><strong>内容</strong>：</li><li><strong>B7 签收标准 = 15 万活跃 agent</strong>（≈12 ms）</li><li><strong>打磨年目标 = 50 万</strong>（需 GPU 计算着色器）</li><li>上限<strong>不写死</strong>，做成<strong>可配置档位 + 自动探测</strong>（对标 CS 的硬件差异）</li><li>验收必须绑定硬件档位，不能只说「30 fps」</li><li><strong>影响</strong>：</li><li><code>plan.md</code> B5 验收要加限定「在 &lt;档位&gt; 硬件下」</li><li>需要 <code>tools/benchmark.gd</code>：开局跑一次 3 秒基准，自动落档</li><li>设置项：活跃 agent 上限（自动 / 低 / 中 / 高 / 极限）</li><li>50 万档只对有 GPU 算力的机器开放，<strong>不降画质降并发</strong></li></ul>
+<h3 id="r6-空间-地块由道路围合生成-栅格只是计算索引-原-q9-问题作废">R6 · 空间：地块由道路围合生成，栅格只是计算索引（原 Q9，问题作废）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「Q9 的地格在开始初期建村庄的时候单栋建筑不可能有 20M，但是如果有前后院差不多，</li></ul>
+<p>  后面建小区就大了，另外<strong>地格不是固定的，是按照道路来看的</strong>」</p>
+<ul><li><strong>内容</strong>：</li><li><strong>取消「固定用地格」作为空间真值</strong>。Q9 的 20 m / 25 m 之争本身作废</li><li><strong>真值 = 路网围合出的 block 面 → 按沿街面宽细分为 parcel</strong></li><li>建筑落在 parcel 上，<strong>带前后院 / 退线</strong>；村庄是 15–25 m 宽的独院，小区是整片</li><li>栅格<strong>降级为派生索引</strong>，只用于地价扩散 / 服务覆盖 / 拥堵热力这类计算，<strong>50 m 即可</strong></li><li><strong>影响</strong>：</li><li><code>11-scale.md</code> §二「空间分层」<strong>整节重写</strong>（见该文 §二）</li><li><code>02-road.md</code> 必须输出<strong>围合面</strong>（不只是节点/路段/车道），需要半边数据结构</li><li><code>03-zoning.md</code> 以 <code>parcel</code> 为单位，不再以 <code>cell</code> 为单位</li><li>存档要存多边形顶点（不定长），<strong>parcel 需要稳定 ID</strong>，不能靠坐标</li><li>好处：栅格从 625 万格 / 95 MB 降到 <strong>100 万格 / 15 MB</strong>（50 m），且不走方格网——正好符合中国老城与村庄的不规则肌理</li></ul>
+<h3 id="r7-核心循环-r1-r2-r3-全立-且拆迁收储进可玩版-原-q1">R7 · 核心循环：R1 + R2 + R3 全立，且<strong>拆迁收储进可玩版</strong>（原 Q1）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「剩下的按照你的建议来」</li><li><strong>内容</strong>：</li><li><strong>R1 路网密度 / R2 土地财政 / R3 学区</strong>三条全部成立，构成核心循环（<code>01-playable-definition</code> §4.2）</li><li><strong>R3 用最小实现</strong>：一个标量评分 + 半径衰减，<strong>不建「教师-生源-设施」三本账</strong>（v1 膨胀的起点）</li><li><strong>拆迁收储进可玩版</strong>：土地财政是「收储（拆迁补偿）→ 一级开发 → 招拍挂 → 出让」完整链条，</li></ul>
+<p>     不是凭空卖地</p>
+<ul><li><strong>影响</strong>：</li><li><code>06-finance-land.md</code> 必须定义 <code>land_acquisition</code>（收储成本）与 <code>premium_rate</code>（溢价率）</li><li><strong>A6 断言</strong>（只收税必亏）才有说服力——少掉成本项会让它假绿</li><li><code>finance/</code> 三个文件（<code>finance_system</code> / <code>land_value</code> / <code>land_sale</code>）需要加收储字段，可能挤到 4 个文件（破 DG5 上限需报批）</li></ul>
+<h3 id="r8-cs1_replica-只读保留-代码一行不搬-原-q2">R8 · cs1_replica 只读保留，代码一行不搬（原 Q2）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>内容</strong>：<code>cs1_replica</code> 作为「这条路能走通」的证明保留只读查阅；v2 不引用、不复制。</li><li><strong>影响</strong>：B2 / B5 多花约 2–3 周重写，但换来的是<strong>来源可知的 SoA 布局</strong>（六个系统全依赖它）。</li></ul>
+<h3 id="r9-系统划分-7-个功能系统-core-原-q3">R9 · 系统划分：7 个功能系统 + core（原 Q3）</h3>
+<blockquote>⚠ <strong>本条已被 R15 修正为 8 个</strong>（新增 <code>utility</code>，Tick 置于 <code>zoning</code> 之前）。<br>正文保留原样作为留痕；<strong>DG4 判据现为「<code>ls scripts/sim/</code> = 8」</strong>。</blockquote>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>内容</strong>：<code>road</code> / <code>zoning</code> / <code>population</code> / <code>employment</code> / <code>finance</code> / <code>services</code> / <code>traffic</code> 恰为 7 个。</li></ul>
+<p>  <strong><code>employment</code> 必须独立</strong>——它是 R1 可达性到 <code>traffic</code> 拥堵之间唯一的桥。</p>
+<ul><li><strong>影响</strong>：DG4 判据维持「<code>ls scripts/sim/</code> = 7」；<strong>DLC 加功能只能走子模块，不得加目录</strong>（见 R12）。</li></ul>
+<h3 id="r10-b0-交付-九篇设计文档只先写-数据契约-验收点-原-q6-方案-a">R10 · B0 交付：九篇设计文档只先写「数据契约 + 验收点」（原 Q6，方案 A′）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>内容</strong>：<code>design/02</code>–<code>10</code> 每篇在 B0 内至少写满 <strong>数据契约</strong> 与 <strong>验收点</strong> 两节；</li></ul>
+<p>  <code>范围</code> 与 <code>更新流程</code> 可在实现过程中补。</p>
+<ul><li><strong>影响</strong>：B0 从约 3 天变约 8 天；但 B1 起每个子代理的「唯一需求来源」不再是空文件。</li></ul>
+<p>  ⚠ <code>10-presentation.md</code> 已完成（R3），<code>11-scale.md</code> 已完成，<strong>实际待写的是 02–09 八篇</strong>。</p>
+<h3 id="r11-开局-空白地图-启动资金-修正-r4-时的误读">R11 · 开局：空白地图 + 启动资金（<strong>修正 R4 时的误读</strong>）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「开局还是按照 CS 那样一张空白地图和启动资金（CS 有地图编辑器，</li></ul>
+<p>  所以可以在地图编辑器里自定义地图样式）」</p>
+<ul><li><strong>内容</strong>：</li><li><strong>开局 = 空白地图 + 启动资金</strong>，与 CS 一致；<strong>不是</strong>预先放好一座村庄</li><li>用户此前的「开局从建村庄开始」指的是<strong>成长路径</strong>，不是初始状态：</li></ul>
+<p>     玩家受资金、需求与早期规范限制，<strong>第一批建出来的必然是 1–3 层独院</strong>，      于是自然呈现村庄形态 → 人口增长后才进入镇 / 县 / 市</p>
+<ol><li><strong>地图编辑器</strong>（自定义地形样式）列入后期（见 Q11），</li></ol>
+<p>     但<strong>地形数据契约从 B1 就要支持外部地图</strong>，不许把生成算法写死在 <code>terrain_view</code></p>
+<ul><li><strong>影响</strong>：</li><li><code>01-playable-definition.md</code> §五 开局条目<strong>再改一次</strong>（见该文变更记录）</li><li><code>scenes/main.tscn</code> 与 <code>terrain_view.gd</code> 的输入必须是「地图数据」，不是「随机种子」</li><li>四级演进表（§5.3）保留，但明确是<strong>玩家建出来的形态</strong>，不是预设</li></ul>
+<h3 id="r12-dlc-策略-砍掉清单即-dlc-池-且不得破-dg4">R12 · DLC 策略：砍掉清单即 DLC 池，且不得破 DG4</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「DLC 扩展包要扩展玩法」</li><li><strong>内容</strong>：</li><li><strong>基础版只做核心循环</strong>（R1+R2+R3 + 7 系统）</li><li><strong><code>01-playable-definition</code> §七 砍掉清单 = DLC 池</strong>。每一件砍掉的东西都是 DLC 候选，</li></ul>
+<p>     不是"以后可能做"，而是<strong>登记在册、有明确接口预留</strong></p>
+<ol><li>DLC <strong>只能以子模块形式</strong>扩展既有 7 个系统，<strong>不得新增 <code>scripts/sim/</code> 目录</strong>（宪法 §二 / DG4）</li><li>预留接口清单见 <code>design/12-china-features.md</code> §四</li><li><strong>影响</strong>：</li><li>每个 DLC 都必须在基础版里留一个空接口（哪怕只有一个 bus key），否则 DLC 要推倒重来</li><li>例：地铁 → <code>traffic</code> 留 <code>transit_corridor</code>；环境 → <code>zoning</code> 留 <code>pollution</code> 字段；季节 → <code>clock</code> 留 <code>season</code> 字段</li><li><strong>落地细则见 <code>design/12-china-features.md</code> §四</strong>：三条判定标准（缺了循环还闭合吗 / 能玩还是更多玩法 /</li></ol>
+<p>    单卖得动吗）、<strong>反向红线（本体必须完整，宁可少做两个 DLC）</strong>、免费更新 vs 付费 DLC 的区分、     以及「打磨年 12 个月最多做 4 个」的排期现实</p>
+<hr>
+<h3 id="r13-时间尺度-3-秒-日-昼夜-24-分钟-两个时钟永不混">R13 · 时间尺度：3 秒/日，昼夜 24 分钟，两个时钟永不混</h3>
+<blockquote>⚠ <strong>本条已被 R14 修正 3 处，正文保留原样作为留痕，执行以 R14 为准：</strong><br>① <strong>年 = 365/366 日</strong>（不是 360，下面第 1、4 条已废）② 农历要完整算法（不只查春节）<br>③ 一局改为里程碑 + 长期档。<strong>"两个时钟永不混"这条铁律不变。</strong></blockquote>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「一个游戏日为 3 秒，但是不可能太阳就要 3 秒进行升起降落，这不现实，</li></ul>
+<p>  但是 3 秒一天不动，我的想法是 24 分钟为太阳降落升起周期，然后就是游戏日，游戏周，月，季度，年」</p>
+<ul><li><strong>内容</strong>：</li><li><strong>模拟时钟</strong>：1 日 = <strong>3 秒</strong>（1x）；周 7 日、月 30 日、季 90 日、年 <strong>360 日</strong></li><li><strong>视觉时钟</strong>：昼夜周期 <strong>24 分钟</strong>（1x），<strong>纯表现</strong>，与日历解耦</li><li>四条铁律：昼夜不参与任何数值 / "日"永远指 <code>sim_day</code> / 暂停时昼夜冻结 / 存档不存视觉相位</li><li>一年按 <strong>360 日</strong>（12×30），不用 365——月边界必须等长，否则财务对账永远差一点</li><li><strong>影响</strong>：</li><li><code>design/09-core-tick.md</code> <strong>已按此重写</strong>（数据契约 / bus key / 8 条验收断言）</li><li><code>clock.visual_day_phase</code> <strong>故意放在同一个 bus 上</strong>，让 <code>check_contract.gd</code> 能扫到 <code>sim/</code> 里的误用</li><li>24 分钟在 1x 下 = <strong>480 模拟日 = 1.33 游戏年</strong> ⇒ 两者绝不能绑一起</li><li>农历<strong>只查表定春节</strong>（1900–2100，约 200 项），不做完整农历算法</li><li>城市等级判定（村/镇/县/市）放在<strong>年边界</strong>，不是月边界</li><li><strong>未解</strong>：3 秒/日 下一局只有 13–20 年（1x），与「50–80 年」冲突 → <strong>Q12 待拍板</strong></li></ul>
+<hr>
+<h3 id="r14-时间尺度修正-现实日历-完整农历-里程碑制-日内时段">R14 · 时间尺度修正：现实日历、完整农历、里程碑制、日内时段</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「那这样的话早晚高峰，上学放学，这个怎么办，还有就是城市发展肯定是从当前时间开始发展，</li></ul>
+<p>  然后城市发展不可能发展几十年，肯定至少得几百年（至少 CS1 是这样的，玩到物品上限大约 400 年），   然后农历算法还是要做的，然后一年 360 天我觉得还是不行，得按现实时间，所以文档得改，   得有一个合适的时间周期」</p>
+<ul><li><strong>内容</strong>（修正 R13 四处 + 新增一处）：</li><li><strong>年改回现实 365/366 日</strong>，月用现实天数（28/29/30/31），闰年按「4 整除且非整百，或 400 整除」。</li></ul>
+<p>     月度结算的金额<strong>不按天数比例换算</strong>，长月短月不影响对账。</p>
+<ol><li><strong>农历做完整算法</strong>：年份编码表（每年一个 <code>u32</code>，覆盖 1900–2200）+ 公历↔农历换算函数（约 200–250 行）。</li></ol>
+<p>     能得任意日期的农历月/日/闰月，支撑春节、元宵、端午、中秋、重阳。<strong>不用 VSOP87 天文计算</strong>。</p>
+<ol><li><strong>一局不定长</strong>，改为<strong>里程碑 + 长期档</strong>：单次游玩 2 小时约 6–7 游戏年；</li></ol>
+<p>     完整档可玩到 <strong>400 年（≈122 小时 @1x / 41 小时 @3x）</strong>，与 CS1 一致。</p>
+<ol><li><strong>新增日内时段</strong>：一天切 4 段（早高峰 / 平峰 / 晚高峰 / 夜间），</li></ol>
+<p>     <strong>不占真实时间</strong>，用<strong>时段系数法</strong>给同一份月度 OD 乘 4 组系数 → 4 份路段流量表。      学生 OD 单列一类，早高峰占 90 %，<strong>寒暑假归零</strong>。</p>
+<ol><li><strong>开局年份 = 当前现实年份（2026）</strong>，<code>epoch_year</code> 可配置。</li><li><strong>影响</strong>：</li><li><code>design/09-core-tick.md</code> <strong>整篇重写</strong>（三个时间概念、现实日历、完整农历、日内时段、9 条验收）</li><li><code>design/08-traffic.md</code> <strong>补齐</strong>（三层模型 / 双层流量 / 4 时段系数 / 8 条验收）</li><li>新增铁律 <strong>UI 永不显示"时:分"</strong> —— 只显示日期，否则两个时钟的不一致会立刻暴露</li><li><code>01-playable-definition.md</code> 的「一局时长」改为<strong>里程碑表</strong>，不再写固定年数</li><li><code>12-china-features.md</code> 的 F24–F26 从"查表定春节"升级为"完整农历"</li></ol>
+<h3 id="r15-系统数-7-8-新增-utility">R15 · 系统数：7 → 8（新增 utility）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-15</li><li><strong>原话</strong>：「可以」（对 Q14 方案 A）</li><li><strong>内容</strong>：</li><li><code>scripts/sim/</code> 从 7 个目录改为 <strong>8 个</strong>：新增 <strong><code>utility</code></strong>（电 / 水 / 污水 / 通信 / 燃气）</li><li><code>services</code> 回归公共服务本职：学校 / 医院（待定）/ 公园 / 菜市场</li><li><strong>Tick 顺序改为</strong>：<code>road → utility → zoning → population → employment → services → finance → traffic</code></li></ul>
+<p>     （<code>utility</code> 必须在 <code>zoning</code> 之前——市政容量决定地块能不能生长）</p>
+<ol><li>DG4 判据改为 <code>ls scripts/sim/ | wc -l</code> <strong>= 8</strong></li><li><strong>影响</strong>：</li><li><code>00-constitution.md</code> §二、§三 <strong>已改</strong></li><li><code>README.md</code> DG4 判据 <strong>已改</strong></li><li><code>07-services.md</code> §6.1 的"塞不下"论证成立；水/污水/通信的结构定义待 <code>utility</code> 系统立项后补</li><li><code>plan.md</code> B6 的交付清单要从 <code>services/</code> 2 文件扩为 <code>services/</code> + <code>utility/</code></li><li><strong>为什么这不是"加系统就变乱"</strong>：8 仍远低于 v1 的 16；且<strong>旧边界本来就错了</strong></li></ol>
+<p>  （基础设施三种数据结构塞不进一个系统），改正错误边界与"想加功能"是两件事。</p>
+<h3 id="r16-中国时间维度进可玩版-南北与编辑器推打磨年-原-q11">R16 · 中国时间维度进可玩版，南北与编辑器推打磨年（原 Q11）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-16</li><li><strong>原话</strong>：「其他照做」（即采纳 Q11 的 AI 建议）</li><li><strong>内容</strong>：</li><li><strong>节假日 / 寒暑假 / 春运三个时间维度全部进可玩版</strong>，合计约 6 天</li><li><strong>南北城市选择推打磨年</strong>（需两套气候参数、两套建筑谱系、北方集中供暖）</li><li><strong>地图编辑器推打磨年</strong>（2500 km² 的编辑器工作量极大）</li><li>但<strong>两样东西必须前置</strong>：<code>climate_zone</code> 字段从 B1 存在；地形数据契约从 B1 支持外部地图</li><li><strong>批次分配</strong>：</li></ul>
+<div class="tw"><table><thead><tr><th>批次</th><th>内容</th></tr></thead><tbody><tr><td>B4</td><td>日历：公历 + 闰年 + 完整农历 + 节日表 + 寒暑假判定（只出 flag，不接乘子）</td></tr><tr><td>B5</td><td>交通侧：节假日出行 ×1.5–2、学生 OD 寒暑假归零</td></tr><tr><td>B6</td><td>财政与生长：商业 ×1.3–1.8、施工 ×0.3、学校学期开关</td></tr><tr><td>B7</td><td>春运：流动人口返乡 + 枢纽峰值 + 通知文案</td></tr></tbody></table></div>
+<ul><li><strong>三个前置动作</strong>（各约半天，不做就返工）：</li><li><code>transit_hub</code>（火车站/汽车站）与 <code>hsr_station</code>（高铁站）原型 → <strong>已加进谱系</strong></li><li><code>climate_zone</code> 字段从 B1 就存在（哪怕只有一个值）</li><li>日照系数 <code>k</code> 做成"按 <code>climate_zone</code> 查表"，不能是常量</li><li><strong>影响</strong>：</li><li><code>12-china-features</code> §3.6 批次规划生效；<code>09-core-tick</code> §四 已实现日历部分</li><li>⚠ <strong><code>climate_zone</code> 的分量比 Q11 提出时更重了</strong>：数据中心（F92）让它从"南北建筑差异"</li></ul>
+<p>    升级为<strong>产业选址硬条件</strong>（凉爽城市适合算力产业）⇒ 字段与参数表必须早做，     但"开局选南北"这个<strong>玩法</strong>仍推打磨年</p>
+<ul><li><strong>春运的拥堵压力分给两级枢纽</strong>：<code>transit_hub</code>（火车站/汽车站，镇/县/市都有）与</li></ul>
+<p>    <strong><code>hsr_station</code>（高铁站，仅市，峰值最尖）</strong> —— 高铁是中国春运的第一主角，     见 <code>12-china-features</code> §3.5</p>
+<ul><li>⚠ <code>hsr_station</code> 与 <code>transit_hub</code> 必须在 <strong>B3 就做进资产</strong>，不能等 B7 补（否则图集重排）</li></ul>
+<h3 id="r17-地图编辑器前置-模块化建筑-资产编辑器推后">R17 · 地图编辑器前置、模块化建筑、资产编辑器推后</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-16</li><li><strong>原话</strong>：「地图编辑器我的建议是提前做，因为初始版本肯定要选择一个地图来建造，</li></ul>
+<p>  但是开发者需要自己画几个出来，当然也提供程序化生成地图，然后就是 CS 还有资产编辑器，   我昨天上网又查了关于 CS1 的开发历程，建筑其实可以拆成多个模块，然后按需求组装在一起形成不同风格」</p>
+<ul><li><strong>内容</strong>：</li><li><strong>地图编辑器前置</strong>（修正 R16 的"推打磨年"）——<strong>开发者自用版必须在 B3 之前可用</strong>。</li></ul>
+<p>     理由：初版必须有一张能玩的地图，而它得由开发者自己画出来。</p>
+<ol><li><strong>同时提供程序化生成</strong>（种子 + 参数），不是二选一：</li></ol>
+<p>     生成给"随便开一局"，手绘给"做正式地图"。</p>
+<ol><li><strong>建筑改为模块化组装</strong>（采纳 CS1 的做法）：</li></ol>
+<p>     把建筑拆成<strong>楼体 / 屋顶 / 底层 / 附属</strong>四组模块，按 <code>archetype</code> + <code>era</code> 的规则组合，      而不是让建模 Agent 做 22 个完整建筑。见 <code>12-china-features</code> F94。</p>
+<ol><li><strong>资产编辑器</strong>（玩家用）仍推打磨年，但<strong>模块库规范必须前置</strong>（B3 前定清单）。</li><li><strong>影响</strong>：</li><li><code>10-presentation.md</code> §五 的 archetype 表<strong>从"完整建筑清单"改为"模块清单 + 组合规则"</strong></li><li>B1 的地形数据契约要同时支持"程序化生成"与"手绘编辑"两条入口（本来就要）</li><li><code>plan.md</code> 需加一个前置子批次（B0.5 或 B2 之前）用于地图编辑器的最小可用版</li><li>模块化让图集压力大幅下降：模块复用的材质更少，且天然适配 MultiMesh 合批</li></ol>
+<h3 id="r18-地铁与公交回归本体-节日模型与古建社区化">R18 · 地铁与公交回归本体；节日模型与古建社区化</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-16</li><li><strong>原话</strong>：「地铁还要 DLC 的话感觉太牵强了，人家 CS1 好歹不加 DLC 也有地铁，</li></ul>
+<p>  另外节日部分还需建模和节日有关的模型，以及开展活动，比如利用城市中的河流开展赛龙舟，   过年时舞狮龙等，环境与季节我觉得这个可以做成 DLC 扩展包，季节性产业可以做，   同时还能和本地工业联动，其实一些城市还有古风建筑，但是我觉得这个交给社区来完成吧」</p>
+<ul><li><strong>内容</strong>：</li><li><strong>地铁与公交回归本体</strong>（推翻我之前把它们放进 DLC1 的判断）。</li></ul>
+<p>     理由：CS1 本体就有，<strong>"中国版天际线没有地铁"是硬伤，不是扩展玩法</strong>。</p>
+<ol><li><strong>地铁用简化实现</strong>（见下方代价说明），不挖隧道、不做立体换乘。</li><li><strong>节日 DLC 需要建模 + 活动</strong>：舞狮、舞龙、龙舟、灯笼对联、庙会摊位、墓园等（F108–F110）。</li><li><strong>环境与季节确认做 DLC</strong>（编号见 R27：<strong>DLC1</strong>）。</li><li><strong>季节性产业与本地工业联动</strong>（F106 扩展，见 §17.6）。</li><li><strong>古风建筑交给社区 Mod</strong>，本体不做（中国传统古建建模复杂度太高，且不是"当下中国城市"的主体）。</li></ol>
+<p><strong>地铁进本体的代价与简化方案</strong>：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>完整做法</th><th><strong>简化做法（采纳）</strong></th></tr></thead><tbody><tr><td>隧道</td><td>挖地下空间、立体交叉</td><td><strong>不挖</strong>。地下线路只在地图叠层显示（CS1 也是这么干的）</td></tr><tr><td>换乘</td><td>站内换乘动线、立体换乘</td><td><strong>简化</strong>：同站即换乘，不做动线</td></tr><tr><td>车辆</td><td>独立 agent 在地铁线上跑</td><td><strong>不做 agent</strong>，只做"运力分流"数值</td></tr><tr><td>施工</td><td>盾构、明挖、交通导改</td><td><strong>只做造价与工期</strong>，不做施工表现</td></tr><tr><td><strong>核心机制</strong></td><td>—</td><td><strong>把一部分 OD 从路网转移到地铁</strong> —— 这才是地铁的意义</td></tr></tbody></table></div>
+<p>⚠ <strong>关键洞察</strong>：地铁在游戏里的价值是"<strong>分流 OD</strong>"，不是"开地铁看车跑"。 在我们的 OD 框架下，这只是流量分配时多一条"轨道方式"，<strong>成本远低于画隧道</strong>。</p>
+<p><strong>影响</strong>：</p>
+<ul><li><code>01-playable-definition.md</code> §七 砍掉清单：<strong>移除"公交 / 地铁"</strong>（改为"轨道扩展：轻轨/城际/磁浮/轮渡"）</li><li><code>12-china-features</code> §4.5：原 DLC1（公共交通）内容回本体，DLC1 改为「<strong>环境与季节</strong>」（后由 R27 定案）</li><li><code>08-traffic.md</code> 需加"多方式 OD 分配"（轨道方式的分担率）</li><li><code>10-presentation.md</code> 需加<strong>可动模型清单</strong>（舞狮/舞龙/龙舟需要骨骼动画）与<strong>社区资产接口</strong></li></ul>
+<h3 id="r19-主语言分工-sim-用-c-其余用-gdscript">R19 · 主语言分工：sim/ 用 C#，其余用 GDScript</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-17</li><li><strong>原话</strong>：「sim 用 C#，其余 GDScript（推荐）」</li><li><strong>依据</strong>：<code>11-scale.md</code> §6.4 实测（<code>bench/</code>）——</li></ul>
+<p>  <strong>GDScript 做 15 万 agent 要 43 ms（23 fps）、1000 万人口月结要 3.1 秒</strong>；   <strong>C# 分别是 ~25 ms 与 71 ms</strong>。不做这个切换，R1 与 R5 都不可能达成。</p>
+<p><strong>分工</strong>：</p>
+<div class="tw"><table><thead><tr><th>层</th><th>语言</th><th>理由</th></tr></thead><tbody><tr><td><strong><code>scripts/sim/</code></strong>（8 系统 24 文件）</td><td><strong>C#</strong></td><td>性能敏感，且<strong>不碰引擎 API</strong>（宪法 §四）⇒ 无 interop 开销</td></tr><tr><td><strong><code>core/</code></strong>（5 文件）</td><td><strong>C#</strong></td><td>sim 直接依赖；<code>bus</code> 是跨层通道</td></tr><tr><td><strong><code>view/</code></strong> <code>ui/</code> <code>tools/</code></td><td><strong>GDScript</strong></td><td>每帧调用少，够用；<strong>改完即跑</strong>，UI 与工具迭代快</td></tr></tbody></table></div>
+<p><strong>三条硬约束（不写会出事）</strong>：</p>
+<ol><li>⚠ <strong><code>sim/</code> 内部用 <code>float[]</code> / <code>int[]</code>，禁用 <code>Vector3</code></strong></li></ol>
+<p>   实测：C# 下 <code>Vector3</code> 运算只比 GDScript 快 <strong>2.1 倍</strong>，纯数组快 <strong>44 倍</strong>。    <strong>这也正是宪法 §四"空间用整数坐标"的要求</strong> —— 两条规则指向同一件事。</p>
+<ol><li>⚠ <strong><code>MultiMesh</code> 一律用 <code>Buffer</code> 批量写，禁用逐个 <code>SetInstanceTransform</code></strong></li></ol>
+<p>   实测 C# 下批量快 <strong>9 倍</strong>（5.49 vs 9.79 ms @10 万）。    该 API 每次跨 C#/C++ 边界约 <strong>90 ns</strong>，与 GDScript 调用开销同量级。</p>
+<ol><li>⚠ <strong>跨语言只传"整块数组"，不逐个传</strong></li></ol>
+<p>   <code>bus</code> 的 key 若承载大数组（如 agent 位置），必须<strong>一次传一个 <code>float[]</code></strong>，    由 <code>view</code> 侧一次读完 —— <strong>不要 for 循环逐个 <code>get</code></strong>。</p>
+<p><strong>代价（认了）</strong>：</p>
+<div class="tw"><table><thead><tr><th>代价</th><th>说明</th></tr></thead><tbody><tr><td>两种语言、两套约定</td><td>子代理派活要区分（<code>agents.md</code> 已改）</td></tr><tr><td>项目必须开 mono</td><td>导出体积增加，Steam 分发建议 IL2CPP</td></tr><tr><td>C# 的 GC</td><td><strong>月结里不许 <code>new</code> 对象</strong>，用数组池 + <code>struct</code></td></tr><tr><td>UI 改不了 C#</td><td>⚠ 但要改 sim 行为就得 <code>dotnet build</code>（几秒），<strong>迭代慢于 GDScript</strong></td></tr></tbody></table></div>
+<p><strong>影响</strong>：</p>
+<ul><li><code>plan.md</code> <code>system-boundaries.md</code> <code>agents.md</code> 里 <code>sim/</code> 与 <code>core/</code> 的文件后缀全部改为 <strong><code>.cs</code></strong></li><li><code>tools/check_contract.gd</code> 要能扫 <code>.cs</code>（它检查的是"路径与引用"，与语言无关）</li><li><code>scripts/sim/</code> 目录结构与"每系统 ≤3 文件"（DG5）<strong>不变</strong></li></ul>
+<hr>
+<h3 id="r20-多语言-八语-阿拉伯语暂不做-但预留-rtl">R20 · 多语言：八语（阿拉伯语暂不做，但预留 RTL）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-17</li><li><strong>原话</strong>：「多语言支持我打算支持简中，繁中，英文，韩文，日文，法语，西班牙语，俄语，阿拉伯估计很难」</li><li><strong>内容</strong>：首发 <strong>8 语</strong> —— 简中（源）/ 繁中 / 英 / 日 / 韩 / 法 / 西 / 俄。</li></ul>
+<p>  <strong>阿拉伯语暂不做</strong>（RTL + BIDI + 连写变形）。</p>
+<p><strong>三项必须现在就定的事（否则后面返工）</strong>：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>事项</th><th>为什么现在定</th></tr></thead><tbody><tr><td>1</td><td>⚠ <strong>CJK 要四套字体变体（SC/TC/JP/KR）</strong></td><td>只装一套，<strong>日文玩家会看出"这是中文字形"</strong>（<code>直</code>/<code>骨</code>/<code>海</code> 写法不同）。事后换字体=全套 UI 重测</td></tr><tr><td>2</td><td>⚠ <strong>UI 宽度按俄语（+33~35 %）设计</strong></td><td>这类截断 bug <strong>只在俄语下暴露</strong>，中文测试永远发现不了</td></tr><tr><td>3</td><td>⚠ <strong>布局用逻辑方向（<code>start</code>/<code>end</code>），不用物理方向（<code>left</code>/<code>right</code>）</strong></td><td>零成本预留。以后做阿拉伯语只翻一个开关，而不是改几百处</td></tr></tbody></table></div>
+<p><strong>影响</strong>：</p>
+<ul><li><code>13-player-loop</code> §十九 从三语扩为八语，新增 §19.2 CJK 四语成本、§19.3 字体子集、§19.4 文本膨胀率、</li></ul>
+<p>  §19.9 RTL 预留、§19.10 翻译工作流；验收点从 6 条扩到 <strong>10 条</strong>（加 I18N-4b 字形、I18N-4c 俄语截断、I18N-7 回退、I18N-8 逻辑方向）</p>
+<ul><li>新建 <code>config/ui/i18n.json</code>（八语清单 + 字体预算 + 回退规则）</li><li><strong>翻译成本从 ×3 变 ×8</strong>：改一句文案改八处，这是长期成本</li></ul>
+<hr>
+<h3 id="r21-采用-ecs-的-数据布局与句柄机制-不采用完整-ecs-框架">R21 · 采用 ECS 的"数据布局与句柄机制"，不采用完整 ECS 框架</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-18</li><li><strong>原话</strong>：「我们城脉要使用 ECS，不然后面硬件开销太大」</li><li><strong>依据</strong>：CS1 逆向源码实测（<code>docs/reference/cs1-decomp-notes.md</code>）</li></ul>
+<p><strong>⭐ 先说一个必须知道的事实</strong>：</p>
+<blockquote><strong>CS1 根本不是 ECS</strong>，它是 <strong>Manager + 手写句柄池</strong>（<code>Array16</code>/<code>Array32</code>）。<br><strong>CS2 才是真 ECS（Unity DOTS），而 CS2 发售后性能翻车。</strong></blockquote>
+<p>⇒ 所以"用 ECS 降低硬件开销"这个前提<strong>部分不成立</strong>： <strong>降开销的不是 ECS 的框架，是它的数据布局。</strong></p>
+<p><strong>三层拆分（这是本裁定的核心）</strong>：</p>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>采纳</th><th>理由</th></tr></thead><tbody><tr><td><strong>① 数据布局</strong></td><td>SoA / 结构体数组，组件按列存</td><td>✅ <strong>已在做</strong></td><td>缓存友好，这是性能的真正来源</td></tr><tr><td><strong>② 句柄机制</strong></td><td>固定容量预分配 + 稳定索引 ID + 空闲槽复用</td><td>✅ <strong>采纳</strong>（学 CS1 <code>Array32</code>）</td><td>零 GC、可存档、引用不失效</td></tr><tr><td><strong>③ 完整 ECS 框架</strong></td><td>运行时动态组件组合 / archetype 迁移 / 系统调度器</td><td>❌ <strong>不做</strong></td><td>见下</td></tr></tbody></table></div>
+<p><strong>为什么不做 ③</strong>：</p>
+<div class="tw"><table><thead><tr><th>理由</th><th>说明</th></tr></thead><tbody><tr><td><strong>实体类型是固定的</strong></td><td>我们只有 8 类：<code>citizen</code> <code>household</code> <code>vehicle</code> <code>building</code> <code>parcel</code> <code>agent</code> <code>district</code> <code>link</code>。<strong>不需要运行时动态加删组件</strong></td></tr><tr><td><strong>archetype 迁移是最大开销</strong></td><td>加/删组件会触发数据搬移。我们一个实体从头到尾字段不变，<strong>根本不会有迁移</strong></td></tr><tr><td><strong>间接寻址反而更慢</strong></td><td>ECS 的 <code>entity → archetype → chunk → component</code> 多跳寻址，比直接 <code>array[i]</code> 慢</td></tr><tr><td><strong>CS2 是反面证据</strong></td><td>同样的规模，DOTS 没跑过 CS1 的手写句柄池</td></tr></tbody></table></div>
+<p>⚠ <strong>不采纳 ③ 不代表"不用 ECS 的思想"</strong>：①② 就是 ECS 的精华，我们全拿。 <strong>只是不引入第三方 ECS 框架的运行时开销。</strong></p>
+<p><strong>具体落地（改哪几处）</strong>：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>现状</th><th>改后</th></tr></thead><tbody><tr><td>人口数组</td><td><code>PackedByteArray</code> 等 Godot 容器</td><td><strong><code>Array32&amp;lt;T&amp;gt;</code> 式句柄池</strong>（固定容量 + <code>uint</code> 索引 + 空闲栈）</td></tr><tr><td><strong>索引类型</strong></td><td>混用</td><td><strong>一律 <code>uint</code></strong>，禁用 <code>ushort</code>（65536 上限的来源）</td></tr><tr><td>户的成员</td><td>未定</td><td>内联槽，但<strong>槽数与类型放宽</strong>（CS1 是 5 个 <code>uint</code>）</td></tr><tr><td>容量</td><td>动态</td><td><strong>按上限一次预分配</strong>，不扩容（扩容=引用失效）</td></tr><tr><td>存档</td><td>存数组内容</td><td>同 CS1：<strong>索引就是 ID</strong>，存档=数组快照</td></tr></tbody></table></div>
+<p>⚠ <strong>如果将来发现某一块真的需要动态组件</strong>（比如可插拔的 DLC 机制）， <strong>只在那一个系统内局部使用 ECS 模式</strong>，不做全局改造。</p>
+<p><strong>与 R19（C#）的关系</strong>：句柄池用 C# 实现（<code>sim/</code> 已是 C#）。 C# 的 <code>struct[]</code> + <code>uint</code> 索引，就是 CS1 在 .NET 里做的事，<strong>性能已经被验证过</strong>。</p>
+<hr>
+<h3 id="r22-配音只有中文-其余语言无配音-只留字幕">R22 · 配音只有中文（其余语言无配音，只留字幕）</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-18</li><li><strong>原话</strong>：「音频只有中文，一些内容翻译成其他语言就没味了」</li><li><strong>内容</strong>：声音层<strong>只做简体中文</strong>。其余七种语言的 <code>Voice</code> 总线静音。</li></ul>
+<p>  ⚠ <strong>2026-11-20 修正</strong>：原写"字幕照常"——<strong>本作不做字幕层</strong>（<code>13-player-loop</code> §20.7）。   信息一律走 UI，声音只负责氛围。</p>
+<ul><li><strong>理由</strong>：</li><li>⭐ <strong>不是成本问题，是内容问题</strong>——菜市场叫卖、街边喇叭、广场舞、</li></ul>
+<p>     电动车警报，<strong>这些声音本身就是"中国"</strong>。翻译过去就不再是环境音，      而变成"奇怪的配音"。</p>
+<ol><li>八语配音 = 200 条 × 8 = 1600 条，<strong>逐条人工试听不可能</strong>（<code>13-player-loop</code> §20.5 的 VO-5）</li><li><strong>影响</strong>：</li><li><code>13-player-loop</code> §20.4.1 定案；V4b 改为"只做中文"</li><li>音频包<strong>不需要按语言分包</strong>（只有一份中文包）</li><li>八语首发时，非中文玩家<strong>默认无语音</strong>——这符合"文字是主、语音是辅"</li></ol>
+<hr>
+<h3 id="r23-归档-cs1_replica-改用-cs1-逆向源码作参考">R23 · 归档 cs1_replica，改用 CS1 逆向源码作参考</h3>
+<ul><li><strong>裁定人</strong>：开发者</li><li><strong>日期</strong>：2026-11-18</li><li><strong>原话</strong>：「把 cs1_replica 归档，这个当初完全就是 CS1 的复刻版本，并且效果还不好，</li></ul>
+<p>  不要管它，但是 CS1 的一些设计我觉得可以参考一下，前阵子逆向了 CS1 的源码   <code>&amp;amp;lt;Godot&amp;amp;gt;</code>」</p>
+<ul><li><strong>内容</strong>：</li><li><strong><code>cs1_replica</code> 归档</strong>——它是 CS1 的复刻实现，效果不佳，<strong>不再参考、不再并轨</strong>。</li></ul>
+<p>     这<strong>强化了 R8</strong>（原为"只读不搬"，现为"完全不看"）。</p>
+<ol><li><strong>参考源改为 CS1 逆向源码</strong>：<code>&amp;amp;lt;Godot&amp;amp;gt;</code>（1498 个 C# 文件）。</li></ol>
+<p>     只学结构决策，<strong>不搬代码</strong>。</p>
+<ul><li><strong>参考价值</strong>（详见 <code>docs/reference/cs1-decomp-notes.md</code>）：</li><li>⭐ <strong>CS1 人口上限是 104 万</strong>（<code>Array32</code>），<strong>65536 只是"活跃行人实例"上限</strong>（<code>Array16&amp;lt;ushort&amp;gt;</code>）</li><li>⭐ <strong>CS1 是 Manager + 手写句柄池，不是 ECS</strong>——这直接影响 R21</li><li>车辆池只有 <strong>16,384</strong>，证明 CS1 的交通本来就是抽样</li><li><strong>影响</strong>：</li><li><code>README.md</code> 的废弃目录说明更新</li><li><code>01-playable-definition</code> 里"两层代码实现"一条归档</li><li>新增 <code>docs/reference/cs1-decomp-notes.md</code></li></ul>
+<hr>
+<h3 id="r24-反向读一律读上月值-取代-system-boundaries-的-唯一反向读">R24 · 反向读一律读上月值（取代 system-boundaries 的"唯一反向读"）</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-21「都按建议做」）</li><li><strong>背景</strong>：<code>system-boundaries</code> §四 写"唯一的反向读是 <code>zoning</code> 读 <code>employment</code> 上月产能"，</li></ul>
+<p>  但 §三 明细里实际有 5 处反向读（zoning←finance.land_value、population←traffic.avg_commute_s、   services←finance.budget、finance←traffic.avg_commute_s）。规则既不成立也未被推翻。</p>
+<ul><li><strong>裁定</strong>：<strong>凡是读 Tick 顺序在自己之后的系统，一律读"上月值"，并标记 <code>stale</code>。</strong></li></ul>
+<p>  这不是新增特例，而是把 §四·五 的降级机制升格为通用规则。</p>
+<ul><li><strong>影响</strong>：</li><li><code>system-boundaries</code> §四 硬规则改写；§三 明细里的反向读全部标注"上月值"</li><li><code>zoning</code> 读 <code>employment</code> 滞后的那条从"唯一特例"降级为"第一个例子"</li><li>B3 起步阶段无差别（那时上游都用 <code>config</code> 初始值，见 §4.5.2）</li></ul>
+<hr>
+<h3 id="r25-native-sim_core-降为应急-b4-不前置">R25 · native/sim_core 降为应急，B4 不前置</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-21）</li><li><strong>背景</strong>：<code>plan</code> B4 写"native 必须在 B4 之前可用"，依据是"GDScript 月结约 10 s"的<strong>估算</strong>；</li></ul>
+<p>  2026-11-17 实测（<code>11-scale</code> §6.4.1）：<strong>C# 月结 71 ms</strong>，预算 400 ms。</p>
+<ul><li><strong>裁定</strong>：<strong>B4 的输入条件是"<code>sim/</code> 走 C#（R19）"，不是 native。</strong></li></ul>
+<p>  native 仅在"某一块实测超预算"时<strong>局部</strong>下沉（首选 OD 分配）。</p>
+<ul><li><strong>影响</strong>：</li><li><code>plan</code> B4 输入条件改写；<code>11-scale</code> §七 C1 作废</li><li>省下 GDExtension + 绑定 + 跨语言调试，约 2–4 周</li><li><code>README</code> 目录树里 <code>native/</code> 标注"应急，默认不建"</li></ul>
+<hr>
+<h3 id="r26-活跃-agent-15-万是上限-8-万是首发基线">R26 · 活跃 agent：15 万是上限，8 万是首发基线</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-21）</li><li><strong>背景</strong>：R5 写"B7 签收 = 15 万"，<code>11-scale</code> §八 写"B7 = 8 万"、<code>plan</code> B5 也写 8 万，三处并存。</li><li><strong>裁定</strong>：两个数字<strong>各有语义，不互相覆盖</strong>：</li><li><strong>15 万 = 能力上限</strong>（R5）：硬件够就能跑，实测 ≈25 ms（40 fps）</li><li><strong>8 万 = 首发验收基线</strong>：100 万人口下 ≈13 ms（≈60 fps）</li><li>签收口径：<strong>"在指定硬件档位下 ≥8 万且稳定 30 fps；掉档必须能解释（R5 档位）"</strong></li><li><strong>影响</strong>：<code>11-scale</code> §八 与 <code>plan</code> B5④ 统一措辞；验收必须写明档位（08 §七 已有要求）</li></ul>
+<hr>
+<h3 id="r27-dlc-编号以-12-china-features-4-5-为唯一基准">R27 · DLC 编号以 12-china-features §4.5 为唯一基准</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-21）</li><li><strong>背景</strong>：<code>12 §4.5</code> 定 DLC1=环境季节、DLC2=节日；但 R18 与 03/06/07/09 都用"环境=DLC2"，</li></ul>
+<p>  F23/F35/F36 还挂在旧含义的"DLC1（公共交通）"。</p>
+<ul><li><strong>裁定</strong>：<strong>以 §4.5 为准</strong>，其余全部对齐：</li><li><strong>DLC1 环境与季节</strong> / DLC2 节日与民俗 / DLC3 城中村 / <strong>DLC4 都市圈（含区域主题包）</strong> /</li></ul>
+<p>    <strong>DLC5 轨道交通与新型出行</strong>（轻轨/市域铁路/磁浮/无人机/无人派送车）/ DLC6 治理 / DLC7 灾害</p>
+<ul><li>公共交通<strong>已在 R18 回本体</strong>，不再是任何 DLC 的内容</li><li><strong>影响</strong>：R18 里"DLC2 不变"改为"DLC1"；<code>03</code>/<code>06</code>/<code>07</code>/<code>09</code> 的 <code>DLC2</code> 指环境季节处改 <code>DLC1</code>；</li></ul>
+<p>  <code>08</code> 的 <code>bus</code>"基础版不生成"改为"本体就有"；F23 改本体、F35/F36 改 DLC5</p>
+<hr>
+<h3 id="r28-行政层级保持四级">R28 · 行政层级保持四级</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-21）</li><li><strong>背景</strong>：<code>01</code> §5.3 是四级（村/镇/县/市），<code>09</code> §3.2 多出第五级"都市 &gt;100 万"。</li><li><strong>裁定</strong>：<strong>四级</strong>。100 万是<strong>胜利条件</strong>，不是新的行政层级；R4 的规范集也只做了四套。</li><li><strong>影响</strong>：<code>09</code> §3.2 删"都市"行，补一句"100 万触发的是胜利判定，不是层级变更"</li></ul>
+<hr>
+<h3 id="r29-高铁-站进本体-班次进-dlc4">R29 · 高铁：站进本体，班次进 DLC4</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-21）</li><li><strong>背景</strong>：<code>12 §3.5</code> 说春运第一主角是 <code>hsr_station</code>（B7 本体），<code>08 §3.7.7</code> 说高铁班次与跨城 OD 属 DLC4</li></ul>
+<p>  ⇒ 本体春运的"高铁站峰值"没有数据来源。</p>
+<ul><li><strong>裁定</strong>：</li><li><strong>本体</strong>：<code>hsr_station</code> 建筑 + <strong>站前地面交通峰值</strong>。客流按"对外客运量 = 人口 × 常量 × 节日乘子"折算，</li></ul>
+<p>    <strong>不模拟班次</strong>、不建跨城 OD</p>
+<ul><li><strong>DLC4</strong>：真实班次表、双城通勤、周边城市人口导入</li><li><strong>影响</strong>：<code>08 §3.7.7</code>、<code>12 §3.5</code> 各补一句边界；TR23（铁路）不受影响</li></ul>
+<hr>
+<h3 id="r30-od-矩阵月边界算一次">R30 · OD 矩阵月边界算一次</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-21）</li><li><strong>背景</strong>：<code>11-scale</code> §4 写"每日一次"，<code>08</code>/<code>09</code> 写"月边界算一次"。</li><li><strong>裁定</strong>：<strong>月边界一次</strong>。OD 只在人口/就业月更时有新信息，日更 = 30 倍算力零收益。</li><li><strong>影响</strong>：<code>11-scale</code> §4 改写；4 时段系数仍在月内复用</li></ul>
+<hr>
+<h3 id="r31-断言编号两字母化-一次性-b1-前完成">R31 · 断言编号两字母化（一次性，B1 前完成）</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-21）</li><li><strong>背景</strong>：同一字母在不同篇指不同东西（<code>L6–L8</code> 宪法铁律 vs 多语言断言；<code>F9</code> 城中村 vs 财政断言；</li></ul>
+<p>  <code>C2–C6</code> 拍摄 vs 连带影响 vs 中国性判据；<code>V1–V30</code> 交通 vs 配音；<code>R1–R30</code> 路网 vs 裁定；<code>D1–D24</code> 里程碑 vs 判据）。</p>
+<ul><li><strong>裁定</strong>：<strong>现在一次性重编</strong>，编号映射见 <code>glossary.md</code> 附录「断言编号前缀」。</li></ul>
+<p>  裁定号 <code>R<em></code> 与特色台账 <code>F</em></code> <strong>不动</strong>（对外引用太多）。</p>
+<ul><li><strong>影响</strong>：<code>plan</code> 等处的跨文引用必须同步；<strong>这是一次性成本，越晚改越贵</strong></li></ul>
+<hr>
+<h3 id="r32-语言策略-c-为主-rust-只做局部下沉-细化-r19">R32 · 语言策略：C# 为主，Rust 只做局部下沉（细化 R19）</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-22「行，那就保持 C#」）</li><li><strong>背景</strong>：v1 用 Rust；v2 依 R19 改 C#。开发者追问「Rust 更快也更安全，要不要用 / 混合」。</li><li><strong>依据</strong>（<code>reports/2026-11-22-语言策略.md</code>）：</li><li>实测（<code>11-scale</code> §6.4.1）：Rust 8 线程 1.7 ns/实体、C# 7.1 ns；<strong>1000 万月结 71 ms / 预算 400 ms（余量 5.6×）</strong></li><li><strong>真正超预算的只有 OD 分配 ≈1.5 s/月</strong>（预算 800 ms），而它 2500 个起点互不依赖 ⇒ <strong>先并行 ≈0.4 s</strong></li><li>每帧 25 万实例要过边界 ⇒ Rust 进每帧路径会把 <code>fill</code> 13.7 ms 拖垮</li><li><strong>裁定</strong>：</li><li><strong>保持 R19</strong>：<code>sim/</code> + <code>core/</code> 用 C#，<code>view/</code> <code>ui/</code> <code>tools/</code> 用 GDScript</li><li><strong>Rust 准入三条门槛，全过才允许</strong>：</li><li><strong>R-1</strong> 该模块实测 &gt; 预算 <strong>2 倍</strong>，且 <code>Span&amp;lt;T&amp;gt;</code> / 结构体 / 并行 / 降频 都试过仍超</li><li><strong>R-2</strong> <strong>纯计算、无回调</strong>（输入输出都是数组，不调引擎、不持跨帧状态）</li><li><strong>R-3</strong> 单次跨界 <strong>&lt; 20 MB</strong> 且频率 <strong>≤ 每日一次</strong>（<strong>禁止每帧</strong>）</li><li><strong>形式限定</strong>：局部 <code>cdylib</code> + P/Invoke（方案 B），<strong>不用 GDExtension / gdext 重写整个 sim</strong></li><li><strong>优化顺序冻结</strong>：报数字 → 并行 → 降频率 → 才谈 native（<code>plan.md</code> B5）</li><li><strong>影响</strong>：</li><li><code>plan</code> B5 停止条件改为四步顺序</li><li><code>11-scale</code> §6.4.1 的「native 降为应急」有了可执行判据</li><li><strong>现在一行 Rust 都不写</strong>；<code>native/</code> 目录保持空壳</li></ul>
+<h3 id="r33-渲染层保持-godot-不转-webui-three-js">R33 · 渲染层保持 Godot，不转 WebUI / Three.js</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-22「干脆还是继续 Godot 吧」）</li><li><strong>背景</strong>：开发者提出「模拟用 C#、渲染用 WebUI（Three.js），动画更好做」。</li></ul>
+<p>  起因不是渲染不行，而是<strong>在 Godot 里做 UI 反复调整、不满意又难表达</strong>。   评估与实测见 <code>reports/2026-11-22-渲染层选型-WebUI评估.md</code>。</p>
+<ul><li><strong>依据</strong>：</li><li><strong>痛点定位</strong>：不满意的是 <strong>UI 的迭代速度与布局手感</strong>，不是渲染能力。换栈能治 UI，</li></ul>
+<p>    但会把 3D 基础件（分块 / 视锥剔除 / LOD / 地形流式）从「引擎现成」变成「自己写」。</p>
+<ul><li><strong>负载实测</strong>（<code>11-scale</code> §6.4）：C# 写 25 万实例 <strong>13.7 ms</strong>、1000 万月结 <strong>71 ms / 预算 400 ms</strong>。</li></ul>
+<p>    Web 侧已知边界：<code>InstancedMesh</code> 动画 <strong>1–10 万</strong>，<strong>每帧在 JS 里改矩阵是主瓶颈</strong>；     而本项目的车辆正是「每帧动」的 8 万。三条解法（只渲视锥内 / GPU 顶点插值 / 降数量）都要额外工程量。</p>
+<ul><li><strong>迁移窗口虽好</strong>（<code>view/</code> 仍 0 行实现），但代价是 <code>11-scale</code> 全部实测数字与 60+ 张视觉基线作废重测。</li><li><strong>Tauri 已被本机历史构建证明可行</strong>（<code>D:\project\QzoneArchive-main</code>，2026-10-31 用 MSVC 链成功），</li></ul>
+<p>    但当前环境坏（Windows SDK 的 <code>Lib/Include</code> 被清空、<code>link.exe</code> 被 MSYS2 遮蔽）——     这两条<strong>可修，不构成否决理由</strong>，只是不能拿它当"换栈顺手"的理由。</p>
+<ul><li><strong>裁定</strong>：</li><li><strong>渲染与 UI 保持 Godot 4.7.1 mono</strong>，R19 不变（<code>sim/</code>+<code>core/</code> = C#，<code>view/</code>+<code>ui/</code>+<code>tools/</code> = GDScript）。</li><li><strong>UI 的解法改为「数据驱动 + 截图回归」</strong>：<code>theme.json</code> / <code>layout.json</code> / <code>panels.json</code> 三个配置已真接线</li></ul>
+<p>     （B1-4 实测：改 <code>color.accent</code> 红→绿，只有 66 个像素变，且全落在该落的地方）；      每次改动必须出前后对比截图，<strong><code>--hour</code> 固定天光</strong>，用图说话而不是用文字描述。</p>
+<ol><li><strong>不再提换引擎</strong>；允许的优化范围只有 UI 层实现（自绘 <code>_draw</code>、换 StyleBox、封装控件、调 token）。</li><li><strong>重议触发条件（三条全过才重开议题）</strong>：</li><li><strong>W-1</strong> Godot 的 UI 导致<strong>任一验收指标</strong>不达标（帧率 / 内存 / 输入延迟）</li><li><strong>W-2</strong> 单次 UI 改动成本仍 <strong>&gt; 30 分钟</strong>，且连续 3 个批次因此延期</li><li><strong>W-3</strong> 已有一份可跑的「sim 服务化 + 二进制协议」方案（加成项，不是必需）</li><li><strong>影响</strong>：</li><li><code>11-scale</code> 的性能数字<strong>继续有效</strong>，不需要重测（篇首已注明）</li><li><code>10-presentation</code> 继续以 Godot Control 为载体；§6.1.2 / §6.1.3 是现状</li><li><code>handoff</code> §四·六（Rust / Tauri 环境）保留，作<strong>打包与工具链</strong>参考，<strong>与渲染方案无关</strong></li><li><code>reports/2026-11-22-渲染层选型-WebUI评估.md</code> 标记为「已否决 · 留档」</li></ol>
+<h3 id="r34-按城市等级切片-边做边玩-同一存档贯穿">R34 · 按城市等级切片，边做边玩（同一存档贯穿）</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-24）</li><li><strong>原话</strong>：「边规划边做游戏边玩，比如我们现在只建模村庄有关的模型，然后继续开发游戏，</li></ul>
+<p>  把村庄模拟的逻辑跑起来，此时就需要存档系统了。然后后面继续做镇、县、市，建筑越来越现代化，   等级也越高。然后我们也玩这个初始存档来测试游戏，正好后续做宣传片就用这个存档来拍。」</p>
+<ul><li><strong>背景</strong>：解决「一局玩起来没意思」这类<strong>只有真玩过才知道、且后期最贵</strong>的问题。</li></ul>
+<p>  v1 的一半失败是"14 条愿景 0 条落地"，本质就是从没玩过。</p>
+<ul><li><strong>裁定</strong>：</li><li><strong>采纳「等级切片」作为可玩里程碑</strong>：<strong>V0 村庄 → V1 镇 → V2 县 → V3 市</strong>（<code>16-progressive-play</code>）。</li></ul>
+<p>     每片必须过 <strong>P-1 能玩 / P-2 能赚 / P-3 能升</strong>（P-3 = 该片存档能在下一片版本打开并继续跑 100 游戏日）。</p>
+<ol><li>⭐ <strong>B 批次不取消</strong>。V 切片是<strong>穿越 B 批次的横切</strong>（每片用一遍所有系统，但每条都浅），</li></ol>
+<p>     不是"换一套计划"。取消 B 批次会导致"系统做到一半就切走"，那正是 v1 的病。</p>
+<ol><li>⭐ <strong>存档迁移链是硬前提，B1 就要落地</strong>（不是"需要了再做"）：</li></ol>
+<p>     <code>FORMAT_VERSION</code> 单增整数 + 迁移函数注册表 + 读档链式升级 + <strong>每次改完用最老 V0 档跑 100 游戏日</strong>。      理由：本方案的核心是"同一存档从村庄玩到市"，跨十几个版本；<strong>没有迁移链，V0 存档到 V1 就打不开，宣传片方案直接作废</strong>。</p>
+<ol><li><strong>等级闸门是正式功能</strong>（<code>config/sim/city_tier.json</code>）：下一级未实现时<strong>限制在阈值上限 + 明确提示</strong>，</li></ol>
+<p>     <strong>不许静默继续涨</strong>——否则会污染存档历史，等做完镇级回头看这条档已不可信。</p>
+<ol><li><strong>"能浅 / 绝不能浅"判据</strong>（防止切片法变成挖坑）：</li><li>能浅：加类型（路网类型、建筑原型、服务种类、UI 面板）</li><li><strong>绝不能浅</strong>：parcel 数据结构、Tick 顺序、bus 契约、存档格式 —— <strong>一改就全线返工</strong></li><li>一句话：<strong>"以后加一个类型"可以浅；"以后要改数据形状"绝对不能浅。</strong></li><li><strong>每片结束必须"回填"</strong>：把为快而浅的实现换成正式实现，<strong>不是往上堆功能</strong>（<code>16</code> §5.4）。</li><li><strong>从 V0 起就分主档/试验档</strong>：主档干净、给宣传片用；试验档随便玩。成本极低，别省。</li><li><strong>待拍三项</strong>（<code>16</code> §八）：</li><li>V0「能玩」的定义（建议：30 分钟不出错 + 财政由负转正 + 人口到 3000 并触发闸门）</li><li>⭐ <strong>存档迁移的容忍度</strong>（建议：接受"能打开但不保证数值等价"——</li></ol>
+<p>     否则等于要求公式第一天就不许改，项目做不完）</p>
+<ol><li>每片资产范围（建议：V0 只做村庄相关 4 类）</li><li><strong>影响</strong>：</li><li>新建 <code>docs/design/16-progressive-play.md</code>（方案正本）</li><li><code>plan.md</code> 批次表加 <strong>V 切片</strong>一列 + 新增「V0 收口」批次</li><li><code>01-playable-definition</code> 的 <strong>A9 断言仍然有效</strong>（它验"同版本往返一致"，与"跨版本迁移"是两件事，不许混）</li><li>已完成的 B1 骨架 = V0 的壳；第一批 8 个模型里 V0 只用 4 个</li></ol>
+<h3 id="r35-做车道级连接-推翻-r-前身-3-6-5b-的-不做">R35 · 做车道级连接（推翻 R 前身 §3.6.5b 的"不做"）</h3>
+<ul><li><strong>裁定人</strong>：开发者（2026-11-25）</li><li><strong>原话</strong>：「车道级连接我觉得可以做一下，毕竟高自由度也是这个游戏的特点。」</li><li><strong>推翻的是</strong>：<code>design/02-road.md</code> §3.6.5b（2026-11-18 定「不做车道级连接」）</li></ul>
+<p>  与 <code>design/08-traffic.md</code> §3.6.3 表里的"路口内车道连接 = 不做"。</p>
+<ul><li><strong>背景与重新评估</strong>：</li><li>2026-11-18 的判断是「OD 聚合下车道细节对宏观流量没贡献，却要一个子系统」。</li><li><strong>但我漏了一件已经存在的事</strong>：<code>08</code> §3.6.2 已经定「<strong>agent 生成时按 OD 方向定车道归属</strong>」</li></ul>
+<p>    （左转靠左 / 右转靠右 / 直行居中）。也就是说<strong>车已经在正确的车道上了</strong>，     缺的只是<strong>路口内那一段的连接关系</strong>。</p>
+<ul><li>因此这不是"从零做车道图"，而是"<strong>给已有的车道归属补上路口内的走向</strong>"。代价比原估低一个量级。</li><li>另有三个视觉收益是原判断低估的：① <strong>标线导向箭头能对上车道</strong>（否则箭头与车流不符，很假）；</li></ul>
+<p>    ② <strong>多方向同时右转不会在路口中心打结</strong>；③ 为<strong>左转待转区 / 可变车道 / 潮汐车道</strong>留接口     （这三样是中国城市的真实特征，<code>12-china-features</code> 有登记）。</p>
+<ul><li><strong>裁定</strong>：分四级，<strong>只做 Lv0–Lv2，Lv3 仍不做</strong>。</li></ul>
+<div class="tw"><table><thead><tr><th>级</th><th>内容</th><th>做不做</th><th>代价</th></tr></thead><tbody><tr><td><strong>Lv0</strong></td><td>车道归属（生成时按转向定一次 + 抖动）</td><td>✅ 已有（<code>08</code> §3.6.2）</td><td>0</td></tr><tr><td><strong>Lv1</strong></td><td><strong>转向车道配置</strong>：每个进口方向指定几条左转/直行/右转道</td><td>✅ <strong>必做</strong></td><td>低（3 个数字）</td></tr><tr><td><strong>Lv2</strong></td><td><strong>路口内车道连接</strong>：进口道 → 出口道的对应关系</td><td>✅ <strong>做</strong></td><td>中（弧线生成 + 数据结构）</td></tr><tr><td><strong>Lv3</strong></td><td>段内逐车变道（MOBIL 类）</td><td>❌ <strong>不做</strong></td><td>高（与代表性 agent 冲突）</td></tr></tbody></table></div>
+<ul><li>⭐ <strong>关键实现约束（决定代价可控）</strong>：</li></ul>
+<p>  <strong><code>lane_links</code> 由规则推导，不存全量图；只存玩家覆盖值。</strong></p>
+<div class="tw"><table><thead><tr><th>项</th><th>做法</th></tr></thead><tbody><tr><td>默认连接</td><td>按转向类型 + 车道位置<strong>推导</strong>（左转：最左 n 道 → 对向最左 n 道；右转：最右 n 道 → 最右 n 道；直行：同位对应）</td></tr><tr><td>玩家覆盖</td><td>只在<strong>自由档</strong>可以改；覆盖值进存档（与 <code>§3.10.14</code> 标线推导同一套思路）</td></tr><tr><td>弧线</td><td>路口内用 <strong>Bezier</strong> 生成，按"车道中心线"求出入口/出口切线；<strong>不存采样点</strong>，进表现层</td></tr><tr><td>规模</td><td>若全量存：4 进口 × 4 道 × 3 向 ≈ 48 条/路口 × 数万路口 = 百万级。<strong>推导后只存覆盖，通常为 0</strong></td></tr></tbody></table></div>
+<ul><li><strong>影响</strong>：</li><li><code>02-road</code> §3.6.5b <strong>整节重写</strong>为"做，但分层"；新增 <code>node.lane_links_override</code>（稀疏，默认空）</li><li><code>08-traffic</code> §3.6.3 的三层表改：路口连接「不做 → Lv2 做」；§3.6.2 的车道归属<strong>不变</strong></li><li><strong>B2 要预留接口</strong>（node 结构里留覆盖字段，B2 不实现连接生成）</li><li><strong>B5 的范围扩大</strong>：要包含 Lv1 转向配置 + Lv2 弧线生成 + 车道级排队形态</li><li>存档：加稀疏覆盖字段 ⇒ <strong><code>FORMAT_VERSION</code> 再 +1</strong>（与 §3.10 的 corridor 一起，3 → 4 或 5）</li><li>⚠ 验收要新增"车道级"断言（见 <code>02-road</code> §3.6.5b 的 RD-L1~L3）</li><li><strong>明确不做（防膨胀）</strong>：</li><li>段内逐车变道（Lv3）——维持"生成时定 + 抖动"</li><li>车道级<strong>流量分配</strong>（把 OD 精确分到每条车道）——仍按转向比例分配到"转向组"，不逐车道</li><li>完整车道图<strong>全量存盘</strong>——只存覆盖</li></ul>
+<hr>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-25</strong>：新增 <strong>R35 做车道级连接</strong>（推翻 2026-11-18 的 §3.6.5b「不做」）。</li></ul>
+<p>  重新评估发现原判断低估了：车道归属<strong>早已在生成时定过</strong>，缺的只是路口内走向，   代价低一个量级；且"标线箭头与车流不符""多向右转打结"是肉眼可见的假。   分四级，只做 Lv0–Lv2，<strong>Lv3 段内变道仍不做</strong>；<code>lane_links</code> <strong>由规则推导 + 只存覆盖</strong>。</p>
+<ul><li><strong>2026-11-24</strong>：新增 <strong>R34 按城市等级切片、边做边玩</strong>（V0 村庄 → V1 镇 → V2 县 → V3 市）。</li></ul>
+<p>  定 B 批次不取消（V 是横切）、<strong>存档迁移链为 B1 硬前提</strong>、等级闸门为正式功能、   "能浅/绝不能浅"判据、每片必须回填。待拍三项见 <code>16-progressive-play</code> §八。</p>
+<ul><li><strong>2026-11-22（二）</strong>：新增 <strong>R33 渲染层保持 Godot</strong>（否决 WebUI/Three.js 提案）。</li></ul>
+<p>  痛点确认为「UI 迭代速度」而非渲染能力；解法改为数据驱动 + 截图回归；   并写死三条重议触发条件（W-1/W-2/W-3），防止半年后又从头讨论一遍。</p>
+<ul><li><strong>2026-11-22</strong>：新增 <strong>R32 语言策略</strong>（保持 C#；Rust 三条门槛 + 局部 cdylib，禁进每帧路径）。</li></ul>
+<ul><li><strong>2026-11-21</strong>：开发者「都按建议做」⇒ <strong>R24–R31 八条同日拍板</strong>：</li></ul>
+<p>  反向读统一上月值 / native 降应急 / agent 双档（15 万上限·8 万基线）/ DLC 编号以 <code>12 §4.5</code> 为准 /   行政层级保持四级 / 高铁站进本体·班次进 DLC4 / OD 月边界一次 / 断言编号两字母化。   背景与影响见各条正文；编号映射见 <code>glossary.md</code> 附录。</p>
+<ul><li><strong>2026-11-18（四）</strong>：新增 <strong>R23</strong>：<strong><code>cs1_replica</code> 归档</strong>（复刻版效果不佳，不再参考、不再并轨），</li></ul>
+<p>  参考源改为 <strong>CS1 逆向源码 <code>&amp;amp;lt;Godot&amp;amp;gt;</code></strong>。   新增 <code>docs/reference/cs1-decomp-notes.md</code> 记录关键发现   （<strong>CS1 人口上限 104 万 / 65536 只是活跃实例 / CS1 不是 ECS</strong>）。</p>
+<ul><li><strong>2026-11-18（三）</strong>：新增 <strong>R22 配音只有中文</strong>。依据用户「音频只有中文，一些内容翻译成其他语言就没味了」</li></ul>
+<p>  —— ⭐ <strong>这不是成本判断，是内容判断</strong>：菜市场叫卖、街边喇叭、广场舞、电动车警报，   <strong>这些声音本身就是"中国"</strong>，翻过去就变成"奇怪的配音"。</p>
+<ul><li><strong>2026-11-18（二）</strong>：新增 <strong>R21 ECS 三层拆分</strong>。依据用户「要使用 ECS」+ CS1 逆向源码实测：</li></ul>
+<p>  ⭐ <strong>关键事实：CS1 不是 ECS，是 Manager + 手写句柄池；CS2 才是真 ECS，而 CS2 性能翻车。</strong>   ⇒ <strong>采纳 ECS 的数据布局（SoA）与句柄机制（固定容量 + uint 索引 + 空闲栈），   不引入完整 ECS 框架</strong>（实体类型固定、无 archetype 迁移、避免多跳寻址）。   另纠正一个长期误解：<strong>CS1 人口上限是 104 万，65536 是"活跃行人实例"上限</strong>   —— R1 的"突破 65536"其实只需把 <code>CitizenInstance</code> 从 <code>ushort</code> 改 <code>uint</code>。</p>
+<ul><li><strong>2026-11-17（六）</strong>：新增 <strong>R20 多语言八语</strong>（简/繁/英/日/韩/法/西/俄；阿拉伯语暂不做）。</li></ul>
+<p>  三项必须现在定的事：<strong>CJK 四套字体变体</strong>、<strong>UI 按俄语 +35 % 留宽</strong>、<strong>布局用逻辑方向预留 RTL</strong>。   验收点 6 → 8 条。新建 <code>config/ui/i18n.json</code>。</p>
+<ul><li><strong>2026-11-17（五）</strong>：新增 <strong>R19 主语言分工</strong>（<code>sim/</code> + <code>core/</code> 用 C#，<code>view/</code> <code>ui/</code> <code>tools/</code> 用 GDScript）。</li></ul>
+<p>  依据 <code>11-scale</code> §6.4 实测。附三条硬约束（禁 <code>Vector3</code> / 用 <code>Buffer</code> 批量 / 跨语言只传整块数组）   与四项代价（含 <strong>sim 改动要 <code>dotnet build</code>，迭代慢于 GDScript</strong>）。   同步改 <code>plan.md</code> / <code>system-boundaries</code> / <code>agents.md</code> 的文件后缀。</p>
+<ul><li><strong>2026-11-15</strong>：<strong>记录 R13</strong>（时间尺度：3 秒/日 + 昼夜 24 分钟解耦），新增 <strong>Q12</strong></li></ul>
+<p>  （3 秒/日 与一局年数的算术冲突）。<code>design/09-core-tick.md</code> 按此重写。</p>
+<ul><li><strong>2026-11-15</strong>：<strong>Q1/Q2/Q3/Q6 拍板 → 写入 R7–R10</strong>；同时记录 <strong>R11</strong>（开局修正为空白地图 + 启动资金）</li></ul>
+<p>  与 <strong>R12</strong>（DLC 池策略）。新增 <strong>Q11</strong>（春运/节假日/寒暑假与南北城市选择的时机）。   新建 <code>design/12-china-features.md</code>（中国特色台账）。</p>
+<ul><li><strong>2026-11-15</strong>：<strong>Q4 / Q7 / Q8 / Q9 一次性拍板 → 写入 R3 / R4 / R5 / R6</strong>。</li></ul>
+<p>  其中 R6（地块由道路围合生成）<strong>推翻了「固定用地格」这一空间前提</strong>，   <code>11-scale.md</code> §二 整节重写；R3 引出 <code>10-presentation.md</code> 的资产管线；R4 引出 <code>reference/gb-standards.md</code>。</p>
+<ul><li><strong>2026-11-15</strong>：<strong>Q10 拍板 → 写入 R2</strong>（相机只管表现，不管权威）。顶部「待拍板」总表补全为 Q1–Q10 十项，</li></ul>
+<p>  并标注 Q5 / Q10 已由 R1 / R2 裁定。</p>
+<ul><li><strong>2026-11-15</strong>：增补「待拍板 · 决策备忘」（Q1–Q4 各含背景 / 候选 / 后果 / AI 建议 / 拍板栏）。</li></ul>
+<p>  <strong>四条状态全部保持 ⬜，未作任何裁定。</strong> 同时补记「D7 冻结期不计时」的例外。</p>
+<ul><li><strong>2026-11-15</strong>：首版，Q1–Q4 提出。</li></ul><div class="pager"><a href="design-00-constitution.html">← 00 · v2 宪法</a><a href="design-system-boundaries.html">8 系统边界表（B0 核心交付物） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#待拍板-开工前必须清空">待拍板（开工前必须清空）</a><a class="l2" href="#已裁定总表-r1-r32">已裁定总表（R1–R32）</a><a class="l2" href="#待拍板-决策备忘">待拍板 · 决策备忘</a><a class="l3" href="#q1-r1-路网密度-r2-土地财政-r3-学区-三条是否成立">Q1 · R1 路网密度 / R2 土地财政 / R3 学区，三条是否成立</a><a class="l3" href="#q2-cs1_replica-是否只读保留-代码不搬">Q2 · cs1_replica 是否只读保留、代码不搬</a><a class="l3" href="#q3-7-个功能系统-core-的划分是否成立">Q3 · 7 个功能系统 + core 的划分是否成立</a><a class="l3" href="#q4-可玩版是否确定不用任何-cs1-资产">Q4 · 可玩版是否确定不用任何 CS1 资产</a><a class="l3" href="#q5-地图尺度装不下-30-万人口-已裁定-见下-r1">Q5 · 地图尺度装不下 30 万人口 → 已裁定，见下 R1</a><a class="l3" href="#q6-九篇设计文档是空模板-但已是子代理的-唯一需求来源-2026-11-15-复查新增">Q6 · 九篇设计文档是空模板，但已是子代理的「唯一需求来源」（2026-11-15 复</a><a class="l3" href="#q7-八条判据全在-防乱-没有一条在-证明这是中国城市-2026-11-15-复查新增">Q7 · 八条判据全在「防乱」，没有一条在「证明这是中国城市」（2026-11-15 复</a><a class="l3" href="#q8-突破-65536-到底要突破到多少-2026-11-15-规模目标定下后新增">Q8 · 「突破 65536」到底要突破到多少（2026-11-15 规模目标定下后新增</a><a class="l3" href="#q9-l0-用地格用-20-m-还是-25-m-2026-11-15-规模目标定下后新增">Q9 · L0 用地格用 20 m 还是 25 m（2026-11-15 规模目标定下后</a><a class="l3" href="#q10-相机边界-哪些跟着视角走-哪些不跟-已裁定-见下-r2">Q10 · 相机边界：哪些跟着视角走，哪些不跟 → 已裁定，见下 R2</a><a class="l3" href="#q11-中国时间维度与南北差异-进可玩版还是打磨年-已裁定-见下-r16">Q11 · 中国时间维度与南北差异，进可玩版还是打磨年 → 已裁定，见下 R16</a><a class="l3" href="#q12-3-秒-日-下一局只有-13-20-个游戏年-已裁定-见下-r14">Q12 · 3 秒/日 下一局只有 13–20 个游戏年 → 已裁定，见下 R14</a><a class="l3" href="#q13-基础设施怎么放-已升级为-q14-2026-11-15">Q13 · 基础设施怎么放 → 已升级为 Q14（2026-11-15）</a><a class="l3" href="#q14-系统数-7-个还是-8-个-2026-11-15-新增-推翻-r9-的候选">Q14 · 系统数：7 个还是 8 个（2026-11-15 新增，推翻 R9 的候选）</a><a class="l4" href="#q13-原分析-留痕-结论已并入-07-services-4-0-与-q14">Q13 原分析（留痕，结论已并入 07-services §4.0 与 Q14）</a><a class="l2" href="#已裁定">已裁定</a><a class="l3" href="#r1-规模目标-2500-km²-100-万可玩-1000-万挑战-突破-65-536">R1 · 规模目标：2500 km² / 100 万可玩 / 1000 万挑战 / 突破</a><a class="l3" href="#r2-相机边界-相机只管表现-不管权威">R2 · 相机边界：相机只管表现，不管权威</a><a class="l3" href="#r3-资产-自建管线-不用任何-cs1-资产-原-q4">R3 · 资产：自建管线，不用任何 CS1 资产（原 Q4）</a><a class="l3" href="#r4-形态参数按国标-且分年代-分行政层级-原-q7">R4 · 形态参数按国标，且分年代、分行政层级（原 Q7）</a><a class="l3" href="#r5-u3-先-15-万签收-终局-50-万-上限随硬件可配-原-q8">R5 · U3：先 15 万签收，终局 50 万，上限随硬件可配（原 Q8）</a><a class="l3" href="#r6-空间-地块由道路围合生成-栅格只是计算索引-原-q9-问题作废">R6 · 空间：地块由道路围合生成，栅格只是计算索引（原 Q9，问题作废）</a><a class="l3" href="#r7-核心循环-r1-r2-r3-全立-且拆迁收储进可玩版-原-q1">R7 · 核心循环：R1 + R2 + R3 全立，且拆迁收储进可玩版（原 Q1）</a><a class="l3" href="#r8-cs1_replica-只读保留-代码一行不搬-原-q2">R8 · cs1_replica 只读保留，代码一行不搬（原 Q2）</a><a class="l3" href="#r9-系统划分-7-个功能系统-core-原-q3">R9 · 系统划分：7 个功能系统 + core（原 Q3）</a><a class="l3" href="#r10-b0-交付-九篇设计文档只先写-数据契约-验收点-原-q6-方案-a">R10 · B0 交付：九篇设计文档只先写「数据契约 + 验收点」（原 Q6，方案 A′</a><a class="l3" href="#r11-开局-空白地图-启动资金-修正-r4-时的误读">R11 · 开局：空白地图 + 启动资金（修正 R4 时的误读）</a><a class="l3" href="#r12-dlc-策略-砍掉清单即-dlc-池-且不得破-dg4">R12 · DLC 策略：砍掉清单即 DLC 池，且不得破 DG4</a><a class="l3" href="#r13-时间尺度-3-秒-日-昼夜-24-分钟-两个时钟永不混">R13 · 时间尺度：3 秒/日，昼夜 24 分钟，两个时钟永不混</a><a class="l3" href="#r14-时间尺度修正-现实日历-完整农历-里程碑制-日内时段">R14 · 时间尺度修正：现实日历、完整农历、里程碑制、日内时段</a><a class="l3" href="#r15-系统数-7-8-新增-utility">R15 · 系统数：7 → 8（新增 utility）</a><a class="l3" href="#r16-中国时间维度进可玩版-南北与编辑器推打磨年-原-q11">R16 · 中国时间维度进可玩版，南北与编辑器推打磨年（原 Q11）</a><a class="l3" href="#r17-地图编辑器前置-模块化建筑-资产编辑器推后">R17 · 地图编辑器前置、模块化建筑、资产编辑器推后</a><a class="l3" href="#r18-地铁与公交回归本体-节日模型与古建社区化">R18 · 地铁与公交回归本体；节日模型与古建社区化</a><a class="l3" href="#r19-主语言分工-sim-用-c-其余用-gdscript">R19 · 主语言分工：sim/ 用 C#，其余用 GDScript</a><a class="l3" href="#r20-多语言-八语-阿拉伯语暂不做-但预留-rtl">R20 · 多语言：八语（阿拉伯语暂不做，但预留 RTL）</a><a class="l3" href="#r21-采用-ecs-的-数据布局与句柄机制-不采用完整-ecs-框架">R21 · 采用 ECS 的"数据布局与句柄机制"，不采用完整 ECS 框架</a><a class="l3" href="#r22-配音只有中文-其余语言无配音-只留字幕">R22 · 配音只有中文（其余语言无配音，只留字幕）</a><a class="l3" href="#r23-归档-cs1_replica-改用-cs1-逆向源码作参考">R23 · 归档 cs1_replica，改用 CS1 逆向源码作参考</a><a class="l3" href="#r24-反向读一律读上月值-取代-system-boundaries-的-唯一反向读">R24 · 反向读一律读上月值（取代 system-boundaries 的"唯一反向读</a><a class="l3" href="#r25-native-sim_core-降为应急-b4-不前置">R25 · native/sim_core 降为应急，B4 不前置</a><a class="l3" href="#r26-活跃-agent-15-万是上限-8-万是首发基线">R26 · 活跃 agent：15 万是上限，8 万是首发基线</a><a class="l3" href="#r27-dlc-编号以-12-china-features-4-5-为唯一基准">R27 · DLC 编号以 12-china-features §4.5 为唯一基准</a><a class="l3" href="#r28-行政层级保持四级">R28 · 行政层级保持四级</a><a class="l3" href="#r29-高铁-站进本体-班次进-dlc4">R29 · 高铁：站进本体，班次进 DLC4</a><a class="l3" href="#r30-od-矩阵月边界算一次">R30 · OD 矩阵月边界算一次</a><a class="l3" href="#r31-断言编号两字母化-一次性-b1-前完成">R31 · 断言编号两字母化（一次性，B1 前完成）</a><a class="l3" href="#r32-语言策略-c-为主-rust-只做局部下沉-细化-r19">R32 · 语言策略：C# 为主，Rust 只做局部下沉（细化 R19）</a><a class="l3" href="#r33-渲染层保持-godot-不转-webui-three-js">R33 · 渲染层保持 Godot，不转 WebUI / Three.js</a><a class="l3" href="#r34-按城市等级切片-边做边玩-同一存档贯穿">R34 · 按城市等级切片，边做边玩（同一存档贯穿）</a><a class="l3" href="#r35-做车道级连接-推翻-r-前身-3-6-5b-的-不做">R35 · 做车道级连接（推翻 R 前身 §3.6.5b 的"不做"）</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

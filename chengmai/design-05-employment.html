@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05 · 就业与产能：岗位匹配、建材供应链、资源与技改 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" class="on" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="05-就业与产能-岗位匹配-建材供应链-资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</h1>
+<blockquote>依据：<code>decisions.md</code> <strong>R1</strong>（规模）/ <strong>R7</strong>（R1 可达性→通勤）/ <strong>R17</strong>（模块化）。<br>本系统不只算岗位——<strong>工业产能、建材供给、资源产出、减燃料增化工都在这里</strong><br>（<code>12-china-features</code> F60 / F71 / F90，<code>system-boundaries</code> §三-5）。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#二岗位分类跟用地子类对齐">二、岗位分类（跟用地子类对齐）</a></li><li><a href="#二五岗位匹配供需怎么对上2026-11-17-补">二·五、岗位匹配：供需怎么对上（2026-11-17 补）</a></li><li><a href="#三建材供应链f60本系统最复杂的部分">三、建材供应链（F60，本系统最复杂的部分）</a></li><li><a href="#四资源开采与技改f71--f90">四、资源开采与技改（F71 / F90）</a></li><li><a href="#四五产业升级与招商条件驱动不是点击解锁2026-11-18-新增">四·五、产业升级与招商：条件驱动，不是点击解锁（2026-11-18 新增）</a></li><li><a href="#五数据契约">五、数据契约</a></li><li><a href="#六验收点">六、验收点</a></li><li><a href="#七待定">七、待定</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td><strong>岗位</strong>（按用地子类分）与劳动力匹配</td><td>个人数据（在 <code>population</code>）</td></tr><tr><td><strong>工业产能</strong>（<code>M0</code>–<code>M4</code>，含 <code>M1b</code> 化工）</td><td>通勤路径（在 <code>traffic</code>）</td></tr><tr><td><strong>建材供应链</strong>：需求、产能、进口、短缺</td><td>建造本身（在 <code>zoning</code>）</td></tr><tr><td><strong>资源开采</strong>：储量、年产、枯竭</td><td>资源点的地图数据（在 B1 地图契约）</td></tr><tr><td><strong>减燃料增化工技改</strong>（F90）</td><td>化工的价格（在 <code>finance</code>）</td></tr><tr><td><strong>高技能比例</strong>（轨二评级用）</td><td>评级本身（在 <code>core</code> 年边界）</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-岗位分类-跟用地子类对齐">二、岗位分类（跟用地子类对齐）</h2>
+<div class="tw"><table><thead><tr><th>用地</th><th>岗位类型</th><th>技能档</th><th>备注</th></tr></thead><tbody><tr><td><code>M0</code> 资源开采</td><td>矿工/钻工</td><td>低</td><td>人均产出高、就业少、<strong>会枯竭</strong></td></tr><tr><td><code>M1</code> 建材</td><td>建材工人</td><td>低</td><td><strong>产能决定全城建设速度</strong></td></tr><tr><td><code>M1b</code> 化工</td><td>化工操作/技术</td><td>中</td><td>可技改，附加值随化工占比上升</td></tr><tr><td><code>M2</code> 消费品</td><td>普工</td><td>低</td><td>就业密集</td></tr><tr><td><code>M3</code> 装备电子</td><td>技工</td><td>中</td><td>—</td></tr><tr><td><code>M3h</code> 高新</td><td>研发</td><td><strong>高</strong></td><td>需通信覆盖 + 高技能人口</td></tr><tr><td><code>M4</code> 物流仓储</td><td>司机/仓管</td><td>低</td><td>需贴近快速路</td></tr><tr><td><code>B</code> 商业办公</td><td>服务业/白领</td><td>中–高</td><td>高薪岗位的主要来源之一</td></tr><tr><td><code>A</code> 公共服务</td><td>教师/医护</td><td>高</td><td><code>services</code> 的实际岗位</td></tr></tbody></table></div>
+<p>⚠ <strong>技能档只有三档（低/中/高）</strong>。这是"高薪岗位占比"（轨二评级）的计算基础， 不需要更细的划分——更细只会增加平衡难度。</p>
+<hr>
+<h2 id="二-五-岗位匹配-供需怎么对上-2026-11-17-补">二·五、岗位匹配：供需怎么对上（2026-11-17 补）</h2>
+<blockquote>系统间接合的空白：<code>population</code> 给劳动力，<code>employment</code> 给岗位，<strong>谁负责撮合？</strong><br>答案：<strong>本系统只出"岗位空缺"，撮合在 <code>population</code></strong>（见 <code>04</code> §3.5.2）。<br>这里只定义<strong>岗位怎么产生、怎么消失</strong>。</blockquote>
+<h3 id="2-5-1-岗位从建筑来">2.5.1 岗位从建筑来</h3>
+<div class="tw"><table><thead><tr><th>建筑类型</th><th>岗位数公式</th></tr></thead><tbody><tr><td><code>M0</code> 资源开采</td><td><code>min(年产能, 储量) / 人均产出</code>，<strong>枯竭即归零</strong></td></tr><tr><td><code>M1</code> / <code>M1b</code></td><td>建筑面积 × 每 m² 岗位密度（化工更低，因为自动化）</td></tr><tr><td><code>M2</code></td><td>建筑面积 × <strong>最高密度</strong>（劳动密集）</td></tr><tr><td><code>M3</code> / <code>M3h</code></td><td>建筑面积 × 低密度，但<strong>技能档要求高</strong></td></tr><tr><td><code>B</code> 商业办公</td><td>建筑面积 × 中等密度</td></tr><tr><td><code>A</code> 公共服务</td><td>由 <code>services</code> 反推（学校需要多少教师）</td></tr></tbody></table></div>
+<p>⚠ <strong>岗位不随人口自动增加</strong>：只有<strong>建成建筑</strong>才产生岗位。 "人口涨了岗位自然多"是错的——那正是"失业"要解决的问题。</p>
+<h3 id="2-5-2-岗位消失的三种情况">2.5.2 岗位消失的三种情况</h3>
+<div class="tw"><table><thead><tr><th>情况</th><th>后果</th></tr></thead><tbody><tr><td>建筑废弃 / 拆除</td><td>岗位消失 → 该处就业者<strong>全部失业</strong></td></tr><tr><td>资源枯竭（<code>M0</code>）</td><td>同上，且<strong>不可恢复</strong></td></tr><tr><td><strong>技改停产期</strong>（F90）</td><td>岗位<strong>临时消失 6–12 月</strong>，之后恢复</td></tr></tbody></table></div>
+<p>⚠ <strong>技改停产期的失业是"可预期的"</strong>：玩家自己选的，应提前显示"停产期间约 X 人失业"。</p>
+<h3 id="2-5-3-通勤上限反过来限制建厂">2.5.3 通勤上限反过来限制建厂</h3>
+<p>⚠ <strong>这是 <code>employment</code> 与 <code>traffic</code> 的隐藏耦合</strong>： <code>population</code> 的通勤搜索上限是 27 个小区（<code>04</code> §3.5.2）。 所以<strong>建在远郊的工厂，可能招不到人</strong>——因为没人愿意通勤那么远。</p>
+<p>⇒ 玩家的真实约束是：<strong>"建厂"与"修路/建住宅"必须配套</strong>。 这比"随便建厂就有人来"真实得多，也解释了产业新城为什么常常是空城。</p>
+<h2 id="三-建材供应链-f60-本系统最复杂的部分">三、建材供应链（F60，本系统最复杂的部分）</h2>
+<h3 id="3-1-链路">3.1 链路</h3>
+<pre class="code"><code>需求侧：zoning 报"在建面积 × 单位消耗" → zoning.material_demand
+供给侧：M1 产能（水泥/钢材）+ 进口补足 → employment.material_supply
+缺口 → 进口，成本 = 基础价 × (1 + 距离系数)，并占用对外运力
+总量不足 → 全城在建工地按比例减速（塔吊停转）</code></pre>
+<h3 id="3-2-三条约束">3.2 三条约束</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>约束</th><th>理由</th></tr></thead><tbody><tr><td>1</td><td><strong>不做逐车物流</strong></td><td>否则变成《运输模拟器》。只做月度供需平衡 + 运力占用标量</td></tr><tr><td>2</td><td><strong><code>zoning</code> 读上月产能</strong>（滞后一期）</td><td>否则要改 Tick 顺序（<code>system-boundaries</code> §三-3）</td></tr><tr><td>3</td><td><strong>进口永远可得，但越来越贵</strong></td><td>保证城市不会因为"没建材"完全停死，只是变慢变穷</td></tr></tbody></table></div>
+<p>⚠ <strong>第 3 条很重要</strong>：完全断供会让游戏变成"必须建水泥厂否则卡死"， 那就不是规划游戏了。<strong>用价格调节，不用硬卡。</strong></p>
+<h3 id="3-3-砂石-建材的上游-f71-矿石">3.3 砂石：建材的上游（F71 矿石）</h3>
+<pre class="code"><code>砂石场（M0，占资源点）→ 水泥厂（M1）→ 工地</code></pre>
+<p>砂石产能不足 → 水泥产能受限（即使水泥厂建够了）→ 工地减速。 ⚠ 真实原型：2018–2020 河砂禁采导致砂石暴涨、多地停工（<code>12-china-features</code> §11.2）。</p>
+<hr>
+<h2 id="四-资源开采与技改-f71-f90">四、资源开采与技改（F71 / F90）</h2>
+<h3 id="4-1-资源产出">4.1 资源产出</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>产量</td><td><code>min(年产能, 剩余储量)</code>，月度摊分</td></tr><tr><td>储量</td><td>每月递减，<strong>按品位加权</strong>（高品位先采）</td></tr><tr><td>枯竭</td><td>储量为 0 → 停产，<code>M0</code> 岗位消失</td></tr><tr><td>沉陷</td><td>采煤每单位累积沉陷风险，越阈值 → 周边 parcel 不能新建、地价腰斩（F73）</td></tr></tbody></table></div>
+<h3 id="4-2-减燃料增化工技改-f90">4.2 减燃料增化工技改（F90）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>触发</td><td>玩家主动发起，<strong>不是自动</strong></td></tr><tr><td>成本</td><td>一次性投资 + <strong>停产期 6–12 个月</strong></td></tr><tr><td>效果</td><td>产出结构从「燃料 70 %/化工 30 %」切到「化工 60 %+」</td></tr><tr><td>后续</td><td>随年份与技术继续下移（2050 约 40/60，2100 约 10/90）</td></tr></tbody></table></div>
+<p>⚠ <strong>不技改的惩罚是渐进的</strong>：燃料需求随电动化下降 → 同样的产能越来越不值钱。 <strong>不是某一天突然崩，而是一年比一年难受。</strong> 这才是真实的资源型城市衰败方式。</p>
+<hr>
+<h2 id="四-五-产业升级与招商-条件驱动-不是点击解锁-2026-11-18-新增">四·五、产业升级与招商：条件驱动，不是点击解锁（2026-11-18 新增）</h2>
+<blockquote>⚠ <strong>本节是 2026-11-18 扫描发现的空白</strong>：<code>F42 开发区招商</code> / <code>F90 技改</code> 都登记了，<br>但<strong>"产业怎么从低端走到高端"从来没写过</strong>。而这是"城市怎么长大"的核心。</blockquote>
+<h3 id="4-5-1-产业阶梯-六级-不是-高低两档">4.5.1 产业阶梯（六级，不是"高低两档"）</h3>
+<div class="tw"><table><thead><tr><th>级</th><th>子类</th><th>典型</th><th>岗位密度</th><th>技能要求</th><th>税收</th></tr></thead><tbody><tr><td><strong>0</strong></td><td><code>M0</code></td><td>资源开采</td><td>极低</td><td>低</td><td>低</td></tr><tr><td><strong>1</strong></td><td><code>M1</code></td><td>初加工 / 建材</td><td>中</td><td>低</td><td>低</td></tr><tr><td><strong>2</strong></td><td><code>M1b</code></td><td>化工</td><td>低</td><td>中</td><td>中</td></tr><tr><td><strong>3</strong></td><td><code>M2</code></td><td>劳动密集制造</td><td><strong>最高</strong></td><td>低</td><td>低（但就业多）</td></tr><tr><td><strong>4</strong></td><td><code>M3</code></td><td>先进制造</td><td>中</td><td>中</td><td>中</td></tr><tr><td><strong>5</strong></td><td><code>M3h</code></td><td>高新 / 电子</td><td>低</td><td><strong>高</strong></td><td><strong>高</strong></td></tr><tr><td>侧</td><td><code>M4</code></td><td>物流仓储</td><td>低</td><td>低</td><td>低</td></tr><tr><td>侧</td><td><code>B</code> / <code>CBD</code></td><td>服务业 / 办公</td><td>中–高</td><td>中–高</td><td><strong>最高</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>不是"越低越差"</strong>：<code>M2</code> 单位面积岗位最多，<strong>解决就业最有效</strong>，但税收低。 <strong>玩家会在"就业"和"税收"之间反复权衡</strong>——这是设计意图，不是缺陷。</p>
+<h3 id="4-5-2-升级是-条件满足后自动发生-不是-付费解锁">4.5.2 ⭐ 升级是"条件满足后自动发生"，不是"付费解锁"</h3>
+<p><strong>错误做法</strong>（不要做）：<code>花 ¥500 万 → M2 变 M3</code>。 <strong>正确做法</strong>：<strong>企业自己评估条件，满足就升级，不满足就搬走。</strong></p>
+<h4 id="五条升级条件-全部要满足">五条升级条件（全部要满足）</h4>
+<div class="tw"><table><thead><tr><th>#</th><th>条件</th><th>数据来源</th></tr></thead><tbody><tr><td>1</td><td><strong>技能劳动力够</strong></td><td>该片区高技能人口 / 岗位需求 ≥ 1.0</td></tr><tr><td>2</td><td><strong>基础设施够</strong></td><td>电力容量富余 ≥ 30 %、通信覆盖、供水稳定</td></tr><tr><td>3</td><td><strong>交通可达</strong></td><td><code>accessibility</code> ≥ 阈值、货运通道通</td></tr><tr><td>4</td><td><strong>产业链配套</strong></td><td>建材/零部件本地可得（<code>material_chain</code>）</td></tr><tr><td>5</td><td><strong>地价/租金可承受</strong></td><td>租金 ≤ 该产业毛利率的 30 %</td></tr></tbody></table></div>
+<p>⚠ <strong>第 1 条是最容易卡住的</strong>：<strong>没有高技能人口，产业升不上去</strong>。 而高技能人口来自教育（<code>07-services</code> 的学校）——<strong>这条把教育和产业接上了。</strong></p>
+<p>⚠ <strong>第 5 条制造真实矛盾</strong>：<strong>地价涨 → 低端产业待不住 → 被迫外迁</strong>。 这就是"腾笼换鸟"，也是<strong>老城区产业空心化</strong>的来源。</p>
+<h3 id="4-5-3-招商-f42-开发区-补贴有用-但不是万能">4.5.3 招商（F42 开发区）：补贴有用，但不是万能</h3>
+<div class="tw"><table><thead><tr><th>步骤</th><th>机制</th></tr></thead><tbody><tr><td>1</td><td>玩家划<strong>开发区</strong>（<code>M</code> 类 + 政策标签）</td></tr><tr><td>2</td><td>给<strong>招商补贴</strong>（<code>13-player-loop</code> §十三 的旋钮，0–500 万/企业）</td></tr><tr><td>3</td><td>企业按<strong>五条条件打分</strong>，补贴只是其中一项</td></tr><tr><td>4</td><td>分数达标 → 迁入；不达标 → <strong>补贴再多也不来</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>补贴的边际效用递减</strong>：补贴 ×2，吸引企业数只增约 30 %。 ⚠ <strong>企业会挑地方</strong>：同样补贴，交通好、劳动力足的地方先满。</p>
+<p>⭐ <strong>这防止"砸钱就能建产业"的简单解法</strong>，也解释了真实的开发区为什么有的活、有的死。</p>
+<h3 id="4-5-4-企业迁出-和升级对称的另一半">4.5.4 企业迁出：和升级对称的另一半</h3>
+<div class="tw"><table><thead><tr><th>触发</th><th>说明</th></tr></thead><tbody><tr><td>成本上升</td><td>地价/工资涨到毛利率 30 % 以上</td></tr><tr><td>交通恶化</td><td><code>avg_commute_s</code> 上升 → 招不到人</td></tr><tr><td>政策恶化</td><td>税率过高、补贴取消</td></tr><tr><td>资源枯竭</td><td><code>M0</code> 特有（<code>§四</code>）</td></tr></tbody></table></div>
+<p>⚠ <strong>迁出不是瞬间的</strong>：从"开始亏损"到"搬走"给 <strong>12–24 月</strong>缓冲期， 期间产能下降、岗位减少——<strong>玩家有反应时间</strong>（符合 <code>13-player-loop</code> §五 的预警原则）。</p>
+<h3 id="4-5-5-技能档怎么产生-完整答案在-07-services-三-五">4.5.5 技能档怎么产生：<strong>完整答案在 07-services §三·五</strong></h3>
+<p>技能来自<strong>教育阶梯</strong>，不是"建学校就涨"：</p>
+<div class="tw"><table><thead><tr><th>路径</th><th>技能档</th></tr></thead><tbody><tr><td>初中及以下</td><td><code>low</code></td></tr><tr><td><strong>职业学校（普职分流 50 %）</strong></td><td><strong><code>low_mid</code>（技工）</strong></td></tr><tr><td>高中毕业未升学</td><td><code>mid_low</code></td></tr><tr><td>大专 / 高职</td><td><code>mid</code></td></tr><tr><td><strong>本科（同龄人 ~12 %）</strong></td><td><strong><code>high</code></strong></td></tr></tbody></table></div>
+<p>⚠ <strong>⭐ 关键：本科率高不等于好</strong> —— 把本科率调到 50 %，技工就没了， <strong>M2/M3 招不满人</strong>（<code>07-services</code> SV17 断言）。</p>
+<p>⚠ <strong>这条让"建学校"有了长期回报</strong>，而不只是学区房溢价—— <strong>学区房是短期套利，技能人口是长期税基。</strong> 两者都是真的。</p>
+<h3 id="4-5-6-验收点">4.5.6 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>EM14</strong></td><td>技能人口不足时，<strong>M2 无法升级为 M3</strong>（补贴再多也不行）</td></tr><tr><td><strong>EM15</strong></td><td>建成学校 → 20 年后该片区<strong>高技能人口比例上升</strong>，产业开始升级</td></tr><tr><td><strong>EM16</strong></td><td>地价涨到阈值后，<strong>低端产业开始外迁</strong>（腾笼换鸟）</td></tr><tr><td><strong>EM17</strong></td><td>企业迁出有 <strong>12–24 月缓冲期</strong>，不是瞬间消失</td></tr><tr><td><strong>EM18</strong></td><td>补贴翻倍，吸引企业数<strong>只增约 30 %</strong>（边际递减）</td></tr></tbody></table></div>
+<p>⚠ <strong>EM14 是本节的核心</strong>：如果"砸钱就能升级"，整个产业系统就退化成了数值滑块。</p>
+<h2 id="五-数据契约">五、数据契约</h2>
+<h3 id="5-1-结构">5.1 结构</h3>
+<div class="tw"><table><thead><tr><th>结构</th><th>字段</th><th>上限</th></tr></thead><tbody><tr><td><code>job_slot</code></td><td><code>parcel_id(u32)</code> <code>subtype(u8)</code> <code>skill(u8)</code> <code>filled(u32)</code> <code>capacity(u32)</code></td><td>≤ 30 万</td></tr><tr><td><code>industry</code></td><td><code>parcel_id(u32)</code> <code>subtype(u8)</code> <code>output(u32)</code> <code>fuel_ratio(u8)</code> <code>upgrading(bool)</code></td><td>≤ 5 万</td></tr><tr><td><code>resource_site</code></td><td><code>cell_x(u16)</code> <code>cell_y(u16)</code> <code>kind(u8)</code> <code>reserve(u32)</code> <code>grade(u8)</code> <code>annual_cap(u32)</code></td><td>≤ 5,000</td></tr><tr><td><code>material</code></td><td><code>demand_cement</code> <code>demand_steel</code> <code>demand_sand</code> <code>supply_*</code> <code>import_cost</code> <code>shortage_ratio</code></td><td>4×6 标量</td></tr></tbody></table></div>
+<p>⚠ <strong><code>job_slot</code> 的 30 万上限待核（2026-11-21 标）</strong>：100 万人口按 50–60 % 就业率需要 <strong>50–60 万岗位</strong>。 两种解释二选一，<strong>必须在 B4 前定</strong>： ① <code>job_slot</code> 是<strong>聚合槽位</strong>（<code>capacity</code> 为该槽位可容纳人数，一个槽位 = 一栋楼的岗位包）⇒ 30 万够； ② <code>job_slot</code> 是<strong>逐岗位</strong> ⇒ 上限必须提到 60 万，且 <code>filled(u32)</code> 的数组会涨到 240 MB 量级。 <strong>当前文档没有写清是哪一种，这是 <code>11-scale</code> §6.1 内存表之外的一块隐性开销。</strong></p>
+<p>⚠ <strong>资源点是地图数据</strong>（B1 地形契约的一部分），<code>employment</code> 只读不写储量以外的东西。</p>
+<h3 id="5-2-bus-key">5.2 bus key</h3>
+<div class="tw"><table><thead><tr><th>key</th><th>方向</th><th>内容</th></tr></thead><tbody><tr><td><code>employment.jobs</code></td><td>写</td><td>岗位空缺（按技能档）</td></tr><tr><td><code>employment.material_supply</code></td><td>写</td><td>建材供给（<strong>供 <code>zoning</code> 滞后一期读</strong>）</td></tr><tr><td><code>employment.resource_output</code></td><td>写</td><td>资源产量与储量</td></tr><tr><td><code>employment.high_skill_ratio</code></td><td>写</td><td>高薪岗位占比（轨二评级用）</td></tr><tr><td><code>zoning.material_demand</code></td><td>读</td><td>在建面积 × 单位消耗</td></tr><tr><td><code>population.labor</code></td><td>读</td><td>劳动力（按技能档）</td></tr><tr><td><code>road.accessibility</code></td><td>读</td><td>货车可达性（影响进口成本）</td></tr><tr><td><code>utility.gas_ok</code></td><td>读</td><td>工业用气（化工必需）</td></tr></tbody></table></div>
+<h3 id="5-3-config-config-sim-employment-json">5.3 config（config/sim/employment.json）</h3>
+<pre class="code" data-lang="json"><code>{
+  "material_per_m2": { "cement": 0.20, "steel": 0.045, "sand": 0.35 },
+  "import_price_multiplier": 1.6,
+  "import_distance_factor": 0.15,
+  "sand_to_cement_ratio": 3.0,
+  "upgrade": { "cost_per_capacity": 800, "downtime_months": [6, 12] },
+  "subsidence": { "per_unit_coal": 0.02, "threshold": 1.0 }
+}</code></pre>
+<p>⚠ 单位：建材为<strong>吨/月</strong>，容量为<strong>吨</strong>。数字是初始手感值，必须跑出来调。</p>
+<hr>
+<h2 id="六-验收点">六、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>EM1</strong></td><td>岗位空缺 &gt; 0 → <code>population</code> 净迁移为正（联动 P3）</td><td>探针对照</td></tr><tr><td><strong>EM2</strong></td><td>拆掉全部 <code>M1</code> → 建材缺口 &gt; 0，<strong>进口成本上升</strong>，且在建工地减速</td><td>探针三步对照</td></tr><tr><td><strong>EM3</strong></td><td><strong>砂石产能为 0 时，即使水泥厂充足，水泥产出也受限</strong></td><td>探针断言</td></tr><tr><td><strong>EM4</strong></td><td>资源点采完 → <code>M0</code> 岗位归零，该 parcel 建筑废弃</td><td>探针快进</td></tr><tr><td><strong>EM5</strong></td><td>采煤累积到阈值 → 周边 parcel <code>subsidence</code> 生效，<strong>不能新建</strong></td><td>探针断言</td></tr><tr><td><strong>EM6</strong></td><td>技改后 <code>fuel_ratio</code> 显著下降，且<strong>停产期产出为 0</strong></td><td>探针断言</td></tr><tr><td><strong>EM7</strong></td><td>不技改的化工城市：2050 年同产能的<strong>收入明显低于</strong>技改城市</td><td>两支对照快进</td></tr><tr><td><strong>EM8</strong></td><td><code>employment</code> <strong>不写</strong> <code>zoning</code>（只在 bus 上写自己的 key）</td><td><code>check_contract</code></td></tr><tr><td><strong>EM9</strong></td><td>存档 → 读档后储量、<code>fuel_ratio</code>、<code>filled</code> 完全一致</td><td>探针比对</td></tr><tr><td><strong>EM10</strong></td><td>5 万工业 + 5000 资源点下月结 ≤ 300 ms</td><td><code>probe_tick</code></td></tr><tr><td><strong>EM11</strong></td><td><strong>人口翻倍不会让岗位翻倍</strong>（岗位只来自建筑）</td><td>探针两组对照</td></tr><tr><td><strong>EM12</strong></td><td>远郊工厂<strong>招不满人</strong>（通勤超 27 个小区），近城同规模工厂能招满</td><td>探针三组对照</td></tr><tr><td><strong>EM13</strong></td><td>技改停产期内该厂岗位<strong>归零</strong>，结束后恢复</td><td>探针断点</td></tr></tbody></table></div>
+<p>⚠ <strong>EM2 是 F60 存在的唯一证据</strong>：如果拆了水泥厂工地照跑，那建材供应链就是白做。 ⚠ <strong>EM7 是"减燃料增化工"这个机制的全部意义</strong>：不做技改的城市必须真的吃亏， 否则玩家没有理由选择它。</p>
+<hr>
+<h2 id="七-待定">七、待定</h2>
+<ol><li><strong><code>M3h</code> 的通信门槛具体怎么判</strong> —— 覆盖面积占比还是容量？建议容量</li><li><strong>进口是否要走"港口/铁路枢纽"</strong> —— 会大幅增加真实感，但也增加复杂度，建议只做"对外通道"标量</li><li><strong>沉陷区的治理机制</strong> —— 花钱恢复，但恢复后能否重建？建议可以，否则地图会被永久毁掉</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-18</strong>：新增 <strong>§四·五 产业升级与招商</strong>（扫描发现的空白：F42/F90 都登记了，</li></ul>
+<p>  但"产业怎么从低端走到高端"从来没写过）。   ① <strong>六级产业阶梯</strong>（M0→M1→M1b→M2→M3→M3h，加 M4/B 侧支），   ⚠ <strong>不是"越低越差"</strong>：M2 单位面积岗位最多但税收低，<strong>玩家在就业与税收间反复权衡</strong>；   ② ⭐ <strong>升级是"条件满足后自动发生"，不是付费解锁</strong> —— 五条条件   （技能劳动力 / 基础设施 / 交通 / 产业链 / 地价可承受），   ⚠ <strong>第 1 条把教育和产业接上了</strong>（没高技能人口就升不上去）；   ⚠ <strong>第 5 条（租金 ≤ 毛利 30 %）制造"腾笼换鸟"</strong>；   ③ <strong>招商补贴边际递减</strong>（×2 只增 ~30 %），<strong>不达标补贴再多也不来</strong>——   解释真实开发区为什么有的活有的死；   ④ <strong>企业迁出有 12–24 月缓冲期</strong>（符合预警原则）；   ⑤ <strong>技能档只能由教育产生</strong>，本体不做大学，用"外部求学回流"近似——   <strong>学区房是短期套利，技能人口是长期税基</strong>。新增 EM14–EM18。</p>
+<ul><li><strong>2026-11-17</strong>：新增 <strong>§二·五 岗位匹配</strong>（补系统间接合的空白）：</li></ul>
+<p>  明确的职责划分 —— <strong>本系统只出"岗位空缺"，撮合在 <code>population</code></strong>；   岗位从建筑来的公式（各类用地密度不同）、<strong>岗位不随人口自动增加</strong>（那正是失业要解决的问题）、   三种岗位消失情况（废弃/枯竭/<strong>技改停产期可预期</strong>）、   ⚠ 以及一个隐藏耦合：<strong>通勤上限 27 个小区反过来限制远郊建厂</strong>（产业新城为什么常是空城）。</p>
+<ul><li><strong>2026-11-16</strong>：首版（B0 交付项之五，AI 起草）。按 R1/R7 + F60/F71/F90 建立：</li></ul>
+<p>  <strong>岗位按用地子类对齐 + 三档技能</strong>、<strong>建材供应链</strong>（三条约束：不做逐车物流 / 滞后一期 / 进口价格调节）、   砂石上游、资源枯竭与沉陷、<strong>减燃料增化工技改（不技改是渐进变难受，不是突然崩）</strong>、10 条验收断言。</p><div class="pager"><a href="design-04-population.html">← 04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a><a href="design-06-finance-land.html">06 · 财政与土地：地价、收储出让、税、债务 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#二-岗位分类-跟用地子类对齐">二、岗位分类（跟用地子类对齐）</a><a class="l2" href="#二-五-岗位匹配-供需怎么对上-2026-11-17-补">二·五、岗位匹配：供需怎么对上（2026-11-17 补）</a><a class="l3" href="#2-5-1-岗位从建筑来">2.5.1 岗位从建筑来</a><a class="l3" href="#2-5-2-岗位消失的三种情况">2.5.2 岗位消失的三种情况</a><a class="l3" href="#2-5-3-通勤上限反过来限制建厂">2.5.3 通勤上限反过来限制建厂</a><a class="l2" href="#三-建材供应链-f60-本系统最复杂的部分">三、建材供应链（F60，本系统最复杂的部分）</a><a class="l3" href="#3-1-链路">3.1 链路</a><a class="l3" href="#3-2-三条约束">3.2 三条约束</a><a class="l3" href="#3-3-砂石-建材的上游-f71-矿石">3.3 砂石：建材的上游（F71 矿石）</a><a class="l2" href="#四-资源开采与技改-f71-f90">四、资源开采与技改（F71 / F90）</a><a class="l3" href="#4-1-资源产出">4.1 资源产出</a><a class="l3" href="#4-2-减燃料增化工技改-f90">4.2 减燃料增化工技改（F90）</a><a class="l2" href="#四-五-产业升级与招商-条件驱动-不是点击解锁-2026-11-18-新增">四·五、产业升级与招商：条件驱动，不是点击解锁（2026-11-18 新增）</a><a class="l3" href="#4-5-1-产业阶梯-六级-不是-高低两档">4.5.1 产业阶梯（六级，不是"高低两档"）</a><a class="l3" href="#4-5-2-升级是-条件满足后自动发生-不是-付费解锁">4.5.2 ⭐ 升级是"条件满足后自动发生"，不是"付费解锁"</a><a class="l4" href="#五条升级条件-全部要满足">五条升级条件（全部要满足）</a><a class="l3" href="#4-5-3-招商-f42-开发区-补贴有用-但不是万能">4.5.3 招商（F42 开发区）：补贴有用，但不是万能</a><a class="l3" href="#4-5-4-企业迁出-和升级对称的另一半">4.5.4 企业迁出：和升级对称的另一半</a><a class="l3" href="#4-5-5-技能档怎么产生-完整答案在-07-services-三-五">4.5.5 技能档怎么产生：完整答案在 07-services §三·五</a><a class="l3" href="#4-5-6-验收点">4.5.6 验收点</a><a class="l2" href="#五-数据契约">五、数据契约</a><a class="l3" href="#5-1-结构">5.1 结构</a><a class="l3" href="#5-2-bus-key">5.2 bus key</a><a class="l3" href="#5-3-config-config-sim-employment-json">5.3 config（config/sim/employment.json）</a><a class="l2" href="#六-验收点">六、验收点</a><a class="l2" href="#七-待定">七、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

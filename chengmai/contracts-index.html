@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>契约卡（docs/contracts/） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" class="on" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 数据契约卡</div><h1 id="契约卡-docs-contracts">契约卡（docs/contracts/）</h1>
+<blockquote><strong>用途：让并行的子代理能"接得上"，而不靠互相读聊天记录。</strong><br>一张卡 = 一个系统开工需要知道的全部。开工前读<strong>自己的卡 + 直接上游的卡</strong>，就够动手。</blockquote>
+<hr>
+<h2 id="一-八张卡">一、八张卡</h2>
+<div class="tw"><table><thead><tr><th>系统</th><th>卡</th><th>一句话</th></tr></thead><tbody><tr><td><code>road</code></td><td><a href="road.html">road.md</a></td><td>空间真值的源头：三表 + 围合面 + 可达性（事件驱动）</td></tr><tr><td><code>utility</code></td><td><a href="utility.html">utility.md</a></td><td>市政容量与覆盖，<strong>必须排在 <code>zoning</code> 之前</strong></td></tr><tr><td><code>zoning</code></td><td><a href="zoning.html">zoning.md</a></td><td><code>block_face</code> → parcel → 建筑（日更 + 月汇总）</td></tr><tr><td><code>population</code></td><td><a href="population.html">population.md</a></td><td>人与迁徙，个人全量存、出行交给 <code>traffic</code></td></tr><tr><td><code>employment</code></td><td><a href="employment.html">employment.md</a></td><td>岗位与产能，把人与路连起来</td></tr><tr><td><code>services</code></td><td><a href="services.html">services.md</a></td><td>半径型公共服务（一个标量 + 衰减）</td></tr><tr><td><code>finance</code></td><td><a href="finance.html">finance.md</a></td><td>核心循环引擎：地价 → 卖地 → 建校 → 地价</td></tr><tr><td><code>traffic</code></td><td><a href="traffic.html">traffic.md</a></td><td>流与堵；宏观流量是真值，agent 只是表现</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-三条使用规则">二、三条使用规则</h2>
+<h3 id="1-卡不是真相-是压缩">1. 卡不是真相，是压缩</h3>
+<p>真相在：<code>../design/system-boundaries.md</code> §三（归属与 bus key）、<code>../design/09-core-tick.md</code> §7.4（已实现接口）、 <code>../../config/sim/&amp;lt;系统&amp;gt;.json</code>（参数）。 <strong>卡与文档冲突时以文档为准，并回头修卡</strong>——卡过期比没有卡更坏。</p>
+<h3 id="2-改卡-改契约-先提裁定">2. 改卡 = 改契约 ⇒ 先提裁定</h3>
+<p>任何一条（新增 bus key、改字段、改频率、改降级默认值）都会影响下游。 流程：提 <code>../decisions.md</code> → 拍板 → 改卡 → 改文档 → <strong>通知所有下游的卡</strong> → 再动代码。</p>
+<p>⚠ <strong>禁止"先加个字段，以后再补文档"</strong>——这正是 v1 的做法。</p>
+<h3 id="3-并行时只读卡-不读别人的代码">3. 并行时只读卡，不读别人的代码</h3>
+<p>子代理 A 不需要知道 B 怎么实现，只需要知道 <strong>B 会写哪些 key、什么时候写、缺数据时给什么</strong>。 这就是"上下文互通"的正确形态：<strong>共享契约，不共享对话</strong>。</p>
+<hr>
+<h2 id="三-开工前的四件套-每个子代理都要做">三、开工前的四件套（每个子代理都要做）</h2>
+<pre class="code"><code>1. 本系统的卡               ← docs/contracts/&lt;自己&gt;.md
+2. 直接上游的卡（1–2 张）    ← 知道"我读的东西什么时候写、缺了给什么"
+3. 09 §7.4 已实现接口        ← 别重造 Clock / Bus / Sim / SaveGame / Check
+4. config/sim/&lt;自己&gt;.json    ← 参数从这里读，不写魔法数字（L5）</code></pre>
+<p>上游关系（读谁）：</p>
+<pre class="code"><code>road ─→ utility ─→ zoning ─→ population ─→ employment ─→ services ─→ finance ─→ traffic
+                     ↑            ↑              ↑             ↑            ↑
+                     └── 反向读一律取上月值（R24），用 Bus.TryGetLagged()</code></pre>
+<hr>
+<h2 id="四-维护">四、维护</h2>
+<ul><li>卡由<strong>拥有者</strong>维护（谁改契约谁改卡）。</li><li>每次 <code>decisions.md</code> 新增涉及系统归属/接口的裁定，<strong>同一次提交里</strong>改对应卡。</li><li>2026-11-22 首版 8 张，内容对应 R24–R32 之后的状态。</li></ul><div class="pager"><a href="contracts-finance.html">← 契约卡 · 财政与土地（finance）</a><a href="contracts-population.html">契约卡 · 人口与家庭（population） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-八张卡">一、八张卡</a><a class="l2" href="#二-三条使用规则">二、三条使用规则</a><a class="l3" href="#1-卡不是真相-是压缩">1. 卡不是真相，是压缩</a><a class="l3" href="#2-改卡-改契约-先提裁定">2. 改卡 = 改契约 ⇒ 先提裁定</a><a class="l3" href="#3-并行时只读卡-不读别人的代码">3. 并行时只读卡，不读别人的代码</a><a class="l2" href="#三-开工前的四件套-每个子代理都要做">三、开工前的四件套（每个子代理都要做）</a><a class="l2" href="#四-维护">四、维护</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

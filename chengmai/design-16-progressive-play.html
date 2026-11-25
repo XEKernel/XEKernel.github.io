@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>16 · 渐进可玩：按城市等级切片，边做边玩 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" class="on" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 计划与纪律</div><h1 id="16-渐进可玩-按城市等级切片-边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</h1>
+<blockquote>建立于 2026-11-24。开发者原话：<br>&gt; 「边规划边做游戏边玩，比如我们现在只建模村庄有关的模型，然后继续开发游戏，把村庄模拟的逻辑跑起来，<br>&gt; 此时就需要存档系统了。然后后面继续做镇、县、市，建筑越来越现代化，等级也越高。<br>&gt; 然后我们也玩这个初始存档来测试游戏，正好后续做宣传片就用这个存档来拍。」<br>本文把这个想法落成可执行的方案，并<strong>补一个它现在缺的前提</strong>（存档迁移链）。<br>与 <code>plan.md</code> 的关系：<strong>不推翻 B 批次，加一层横向切片</strong>（见 §六）。</blockquote>
+<hr>
+<h2 id="一-先肯定-这个想法解决的是最难修的问题">一、先肯定：这个想法解决的是最难修的问题</h2>
+<p>「一局玩起来没意思」这类问题，<strong>只有真玩过才知道</strong>，而且是后期最贵的返工。 v1 的失败里有一半是"14 条愿景 0 条落地"，本质就是<strong>从没玩过</strong>。</p>
+<p>这个方案还有三个实际收益：</p>
+<div class="tw"><table><thead><tr><th>收益</th><th>说明</th></tr></thead><tbody><tr><td><strong>早发现"不好玩"</strong></td><td>村庄阶段就能验"建第一栋房、看到第一户人搬进来"这件事爽不爽</td></tr><tr><td><strong>宣传片素材</strong></td><td>确实需要一个长期存档。临时拼的档拍出来是"演示"，不是"我的城市"</td></tr><tr><td><strong>资产按等级分批</strong></td><td>与 <code>15-model-inventory</code> 的 P0/P1 排期天然吻合，不用另排</td></tr><tr><td><strong>单人开发的心理支撑</strong></td><td>每 2–3 周都有"能玩的"，比连做 4 个月看不到东西强得多</td></tr></tbody></table></div>
+<p>⇒ <strong>方向采纳。</strong> 但下面三件事必须先补，否则这个方案会在第二片就崩。</p>
+<hr>
+<h2 id="二-前提一-存档迁移链-这是硬前提-不是优化项">二、⚠ 前提一：存档迁移链（<strong>这是硬前提，不是优化项</strong>）</h2>
+<h3 id="2-1-问题">2.1 问题</h3>
+<p>方案的核心是「<strong>同一个存档从村庄玩到市</strong>」。这要求存档<strong>跨十几个版本存活</strong>。</p>
+<p>但开发期必然改数据结构：parcel 切分规则（<code>03</code> §3.7）、人口三层（<code>04</code>）、OD 矩阵（<code>08</code>）、 限制条件（<code>11</code>）……<strong>每改一次，旧档就读不了</strong>。</p>
+<p>现有文档只有 <code>01-playable-definition</code> 一句「格式带 <code>FORMAT_VERSION</code>」，<strong>没有迁移框架</strong>。 这是缺口，而且是致命的：<strong>没有它，V0 的存档到 V1 就打不开了，宣传片方案作废。</strong></p>
+<h3 id="2-2-做法-b1-就要落地-不能等-需要了再做">2.2 做法（B1 就要落地，不能等"需要了再做"）</h3>
+<div class="tw"><table><thead><tr><th>组件</th><th>要求</th></tr></thead><tbody><tr><td><code>FORMAT_VERSION</code></td><td><strong>单个整数</strong>，任何影响存档结构的改动 <strong>+1</strong>（不许跳号）</td></tr><tr><td>迁移注册表</td><td><code>migrations: {1→2: fn, 2→3: fn, …}</code>，<strong>只写增量</strong>，不写"全量重写"</td></tr><tr><td>读档流程</td><td>读到 v_old → 链式升级到 current → 再交给系统恢复</td></tr><tr><td>前向兼容</td><td>存档版本 <strong>&gt; 当前版本</strong>时<strong>拒绝并明确提示</strong>（不要试图猜）</td></tr><tr><td>回归</td><td>⭐ <strong>每次改完必跑：用最老的一份 V0 档，在当前版本打开并跑 100 游戏日</strong></td></tr></tbody></table></div>
+<h3 id="2-3-必须接受的取舍-要你拍">2.3 必须接受的取舍（要你拍）</h3>
+<p>迁移<strong>只保证"能打开、不崩、能继续玩"</strong>，<strong>不保证数值完全等价</strong>。</p>
+<p>理由很实在：V0 期的人口增长公式和 V3 期不一样，存档里存的是"当前人口"，迁移后没法回溯成新公式下的结果。 强行要求等价，等于要求"公式从第一天就不许改"——那这个项目做不完。</p>
+<p>⚠ 所以：<strong>宣传片用的那条档，会在每次迁移后"略微变成另一座城"，但它的历史（里程碑、已建成的楼）保留。</strong> 这一点先讲清楚，免得拍到一半发现"和上次不一样了"。</p>
+<h3 id="2-4-与既有断言的关系">2.4 与既有断言的关系</h3>
+<p><code>01-playable-definition</code> 的 <strong>A9</strong>（存档→退出→读档，人口/财政/地价三项完全一致）<strong>仍然有效</strong>—— 它验的是「同一版本内往返一致」，与跨版本迁移是两件事，<strong>不要混</strong>。</p>
+<hr>
+<h2 id="三-前提二-等级闸门-防止静默出错">三、前提二：等级闸门（防止静默出错）</h2>
+<h3 id="3-1-问题">3.1 问题</h3>
+<p>人口长过 3000 就进镇。但如果镇级的系统/资产还没做，会发生什么？</p>
+<p><strong>最坏的情况是：不报错，继续长出一堆"参数对但画面错"的楼。</strong> 这会污染存档——等你做完镇级回头看，这条档的历史已经不可信了。</p>
+<h3 id="3-2-做法">3.2 做法</h3>
+<p><code>config/sim/city_tier.json</code>：</p>
+<pre class="code" data-lang="json"><code>{
+  "tiers": [
+    { "id": "village", "name": "村庄", "pop_max": 3000,   "implemented": true  },
+    { "id": "town",    "name": "镇",   "pop_max": 30000,  "implemented": false, "note": "V1 未开工" },
+    { "id": "county",  "name": "县",   "pop_max": 300000, "implemented": false, "note": "V2 未开工" },
+    { "id": "city",    "name": "市",   "pop_max": null,   "implemented": false, "note": "V3 未开工" }
+  ]
+}</code></pre>
+<p>行为：</p>
+<div class="tw"><table><thead><tr><th>情况</th><th>表现</th></tr></thead><tbody><tr><td>人口逼近阈值且下一级未实现</td><td><strong>提前 10% 提示一次</strong>（"这座城快装不下了"），不是到点才说</td></tr><tr><td>到达阈值且下一级未实现</td><td><strong>限制在阈值上限</strong>，并明确告知"镇级内容未实现"；<strong>不许静默继续涨</strong></td></tr><tr><td>下一级已实现</td><td>正常升级，出里程碑</td></tr></tbody></table></div>
+<p>⚠ <strong>这不是临时脚手架，是正式功能</strong>：正式版里如果玩家用 Mod 缩小地图，也会撞到这个闸门。</p>
+<hr>
+<h2 id="四-前提三-v0-不省工作量-只省-深度">四、前提三：V0 不省工作量，只省"深度"</h2>
+<h3 id="4-1-容易误解的地方">4.1 容易误解的地方</h3>
+<p>「只做村庄」听起来像"少做几个系统"。实际不是——</p>
+<p><strong>村庄要能玩，需要：</strong></p>
+<div class="tw"><table><thead><tr><th>需要</th><th>来自哪批</th><th>V0 的深度</th></tr></thead><tbody><tr><td>时间推进（日/月/年）</td><td>B1 <code>clock</code></td><td><strong>完整</strong>（R13/R14 的时间尺度不能浅）</td></tr><tr><td>修路（能画，能围合出地块）</td><td>B2 <code>road</code></td><td>只做<strong>直路 + 简单曲线 + 村道宽度</strong>；不做高架/立交/桥</td></tr><tr><td>地块与分区（独院）</td><td>B3 <code>zoning</code></td><td>只做<strong>独院农房一种原型</strong> + 沿街自建</td></tr><tr><td>人口（家庭、迁入迁出）</td><td>B4 <code>population</code></td><td>完整（这是"活了"的核心，不能浅）</td></tr><tr><td>财政（税收、支出、破产）</td><td>B6a</td><td><strong>最小可用</strong>：人头税 + 建设支出</td></tr><tr><td>服务（一个就够）</td><td>B6a</td><td>只要<strong>小学</strong>（或村委会）一项，证明服务机制通</td></tr><tr><td>存档</td><td>B1 <code>save</code></td><td><strong>完整 + 迁移链</strong>（见 §二）</td></tr></tbody></table></div>
+<p>⇒ <strong>V0 = B1 + B2(浅) + B3(浅) + B4(全) + B6a(浅) + 存档(全)</strong>。 不是"少做"，是<strong>每条链路都先打通一遍</strong>。</p>
+<h3 id="4-2-哪些能浅-哪些绝对不能浅">4.2 ⭐ 哪些能浅、哪些绝对不能浅</h3>
+<p><strong>这条是防止"快速做村庄"变成"快速挖坑"的关键。</strong></p>
+<div class="tw"><table><thead><tr><th>类别</th><th>项目</th><th>判断</th></tr></thead><tbody><tr><td>❌ <strong>绝对不能浅</strong></td><td>parcel 数据结构（<code>03</code> §3.7 七条硬规则）、Tick 顺序（<code>09</code>）、bus 契约（宪法 L3）、存档格式与迁移</td><td><strong>一改就全线返工</strong>。B2 是全项目最关键一批，不能为"快"压缩</td></tr><tr><td>🟡 可以浅</td><td>路网类型（只直路+曲线）、建筑原型（只独院）、服务种类（只小学）、UI 面板（只 8 个）</td><td>加类型不用改架构</td></tr><tr><td>✅ 可以先不做</td><td>地铁、高架、桥、开发区、超高层、文保、DLC 池、环境（污染/季节）</td><td>与 V0 无依赖关系</td></tr></tbody></table></div>
+<p>⚠ <strong>一句话判据</strong>：<strong>"以后加一个类型"可以浅；"以后要改数据形状"绝对不能浅。</strong></p>
+<hr>
+<h2 id="五-四个切片-v0-v3">五、四个切片（V0–V3）</h2>
+<h3 id="5-1-定义">5.1 定义</h3>
+<div class="tw"><table><thead><tr><th>切片</th><th>城市形态</th><th>人口</th><th>必须有的</th><th>明确不做</th></tr></thead><tbody><tr><td><strong>V0 村庄</strong></td><td>独院 + 村道 + 田</td><td>&lt; 3000</td><td>独院农房、村道、村委会/小学、水井（供水）、人头税</td><td>一切城市设施</td></tr><tr><td><strong>V1 镇</strong></td><td>沿街自建 + 十字街</td><td>3000–3 万</td><td>沿街自建（底商上住）、镇区路网、初中+小学、卫生院、菜市场、镇政府</td><td>高架、地铁、高层（&gt;6 层）</td></tr><tr><td><strong>V2 县</strong></td><td>6 层为主 + 老单位大院</td><td>3 万–30 万</td><td>板楼、<strong>县城限高 18 层</strong>、公交+站台、县医院、行政中心、工业区（M1/M2）</td><td>地铁、CBD、超高层</td></tr><tr><td><strong>V3 市</strong></td><td>高层 + 高架 + 地铁</td><td>&gt; 30 万</td><td>高层住宅、写字楼、高架、地铁、CBD、M3/M4 工业</td><td>都市圈、DLC 池</td></tr></tbody></table></div>
+<p>⚠ 阈值来自 R11 与 <code>03-zoning</code>（<code>county_height_cap: 18</code> 是 2021 县城限高）。</p>
+<h3 id="5-2-时间预算-按-r14-的尺度算-不是估的">5.2 时间预算（按 R14 的尺度算，不是估的）</h3>
+<p>R14：<strong>1 模拟日 = 3 秒 @1x</strong>，1 年 ≈ 1095 秒 ≈ <strong>18 分钟 @1x / 6 分钟 @3x</strong>。</p>
+<div class="tw"><table><thead><tr><th>段</th><th>人口</th><th>年增长假设</th><th>需要年数</th><th>@3x 耗时</th></tr></thead><tbody><tr><td>起步 → V0 上限</td><td>1000 → 3000</td><td>25%</td><td>~5 年</td><td><strong>~30 分钟</strong></td></tr><tr><td>V1</td><td>3000 → 3 万</td><td>25%</td><td>~10 年</td><td>~1 小时</td></tr><tr><td>V2</td><td>3 万 → 30 万</td><td>20%</td><td>~13 年</td><td>~1.3 小时</td></tr><tr><td>V3</td><td>30 万 → 100 万</td><td>12%</td><td>~10 年</td><td>~1 小时</td></tr></tbody></table></div>
+<p>⇒ <strong>从空白到 100 万人口，@3x 约 4 小时</strong>。这个节奏对"边玩边测"是合适的： <strong>每片的可玩时长在 30 分钟 – 1.5 小时之间</strong>，一次测试刚好一个晚上。</p>
+<p>⚠ 增长假设是<strong>占位值</strong>，实际由 <code>04-population</code> 的拉力/推力公式决定，B4 之后要重算。</p>
+<h3 id="5-3-每片的验收-三条-缺一不算">5.3 每片的验收（三条，缺一不算）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>验收</th><th>判据</th></tr></thead><tbody><tr><td><strong>P-1 能玩</strong></td><td>连续玩 <strong>≥ 该片预算时长</strong>，不崩、不卡死、无报错</td><td>录屏 + 日志无 error</td></tr><tr><td><strong>P-2 能赚</strong></td><td>财政能由负转正且能持续（说明循环闭合）</td><td>面板数值可复核</td></tr><tr><td><strong>P-3 能升</strong></td><td><strong>该片存档能在下一片版本打开并继续跑 100 游戏日</strong></td><td>迁移链实测</td></tr></tbody></table></div>
+<p>⚠ <strong>P-3 是这个方案的生命线</strong>。前两片过了 P-1/P-2 但 P-3 不过，等于整个方案作废。</p>
+<h3 id="5-4-每片结束时必须做-回填">5.4 每片结束时必须做"回填"</h3>
+<p>切片法的最大风险是<strong>深度差越拉越大</strong>：V0 的临时实现一直堆着，到 V3 已经没人敢动。</p>
+<p>⇒ 每片收尾做一次<strong>回填</strong>：把该片"为快而浅"的实现，换成正式实现，<strong>不是往上堆功能</strong>。</p>
+<div class="tw"><table><thead><tr><th>例子</th><th>V0 的做法</th><th>V1 回填</th></tr></thead><tbody><tr><td>路网</td><td>只支持直路</td><td>补曲线 + 围合面生成，并验 V0 存档里的路还能编辑</td></tr><tr><td>服务</td><td>只有小学</td><td>补卫生院/菜市场，<strong>同时验旧档的学校还在</strong></td></tr><tr><td>UI</td><td>只开 8 个面板</td><td>加到 16 个，<strong>布局配置驱动</strong>（不是改代码）</td></tr></tbody></table></div>
+<p>⚠ <strong>回填的顺序</strong>：先回填"数据形状"的东西，再回填"表现"的东西。反了会返工两次。</p>
+<hr>
+<h2 id="六-与既有-b-批次的关系-不推翻-加一层">六、与既有 B 批次的关系（不推翻，加一层）</h2>
+<h3 id="6-1-两层映射">6.1 两层映射</h3>
+<pre class="code"><code>B 批次 = 能力批次（纵向：每批做完一个系统）
+V 切片 = 可玩里程碑（横向：每片穿越所有系统，但每条都浅）
+
+V0 通过 = B1 ✅ / B2 达到 V0 深度 / B3 达到 V0 深度 / B4 完整 / B6a 最小 / 存档带迁移链</code></pre>
+<p><strong>B 批次不取消。</strong> 取消会导致"系统做到一半就切走"，那正是 v1 的病。</p>
+<h3 id="6-2-已实现的进度落在哪">6.2 已实现的进度落在哪</h3>
+<div class="tw"><table><thead><tr><th>已完成</th><th>落在哪个切片</th></tr></thead><tbody><tr><td>B0 立法 ✅</td><td>全部（前提）</td></tr><tr><td>B1 骨架（core 5 文件、sim 24 桩、UI 三页 + HUD 新布局、三配置全接线）</td><td><strong>V0 的壳</strong>（还差 clock 真跑 + 存档 + 相机地形）</td></tr><tr><td>第一批 8 个模型</td><td>V0 用到 4 个（<code>vlg_court</code> / <code>bus_stop</code> / 后续 <code>shop_street</code> V1 用 / <code>factory</code> V1 用）</td></tr><tr><td>第二批 16 个（道路车辆标识）</td><td>V0 只用 <code>rd_*</code> 里最简的 + 车辆可先不做（村庄没车流）</td></tr></tbody></table></div>
+<p>⚠ 这说明一件事：<strong>第二批那 16 个里有一半 V0 用不上</strong>（高架、拱桥、隔音屏、公交、信号灯）。 但<strong>不用改计划</strong>——它们属于 V1/V2，先做出来不亏（这是"提前买料"，不是"提前施工"）。</p>
+<hr>
+<h2 id="七-必须承认的三个代价">七、必须承认的三个代价</h2>
+<div class="tw"><table><thead><tr><th>代价</th><th>说明</th><th>缓解</th></tr></thead><tbody><tr><td><strong>不会更快</strong></td><td>每片都要打通全链路，比"纵向做深一个系统"慢</td><td>换来的是"每 3 周能看到东西"，以及早发现不好玩</td></tr><tr><td><strong>会返工</strong></td><td>V0 的 UI/数值到 V3 要改</td><td>返工集中在<strong>表现层</strong>（便宜）；数据层靠 §4.2 的"绝不浅"保住</td></tr><tr><td><strong>深度差风险</strong></td><td>各系统深度不一致，越到后面越难收</td><td>§5.4 的"每片回填"+ §4.2 的红线</td></tr></tbody></table></div>
+<p>⚠ 还有一个不易察觉的代价：<strong>测试存档会被"玩坏"</strong>。 开发期你会用它试各种操作，某些操作会让城陷入不可逆的困境（比如拆错一片路网）。 ⇒ <strong>从 V0 起就做"分支存档"</strong>：主档（干净、给宣传片用）+ 试验档（随便玩）。这条成本极低，别省。</p>
+<hr>
+<h2 id="八-待你拍-三项">八、待你拍（三项）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>事项</th><th>我的建议</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>V0「能玩」的定义</td><td><strong>能连续玩 30 分钟不出错 + 财政由负转正 + 人口能长到 3000 并触发闸门提示</strong>。不要求"好玩"，只要求"循环闭合"</td></tr><tr><td><strong>2</strong></td><td>存档迁移的容忍度</td><td><strong>接受"能打开但不保证数值等价"</strong>。否则等于要求公式第一天就不许改，项目做不完</td></tr><tr><td><strong>3</strong></td><td>每片的资产范围</td><td><strong>V0 只做村庄相关 4 类</strong>（独院/村道/村委会/水井），城市设施等切片。现有 8+16 个资产里 V0 用不到的先留着</td></tr></tbody></table></div>
+<p>⚠ 第 2 项最关键。<strong>你不接受这个取舍，整个方案就不成立</strong>——因为"一个存档玩到底"必然跨版本。</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-24</strong>：首版。起因：开发者提出「按城市等级边做边玩，用同一存档贯穿并拍宣传片」。</li></ul>
+<p>  采纳方向，补三个前提：<strong>存档迁移链（硬前提，B1 就要落地）</strong>、<strong>等级闸门（防静默出错污染存档）</strong>、   <strong>V0 不省工作量只省深度（含"能浅/绝不能浅"判据）</strong>。   定 V0–V3 四片、按 R14 算出各片 30 分钟–1.5 小时的预算、   验收 P-1/P-2/<strong>P-3（存档能升到下一片，生命线）</strong>、每片结尾必须"回填"。   明确 B 批次不取消（V 切片是穿越 B 批次的横切），以及三个代价（不会更快/会返工/深度差）。</p><div class="pager"><a href="assets-batch-02.html">← 第二批模型清单与提示词（道路 / 车辆 / 标识）</a><a href="design-19-tradeoffs.html">19 · 取舍登记册：性能 vs 现实 vs 效果 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-先肯定-这个想法解决的是最难修的问题">一、先肯定：这个想法解决的是最难修的问题</a><a class="l2" href="#二-前提一-存档迁移链-这是硬前提-不是优化项">二、⚠ 前提一：存档迁移链（这是硬前提，不是优化项）</a><a class="l3" href="#2-1-问题">2.1 问题</a><a class="l3" href="#2-2-做法-b1-就要落地-不能等-需要了再做">2.2 做法（B1 就要落地，不能等"需要了再做"）</a><a class="l3" href="#2-3-必须接受的取舍-要你拍">2.3 必须接受的取舍（要你拍）</a><a class="l3" href="#2-4-与既有断言的关系">2.4 与既有断言的关系</a><a class="l2" href="#三-前提二-等级闸门-防止静默出错">三、前提二：等级闸门（防止静默出错）</a><a class="l3" href="#3-1-问题">3.1 问题</a><a class="l3" href="#3-2-做法">3.2 做法</a><a class="l2" href="#四-前提三-v0-不省工作量-只省-深度">四、前提三：V0 不省工作量，只省"深度"</a><a class="l3" href="#4-1-容易误解的地方">4.1 容易误解的地方</a><a class="l3" href="#4-2-哪些能浅-哪些绝对不能浅">4.2 ⭐ 哪些能浅、哪些绝对不能浅</a><a class="l2" href="#五-四个切片-v0-v3">五、四个切片（V0–V3）</a><a class="l3" href="#5-1-定义">5.1 定义</a><a class="l3" href="#5-2-时间预算-按-r14-的尺度算-不是估的">5.2 时间预算（按 R14 的尺度算，不是估的）</a><a class="l3" href="#5-3-每片的验收-三条-缺一不算">5.3 每片的验收（三条，缺一不算）</a><a class="l3" href="#5-4-每片结束时必须做-回填">5.4 每片结束时必须做"回填"</a><a class="l2" href="#六-与既有-b-批次的关系-不推翻-加一层">六、与既有 B 批次的关系（不推翻，加一层）</a><a class="l3" href="#6-1-两层映射">6.1 两层映射</a><a class="l3" href="#6-2-已实现的进度落在哪">6.2 已实现的进度落在哪</a><a class="l2" href="#七-必须承认的三个代价">七、必须承认的三个代价</a><a class="l2" href="#八-待你拍-三项">八、待你拍（三项）</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

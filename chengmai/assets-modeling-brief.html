@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>建模组工作总纲（2026-11-24 重写） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" class="on" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 资产与建模</div><h1 id="建模组工作总纲-2026-11-24-重写">建模组工作总纲（2026-11-24 重写）</h1>
+<blockquote>🅰 <strong>本文是「规则总纲」</strong>（提示词模板、负向词库、翻车清单）——给建模组<strong>边做边查</strong>。<br>🅱 <strong>要「一次性粘给建模 AI」的总指令，在 <code>docs/prompts/for-modeling-ai.md</code></strong>。<br>⚠ 不要拿本文整篇去当 prompt：它太长，且含大量"为什么"，粘过去会稀释重点。</blockquote>
+<blockquote><strong>为什么重写</strong>：第一批 8 个模型技术项全过（槽名/单体/降级都对），但开发者一看就说<br>「像动画片里面的一样」，要求「几乎要跟现实的一样」。<br>旧版提示词有三个病，<strong>只改文案治不好</strong>：<br>① 写着<code>【相机】等轴测视角，浅灰底，无环境</code> —— 这条本身就在要求<strong>无光照出图</strong>；<br>② <code>【材质】白瓷砖+水泥抹灰</code> —— 只给材料名，<strong>没给 PBR 数值、没要求法线</strong>；<br>③ <code>【细节】女儿墙压顶、门口台阶</code> —— 只列构件，<strong>不说"多脏、哪里不齐"</strong>。<br>所以这次重写的是<strong>三件事一起</strong>：提示词结构 + 技术要求 + 验收标准。<br>只改其中一件，结果不会变。</blockquote>
+<hr>
+<h2 id="一-这份文件怎么用">一、这份文件怎么用</h2>
+<div class="tw"><table><thead><tr><th>谁</th><th>什么时候读</th></tr></thead><tbody><tr><td>建模组（人或 AI）</td><td><strong>开工前读完整份</strong>，之后每条提示词照 §五 的模板填</td></tr><tr><td>单件规格</td><td>在 <code>batch-01.md</code> / <code>batch-02.md</code> 里，每件一条；<strong>规格 + 本文件的模板 = 可交付</strong></td></tr><tr><td>写实判据</td><td><code>realism-spec.md</code>（本文件是它的"给建模组的操作版"，不重复硬指标细节）</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-先定路线-程序化脚本-vs-生成式-ai">二、⚠ 先定路线：程序化脚本 vs 生成式 AI</h2>
+<p><strong>这两条路线的"提示词"含义完全不同，走错等于白做。</strong></p>
+<div class="tw"><table><thead><tr><th></th><th><strong>路线 A 程序化脚本</strong>（第一批走的是这条）</th><th><strong>路线 B 生成式 AI</strong></th></tr></thead><tbody><tr><td>谁执行</td><td>Blender <code>bmesh</code> 脚本（<code>tools/blender/</code>）</td><td>图像/3D 生成模型（Tripo / Hunyuan3D / Rodin 等）</td></tr><tr><td>"提示词"是什么</td><td><strong>规格说明书</strong>：脚本作者照着写代码</td><td><strong>prompt</strong>：直接喂给模型</td></tr><tr><td>写实化关键动作</td><td>① 材质节点里加 <strong>Noise/Voronoi 污渍遮罩</strong>&lt;br&gt;② <strong>烘焙 normal map</strong>（从位移/高度图烘）&lt;br&gt;③ 几何加<strong>偏移噪声</strong>（Displace 小强度）&lt;br&gt;④ 材质按 <code>matlib</code> 取参数，<strong>不共用</strong></td><td>① prompt 里写<strong>物理事实</strong>（哪脏、多深）&lt;br&gt;② 必须出 <strong>normal + ORM</strong>（多数生成器不出，要后处理）&lt;br&gt;③ 拓扑要清理（生成网格很脏）</td></tr><tr><td>可控性</td><td>高（参数化、可复现、无版权风险）</td><td>低（风格漂移、拓扑烂、不可参数化）</td></tr><tr><td>238 类的可行性</td><td>✅ 高</td><td>⚠ 只适合少数地标</td></tr></tbody></table></div>
+<h3 id="2-1-我的判断-不是建议-是结论">2.1 我的判断（不是建议，是结论）</h3>
+<ul><li><strong>绝大多数建筑走 A</strong>，因为要 238 类、要参数化（层数/开间变）、要无版权风险。</li><li><strong>B 只用在 3–5 个地标</strong>（高铁站、寺庙、体育场），因为那些值得单独精修。</li><li>⚠ <strong>不管走哪条，"必须交 normal + ORM"这条不变</strong>。</li></ul>
+<p>  第一批之所以像动画片，根因就是<strong>一！张！都！没！有</strong>——这不是提示词问题，是交付契约缺项。</p>
+<h3 id="2-2-这条要开发者拍">2.2 这条要开发者拍</h3>
+<p>见 <code>docs/NEXT.md</code> §六 第 4 项。在拍之前，<strong>两条路线的提示词都按本文件写</strong>（结构是通用的）。</p>
+<hr>
+<h2 id="三-写实的三个硬指标-每条提示词必须体现">三、写实的三个硬指标（每条提示词必须体现）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>指标</th><th>一句话</th><th>提示词里怎么写</th></tr></thead><tbody><tr><td>1</td><td><strong>法线细节</strong></td><td>表面要有微观起伏</td><td>"砖缝、石材颗粒、混凝土气孔、卷帘门波纹，<strong>表面有可见微观起伏</strong>"</td></tr><tr><td>2</td><td><strong>风化与污渍</strong></td><td>材料在被使用</td><td>"檐口下竖向雨水冲刷痕、墙根 0.8 m 内溅泥发暗、金属件锈迹顺水流拉长、朝南面褪色"</td></tr><tr><td>3</td><td><strong>不规整</strong></td><td>真实世界不整齐</td><td>"窗洞轻微错位 ±5 cm、女儿墙高度不一、雨棚歪斜 1–3°、不要严格网格对齐"</td></tr></tbody></table></div>
+<p>⚠ <strong>光写 "photorealistic / 写实风格" 完全无效</strong>——那是风格词，不改变材质与几何。 必须写<strong>物理事实</strong>：有什么、在哪、多深。</p>
+<p>⚠ 住宅类必加第四条：<strong>"空调外机凌乱外挂，位置毫无规律"</strong>。 真实一栋 11 层板楼正面能数出 <strong>30–60 台</strong>，且任意相邻三台不在同一水平线上。</p>
+<h3 id="3-1-但污渍必须有上限-2026-11-25-新增-血的教训">3.1 ⚠ 但污渍<strong>必须有上限</strong>（2026-11-25 新增，血的教训）</h3>
+<blockquote>开发者看过按第一版要求做的模型后说：「有一种<strong>废土风</strong>，倒不写实了，有一种人类灭绝很多年被侵袭的样子。」</blockquote>
+<p><strong>这是从"太干净像动画片"过度修正到"太脏像废墟"。真实城市在两个极端之间。</strong></p>
+<p>所以每个模型必须标一个 <strong>脏污等级 D0–D3</strong>（完整分级、各模型目标值见 <code>realism-spec</code> §5.4）：</p>
+<div class="tw"><table><thead><tr><th>级</th><th>对应</th><th>脏污面积</th><th>一句话</th></tr></thead><tbody><tr><td><strong>D0</strong> 新建</td><td>新区、刚交付</td><td>≤5%</td><td>几乎无痕</td></tr><tr><td><strong>D1</strong> 正常 ★默认</td><td>绝大多数</td><td>8–15%</td><td>轻微雨痕、墙根溅泥</td></tr><tr><td><strong>D2</strong> 老旧</td><td>老城区</td><td>15–25%</td><td>明显雨痕、修补色差、局部锈</td></tr><tr><td><strong>D3</strong> 老旧未整治</td><td>城中村、老厂</td><td>25–35%</td><td>大面积污渍、涂层剥落</td></tr><tr><td>❌ <strong>废弃（禁止）</strong></td><td>—</td><td>&gt;35%</td><td>苔藓覆盖、结构裂缝、玻璃全碎、杂草丛生</td></tr></tbody></table></div>
+<p>⛔ <strong>D3 之上没有 D4。</strong> 再脏就是"废弃"，而本项目<strong>不模拟废弃城市</strong>。 ⛔ <strong>结构破损永远不许</strong>——一栋楼可以旧，但不能塌。</p>
+<p>⚠ <strong>提示词要同时写"不要什么"</strong>：只写"哪里有污渍"会被做到极端。 例：「D2 级：窗下浅色雨痕、墙根溅泥、2–3 处修补色差；<strong>不要锈穿、不要苔藓、不要剥落</strong>」。</p>
+<p>⚠ <strong>中国城市的真实感来自"新旧并存于同一栋楼"</strong>： 临街面 D0/D1（外立面整治过）+ 背面 D2/D3（没人管）。<strong>这比整体做旧更真。</strong></p>
+<hr>
+<h2 id="四-交付契约-2026-11-24-修订-比旧版多了三项">四、交付契约（2026-11-24 修订，<strong>比旧版多了三项</strong>）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>旧要求</th><th><strong>新要求</strong></th></tr></thead><tbody><tr><td>格式</td><td><code>.glb</code></td><td><code>.glb</code>（不变）</td></tr><tr><td>单位 / 朝向 / 轴心</td><td>米 / 朝 −Z / 底面中心</td><td>不变</td></tr><tr><td>单体化</td><td>一 glb 一栋，≤200 m</td><td>不变</td></tr><tr><td>面数</td><td>T1 ≤3 万、T2 ≤8 千</td><td>不变（<strong>余量花在轮廓上</strong>：檐口、女儿墙、阳台进深、屋顶设备）</td></tr><tr><td><strong>贴图</strong></td><td>≤2 张 4096</td><td>⭐ <strong>albedo + normal + ORM 三类都要</strong>；ORM（rough/AO/metal 打包）可 2048</td></tr><tr><td><strong>PBR 参数</strong></td><td>无要求</td><td>⭐ <strong>按材料分别给</strong>（<code>realism-spec</code> §4.2 的表），<strong>不许全类共用一个值</strong></td></tr><tr><td>材质</td><td>≤6 槽，固定名</td><td>不变（<code>body/roof/base/glass/metal/sign</code>）</td></tr><tr><td>主色表</td><td><code>.slots.json</code></td><td>不变（T3 靠它）</td></tr><tr><td><strong>写实预览图</strong></td><td>无</td><td>⭐ <strong><code>checks/&amp;lt;id&amp;gt;_real.png</code></strong>：太阳光 40° + HDRI + AO + ACES + 中性灰底 + <strong>1.8 m 人形参照</strong></td></tr><tr><td><strong>说明文件</strong></td><td>无</td><td>⭐ <strong><code>SOURCE.md</code> 必须写明 normal/ORM 的打包方式</strong>（引擎侧靠它接对）</td></tr></tbody></table></div>
+<h3 id="4-1-为什么-1-8-m-人形参照-是硬要求">4.1 为什么"1.8 m 人形参照"是硬要求</h3>
+<p>第一批的砖看起来有 <strong>1 m 宽</strong>——因为 UV 是按整面墙拉伸的。 贴一张人形剪影进去，<strong>一眼就能看出尺度错没错</strong>（一个人能不能站进一块砖里）。 没有参照，这个错误肉眼很难发现，但会让整座城市"像玩具"。</p>
+<h3 id="4-2-为什么-orm-要打包">4.2 为什么 ORM 要打包</h3>
+<p>glTF 标准：<code>occlusionTexture</code> 与 <code>metallicRoughnessTexture</code> 指向<strong>同一张图</strong>， <strong>R=AO / G=roughness / B=metallic</strong>。分三张也合规，但会多两次采样，且体积更大。</p>
+<hr>
+<h2 id="五-提示词模板-新结构-逐块填">五、提示词模板（新结构，逐块填）</h2>
+<pre class="code"><code>&lt;一段自然语言主体：什么建筑、哪个地区、哪个年代、什么结构、参考什么真实原型&gt;
+
+【体量与尺度】占地/层数/檐高/开间数，带真实参照（"一间 3.3 m"这种）
+【材料与表面】墙面什么材料 + 手感（粗糙/光滑/有肋条）+ 必须有的法线细节
+【风化与污渍】具体位置 + 具体痕迹 + 强度（檐下/墙根/朝南/金属件）
+【不规整】具体哪里不齐，用厘米或角度写（窗洞 ±5 cm、雨棚歪 2°）
+【生活痕迹】具体物件 + 数量 + 随机性（空调 40 台乱挂、防盗窗、晾衣杆、门口杂物）
+【结构必须几何化】窗/门洞/檐口/栏杆必须是实体或独立面，不许用贴图表现
+【光照】晴日上午侧光，明显阴影与墙角暗部（不是等轴测无环境）
+【技术】米 / +Y 向上 / 正面朝 −Z / 轴心在底面中心 / 一 glb 一栋 / 六槽
+【必须交付】albedo + normal + ORM（写明打包方式）/ checks: t1 t3 t5 + real
+【负向】&lt;见 §六&gt;</code></pre>
+<h3 id="5-1-与旧模板的差异-务必对照">5.1 与旧模板的差异（务必对照）</h3>
+<div class="tw"><table><thead><tr><th>块</th><th>旧</th><th>新</th></tr></thead><tbody><tr><td><del>【相机】等轴测视角，浅灰底，无环境</del></td><td>有</td><td>❌ <strong>删除</strong>。改为【光照】"晴日上午侧光，明显阴影"</td></tr><tr><td>【材质】只给材料名</td><td>有</td><td>→ 拆成【材料与表面】+【风化与污渍】</td></tr><tr><td>【细节】列构件</td><td>有</td><td>→ 拆成【不规整】+【生活痕迹】（写"多脏、哪不齐"，不是"有什么"）</td></tr><tr><td>【降级要求】</td><td>有</td><td>✅ <strong>保留</strong>（六槽 + 几何承担结构，T3/T5 靠它）</td></tr><tr><td>新增【必须交付】</td><td>无</td><td>⭐ 写明 normal/ORM 与 <code>_real.png</code></td></tr></tbody></table></div>
+<hr>
+<h2 id="六-负向词库-按类型组合-不要照抄全部">六、负向词库（按类型组合，不要照抄全部）</h2>
+<p><strong>通用</strong>（每条都带）</p>
+<pre class="code"><code>卡通, 动画片, 低多边形感, 塑料质感, 均匀纯色, 过于干净, 完美对称, 严格网格对齐,
+玩具比例, 饱和度过高, 平涂无纹理, 无阴影, 等轴测无环境光, 赛博朋克霓虹</code></pre>
+<p><strong>地域</strong>（防 AI 默认给欧美）</p>
+<pre class="code"><code>欧美郊区住宅, 美式木屋, 日式风格, 欧式尖顶, 罗马柱, 玻璃幕墙塔楼,
+地中海风格, 北欧极简</code></pre>
+<p><strong>类型专属</strong></p>
+<div class="tw"><table><thead><tr><th>类型</th><th>加什么负向</th></tr></thead><tbody><tr><td>住宅</td><td>别墅, 独栋花园, 车库, 草坪, 泳池</td></tr><tr><td>厂房</td><td>圆润玩具感, 透明屋顶, 现代艺术馆</td></tr><tr><td>车辆</td><td>跑车, 加长, 品牌 logo, 打开的车门</td></tr><tr><td>工地</td><td>完工建筑, 干净地面, 无围挡</td></tr></tbody></table></div>
+<hr>
+<h2 id="七-验收-交付前自己先过-不许等别人挑">七、验收（交付前自己先过，不许等别人挑）</h2>
+<h3 id="7-1-脚本-跑一遍-0-fail-才交">7.1 脚本（跑一遍，0 FAIL 才交）</h3>
+<pre class="code" data-lang="bash"><code>python bench/check_assets.py &lt;目录&gt;     # 技术项：槽名/单体/原点/面数/降级图
+python bench/check_realism.py &lt;目录&gt;    # 写实项：normal/ORM/参数区分/玻璃反射/real图</code></pre>
+<h3 id="7-2-人眼六条-脚本查不了-逐条打勾">7.2 人眼六条（脚本查不了，逐条打勾）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>怎么看</th><th>不过的表现</th></tr></thead><tbody><tr><td>V-1</td><td><strong>1.8 m 人形能否站进一块砖</strong></td><td>砖有 1 m 宽</td></tr><tr><td>V-2</td><td>墙根是否比上部暗</td><td>上下一样干净</td></tr><tr><td>V-3</td><td>朝南/朝北是否有褪色差</td><td>四面同色</td></tr><tr><td>V-4</td><td>住宅能否数出 ≥20 台空调</td><td>立面无生活痕迹</td></tr><tr><td>V-5</td><td>玻璃里有没有反射到天空</td><td>玻璃是纯蓝平面</td></tr><tr><td>V-6</td><td><strong>把图缩到 25%，还像建筑吗</strong></td><td>糊成一团色块 = 对比不足</td></tr></tbody></table></div>
+<p>⚠ <strong>V-6 最省时间</strong>：缩小后还认得出材质差异，说明层次够；全是一个色，说明是平涂。</p>
+<h3 id="7-3-一句自检法-旧版就有-仍然有效">7.3 一句自检法（旧版就有，仍然有效）</h3>
+<blockquote><strong>把贴图全去掉、只留分区纯色，还能不能认出这是什么建筑？</strong><br>认不出 → 你在用贴图撑结构 → 重做。</blockquote>
+<hr>
+<h2 id="八-按类型的翻车清单-第一批实测-预判">八、按类型的翻车清单（第一批实测 + 预判）</h2>
+<div class="tw"><table><thead><tr><th>类型</th><th>最常见的翻车</th><th>怎么防</th></tr></thead><tbody><tr><td>村庄独院</td><td>做成欧式小楼 / 省掉院墙 / 平顶</td><td>负向写死"欧式尖顶、别墅、平顶"；院墙必须独立体量</td></tr><tr><td>高层住宅</td><td>立面太干净、空调太少太整齐</td><td>强制"40–60 台，位置随机，任意三台不同高"</td></tr><tr><td>沿街商铺</td><td>做成一栋商业楼贴六个招牌</td><td>六间<strong>高低不齐</strong> + 雨棚高差 + 招牌层层叠加</td></tr><tr><td>厂房</td><td>彩钢板纯蓝平涂</td><td>肋距 0.25 m 必须可辨（法线或几何）</td></tr><tr><td>站台</td><td>太干净</td><td>广告满墙 + 地面污渍 + 玻璃下半脏</td></tr><tr><td>加油站</td><td>地面没油渍</td><td>加油岛必须有深色油斑</td></tr><tr><td>消防站</td><td><strong>红门画成贴图</strong> → T3 消失</td><td>车库门必须<strong>实体凹进去</strong></td></tr><tr><td>工地</td><td>做成完工建筑</td><td>防尘网是实体板 + 塔吊独立落地 + 材料堆场</td></tr><tr><td>车辆</td><td>干净车漆 → 玩具车</td><td>下裙边泥点 + 轮拱溅泥 + 轮毂内侧积灰</td></tr><tr><td>桥梁</td><td>做成整条 500 m</td><td>30 m 标准跨，接缝在 ±X</td></tr></tbody></table></div>
+<hr>
+<h2 id="九-与批次文档的关系">九、与批次文档的关系</h2>
+<div class="tw"><table><thead><tr><th>文件</th><th>内容</th></tr></thead><tbody><tr><td><strong>本文件</strong></td><td>规则与模板（<strong>通用，不变</strong>）</td></tr><tr><td><code>batch-01.md</code></td><td>第一批 8 个（已交付，<strong>待返修</strong>）；提示词已按本文件重写</td></tr><tr><td><code>batch-01-fix.md</code></td><td>第一批返修单（改材质 + 补 L3，不重做几何）</td></tr><tr><td><code>batch-02.md</code></td><td>第二批 16 个（未开工），提示词含<code>【写实】</code>行</td></tr><tr><td><code>realism-spec.md</code></td><td>写实硬指标的<strong>权威出处</strong>（PBR 参数表、物理尺度表、R/V 验收）</td></tr><tr><td><code>agent-plan.md</code></td><td>分包方案（SA-1 材质库 / SA-2 返修 / SA-3 第二批 / SA-4 验收）</td></tr></tbody></table></div>
+<p>⚠ <strong>冲突时以 <code>realism-spec.md</code> 为准</strong>（它是硬指标），本文件是操作版。</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-24</strong>：<strong>全篇重写</strong>。起因：第一批技术项全过但"像动画片"。</li></ul>
+<p>  诊断出旧提示词的三个病（要求无环境光出图 / 材质只给名字 / 细节只列构件），   并明确一个关键前提：<strong>只改提示词治不好，必须同时改交付契约</strong>——   新增三项硬要求（<strong>normal + ORM 贴图</strong> / <strong>按材料分 PBR 参数</strong> / <strong><code>_real.png</code> 含 1.8 m 人形参照</strong>）。   新增 §二 两条路线对照（程序化脚本 vs 生成式 AI，"提示词"含义不同，走错等于白做），   新增 §五 新提示词模板（删【相机】、拆【材质】→【材料与表面】+【风化与污渍】、加【不规整】【生活痕迹】【必须交付】），   新增 §六 分类负向词库、§八 按类型翻车清单。</p><div class="pager"><a href="assets-realism-spec.html">← 写实基线（R-Spec）— 什么是"写实"，怎么验收</a><a href="assets-batch-01.html">第一批模型清单与提示词（交付给建模组） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-这份文件怎么用">一、这份文件怎么用</a><a class="l2" href="#二-先定路线-程序化脚本-vs-生成式-ai">二、⚠ 先定路线：程序化脚本 vs 生成式 AI</a><a class="l3" href="#2-1-我的判断-不是建议-是结论">2.1 我的判断（不是建议，是结论）</a><a class="l3" href="#2-2-这条要开发者拍">2.2 这条要开发者拍</a><a class="l2" href="#三-写实的三个硬指标-每条提示词必须体现">三、写实的三个硬指标（每条提示词必须体现）</a><a class="l3" href="#3-1-但污渍必须有上限-2026-11-25-新增-血的教训">3.1 ⚠ 但污渍必须有上限（2026-11-25 新增，血的教训）</a><a class="l2" href="#四-交付契约-2026-11-24-修订-比旧版多了三项">四、交付契约（2026-11-24 修订，比旧版多了三项）</a><a class="l3" href="#4-1-为什么-1-8-m-人形参照-是硬要求">4.1 为什么"1.8 m 人形参照"是硬要求</a><a class="l3" href="#4-2-为什么-orm-要打包">4.2 为什么 ORM 要打包</a><a class="l2" href="#五-提示词模板-新结构-逐块填">五、提示词模板（新结构，逐块填）</a><a class="l3" href="#5-1-与旧模板的差异-务必对照">5.1 与旧模板的差异（务必对照）</a><a class="l2" href="#六-负向词库-按类型组合-不要照抄全部">六、负向词库（按类型组合，不要照抄全部）</a><a class="l2" href="#七-验收-交付前自己先过-不许等别人挑">七、验收（交付前自己先过，不许等别人挑）</a><a class="l3" href="#7-1-脚本-跑一遍-0-fail-才交">7.1 脚本（跑一遍，0 FAIL 才交）</a><a class="l3" href="#7-2-人眼六条-脚本查不了-逐条打勾">7.2 人眼六条（脚本查不了，逐条打勾）</a><a class="l3" href="#7-3-一句自检法-旧版就有-仍然有效">7.3 一句自检法（旧版就有，仍然有效）</a><a class="l2" href="#八-按类型的翻车清单-第一批实测-预判">八、按类型的翻车清单（第一批实测 + 预判）</a><a class="l2" href="#九-与批次文档的关系">九、与批次文档的关系</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

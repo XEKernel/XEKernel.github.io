@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>06 · 财政与土地：地价、收储出让、税、债务 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" class="on" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="06-财政与土地-地价-收储出让-税-债务">06 · 财政与土地：地价、收储出让、税、债务</h1>
+<blockquote>依据：<code>decisions.md</code> <strong>R7</strong>（R2 完整链条 + 拆迁收储进可玩版）/ <strong>R1</strong>（规模）/ <strong>R14</strong>（时间尺度）。<br>本系统承载<strong>核心循环的一半</strong>（R2），也是胜利条件「不靠卖地、不靠卖资源自持」的判定方。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#二地价一个乘法公式四项因子">二、地价：一个乘法公式，四项因子</a></li><li><a href="#三土地财政完整链条r7-的核心">三、土地财政完整链条（R7 的核心）</a></li><li><a href="#三五流拍与收储流程2026-11-17-补">三·五、流拍与收储流程（2026-11-17 补）</a></li><li><a href="#四收入与支出的完整清单">四、收入与支出的完整清单</a></li><li><a href="#五债务f43土地财政的另一半">五、债务（F43）：土地财政的另一半</a></li><li><a href="#六tax_self_sufficiency胜利条件与评级的共同判据">六、<code>tax_self_sufficiency</code>：胜利条件与评级的共同判据</a></li><li><a href="#七数据契约">七、数据契约</a></li><li><a href="#八验收点">八、验收点</a></li><li><a href="#九待定">九、待定</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td><strong>地价</strong> <code>land_value</code>（R1 可达性 + R3 学区 + 环境的合成）</td><td>可达性（在 <code>road</code>）、学区评分（在 <code>services</code>）</td></tr><tr><td><strong>收储 → 一级开发 → 出让</strong>完整链条（R7）</td><td>建筑生长（在 <code>zoning</code>）</td></tr><tr><td>税（增值税基 / 契税 / 土地增值税）</td><td>个人收入（在 <code>population</code>）</td></tr><tr><td><strong>债务与月供</strong>（F43 城投）</td><td>资源产量（在 <code>employment</code>）</td></tr><tr><td>转移支付（F85）与补贴</td><td>春节施工停工（在 <code>zoning</code>，读 <code>clock</code>）</td></tr><tr><td><strong><code>tax_self_sufficiency</code></strong>（轨二评级与胜利条件）</td><td>评级本身（在 <code>core</code> 年边界）</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-地价-一个乘法公式-四项因子">二、地价：一个乘法公式，四项因子</h2>
+<pre class="code"><code>land_value(parcel) =
+      base(use_code)                  ← 用途基价（R 最低，B 最高，M/A/U 更低）
+    × f_access(accessibility)         ← R1 可达性（幂函数，0.4–1.6 倍）
+    × f_school(school_score)          ← R3 学区（仅 R 类生效，0.8–1.8 倍）
+    × f_env(环境)                     ← 基础版只有绿地率；污染在 DLC1（R27）
+    × f_policy(限购等)                ← 政策旋钮，基础版恒 1.0</code></pre>
+<div class="tw"><table><thead><tr><th>因子</th><th>来源</th><th>范围</th></tr></thead><tbody><tr><td><code>base</code></td><td><code>config</code>，按 <code>use_code</code>（R/B/M/A/U/G）</td><td>差异 5–10 倍</td></tr><tr><td><code>f_access</code></td><td><code>road.accessibility</code>（50 m 栅格）</td><td>0.4–1.6</td></tr><tr><td><code>f_school</code></td><td><code>services.school_score</code>（<code>exp(-dist/500m)</code> 衰减）</td><td>0.8–1.8，<strong>仅 R 类</strong></td></tr><tr><td><code>f_env</code></td><td>绿地率占比</td><td>0.9–1.2</td></tr><tr><td><code>f_policy</code></td><td>政策</td><td>1.0（基础版）</td></tr></tbody></table></div>
+<p>⚠ <strong>刻意用乘法而不是加法</strong>：乘法保证"任何一项为 0 时地价不会变成负的"， 而且因子之间是<strong>放大关系</strong>（好学区 + 高可达性 = 平方级溢价），这正是中国学区房的样子。</p>
+<p>⚠ <strong>系数全部进 <code>config/sim/finance.json</code></strong>（宪法 L5）。</p>
+<hr>
+<h2 id="三-土地财政完整链条-r7-的核心">三、土地财政完整链条（R7 的核心）</h2>
+<pre class="code"><code>① 收储（征地/拆迁）      成本 = 现状建面 × 补偿单价 + 农地补偿
+        ↓                  ⚠ 玩家出血，不是收入（F81 修正）
+② 一级开发               成本 = 通路/通水/通电/平整
+        ↓
+③ 出让（招拍挂）         收入 = 面积 × land_value × 溢价率
+        ↓
+④ 后续税收               房产/增值税基，**持续但很薄**</code></pre>
+<div class="tw"><table><thead><tr><th>阶段</th><th>方向</th><th>备注</th></tr></thead><tbody><tr><td>① 收储</td><td><strong>支出</strong></td><td>有建筑的地块最贵（拆迁）；空地/农地便宜</td></tr><tr><td>② 一级开发</td><td><strong>支出</strong></td><td>没通路通电的地块卖不出价</td></tr><tr><td>③ 出让</td><td><strong>收入</strong></td><td>一次性，<strong>这是玩家早期唯一的"大钱"</strong>（F86）</td></tr><tr><td>④ 税收</td><td><strong>收入</strong></td><td>持续、缓慢，<strong>这才是"自持"的来源</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>A6 断言的全部意义在这里</strong>：如果只有④没有①，卖地永远赚，"只收税必亏"永远不成立。 <strong>收储成本是让这条循环闭合的关键一块。</strong></p>
+<p>⚠ <strong>溢价率</strong> = (成交价 − 底价) ÷ 底价，作为市场热度反馈（不单独做成机制）。</p>
+<hr>
+<h2 id="三-五-流拍与收储流程-2026-11-17-补">三·五、流拍与收储流程（2026-11-17 补）</h2>
+<blockquote>系统间接合的空白：<strong>玩家什么时候能征、征了卖不掉怎么办</strong>。</blockquote>
+<h3 id="3-5-1-收储的前置条件-三条同时满足">3.5.1 收储的前置条件（三条同时满足）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>条件</th></tr></thead><tbody><tr><td>1</td><td>资金够付补偿（不够就拒绝）</td></tr><tr><td>2</td><td>地块在<strong>规划建设范围内</strong>（没规划不能乱征）</td></tr><tr><td>3</td><td><code>E</code> 类基本农田<strong>需要占补平衡</strong>（F39，付出额外代价）</td></tr></tbody></table></div>
+<p>⚠ <strong>第 2 条是防止"乱收储"</strong>：如果没有规划约束，玩家会把全城都征了等涨价， 那就不是规划游戏，是炒地游戏。</p>
+<h3 id="3-5-2-流拍-这是必须做的机制">3.5.2 流拍：这是必须做的机制</h3>
+<p><strong>土地不是想卖就能卖掉的。</strong> 卖不掉有三种原因：</p>
+<div class="tw"><table><thead><tr><th>原因</th><th>判定</th></tr></thead><tbody><tr><td><strong>底价过高</strong></td><td>底价 &gt; <code>land_value</code> × 1.3 → 大概率流拍</td></tr><tr><td><strong>区位太差</strong></td><td><code>accessibility</code> 或 <code>land_value</code> 低于门槛</td></tr><tr><td><strong>市场周期</strong></td><td>全城流拍率连续 2 月 &gt; 40 % → 进入下行周期（推打磨年）</td></tr></tbody></table></div>
+<div class="tw"><table><thead><tr><th>流拍后果</th><th>说明</th></tr></thead><tbody><tr><td>保证金不退</td><td>少量损失</td></tr><tr><td><strong>该地块降价后可再挂</strong></td><td>玩家要判断"降价卖还是等"</td></tr><tr><td><strong>连续流拍 3 次</strong></td><td>该地块自动降为"底价 × 0.8"</td></tr></tbody></table></div>
+<p>⚠ <strong>流拍的机制意义</strong>：它让"卖地"变成一个<strong>有风险的操作</strong>，而不是点击即得钱。 <strong>没有流拍，土地财政就没有紧张感。</strong></p>
+<p>⚠ <strong>但不要让流拍太频繁</strong>：<strong>流拍率目标 15–25 %</strong>。 超过 40 % 玩家会觉得"这游戏在整我"。</p>
+<h3 id="3-5-3-一级开发-不投就别想卖好价">3.5.3 一级开发：不投就别想卖好价</h3>
+<div class="tw"><table><thead><tr><th>投入</th><th>效果</th></tr></thead><tbody><tr><td>通路</td><td><code>accessibility</code> ↑ → <code>land_value</code> ↑</td></tr><tr><td>通水通电</td><td>能否建设（<code>utility</code>）</td></tr><tr><td>场地平整</td><td>基础造价</td></tr></tbody></table></div>
+<p>⚠ <strong>顺序很重要</strong>：<strong>先通路通电，再出让</strong>。反过来（先卖地再配设施）会卖不出价， 这是真实的开发逻辑，也是玩家最容易搞错的顺序。</p>
+<h2 id="四-收入与支出的完整清单">四、收入与支出的完整清单</h2>
+<div class="tw"><table><thead><tr><th>收入</th><th>频率</th><th>说明</th></tr></thead><tbody><tr><td>土地出让金</td><td>事件</td><td>一次性，大额，<strong>不可持续</strong></td></tr><tr><td>增值税基（企业）</td><td>月</td><td>与 <code>employment</code> 产出挂钩</td></tr><tr><td>房产相关税</td><td>月</td><td>与建筑存量、地价挂钩</td></tr><tr><td><strong>资源收入</strong></td><td>月</td><td><strong>不可持续</strong>（枯竭 + 技术淘汰）</td></tr><tr><td><strong>转移支付</strong>（F85）</td><td>月</td><td>保底，随人口规模递减（越大越不能靠它）</td></tr></tbody></table></div>
+<div class="tw"><table><thead><tr><th>支出</th><th>频率</th><th>说明</th></tr></thead><tbody><tr><td>道路 / 市政维护</td><td>月</td><td>与存量设施线性相关</td></tr><tr><td><strong>债务月供</strong>（F43）</td><td>月</td><td>借钱搞基建的代价</td></tr><tr><td>公共服务运营</td><td>月</td><td>学校/医院/公园</td></tr><tr><td>补贴（招商/光伏）</td><td>月</td><td>F44</td></tr><tr><td>收储与拆迁</td><td>事件</td><td>大额</td></tr></tbody></table></div>
+<p>⚠ <strong>维护成本必须真实存在</strong>：只算建设不算维护，玩家会无限铺设施然后永远不亏。 这是 CS 里最容易被忽略、也最容易让经济失衡的一项。</p>
+<hr>
+<h2 id="五-债务-f43-土地财政的另一半">五、债务（F43）：土地财政的另一半</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>借钱</td><td>用于基建投资（修路、建新区、建地铁）</td></tr><tr><td>月供</td><td>本金 / 期限 + 利息，<strong>固定支出</strong></td></tr><tr><td>违约</td><td>余额为负且超过上限 → 破产（失败条件之一）</td></tr><tr><td>上限</td><td>与 <code>tax_self_sufficiency</code> 挂钩：越依赖卖地，可借越少</td></tr></tbody></table></div>
+<p>⚠ <strong>这条设计的用意</strong>：真实的土地财政是"借钱建基建 → 地价涨 → 卖地还债"。 <strong>债务是这个循环的引擎，也是它的炸弹</strong>。玩家必须一直滚下去。</p>
+<hr>
+<h2 id="六-tax_self_sufficiency-胜利条件与评级的共同判据">六、tax_self_sufficiency：胜利条件与评级的共同判据</h2>
+<pre class="code"><code>tax_self_sufficiency = (税收 + 转移支付) / (全部支出)
+                       ⚠ 分子**不含**土地出让金与资源收入</code></pre>
+<div class="tw"><table><thead><tr><th>值</th><th>含义</th></tr></thead><tbody><tr><td>≥ 1.0 连续 12 个月</td><td><strong>达成胜利条件的一半</strong>（配合人口 ≥ 100 万）</td></tr><tr><td>0.7–1.0</td><td>靠卖地/卖资源补缺口 → 不可持续</td></tr><tr><td>&lt; 0.7</td><td>财政危险，随时可能崩</td></tr></tbody></table></div>
+<p>⚠ <strong>这个数字必须能被玩家实时看到</strong>（顶栏或财政面板）， 否则"不靠卖地卖资源"这条规则玩家根本感知不到。</p>
+<hr>
+<h2 id="七-数据契约">七、数据契约</h2>
+<h3 id="7-1-结构">7.1 结构</h3>
+<div class="tw"><table><thead><tr><th>结构</th><th>字段</th><th>上限</th></tr></thead><tbody><tr><td><code>land_value</code></td><td>50 m 栅格 <code>u16</code>（派生量，不进存档）</td><td>100 万格</td></tr><tr><td><code>parcel_price</code></td><td><code>parcel_id</code> → <code>value</code> <code>base</code> <code>premium_rate</code></td><td>200 万</td></tr><tr><td><code>ledger</code></td><td><code>month</code> <code>income_<em></code> <code>expense_</em></code> <code>debt</code> <code>debt_service</code></td><td>12 月滚动</td></tr><tr><td><code>policy</code></td><td><code>purchase_limit(u8)</code> <code>subsidy(u16)</code> <code>tax_rate(u8)</code></td><td>全局</td></tr><tr><td><strong><code>auction</code></strong></td><td><code>parcel_id</code> <code>base_price</code> <code>fail_count(u8)</code> <code>state(u8)</code>（挂牌/成交/流拍/降价）</td><td>≤ 500 在挂</td></tr></tbody></table></div>
+<h3 id="7-2-bus-key">7.2 bus key</h3>
+<div class="tw"><table><thead><tr><th>key</th><th>方向</th><th>内容</th></tr></thead><tbody><tr><td><code>finance.land_value</code></td><td>写</td><td>派生栅格（<code>zoning</code> / <code>population</code> 读）</td></tr><tr><td><code>finance.budget</code></td><td>写</td><td>余额、月收支</td></tr><tr><td><code>finance.debt</code></td><td>写</td><td>债务余额与月供</td></tr><tr><td><code>finance.tax_self_sufficiency</code></td><td>写</td><td><strong>轨二评级 + 胜利条件</strong></td></tr><tr><td><code>road.accessibility</code></td><td>读</td><td>地价的第一因子</td></tr><tr><td><code>services.school_score</code></td><td>读</td><td>学区因子</td></tr><tr><td><code>employment.jobs</code> <code>employment.resource_output</code></td><td>读</td><td>税基与资源收入</td></tr><tr><td><code>population</code></td><td>读</td><td>人口规模（转移支付、税基）</td></tr><tr><td><code>traffic.avg_commute_s</code></td><td>读</td><td>通勤溢价（可达性的补充）</td></tr></tbody></table></div>
+<h3 id="7-3-config-config-sim-finance-json">7.3 config（config/sim/finance.json）</h3>
+<pre class="code" data-lang="json"><code>{
+  "base_price": { "R": 100, "B": 260, "M": 40, "A": 60, "U": 20, "G": 10 },
+  "access_exponent": 0.7,
+  "school_gain": 1.8,
+  "env_gain": 1.2,
+  "acquisition_cost_per_m2": 3500,
+  "development_cost_per_m2": 400,
+  "tax_rate": { "enterprise": 0.06, "property": 0.012 },
+  "maintenance_per_km": 12,
+  "debt": { "term_months": 120, "rate": 0.045, "max_vs_sufficiency": 6.0 },
+  "transfer_base": 8000
+}</code></pre>
+<hr>
+<h2 id="八-验收点">八、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>FN-1</strong></td><td>顶栏财政数字 = <code>ledger</code> 逐项求和（误差 &lt; 0.1 %）</td><td>探针比对</td></tr><tr><td><strong>FN-2</strong></td><td>学校建成 12 游戏月内，周边 500 m 地价 <strong>+10 % 以上</strong>（<strong>必须在学期内测</strong>）</td><td>探针两次采样</td></tr><tr><td><strong>FN-3</strong></td><td><strong>完全禁止卖地 12 个月 → 财政必为负</strong></td><td>探针强制 <code>land_sale=off</code></td></tr><tr><td><strong>FN-4</strong></td><td>收储成本 &gt; 0，且拆迁地块的成本明显高于空地</td><td>探针两类地块对比</td></tr><tr><td><strong>FN-5</strong></td><td><code>tax_self_sufficiency</code> 在<strong>只靠税收</strong>时 &lt; 1，加入卖地后 &gt; 1</td><td>探针两支对照</td></tr><tr><td><strong>FN-6</strong></td><td>债务月供是固定支出，且借钱能短期抬高余额</td><td>探针断点</td></tr><tr><td><strong>FN-7</strong></td><td>维护成本随设施存量线性增长</td><td>探针两组规模对照</td></tr><tr><td><strong>FN-8</strong></td><td>存档 → 读档后 <code>budget</code> <code>debt</code> <code>ledger</code> 完全一致</td><td>探针比对</td></tr><tr><td><strong>FN-9</strong></td><td><code>land_value</code> 不进存档，读档重算结果一致</td><td>探针比对</td></tr><tr><td><strong>FN-10</strong></td><td>学区因子<strong>只作用于 R 类</strong>，M/A/U 地块不受影响</td><td>探针四类对比</td></tr><tr><td><strong>FN-11</strong></td><td><strong>底价 &gt; 地价 × 1.3 时大概率流拍</strong>，且保证金不退</td><td>探针造高价</td></tr><tr><td><strong>FN-12</strong></td><td>连续 3 次流拍后该地块<strong>自动降至底价 × 0.8</strong></td><td>探针</td></tr><tr><td><strong>FN-13</strong></td><td><strong>未通路通水的地块卖不出好价</strong>（与配齐设施的地块对比）</td><td>探针两组</td></tr><tr><td><strong>FN-14</strong></td><td>全城流拍率<strong>长期落在 15–25 %</strong>（不是 0 也不是 50 %）</td><td>基准城市长跑</td></tr></tbody></table></div>
+<p>⚠ <strong>A6 + F1 是核心循环成不成立的唯一证据</strong>：这两条不过， 说明"卖地—建城市—收税"这个循环是假的，游戏只是个画图工具。 ⚠ <strong>A5 必须标明"学期内"</strong>：暑假期间学生 OD 归零，测不出学区效应（<code>12-china-features</code> §3.3）。</p>
+<hr>
+<h2 id="九-待定">九、待定</h2>
+<ol><li><strong>房产税</strong>：中国目前没有普遍征收，要不要做？建议做成"政策旋钮"（打磨年），不当默认收入</li><li><strong>土地增值税</strong>：计算复杂（按增值额累进），建议简化为固定比例</li><li><strong>转移支付随规模递减的曲线</strong>：现在只有 <code>transfer_base</code>，需要一条随人口下降的曲线</li><li><strong>限购/限贷/限价</strong>（F16）→ ⚠ <strong>2026-11-22 更正：在 B7，不是打磨年</strong>（<code>12</code> 台账 F16 = B7；<code>13</code> §十三 的六个政策旋钮含它）。<code>f_policy</code> 字段仍要预留</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-17</strong>：新增 <strong>§三·五 流拍与收储流程</strong>（补系统间接合的空白）：</li></ul>
+<p>  收储三条前置（资金/规划/占补平衡，<strong>防止"乱收储"变成炒地游戏</strong>）、   ⭐ <strong>流拍机制</strong>（底价/区位/周期三种原因，保证金不退、连续 3 次自动降价）——   <strong>没有流拍，土地财政就没有紧张感</strong>；⚠ 但流拍率目标 15–25 %，超 40 % 玩家会觉得被整；   一级开发顺序（<strong>先通路通电再出让</strong>，反过来卖不出价）。</p>
+<ul><li><strong>2026-11-16</strong>：首版（B0 交付项之六，AI 起草）。按 R7/R1/R14 建立：</li></ul>
+<p>  <strong>地价乘法公式</strong>（四因子，乘法保证学区与可达性互相放大）、   <strong>土地财政四阶段</strong>（收储是支出，这是 A6 能成立的关键）、   收入支出完整清单、<strong>债务（引擎也是炸弹）</strong>、   <strong><code>tax_self_sufficiency</code>（分子不含卖地与资源）</strong>、10 条验收断言。</p><div class="pager"><a href="design-05-employment.html">← 05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a><a href="design-07-services.html">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#二-地价-一个乘法公式-四项因子">二、地价：一个乘法公式，四项因子</a><a class="l2" href="#三-土地财政完整链条-r7-的核心">三、土地财政完整链条（R7 的核心）</a><a class="l2" href="#三-五-流拍与收储流程-2026-11-17-补">三·五、流拍与收储流程（2026-11-17 补）</a><a class="l3" href="#3-5-1-收储的前置条件-三条同时满足">3.5.1 收储的前置条件（三条同时满足）</a><a class="l3" href="#3-5-2-流拍-这是必须做的机制">3.5.2 流拍：这是必须做的机制</a><a class="l3" href="#3-5-3-一级开发-不投就别想卖好价">3.5.3 一级开发：不投就别想卖好价</a><a class="l2" href="#四-收入与支出的完整清单">四、收入与支出的完整清单</a><a class="l2" href="#五-债务-f43-土地财政的另一半">五、债务（F43）：土地财政的另一半</a><a class="l2" href="#六-tax_self_sufficiency-胜利条件与评级的共同判据">六、tax_self_sufficiency：胜利条件与评级的共同判据</a><a class="l2" href="#七-数据契约">七、数据契约</a><a class="l3" href="#7-1-结构">7.1 结构</a><a class="l3" href="#7-2-bus-key">7.2 bus key</a><a class="l3" href="#7-3-config-config-sim-finance-json">7.3 config（config/sim/finance.json）</a><a class="l2" href="#八-验收点">八、验收点</a><a class="l2" href="#九-待定">九、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

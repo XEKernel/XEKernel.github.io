@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03 · 分区与生长：用地分类、小区、容积率、生长与废弃 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" class="on" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="03-分区与生长-用地分类-小区-容积率-生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</h1>
+<blockquote>依据：<code>decisions.md</code> <strong>R4</strong>（按国标、分年代）/ <strong>R6</strong>（地块由道路围合）/ <strong>R7</strong>（R1R2R3 全立）/<br><strong>R9</strong>（7 系统）/<strong>R12</strong>（DLC 走子模块）。<br>本篇是「城市长什么样」的真源，也是 <code>02-road</code> 的下游（它给 block face，本篇产 parcel）。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#二用地分类用国标不用-rci-三色">二、用地分类：用国标，不用 RCI 三色</a></li><li><a href="#三小区中国住宅用地的组织方式">三、小区：中国住宅用地的组织方式</a></li><li><a href="#三五地块内部布局五种原型--参数不是随机2026-11-16-新增">三·五、地块内部布局：五种原型 + 参数，不是随机（2026-11-16 新增）</a></li><li><a href="#三六小区不是一堆楼是一个整体工程2026-11-16-新增">三·六、小区不是"一堆楼"，是一个整体工程（2026-11-16 新增）</a></li><li><a href="#三七地块会切分合并建筑会扩建2026-11-23-新增">三·七、地块会切分、合并，建筑会扩建（2026-11-23 新增）</a></li><li><a href="#四容积率密度与限高code_era-驱动">四、容积率、密度与限高（<code>code_era</code> 驱动）</a></li><li><a href="#五生长升级与废弃">五、生长、升级与废弃</a></li><li><a href="#六数据契约">六、数据契约</a></li><li><a href="#七验收点">七、验收点</a></li><li><a href="#八待定">八、待定</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td><strong>用地分类</strong>（按国标，不是 CS 的 RCI 三色）</td><td>路网几何（在 <code>02-road</code>）</td></tr><tr><td>parcel 的细分规则与用途指定</td><td>建筑模型本身（在 <code>10-presentation</code>）</td></tr><tr><td><strong>容积率 / 建筑密度 / 限高</strong> 的取值与校验</td><td>地价公式（在 <code>06-finance-land</code>，R1 载体）</td></tr><tr><td>生长条件、等级 1–5、废弃与拆除</td><td>人口与就业（在 <code>04</code> / <code>05</code>）</td></tr><tr><td><strong>小区的组织方式</strong>（封闭式、围墙、门禁）</td><td>水电气网络的容量（在 <code>07-services</code>，F52）</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-用地分类-用国标-不用-rci-三色">二、用地分类：用国标，不用 RCI 三色</h2>
+<blockquote><strong>这是"中国版"最容易被忽略、性价比最高的一处。</strong><br>CS 只有住宅 / 商业 / 工业三色；中国的城市用地分类有 8 大类。<br>用国标分类，玩家的每一个分区决策都立刻带上中国语境。</blockquote>
+<h3 id="2-1-可玩版取-6-类-gb-50137-2011-的简化">2.1 可玩版取 6 类（GB 50137-2011 的简化）</h3>
+<div class="tw"><table><thead><tr><th>代码</th><th>名称</th><th>可分区</th><th>典型内容</th><th>对应 archetype</th></tr></thead><tbody><tr><td><strong>R</strong></td><td>居住用地</td><td>✅</td><td>独院、多层排楼、高层板楼/塔楼</td><td><code>vlg_court</code> <code>county_walkup</code> <code>city_slab</code> <code>city_tower</code></td></tr><tr><td><strong>B</strong></td><td>商业服务业设施用地</td><td>✅</td><td>底商、商业街、综合体、<strong>写字楼</strong></td><td><code>town_shop</code> <code>city_podium</code> <code>mall</code> <code>cbd_office</code></td></tr><tr><td><strong>M</strong></td><td>工业用地</td><td>✅</td><td>标准厂房、仓储</td><td><code>factory</code>（需补）</td></tr><tr><td><strong>A</strong></td><td>公共管理与公共服务用地</td><td>✅</td><td>学校、医院、行政</td><td><code>school</code>（+ 医院/政府待补）</td></tr><tr><td><strong>U</strong></td><td>市政公用设施用地</td><td>✅</td><td>水厂、变电站、燃气站、污水厂</td><td><code>utility_plant</code>（需补）</td></tr><tr><td><strong>G</strong></td><td>绿地与广场</td><td>✅</td><td>公园、街头绿地、广场</td><td><code>park</code>（需补）</td></tr><tr><td><strong>S</strong></td><td>道路与交通设施</td><td>❌</td><td>道路、站场、停车场</td><td>由 <code>02-road</code> 产，不可分区</td></tr><tr><td><strong>E</strong></td><td><strong>非建设用地</strong></td><td>❌ <strong>禁建</strong></td><td><strong>基本农田 / 林地 / 水域 / 郊野</strong></td><td><code>farmland</code> <code>forest</code> <code>water</code></td></tr></tbody></table></div>
+<p>⚠ <strong><code>E</code> 不是"一种分区"，是"禁建层"</strong>：玩家不能对它做分区，只能<strong>征收置换</strong>（占补平衡，F39）。 它同时承担"耕地红线"与"菜篮子供给"两个角色（<code>12-china-features</code> §11.2）。</p>
+<p>⚠ <strong>不做的三类</strong>（推到 DLC / 打磨年）：<code>W</code> 物流仓储（并入 M）、 <code>A</code> 的细分（体育/文化/医疗先只做学校）、特殊用地（军事/文物）。</p>
+<h3 id="2-2-为什么这事重要">2.2 为什么这事重要</h3>
+<div class="tw"><table><thead><tr><th></th><th>CS</th><th>城脉</th></tr></thead><tbody><tr><td>分区粒度</td><td>3 色（R/C/I）</td><td><strong>6 类</strong>，且每类有国标内涵</td></tr><tr><td>商住关系</td><td>分离</td><td><strong>B 类含底商与写字楼</strong>，住宅区必然带底商（真实中国）</td></tr><tr><td>公共设施</td><td>服务建筑单独盖</td><td><strong>A 类用地</strong>，要占指标</td></tr><tr><td>市政设施</td><td>水管电线（烦）</td><td><strong>U 类用地</strong>（有占地成本，见 <code>07-services</code> §四）</td></tr></tbody></table></div>
+<h3 id="2-3-子类-工业四门类-商业四形态">2.3 子类：工业四门类、商业四形态</h3>
+<blockquote>用户 2026-11-15：「工业也分很多类……而像中国这种全产业链国家工业门类就更多了」<br>「商业也分很多种，比如菜市场、农贸市场，还有娱乐性的商场、小吃街等」。</blockquote>
+<p><strong><code>M</code> 工业：按产业链功能分 4 类</strong>（不按国标 41 个大类，也不按 CS 的"农林油矿"）</p>
+<div class="tw"><table><thead><tr><th>子类</th><th>名称</th><th>服务谁</th><th>特征</th></tr></thead><tbody><tr><td><strong><code>M0</code></strong></td><td><strong>资源开采</strong>（煤矿 / 铁矿 / 油气井 / 稀土矿 / 砂石场）</td><td><strong>原料供给全链</strong></td><td><strong>只能建在资源点上</strong>；有储量与年产量；采完枯竭；采煤有<strong>沉陷区</strong>后果（F71–F73）</td></tr><tr><td><code>M1</code></td><td><strong>建材工业</strong></td><td><strong>建造</strong>（水泥/钢材/混凝土）</td><td>占地大、需货运、<strong>决定全城建设速度</strong></td></tr><tr><td><code>M1b</code></td><td><strong>化学工业</strong>（石化 + 煤化工 + 化肥）</td><td>塑料/化纤/化肥/焦炭</td><td><strong>可技改"减燃料增化工"</strong>（F90）；高耗水、高碳</td></tr><tr><td><code>M2</code></td><td>消费品工业</td><td>商业供给（食品/轻工）</td><td>中等占地，就业密集</td></tr><tr><td><code>M3</code></td><td>装备与电子</td><td>高薪岗位</td><td>需技能人口，土地产出高</td></tr><tr><td><code>M3h</code></td><td><strong>高新技术产业</strong>（推打磨年）</td><td>高附加值、高税收</td><td><strong>需通信覆盖 + 高技能人口 + 快速路</strong>；高新区形态见 <code>12-china-features</code> §11.3</td></tr><tr><td><code>M4</code></td><td>物流仓储</td><td>进口与末端配送</td><td>需贴近快速路/枢纽</td></tr></tbody></table></div>
+<p>⚠ <strong><code>M1</code> 是唯一会反向影响 <code>zoning</code> 自己的子类</strong>：建材产能不足 → 工地停工（见 <code>12-china-features</code> F60）。 这是全场唯一"工业制约城市生长"的闭环。</p>
+<p><strong><code>B</code> 商业：按形态分 4 类</strong></p>
+<div class="tw"><table><thead><tr><th>子类</th><th>形态</th><th>服务半径</th><th>峰值时段</th></tr></thead><tbody><tr><td><code>B1</code></td><td><strong>沿街底商</strong></td><td>300–500 m</td><td>全天平稳，晚饭后略高</td></tr><tr><td><code>B2</code></td><td><strong>菜市场 / 农贸市场</strong></td><td>500–800 m</td><td><strong>早高峰（6–9 点）——第三段峰形</strong></td></tr><tr><td><code>B3</code></td><td><strong>商场 / 综合体</strong></td><td>2–3 km</td><td>周末与节假日</td></tr><tr><td><code>B4</code></td><td><strong>小吃街 / 夜市</strong></td><td>800 m</td><td><strong>夜间</strong>（<code>time_slot=3</code>，推打磨年）</td></tr></tbody></table></div>
+<p>⚠ <strong><code>B2</code> 菜市场必须进本体</strong>：它把"买菜人流"接进早高峰， 形成「上学 + 上班 + 买菜」三段峰形——CS 完全没有这一段。</p>
+<div class="tw"><table><thead><tr><th></th><th>CS</th><th>城脉</th></tr></thead><tbody><tr><td>分区粒度</td><td>3 色（R/C/I）</td><td><strong>6 类</strong>，且每类有国标内涵</td></tr><tr><td>商住关系</td><td>分离</td><td><strong>B 类含底商与写字楼</strong>，住宅区必然带底商（真实中国）</td></tr><tr><td>公共设施</td><td>服务建筑单独盖</td><td><strong>A 类用地</strong>，要占指标</td></tr><tr><td>市政设施</td><td>水管电线（烦）</td><td><strong>U 类用地</strong>（有占地成本，见 §五）</td></tr></tbody></table></div>
+<hr>
+<h2 id="三-小区-中国住宅用地的组织方式">三、小区：中国住宅用地的组织方式</h2>
+<blockquote>这一节回答"为什么中国城市看起来是那个样子"。<br><strong>封闭式小区（围墙 + 大门 + 门禁 + 内部道路 + 内部绿地）</strong> 是中国住宅最独特的形态，<br>也是 CS 完全没有的东西——CS 的住宅直接临街。</blockquote>
+<h3 id="3-1-三级组织-gb-50180-2018-的生活圈">3.1 三级组织（GB 50180-2018 的生活圈）</h3>
+<div class="tw"><table><thead><tr><th>层级</th><th>规模</th><th>空间特征</th></tr></thead><tbody><tr><td><strong>居住区</strong>（15 分钟生活圈）</td><td>3–5 万人</td><td>3–5 km²，含中学、社区医院、商业中心</td></tr><tr><td><strong>小区</strong>（10 分钟生活圈）</td><td>1–1.5 万人</td><td>0.5–1 km²，含小学、菜市场、<strong>围合边界</strong></td></tr><tr><td><strong>组团</strong>（5 分钟生活圈）</td><td>0.2–0.5 万人</td><td>内部绿地、儿童活动场地</td></tr></tbody></table></div>
+<p>⚠ 2018 版把 90 年代的「居住区—小区—组团」改成了「生活圈」，<strong>这是断代点</strong>（<code>gb-standards.md</code> §二）。 <code>code_era &amp;lt; 2018</code> 的用地按旧三级，<code>&amp;gt;= 2018</code> 按生活圈——两套空间逻辑不能混用。</p>
+<h3 id="3-2-一个小区实际的构成-沿街门面-内部住宅">3.2 一个小区实际的构成：沿街门面 + 内部住宅</h3>
+<blockquote>⚠ <strong>2026-11-15 修正。</strong> 我原先写成"四周围墙 + 一两个大门"，用户按实际观察纠正：<br>**「小区内部为住宅楼，外部为门面，可以开店等，当然也不是完全被门面包围，<br>有的甚至就在商场旁边，一些约束等可能还需根据实际来修改。」**<br>⇒ 真实形态不是"围墙包围住宅"，而是 <strong>"沿街一圈商铺 + 内部住宅 + 局部围墙"</strong>。</blockquote>
+<h4 id="生成顺序-这个顺序决定形态">生成顺序（这个顺序决定形态）</h4>
+<pre class="code"><code>按沿街面宽细分 parcel
+   ↓ ① 沿街第一圈（frontage strip，进深 12–18 m）→ B 商业（底商）
+   ↓ ② 内部（interior）                    → R 住宅
+   ↓ ③ 剩余边界：有门面的段 → 商铺外墙；无门面的段 → 围墙
+   ↓ ④ 主入口开在无门面的段上（通常 1–2 个）</code></pre>
+<div class="tw"><table><thead><tr><th>要素</th><th>规则</th></tr></thead><tbody><tr><td><strong>沿街门面</strong></td><td>只在<strong>临主街/次干道</strong>的一侧生成；支路、背街常常没有</td></tr><tr><td><strong>门面进深</strong></td><td>12–18 m（一间铺面的真实尺度），不是整块地</td></tr><tr><td><strong>门面占比</strong></td><td>不包围全部边界。转角、背街、临河道的一侧通常是<strong>围墙</strong></td></tr><tr><td><strong>商场旁的例外</strong></td><td>临近 <code>mall</code> 的住宅地块，门面让位给商场，这一侧只有围墙或直接贴商场</td></tr><tr><td><strong>围墙</strong></td><td>只出现在<strong>没有门面</strong>的边界段上，因此天然是"断续的"</td></tr></tbody></table></div>
+<p>⚠ <strong>这一条让画面立刻变真实</strong>：中国小区的墙不是完整一圈，而是<strong>"有店的地方是店，没店的地方是墙"</strong>。 CS 那种"整片均匀"的做法永远做不出这种参差感。</p>
+<h4 id="四条硬规则">四条硬规则</h4>
+<div class="tw"><table><thead><tr><th>#</th><th>规则</th><th>后果</th></tr></thead><tbody><tr><td>1</td><td>围墙 / 门面沿 parcel 边界生成，<strong>主入口只开在围墙段</strong></td><td>街区内部不连通 → <strong>降低局部可达性</strong>（R1 的直接来源）</td></tr><tr><td>2</td><td>内部道路<strong>不进入公共路网</strong></td><td>玩家要算"绕行距离"，不能穿小区抄近路</td></tr><tr><td>3</td><td>绿地率按国标（新区 ≥30%，旧区 ≥25%）</td><td>占地，挤压容积率</td></tr><tr><td>4</td><td>出入口数量受限（1–2 个）</td><td>出入口太少 → 高峰期出入口自身拥堵</td></tr></tbody></table></div>
+<p>⚠ <strong>规则 1 和 4 是"超大街区"痛点的机制来源</strong>：玩家会本能地想建一个 500 m 见方的大小区， 然后发现所有人挤在一个大门进出——<strong>这就是中国城市的真实体验</strong>。</p>
+<p>⚠ <strong>但门面把"绕行"这件事变复杂了</strong>：沿街门面本身是可达的（人可以走到店门口）， <strong>只是不能穿进小区内部</strong>。所以可达性计算要区分"沿街可达"与"内部可达"，不能一刀切。</p>
+<h3 id="3-3-非封闭形态-同样要有">3.3 非封闭形态（同样要有）</h3>
+<div class="tw"><table><thead><tr><th>形态</th><th>出现在</th><th>特征</th></tr></thead><tbody><tr><td>独院农房</td><td>村庄</td><td>每户自带院墙，无统一大门</td></tr><tr><td>沿街自建</td><td>镇</td><td>贴红线，<strong>底层商铺 + 上层住宅</strong>（同一栋楼），无院</td></tr><tr><td>老单位大院</td><td>县（<code>code_era</code> 60s–90s）</td><td>大围墙 + 内部公共建筑，<strong>门面极少</strong></td></tr><tr><td>开放式街区</td><td>新区试点</td><td>无围墙，小街区（政策 2016 后提倡，实际少见）</td></tr><tr><td><strong>临商场的住宅</strong></td><td>市</td><td>一侧直接贴商场，这一侧无门面、无围墙（用户观察到的例外）</td></tr></tbody></table></div>
+<p>⚠ <strong>上表说明"约束要按实际调"</strong>：这五种形态在同一个城市里能同时存在， 所以 <code>03-zoning</code> 的参数不能是一组全局常量，必须是<strong>按 parcel 的属性组合</strong>（沿街等级 + 邻居类型 + <code>code_era</code>）。</p>
+<hr>
+<h2 id="三-五-地块内部布局-五种原型-参数-不是随机-2026-11-16-新增">三·五、地块内部布局：五种原型 + 参数，不是随机（2026-11-16 新增）</h2>
+<blockquote>用户提出的难题：「我们用道路把一块地围起来的时候就可以直接把这块地设为指定区域，<br>比如小区、商场、工业区等，但是现在有一个难题，<strong>不同小区的内部道路以及建筑布局是不一样的</strong>，<br>程序化生成植被、配套设施以及住宅楼貌似不好搞，得玩家手动来放。」</blockquote>
+<h3 id="3-5-1-先算一笔账-手动放不可能">3.5.1 先算一笔账：手动放不可能</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>数量（1000 万人口）</th></tr></thead><tbody><tr><td>住宅建筑</td><td><strong>约 3 万栋</strong></td></tr><tr><td>parcel</td><td>50 万–200 万</td></tr><tr><td>玩家一局的操作次数（现实上限）</td><td>几千次</td></tr></tbody></table></div>
+<p>⇒ <strong>3 万栋楼一栋一栋摆，不可能。</strong> 必须程序化。 但"程序化"不等于"随机"——<strong>随机生成的小区一眼假</strong>。</p>
+<h3 id="3-5-2-关键洞察-日照规范已经把选择空间压死了">3.5.2 ⭐ 关键洞察：日照规范已经把选择空间压死了</h3>
+<p><strong>中国小区的行列式布局，不是设计师选的，是被《城市居住区规划设计标准》逼出来的。</strong></p>
+<div class="tw"><table><thead><tr><th>约束</th><th>后果</th></tr></thead><tbody><tr><td>住宅<strong>必须南北朝向</strong>（否则拿不到日照）</td><td>楼只能横着排，不能随机转角度</td></tr><tr><td><strong>楼间距 ≥ 日照系数 × 楼高</strong>（<code>gb-standards</code> §三）</td><td>间距被高度决定，<strong>不是自由的</strong></td></tr><tr><td>地块形状由路网围合（R6）</td><td>排布必须贴合不规则多边形</td></tr></tbody></table></div>
+<p>⇒ <strong>能自由变的只剩三件事</strong>：排列方式、楼型（板/塔）、绿地与出入口位置。</p>
+<p><strong>这就是为什么这件事"没那么难"</strong>：约束已经把解空间从"无限"压到"几十种"。</p>
+<h3 id="3-5-3-五种布局原型-覆盖-95-的真实情况">3.5.3 五种布局原型（覆盖 95 % 的真实情况）</h3>
+<div class="tw"><table><thead><tr><th>原型</th><th>名称</th><th>出现年代</th><th>生成规则</th><th>形态描述</th></tr></thead><tbody><tr><td><strong>P1</strong></td><td><strong>行列式</strong></td><td>1990 至今（主流）</td><td>沿长边方向平行排板楼，间距由日照算出</td><td>一排一排，整齐，<strong>最"中国"的居住形态</strong></td></tr><tr><td><strong>P2</strong></td><td><strong>周边式</strong></td><td>1980 前（单位大院/老城）</td><td>楼沿地块边界围一圈，中间留院子</td><td>沿街一圈楼，内部是院</td></tr><tr><td><strong>P3</strong></td><td><strong>点式</strong></td><td>2010 后（新区高端）</td><td>塔楼错落布置，间距大，中间大块绿地</td><td>几栋塔楼散在绿地中</td></tr><tr><td><strong>P4</strong></td><td><strong>外板内塔</strong></td><td>2000–2010</td><td>外围板楼 + 中心塔楼</td><td>外圈板、中间塔，密度高</td></tr><tr><td><strong>P5</strong></td><td><strong>自建/城中村</strong></td><td>任何（<code>unplanned</code>）</td><td>见缝插针，<strong>跳过规范校验</strong></td><td>无规则、握手楼（DLC3 才载入）</td></tr></tbody></table></div>
+<p>⚠ <strong>P1 行列式是全世界最"中国"的居住形态</strong>。苏联东欧也有板楼行列，但中国的更密、 更长、更连续（因为容积率更高、地块更大）。<strong>这一条比任何装饰都更能一眼认出"这是中国"。</strong></p>
+<h3 id="3-5-4-玩家能控制的三层粒度">3.5.4 玩家能控制的三层粒度</h3>
+<div class="tw"><table><thead><tr><th>层</th><th>玩家做什么</th><th>何时做</th></tr></thead><tbody><tr><td><strong>选原型</strong></td><td>在地块上选 P1–P5（默认按 <code>code_era</code> 自动选）</td><td>划区时</td></tr><tr><td><strong>调参数</strong></td><td>间距档（紧凑/标准/宽松）/ 绿地率（25/30/35 %）/ 出入口数（1/2）</td><td>划区时或之后</td></tr><tr><td><strong>微调</strong></td><td>拖动单栋、删一栋、补一栋</td><td><strong>推打磨年</strong>，本体不做</td></tr></tbody></table></div>
+<p>⚠ <strong>微调推后是对的</strong>：本体先把"划一片地就能长出一片像样的小区"跑通， 微调是给追求细节的玩家的，不是必需品。</p>
+<h3 id="3-5-5-什么程序化-什么手动-划清楚">3.5.5 什么程序化、什么手动（划清楚）</h3>
+<div class="tw"><table><thead><tr><th>内容</th><th>谁负责</th><th>为什么</th></tr></thead><tbody><tr><td><strong>住宅楼的位置、朝向、层数</strong></td><td><strong>程序化</strong>（按原型 + 参数）</td><td>3 万栋，不可能手动</td></tr><tr><td><strong>内部道路</strong></td><td>程序化（沿楼间空隙生成）</td><td>跟随楼位自动生成</td></tr><tr><td><strong>绿地/植被</strong></td><td>程序化（填充剩余空间）</td><td>低价值，程序化即可</td></tr><tr><td><strong>围墙与大门</strong></td><td>程序化（§3.2 已定规则）</td><td>—</td></tr><tr><td><strong>学校 / 菜市场 / 变电站</strong></td><td><strong>玩家手动点放</strong></td><td>它们跨地块服务，不属于某个小区</td></tr><tr><td>商场 / 工厂主体</td><td><strong>玩家手动点放</strong>（单栋大体量）</td><td>不是"排布"问题，是"放一个建筑"</td></tr></tbody></table></div>
+<p>⚠ <strong>这条分界很重要</strong>：<strong>排布类的程序化，设施类的手动。</strong> 把学校和菜市场也纳入"小区自动配套"，会让玩家失去"我要在这个片区建一所学校"的决策感。</p>
+<h3 id="3-5-6-一条必须守住的规则-改原型不许-瞬间变形">3.5.6 ⚠ 一条必须守住的规则：改原型不许"瞬间变形"</h3>
+<div class="tw"><table><thead><tr><th>行为</th><th>结果</th></tr></thead><tbody><tr><td>玩家改布局原型 / 参数</td><td><strong>只影响未来生长的建筑</strong></td></tr><tr><td>已有的楼</td><td><strong>完全不动</strong>，要改只能拆了重建（走施工期）</td></tr></tbody></table></div>
+<p>⚠ <strong>理由</strong>：城市的可信度来自"历史累积"。如果玩家一改参数，整片小区瞬间重排， 那这个城市就不是长出来的，是"调"出来的——<strong>这一点会毁掉整个游戏的质感</strong>。</p>
+<h3 id="3-5-7-实现落点-不新增文件">3.5.7 实现落点（不新增文件）</h3>
+<p>⚠ 布局生成算法<strong>并入 <code>parcel_subdiv.cs</code></strong>，不新建文件（DG5 ≤3 文件；R19：<code>sim/</code> 为 C#）。</p>
+<p>理由：它和 parcel 细分是同一条链条—— <code>block_face →（细分）parcel →（布局）building</code>，两次都是"把空间切成更小的单元"。 <strong>拆成两个文件反而是人为切断。</strong></p>
+<div class="tw"><table><thead><tr><th>文件</th><th>职责（更新后）</th></tr></thead><tbody><tr><td><code>zoning_system.cs</code></td><td>框架、需求汇总、bus</td></tr><tr><td><strong><code>parcel_subdiv.cs</code></strong></td><td><strong>block_face → parcel 细分 + parcel → 建筑布局（五种原型）</strong></td></tr><tr><td><code>growth.cs</code></td><td>生长/升级/废弃判定、施工状态</td></tr></tbody></table></div>
+<hr>
+<h2 id="三-六-小区不是-一堆楼-是一个整体工程-2026-11-16-新增">三·六、小区不是"一堆楼"，是一个整体工程（2026-11-16 新增）</h2>
+<blockquote>用户的实际观察：「建造一个小区的时候其实是建造<strong>一个整体大建筑</strong>。<br>首先都是先挖地基，并且<strong>挖得较深</strong>，毕竟是作为<strong>地下停车场</strong>；<br>然后分别在要建楼的地方开始铺设钢筋。<br>其实我们在小区地面上看到的<strong>绿化都是后期做的</strong>，而且还是在<strong>巨大的"混凝土壳"上</strong>，<br>然后"混凝土壳"上面有住宅楼、社区服务中心以及道路等。」</blockquote>
+<h3 id="3-6-1-为什么必然是-整体-而不是-逐栋">3.6.1 为什么必然是"整体"而不是"逐栋"</h3>
+<div class="tw"><table><thead><tr><th>原因</th><th>说明</th></tr></thead><tbody><tr><td><strong>地下车库必须连成一片</strong></td><td>车库是整块底板，不能一栋楼一个坑——车要能开过去</td></tr><tr><td><strong>深基坑只能挖一次</strong></td><td>挖 8 m 深的坑，做整体地下室结构，再回填。<strong>逐栋挖等于把坑填了再挖</strong></td></tr><tr><td><strong>顶板就是地面</strong></td><td>地库顶板（用户说的"混凝土壳"）就是小区的地面层，上面做覆土、道路、绿化</td></tr><tr><td><strong>管线要走底板</strong></td><td>水电气主干都在地下室，逐栋建没法规划</td></tr></tbody></table></div>
+<p>⚠ <strong>这条推翻了我原来的模型</strong>：<code>parcel → building[]</code> 缺了一个中间层。 正确层级是 <strong><code>parcel → compound（小区）→ 底盘 + building[] + 覆土层</code></strong>。</p>
+<h3 id="3-6-2-compound-结构-新增中间实体">3.6.2 compound 结构（新增中间实体）</h3>
+<div class="tw"><table><thead><tr><th>字段</th><th>内容</th></tr></thead><tbody><tr><td><code>id</code> / <code>parcel_id</code></td><td>—</td></tr><tr><td><strong><code>pit_depth_dm</code></strong></td><td>基坑深度（通常 8–12 m，地下两层）</td></tr><tr><td><strong><code>parking_slots</code></strong></td><td>地库车位数（<strong>不占地面</strong>，这是关键）</td></tr><tr><td><code>podium_roof_area</code></td><td>顶板面积（≈ 地块面积）</td></tr><tr><td><strong><code>cover_soil_dm</code></strong></td><td><strong>覆土厚度</strong>（1.0–1.5 m）← 决定能种什么</td></tr><tr><td><code>community_room_m2</code></td><td><strong>社区服务用房面积</strong>（政策要求 30–100 m²/百户）</td></tr><tr><td><code>building_range</code></td><td>地上的楼（住宅 + 社区中心）</td></tr><tr><td><strong><code>internal_access</code></strong></td><td><strong>内部道路等级：<code>0</code> 无（只贴围墙）/ <code>1</code> 有一条环形消防车道 / <code>2</code> 完整内部路网</strong>。⚠ <strong>内部路一律不生成 <code>segment</code></strong>（§3.6 规则 2），此字段只供可达性与消防校验用</td></tr><tr><td><code>stage</code></td><td>施工阶段 0–4（见 §3.6.3）</td></tr></tbody></table></div>
+<h3 id="3-6-3-四个施工阶段-每阶段视觉完全不同">3.6.3 四个施工阶段（每阶段视觉完全不同）</h3>
+<div class="tw"><table><thead><tr><th>阶段</th><th>名字</th><th>工期</th><th>画面</th><th>副作用</th></tr></thead><tbody><tr><td><strong>0</strong></td><td><strong>挖基坑</strong></td><td>6–12 月</td><td><strong>一个大坑 + 土方车排队</strong></td><td><strong>渣土车穿城</strong>、扬尘、夜间运输</td></tr><tr><td><strong>1</strong></td><td><strong>地下室结构</strong></td><td>6–12 月</td><td>坑里铺满钢筋、混凝土泵车</td><td>占道施工</td></tr><tr><td><strong>2</strong></td><td><strong>地上主体</strong></td><td>12–24 月</td><td><strong>塔吊群</strong>（一小区几台到十几台）+ 逐层升高</td><td>噪音、遮挡</td></tr><tr><td><strong>3</strong></td><td><strong>覆土与配套</strong></td><td>3–6 月</td><td>回填土、铺路、种灌木、砌围墙</td><td>—</td></tr><tr><td><strong>4</strong></td><td>交付</td><td>—</td><td>完整小区</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>阶段 0 的渣土车是中国城市最日常的景观之一</strong>，也是交通压力的真实来源 （工地周边道路被重卡碾压、夜间运输、限行时段）。这条可以接 <code>traffic</code> 的货运 OD。</p>
+<p>⚠ <strong>阶段 2 的"塔吊群"是"中国工地"的核心视觉符号</strong>（F7）。一个 500 m 见方的小区 同时有十几台塔吊——<strong>CS 全球都没这种画面</strong>。</p>
+<h3 id="3-6-4-覆土厚度决定绿化-为什么中国小区-树不大">3.6.4 ⭐ 覆土厚度决定绿化：为什么中国小区"树不大"</h3>
+<div class="tw"><table><thead><tr><th>覆土厚度</th><th>能种什么</th><th>中国小区的实际情况</th></tr></thead><tbody><tr><td>&lt; 0.6 m</td><td>只有草坪、地被</td><td>屋顶绿化</td></tr><tr><td><strong>1.0–1.5 m</strong></td><td><strong>灌木 + 小乔木</strong></td><td><strong>绝大多数小区（地库顶板）</strong></td></tr><tr><td>&gt; 2.0 m</td><td>可种大树</td><td>少数无地下室的老小区、公园</td></tr></tbody></table></div>
+<p>⚠ <strong>这是一个非常真实的物理约束</strong>：地库顶板承重有限，覆土不能太厚， 所以<strong>中国小区里大树少、灌木和草坪多</strong>——不是设计品味问题，是结构问题。</p>
+<p>⇒ 做成规则：<code>绿化类型 = f(cover_soil_dm)</code>。老小区（无地下室）能种大树， 新区（大地盘）只能种灌木。<strong>这个细节一做，画面立刻不一样。</strong></p>
+<h3 id="3-6-5-对-停车难-f41-的连锁修正">3.6.5 对"停车难"（F41）的连锁修正</h3>
+<div class="tw"><table><thead><tr><th>原来</th><th>现在（更真实）</th></tr></thead><tbody><tr><td>停车要占地建停车场</td><td><strong>停车位藏在小区基坑里，不占地面</strong></td></tr><tr><td>地面停车占车道 → 通行能力 −25 %</td><td><strong>老小区（无地库）才这样</strong>，新区不占</td></tr></tbody></table></div>
+<p>⚠ <strong>这解释了一个 CS 做不出的画面</strong>：中国小区地面看起来很空（全是绿化和小路）， 但车很多——<strong>车都在地下</strong>。</p>
+<p>⚠ 但<strong>地下车库不等于免费</strong>：深基坑造价极高（占开发成本 20–30 %）。 开发商愿意挖，是因为<strong>车位能卖钱</strong>（这也是土地财政的一部分：地下空间也是资产）。</p>
+<p>⚠ <strong>老小区（1990 前）没有地库</strong> → 车只能停地面 → <strong>占车道 → 拥堵</strong>。 这就是"老城区更堵"的一个真实来源。</p>
+<h3 id="3-6-6-按年代分-大地盘不是从来就有的">3.6.6 按年代分：大地盘不是从来就有的</h3>
+<div class="tw"><table><thead><tr><th><code>code_era</code></th><th>基础形式</th><th>停车</th><th>绿化</th></tr></thead><tbody><tr><td>1960–1989</td><td><strong>独立基础</strong>，无地下室</td><td>地面停车 / 自行车棚</td><td>直接种地，<strong>可种大树</strong></td></tr><tr><td>1990–2005</td><td>部分有半地下</td><td>少量地面 + 半地下</td><td>大树较多</td></tr><tr><td><strong>2005–现在</strong></td><td><strong>大地盘 + 地下车库</strong></td><td><strong>全地下</strong></td><td><strong>覆土 1.0–1.5 m，灌木为主</strong></td></tr></tbody></table></div>
+<p>⚠ 这条完美呼应 R4 的"年代层理"：<strong>同一座城市里，老小区的树比新小区大</strong>。 玩家一眼就能看出哪片是新开发的。</p>
+<h3 id="3-6-7-分期开发-不要一次全建">3.6.7 分期开发（不要一次全建）</h3>
+<p>真实小区是一期、二期分开建的。所以：</p>
+<div class="tw"><table><thead><tr><th>规则</th><th>说明</th></tr></thead><tbody><tr><td><code>compound</code> 可分 2–4 期</td><td>每期独立走 §3.6.3 的阶段 0–4</td></tr><tr><td><strong>后期不重新挖基坑</strong></td><td>二期沿用一期地库（如果连通），或独立小基坑</td></tr><tr><td>分期之间<strong>地面是完工的</strong></td><td>玩家能看到"一期住人了，二期还在挖坑"</td></tr></tbody></table></div>
+<p>⚠ <strong>这比"一次建成"真实得多</strong>，也让工地景观持续更久（十年里一直有塔吊）。</p>
+<hr>
+<h2 id="三-七-地块会切分-合并-建筑会扩建-2026-11-23-新增">三·七、地块会切分、合并，建筑会扩建（2026-11-23 新增）</h2>
+<blockquote>开发者原话：「实际的建筑大小并不是确定的，有的厂会扩大，或者一些地要切分或者合并。」<br>R6 定义的 parcel 生成规则（道路围合面 → 按沿街面宽细分）只回答了<strong>「一开始怎么切」</strong>，<br>没回答<strong>「之后还能不能变」</strong>。真实城市里地块边界和建筑体量一直在变，这一节补这一层。</blockquote>
+<h3 id="3-7-1-四个会变的东西-别混在一起">3.7.1 四个会变的东西（别混在一起）</h3>
+<div class="tw"><table><thead><tr><th>维度</th><th>现实里的例子</th><th>谁改</th><th>频率</th><th>允许</th></tr></thead><tbody><tr><td><strong>parcel 边界</strong>（切分 / 合并）</td><td>一宗地分家、开发商整片拿地</td><td>系统（地价/开发强度触发）+ 玩家（更新工具）</td><td>低频</td><td>✅ 但必须有手续与施工期</td></tr><tr><td><strong>建筑 footprint</strong>（占地）</td><td>厂区加建厂房、仓库</td><td>系统（布局原型 / 扩建）</td><td>中</td><td>✅ 受退线与日照约束</td></tr><tr><td><strong>层数</strong>（升层 / 加建）</td><td>老小区加装电梯、城中村自建房升层</td><td>系统</td><td>中</td><td>✅ 受限高与日照约束</td></tr><tr><td><strong>用地性质</strong></td><td>工业转住宅（退二进三）</td><td>玩家（更新）+ 政策</td><td>极低频</td><td>✅ 见 §五 生长与废弃</td></tr></tbody></table></div>
+<p>⚠ <strong>不是所有"变大"都叫扩建</strong>：厂区<strong>在自有宗地内</strong>加建 ≠ 拿邻居的地。后者是合并，要钱、要补偿、要走流程。</p>
+<h3 id="3-7-2-切分与合并的硬规则-写死-不许自由发挥">3.7.2 切分与合并的硬规则（写死，不许自由发挥）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>规则</th><th>为什么</th></tr></thead><tbody><tr><td>1</td><td>切分后每宗必须同时满足 <strong><code>min_frontage</code>（沿街面宽）</strong> 与 <strong>最小面积</strong></td><td>否则会出现 2 m 宽的"面条地"，无法建任何东西却占着数据</td></tr><tr><td>2</td><td>合并上限 <strong><code>max_parcel_area</code></strong></td><td>防止一宗地吞掉整个街区，让地价与开发强度失去意义</td></tr><tr><td>3</td><td><strong>只能沿既有分界线或道路切/并</strong>，禁止斜切出新边界</td><td>斜切会让 parcel 数据集不可复现，存档迁移必炸</td></tr><tr><td>4</td><td>切分/合并后<strong>旧 <code>parcel_id</code> 失效</strong>，记墓碑（<code>split_from</code> / <code>merged_into</code>）</td><td>存档、OD、地块史都要能回溯；id 直接复用会造成幽灵引用</td></tr><tr><td>5</td><td><strong>在月边界结算</strong>，不允许日内随机时刻发生</td><td>与 R30（OD 月边界算一次）同一条纪律，否则同一存档两次跑结果不同</td></tr><tr><td>6</td><td>每宗地的切分次数有上限（建议 3 次）</td><td>防 parcel 数量爆炸；到顶后锁定，只能合并不能切</td></tr><tr><td>7</td><td>切分/合并<strong>必须有施工期</strong>（围挡 / 工地 / 分期）</td><td>呼应 §3.5.6"改原型不许瞬间变形"——城市不会在一帧里改完边界</td></tr></tbody></table></div>
+<p>⚠ <code>min_frontage</code> / 最小面积 / <code>max_parcel_area</code> <strong>具体数值待核对国标与地方规定</strong>（<code>reference/gb-standards.md</code> 现有条目多数标了【推测】）。<strong>未核对前不得写进 <code>config/sim/</code></strong>（R4 纪律）。</p>
+<h3 id="3-7-3-什么时候会自发发生">3.7.3 什么时候会自发发生</h3>
+<p><strong>切分</strong>（一宗变多宗）常见触发：</p>
+<ul><li>地价涨到高于"整宗持有成本" ⇒ 小地块更好卖（老城核心区最常见）</li><li>业主分家 / 破产分割</li><li>旧大厂搬走后，宗地被拆成若干块分别出让（<strong>这是中国城市最常见的切分场景</strong>）</li></ul>
+<p><strong>合并</strong>（多宗变一宗）常见触发：</p>
+<ul><li>开发商整片拿地做小区（§3.6 的 compound 就是以合并为前提）</li><li>厂区扩产要地（用户原话里的"厂会扩大"）</li><li>政府主导的成片更新（棚改 / 老旧小区连片改造）</li></ul>
+<h3 id="3-7-4-对数据结构的影响-这条最容易漏">3.7.4 对数据结构的影响（这条最容易漏）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>要求</th></tr></thead><tbody><tr><td><code>parcel</code> 字段</td><td>必须有 <code>version</code>（每次边界变动 +1）、<code>split_from</code> / <code>merged_into</code>、<code>area</code>、<code>frontage</code></td></tr><tr><td>派生栅格（50 m / 100 万格）</td><td>边界变动后必须能<strong>局部重建</strong>，不能全图重算（B2 性能线）</td></tr><tr><td>存档</td><td>边界变动是<strong>事件</strong>，要能回放；不支持回放就等于每次读档城市都不一样</td></tr><tr><td>OD / 交通</td><td>地块变动会改起终点，走 R30 的月边界重算，<strong>不在日内改</strong></td></tr><tr><td>地带（zone）</td><td>切分后子地块继承父地块地带；合并时若地带不同<strong>必须先统一</strong>，否则拒绝合并</td></tr></tbody></table></div>
+<h3 id="3-7-5-视觉与-ui-契约">3.7.5 视觉与 UI 契约</h3>
+<ul><li>切分 / 合并 / 扩建<strong>都要有可见的施工痕迹</strong>（围挡、塔吊、渣土车、分期脚手架），否则玩家会觉得"地图自己变了"</li><li>信息视图 <code>land</code>（土地）与 <code>renewal</code>（城市更新）必须能回答：<strong>本月有几宗切分、几宗合并、多少面积易主</strong></li></ul>
+<p>  —— 不显示，玩家就无法理解地价和天际线为什么在变</p>
+<ul><li>文保建筑所在宗地：<strong>禁止合并进开发地块</strong>，只能原址保留或整体迁移（<code>heritage</code> 视图里可查）</li></ul>
+<h3 id="3-7-6-验收点-b3-交付时加">3.7.6 验收点（B3 交付时加）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>Z-1</strong></td><td>切分后每宗都满足 <code>min_frontage</code> 与最小面积；不满足的切分必须被拒绝并给出理由</td></tr><tr><td><strong>Z-2</strong></td><td>切分/合并后旧 <code>parcel_id</code> 不再被任何系统引用（墓碑生效）</td></tr><tr><td><strong>Z-3</strong></td><td>同一存档跑两次，地块边界变更序列<strong>完全一致</strong>（月边界结算 + 可回放）</td></tr><tr><td><strong>Z-4</strong></td><td>合并两块地带不同的地，必须被拒绝（或先要求统一地带）</td></tr><tr><td><strong>Z-5</strong></td><td>大院型设施扩展范围时，非连续 / 含文保 / 含他人已建 的请求必须被拒绝并给出具体原因</td></tr><tr><td><strong>Z-6</strong></td><td>扩展的征地成本按当时地价结算，且扩展序列<strong>可回放</strong>（同一存档两次跑结果一致）</td></tr></tbody></table></div>
+<hr>
+<h3 id="3-7-7-特殊建筑-大院型-玩家手动扩展范围-2026-11-23-新增">3.7.7 特殊建筑（"大院型"）：玩家手动扩展范围（2026-11-23 新增）</h3>
+<blockquote>开发者原话：「另外一些特别的建筑可以手动扩展范围。」</blockquote>
+<p><strong>先说清楚这是另一种东西</strong>：普通住宅/商业由 <code>parcel</code> 自动细分生长（系统决定边界）， 而"大院型"设施的边界<strong>由玩家划定并可以继续拉</strong>——它的内部道路不接入城市路网，边界靠围墙/围挡， 内部布局按自己的逻辑排（航站楼、跑道、教学楼、看台）。</p>
+<p><strong>哪些算大院型</strong>（共同点：占地大 + 内部路网自成体系 + 边界是墙）：</p>
+<div class="tw"><table><thead><tr><th>设施</th><th>为什么要手动定边界</th></tr></thead><tbody><tr><td>机场</td><td>跑道方向与长度决定一切，不能由 parcel 细分生成</td></tr><tr><td>火车站 / 高铁站</td><td>站场 + 广场 + 存车线，形状完全非规则</td></tr><tr><td>大学 / 职教园区</td><td>围墙内自成一体，内部道路不给城市用</td></tr><tr><td>三级医院 / 医学中心</td><td>院区 = 若干栋 + 内部环路 + 后勤区</td></tr><tr><td>体育中心 / 会展中心</td><td>场馆 + 集散广场，日照与退线规则不同</td></tr><tr><td>大型厂区（化工、钢铁、汽车）</td><td>工艺流程决定布局，<strong>用户说的"厂会扩大"就是这一类</strong></td></tr><tr><td>公园 / 植物园 / 主题公园</td><td>边界即围墙，内部是园路</td></tr><tr><td>污水厂 / 电厂 / 垃圾焚烧厂</td><td>卫生防护距离决定边界，不是容积率决定</td></tr></tbody></table></div>
+<h3 id="3-7-8-扩展范围的机制-六条">3.7.8 扩展范围的机制（六条）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>规则</th><th>理由</th></tr></thead><tbody><tr><td>1</td><td><strong>扩展 = 把相邻宗地合并进该 facility</strong>（复用 §3.7.2 的合并规则与 <code>parcel_id</code> 墓碑）</td><td>不要为"大院"另造一套空间模型，否则存档与 OD 会有两套真相</td></tr><tr><td>2</td><td><strong>必须连续</strong>（不能飞地），且新增部分必须是<strong>空地或可征收</strong>（非文保、非他人已建）</td><td>飞地会破坏路网/管线拓扑；文保禁扩是同一条底线</td></tr><tr><td>3</td><td><strong>扩张要付钱</strong>：征地成本 = 地价 × 面积 × 系数 + <strong>安置补偿</strong></td><td>中国城市的"大院扩大"本质是征地，不是免费涂色</td></tr><tr><td>4</td><td><strong>单次扩展面积 ≤ 原面积的 50%</strong>，且<strong>在月边界结算</strong></td><td>防止一把拉成巨无霸；与 R30 同一条纪律</td></tr><tr><td>5</td><td><strong>有施工期与分期</strong>：围挡推进 → 场地平整 → 内部路网 → 单体</td><td>呼应 §3.5.6"不许瞬间变形"</td></tr><tr><td>6</td><td>扩展后<strong>内部道路/管线按新边界重排</strong>，但<strong>不得改动城市路网拓扑</strong></td><td>大院内网是私有路，不能反过来改公共路网</td></tr></tbody></table></div>
+<p>⚠ <strong>玩家能"缩"吗</strong>：可以，但只能是<strong>退还（退地）</strong>，且已建单体不拆——退地后那块地回到可出让池。 ⚠ <strong>不能缩到把出入口切掉</strong>：必须保住至少一个对外出入口，否则系统拒绝。</p>
+<h3 id="3-7-9-与自动生长的分工-一句人话">3.7.9 与自动生长的分工（一句人话）</h3>
+<div class="tw"><table><thead><tr><th>类型</th><th>边界谁定</th><th>什么时候变</th></tr></thead><tbody><tr><td>普通住宅 / 商业 / 小厂</td><td><strong>系统</strong>（parcel 细分 + 布局原型）</td><td>自动：地价、需求、容积率余量</td></tr><tr><td>大院型设施（机场、大学、大厂、公园…）</td><td><strong>玩家</strong>（手动划定 + 手动扩展）</td><td>手动：玩家掏钱征地，或政策推动</td></tr><tr><td>老城存量（城中村、老旧小区）</td><td>系统 + 玩家（更新工具）</td><td>半自动：整治/改造触发重划</td></tr></tbody></table></div>
+<p>⚠ 这个分工很重要：<strong>如果不分开，要么机场被 parcel 细分成几十个小块（荒谬）， 要么整个城市都得玩家手画（变成画图软件）</strong>。</p>
+<h2 id="四-容积率-密度与限高-code_era-驱动">四、容积率、密度与限高（code_era 驱动）</h2>
+<div class="tw"><table><thead><tr><th>参数</th><th>作用</th><th>取值来源</th></tr></thead><tbody><tr><td><code>far</code> 容积率</td><td>决定总建筑面积 → 决定层数</td><td>地方控规（<code>gb-standards.md</code> §3.5 只给范围）</td></tr><tr><td><code>density</code> 建筑密度</td><td>底层覆盖率 → 决定"排得有多密"</td><td>控规，通常 20–35%</td></tr><tr><td><code>height_limit</code> 限高</td><td>硬上限</td><td><strong>行政层级</strong>（县城 ≤18 层）+ 城市规模</td></tr><tr><td><code>setback</code> 退线</td><td>建筑退道路红线距离</td><td>控规，通常 3–10 m</td></tr></tbody></table></div>
+<h3 id="4-1-层数的推导-唯一公式">4.1 层数的推导（唯一公式）</h3>
+<pre class="code"><code>层数 = FAR / 建筑密度          （向上取整，且不超过 height_limit）</code></pre>
+<p>⚠ 这条公式是 <strong>DG9 判据</strong>（<code>12-china-features</code> §五）的实现基础： <code>FAR</code> 从 2 调到 6，层数必须可测地变化。</p>
+<h3 id="4-2-code_era-如何决定这四项">4.2 code_era 如何决定这四项</h3>
+<div class="tw"><table><thead><tr><th>年代</th><th>FAR 常见</th><th>密度</th><th>限高</th><th>结果形态</th></tr></thead><tbody><tr><td>60s–80s（单位大院）</td><td>0.8–1.2</td><td>25–30%</td><td>6 层</td><td>板楼行列式</td></tr><tr><td>90s（房改后第一批）</td><td>1.2–1.8</td><td>28–35%</td><td>6–7 层</td><td>密排砖混，<strong>山墙相接</strong></td></tr><tr><td>00s（商品房兴起）</td><td>2.0–3.0</td><td>20–30%</td><td>11–18 层</td><td>小高层 + 板楼</td></tr><tr><td>10s–20s（新区）</td><td>3.0–5.0</td><td>15–25%</td><td>33 层 / 县城 18 层</td><td>塔楼点式，间距大</td></tr></tbody></table></div>
+<p>⚠ 上表是<strong>初始手感值</strong>，不是国标（国标只给限高与日照，FAR 由地方定）。平衡要跑出来。</p>
+<hr>
+<h3 id="4-3-站点催化-tod-与-高铁新城-r18-新增">4.3 站点催化：TOD 与"高铁新城"（R18 新增）</h3>
+<blockquote>这是"地铁一响黄金万两"在分区层的落地。</blockquote>
+<div class="tw"><table><thead><tr><th>设施</th><th>半径</th><th>效果</th></tr></thead><tbody><tr><td><strong>地铁站</strong></td><td>500 m</td><td><code>far</code> 上限 <strong>+0.5</strong>、<code>height_limit</code> +20 %</td></tr><tr><td><strong>公交站</strong></td><td>300 m</td><td><code>far</code> 上限 +0.1（很轻）</td></tr><tr><td><strong>高铁站</strong></td><td>800 m</td><td><code>far</code> 上限 <strong>+1.5</strong>、人口导入加速、地价跳涨（F31）</td></tr></tbody></table></div>
+<p>⚠ <strong>地铁站的催化和高铁站差一个量级</strong>：地铁是"市内可达性提升"，高铁是"城市级的区位改变"。 把两者做成一样强，会出现"每个地铁站都长出一片 CBD"的荒谬画面。</p>
+<p>⚠ <strong>催化只提升上限，不强制建设</strong>：<code>far</code> 上限高了，但如果没有需求与可达性，楼照样不长。 这条保证"地铁修在没人的地方"不会凭空造出高楼——<strong>这正是玩家要判断的事</strong>。</p>
+<p>⚠ 催化范围<strong>不进存档</strong>，读档时按站点位置重算（与 <code>coverage_grid</code> 同类，是派生量）。</p>
+<hr>
+<h2 id="五-生长-升级与废弃">五、生长、升级与废弃</h2>
+<h3 id="5-1-生长条件-三个同时满足">5.1 生长条件（三个同时满足）</h3>
+<div class="tw"><table><thead><tr><th>条件</th><th>说明</th></tr></thead><tbody><tr><td><strong>需求</strong></td><td>该用途的需求 &gt; 0（人口需要住房 / 企业需要办公 / 工厂需要用地）</td></tr><tr><td><strong>可达性</strong></td><td>parcel 的 <code>accessibility</code>（R1）&gt; 阈值</td></tr><tr><td><strong>配套</strong></td><td>有市政容量（水/电，见 <code>07-services</code> F52）；住宅还要求服务覆盖</td></tr></tbody></table></div>
+<h3 id="5-2-等级-1-5-与升级">5.2 等级 1–5 与升级</h3>
+<div class="tw"><table><thead><tr><th>等级</th><th>触发</th><th>表现</th></tr></thead><tbody><tr><td>1</td><td>刚建成</td><td>低层、简陋</td></tr><tr><td>2–4</td><td>地价 / 服务覆盖上升</td><td>翻新、加层、换 archetype</td></tr><tr><td>5</td><td>地价顶格</td><td>最高档 archetype</td></tr></tbody></table></div>
+<p>⚠ <strong>升级不是原地变高</strong>，而是<strong>拆掉重建</strong>（<code>construction</code> 状态 + 塔吊 + 工期）。 这一条让"天际线长高"这个过程可见，也是 F7 塔吊存在的理由。</p>
+<h3 id="5-3-废弃与拆除">5.3 废弃与拆除</h3>
+<div class="tw"><table><thead><tr><th>情况</th><th>结果</th></tr></thead><tbody><tr><td>需求长期为 0（如工厂外迁）</td><td>空置 → 3 年后废弃（视觉破败）</td></tr><tr><td>可达性跌破阈值</td><td>同上</td></tr><tr><td>玩家主动拆除</td><td>收储成本（R7）+ 拆迁期（<code>construction</code>）</td></tr><tr><td>城中村</td><td><strong>跳过规范校验</strong>（F9，DLC3 才载入）</td></tr></tbody></table></div>
+<hr>
+<h2 id="六-数据契约">六、数据契约</h2>
+<h3 id="6-1-核心结构-soa-禁止逐对象">6.1 核心结构（SoA，禁止逐对象）</h3>
+<div class="tw"><table><thead><tr><th>结构</th><th>字段</th><th>上限</th></tr></thead><tbody><tr><td><code>parcel</code></td><td><code>id(u32)</code> <code>block_id(u32)</code> <code>use_code(u8)</code> <code>area_m2(u16)</code> <code>frontage_m(u16)</code> <code>code_era(u8)</code> <code>far(u8x10)</code> <code>density(u8)</code> <code>height_limit(u8)</code> <code>accessibility(u16)</code> <code>land_value(u16)</code> <code>building_id(u32)</code>&lt;br&gt;<strong><code>layout_proto(u8)</code> <code>spacing(u8)</code> <code>green_ratio(u8)</code> <code>entrance_cnt(u8)</code></strong>（§3.5.4）</td><td><strong>50 万–200 万</strong>（<code>11-scale.md</code> §2.1）</td></tr><tr><td><code>building</code></td><td><code>id(u32)</code> <code>parcel_id(u32)</code> <code>archetype(u8)</code> <code>floors(u8)</code> <code>level(u8)</code> <code>built_year(u16)</code> <code>state(u8)</code>（在建/正常/废弃）</td><td>5 万–15 万</td></tr><tr><td><strong><code>compound</code></strong></td><td><code>id(u32)</code> <code>parcel_id(u32)</code> <strong><code>pit_depth_dm(u8)</code> <code>parking_slots(u16)</code> <code>cover_soil_dm(u8)</code> <code>community_room_m2(u16)</code> <code>stage(u8)</code> <code>phase(u8)</code></strong> <code>building_range(u32,u16)</code></td><td>≤ 1 万</td></tr><tr><td><code>block_face</code></td><td><code>id(u32)</code> <code>vertex_start(u32)</code> <code>vertex_count(u16)</code> <code>parcel_range(u32,u16)</code></td><td>2 万–6 万</td></tr></tbody></table></div>
+<p>⚠ <strong>parcel 必须有稳定 <code>id</code>，不能靠坐标索引</strong>（<code>11-scale.md</code> §七 C11）——因为它是多边形，会细分、合并。 ⚠ <code>use_code</code> 用国标字母的数字编码：<code>R=1 B=2 M=3 A=4 U=5 G=6</code>。</p>
+<h3 id="6-2-bus-key">6.2 bus key</h3>
+<div class="tw"><table><thead><tr><th>key</th><th>方向</th><th>内容</th></tr></thead><tbody><tr><td><code>zoning.parcels</code></td><td>写</td><td>parcel 数组（只读视图给其他系统）</td></tr><tr><td><code>zoning.buildings</code></td><td>写</td><td>建筑数组</td></tr><tr><td><code>zoning.demand</code></td><td>读</td><td>各用途需求（来自 <code>population</code> / <code>employment</code>）</td></tr><tr><td><code>zoning.pollution</code></td><td><strong>预留</strong></td><td><strong>DLC1</strong>（R27），基础版恒 0</td></tr><tr><td><code>zoning.unplanned</code></td><td><strong>预留</strong></td><td><strong>DLC3</strong> 城中村，基础版不载入</td></tr><tr><td><code>accessibility</code></td><td>读</td><td>由 <code>02-road</code> + R1 计算</td></tr></tbody></table></div>
+<h3 id="6-3-config-config-sim-zoning-json">6.3 config（config/sim/zoning.json）</h3>
+<pre class="code" data-lang="json"><code>{
+  "use_codes": ["R","B","M","A","U","G"],
+  "code_era_rules": {
+    "1960-1989": { "far": [0.8,1.2], "density": [0.25,0.30], "height": 6 },
+    "1990-1999": { "far": [1.2,1.8], "density": [0.28,0.35], "height": 7 },
+    "2000-2009": { "far": [2.0,3.0], "density": [0.20,0.30], "height": 18 },
+    "2010-2026": { "far": [3.0,5.0], "density": [0.15,0.25], "height": 33 }
+  },
+  "county_height_cap": 18,
+  "green_ratio": { "new": 0.30, "renewal": 0.25 },
+  "parcel_min_frontage_m": 8,
+  "parcel_min_area_m2": 120
+}</code></pre>
+<p>⚠ 全部数字从 config 读（宪法 L5）。<code>county_height_cap: 18</code> 是 2021 县城限高（<code>gb-standards</code> §四）。</p>
+<hr>
+<h2 id="七-验收点">七、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>ZN1</strong></td><td>画出 6 种用地，每种能长出对应 archetype，且<strong>不会串</strong>（商业不长住宅楼）</td><td>探针逐类建一块，打印 archetype</td></tr><tr><td><strong>ZN2</strong></td><td><strong>DG9</strong>：同一 parcel 把 <code>far</code> 从 2 改到 6，<code>floors</code> 变化 &gt; 2 倍</td><td><code>acceptance.gd --case=far</code></td></tr><tr><td><strong>ZN3</strong></td><td>县城（人口 3–30 万）任一建筑 <code>floors ≤ 18</code></td><td>探针断言</td></tr><tr><td><strong>ZN4</strong></td><td>小区生成符合顺序：<strong>沿街一圈是 B 商业（进深 12–18 m），内部是 R 住宅</strong>，且<strong>门面不包围全部边界</strong></td><td>探针打印一个 block 的用地分布图</td></tr><tr><td><strong>ZN5</strong></td><td>穿小区抄近路不可行：从街对面到小区内部，绕行距离 / 直线距离 &gt; 1.3</td><td>探针算两组路径</td></tr><tr><td><strong>ZN10</strong></td><td><strong>沿街门面只在临主/次干道一侧生成</strong>；支路与背街侧生成围墙</td><td>探针打印四条边的用地类型</td></tr><tr><td><strong>ZN11</strong></td><td>紧邻 <code>mall</code> 的住宅地块，<strong>朝向商场的一侧无门面、无围墙</strong></td><td>探针 + 截图</td></tr><tr><td><strong>ZN12</strong></td><td>同一块地上 P1 行列式与 P3 点式生成的<strong>建筑数量、间距、形态明显不同</strong></td><td>探针打印两组建筑坐标</td></tr><tr><td><strong>ZN13</strong></td><td><strong>所有程序化生成的住宅满足日照间距</strong>（南北向 + 间距 ≥ 系数×高）</td><td>探针逐栋校验</td></tr><tr><td><strong>ZN14</strong></td><td><code>code_era</code> &lt; 1990 的地块默认 P2 周边式；≥ 2010 默认 P1 或 P3</td><td>探针断言</td></tr><tr><td><strong>ZN15</strong></td><td>改布局参数后<strong>已建成的楼一栋不动</strong>，只影响后续生长</td><td>探针改参数前后对比</td></tr><tr><td><strong>ZN16</strong></td><td><strong>学校/菜市场只能玩家手动放</strong>，程序化布局不会自己生成它们</td><td>探针断言</td></tr><tr><td><strong>ZN17</strong></td><td>一个小区走完 4 个阶段，<strong>每阶段视觉不同</strong>（坑 → 钢筋 → 塔吊群 → 覆土）</td><td>截图四张</td></tr><tr><td><strong>ZN18</strong></td><td>小区建成后<strong>车位数 &gt; 0 且不占地面</strong>；<code>parking_slots</code> 与地面可用面积无关</td><td>探针断言</td></tr><tr><td><strong>ZN19</strong></td><td><strong>覆土 1.2 m 的地块长不出大树</strong>；无地下室的 1980 年代地块能长大树</td><td>探针比对两组绿化类型</td></tr><tr><td><strong>ZN20</strong></td><td>分期开发：一期已交付入住（有人口）时，二期仍在施工阶段</td><td>探针 + 截图</td></tr><tr><td><strong>ZN21</strong></td><td>1980 年代地块<strong>没有地下车库</strong>（<code>pit_depth_dm = 0</code>），且地面停车占道</td><td>探针断言</td></tr><tr><td><strong>ZN6</strong></td><td>升级走"拆除重建"：<code>state</code> 经历 <code>construction</code>，且期间有塔吊</td><td>探针 + 截图</td></tr><tr><td><strong>ZN7</strong></td><td>绿地率：新区 R 类 parcel 的绿地占比 ≥ 30%</td><td>探针统计</td></tr><tr><td><strong>ZN8</strong></td><td>存档 → 读档后 parcel 的 <code>id</code> 与 <code>use_code</code> 完全一致</td><td>探针断言</td></tr><tr><td><strong>ZN9</strong></td><td>工厂外迁后 3 年内建筑转为废弃状态</td><td>探针快进</td></tr></tbody></table></div>
+<p>⚠ <strong>ZN2 是"中国性"的核心断言</strong>（DG9）；<strong>ZN5 是"超大街区"的核心断言</strong>——两条不过， 说明 zoning 还是 CS 那套，得回 B3 重做。</p>
+<hr>
+<h2 id="八-待定">八、待定</h2>
+<ol><li><strong><code>M</code> 工业用地的细分</strong>（一类/二类/三类，污染差异）—— 污染在 DLC1（R27），基础版只做一类</li><li><strong><code>A</code> 类里除学校外的建筑</strong>（医院 / 政府 / 文化）—— 可玩版只做学校（R3）</li><li><strong><code>G</code> 绿地的产生方式</strong>：玩家手画，还是随小区自动配建？建议后者（省操作）</li><li><del><code>factory</code> / <code>utility_plant</code> / <code>park</code> 三个 archetype 待补</del> → <strong>已补（2026-11-22）</strong>：<code>assets/registry.json</code> 26 类里已含这三个，见 <code>10-presentation</code> §五</li><li><del>基础设施的归属</del> → <strong>已定：第 8 个系统 <code>utility</code></strong>（<code>decisions.md</code> R15）</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-23（二）</strong>：新增 <strong>§3.7.7–3.7.9 大院型设施的手动扩展</strong>（机场/火车站/大学/大厂/公园等）：</li></ul>
+<p>  扩展 = 合并相邻宗地（复用墓碑与月边界）、必须连续、要征地补偿、单次 ≤ 原面积 50%、有施工期；   并写清「自动生长 vs 手动划线」的分工。</p>
+<ul><li><strong>2026-11-23</strong>：新增 <strong>§三·七 地块会切分、合并，建筑会扩建</strong>（开发者指出"建筑大小不是确定的，厂会扩大、地要切分合并"）。</li></ul>
+<p>  补上 R6 没覆盖的"之后还能不能变"：四条硬规则、月边界结算、<code>parcel_id</code> 墓碑与可回放、施工期，   以及 4 条验收点（Z-1~Z-4）。⚠ <code>min_frontage</code> / <code>max_parcel_area</code> 数值待核对，未核对不进 <code>config/sim/</code>。</p>
+<ul><li><strong>2026-11-16（三）</strong>：新增 <strong>§三·六 小区是一个整体工程</strong>。</li></ul>
+<p>  依据用户对本地小区施工的实地观察「先挖深基坑作地下停车场 → 各处铺钢筋 →   地面绿化是后期做的、而且在巨大的"混凝土壳"上 → 壳上面才是住宅楼与道路」：   ⭐ <strong>推翻原 <code>parcel → building[]</code> 模型，新增中间实体 <code>compound</code></strong>（底盘 +   <code>pit_depth</code> / <code>parking_slots</code> / <strong><code>cover_soil_dm</code></strong> / <code>community_room</code> / 四阶段 / 分期）。   三个连带发现：   ① <strong>覆土 1.0–1.5 m 决定了"中国小区树不大"</strong>（地库顶板承重有限，只能种灌木）；   ② <strong>车位藏在地下 ⇒ 地面看起来空但车很多</strong>，且<strong>老小区（无地库）才占道拥堵</strong>；   ③ <strong>大地盘是 2005 后才成为标配</strong>，1980 年代是独立基础 → <strong>同城新老小区的树有大小差别</strong>。   新增 ZN17–ZN21 五条断言。</p>
+<ul><li><strong>2026-11-16（二）</strong>：新增 <strong>§三·五 地块内部布局（五种原型 + 参数）</strong>。</li></ul>
+<p>  依据用户提出的难题「不同小区内部道路与建筑布局不一样，程序化生成不好搞，得玩家手动放」：   ⭐ <strong>核心洞察：日照规范已经把选择空间压死了</strong> —— 南北朝向 + 间距由楼高决定，   所以"行列式不是设计师选的，是被规范逼出来的"，程序化的解空间只有几十种而不是无限。   定下 <strong>5 种布局原型</strong>（行列式/周边式/点式/外板内塔/自建）、<strong>三层粒度</strong>（选原型/调参数/微调）、   <strong>"排布类程序化、设施类手动"的分界</strong>、<strong>改原型不许瞬间变形</strong>（保住"城市是长出来的"）、   以及布局算法<strong>并入 <code>parcel_subdiv.cs</code> 不新增文件</strong>。新增 ZN12–ZN16 五条断言。</p>
+<ul><li><strong>2026-11-16</strong>：新增 <strong>§4.3 站点催化</strong>（R18）。地铁站 500 m <code>far</code> +0.5 / 公交站 300 m +0.1 /</li></ul>
+<p>  高铁站 800 m +1.5，并强调<strong>只提上限不强制建设</strong>——"地铁修在没人的地方"不会凭空造高楼。</p>
+<ul><li><strong>2026-11-15（三）</strong>：§2.3 新增 <strong><code>M0</code> 资源开采</strong>子类（只能建在资源点上，有储量与枯竭，</li></ul>
+<p>  采煤有沉陷区后果），依据 <code>12-china-features</code> §二·十二（F71–F73）。</p>
+<ul><li><strong>2026-11-15（二）</strong>：<strong>§3.2 重写</strong>。依据用户按实际观察的纠正：</li></ul>
+<p>  「小区内部为住宅楼，外部为门面，可以开店，也不是完全被门面包围，有的甚至就在商场旁边」。   改为 <strong>"沿街门面 + 内部住宅 + 局部围墙"</strong> 的真实构成，并给出五步生成顺序、   门面进深 12–18 m、门面只在临主/次干道生成、临商场侧无墙无店。   新增 ZN10 / ZN11 两条断言；把 ZN4 改为验"用地分布"而非"出入口数"。   ⚠ 同时写明：<strong>参数不能是全局常量，必须按 parcel 属性组合</strong>（沿街等级 + 邻居类型 + <code>code_era</code>）。</p>
+<ul><li><strong>2026-11-15</strong>：首版（AI 起草，待开发者拍板）。按 R10 补齐「数据契约 + 验收点」两节。</li></ul>
+<p>  依据 R4/R6/R7/R9/R12 建立：<strong>6 类国标用地</strong>（R/B/M/A/U/G）、小区三级组织与四条封闭规则、   <code>层数 = FAR / 建筑密度</code> 的推导、<code>code_era</code> 四档参数表、生长/升级/废弃流程、9 条验收断言。   同轮标记 Q13（基础设施归属）—— <strong>后于 2026-11-15 由 R15 裁定为第 8 系统 <code>utility</code></strong>。</p><div class="pager"><a href="design-02-road.html">← 02 · 路网与地块：三表、围合面、可达性</a><a href="design-04-population.html">04 · 人口与家庭：三层、迁徙、流动人口与外出务工 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#二-用地分类-用国标-不用-rci-三色">二、用地分类：用国标，不用 RCI 三色</a><a class="l3" href="#2-1-可玩版取-6-类-gb-50137-2011-的简化">2.1 可玩版取 6 类（GB 50137-2011 的简化）</a><a class="l3" href="#2-2-为什么这事重要">2.2 为什么这事重要</a><a class="l3" href="#2-3-子类-工业四门类-商业四形态">2.3 子类：工业四门类、商业四形态</a><a class="l2" href="#三-小区-中国住宅用地的组织方式">三、小区：中国住宅用地的组织方式</a><a class="l3" href="#3-1-三级组织-gb-50180-2018-的生活圈">3.1 三级组织（GB 50180-2018 的生活圈）</a><a class="l3" href="#3-2-一个小区实际的构成-沿街门面-内部住宅">3.2 一个小区实际的构成：沿街门面 + 内部住宅</a><a class="l4" href="#生成顺序-这个顺序决定形态">生成顺序（这个顺序决定形态）</a><a class="l4" href="#四条硬规则">四条硬规则</a><a class="l3" href="#3-3-非封闭形态-同样要有">3.3 非封闭形态（同样要有）</a><a class="l2" href="#三-五-地块内部布局-五种原型-参数-不是随机-2026-11-16-新增">三·五、地块内部布局：五种原型 + 参数，不是随机（2026-11-16 新增）</a><a class="l3" href="#3-5-1-先算一笔账-手动放不可能">3.5.1 先算一笔账：手动放不可能</a><a class="l3" href="#3-5-2-关键洞察-日照规范已经把选择空间压死了">3.5.2 ⭐ 关键洞察：日照规范已经把选择空间压死了</a><a class="l3" href="#3-5-3-五种布局原型-覆盖-95-的真实情况">3.5.3 五种布局原型（覆盖 95 % 的真实情况）</a><a class="l3" href="#3-5-4-玩家能控制的三层粒度">3.5.4 玩家能控制的三层粒度</a><a class="l3" href="#3-5-5-什么程序化-什么手动-划清楚">3.5.5 什么程序化、什么手动（划清楚）</a><a class="l3" href="#3-5-6-一条必须守住的规则-改原型不许-瞬间变形">3.5.6 ⚠ 一条必须守住的规则：改原型不许"瞬间变形"</a><a class="l3" href="#3-5-7-实现落点-不新增文件">3.5.7 实现落点（不新增文件）</a><a class="l2" href="#三-六-小区不是-一堆楼-是一个整体工程-2026-11-16-新增">三·六、小区不是"一堆楼"，是一个整体工程（2026-11-16 新增）</a><a class="l3" href="#3-6-1-为什么必然是-整体-而不是-逐栋">3.6.1 为什么必然是"整体"而不是"逐栋"</a><a class="l3" href="#3-6-2-compound-结构-新增中间实体">3.6.2 compound 结构（新增中间实体）</a><a class="l3" href="#3-6-3-四个施工阶段-每阶段视觉完全不同">3.6.3 四个施工阶段（每阶段视觉完全不同）</a><a class="l3" href="#3-6-4-覆土厚度决定绿化-为什么中国小区-树不大">3.6.4 ⭐ 覆土厚度决定绿化：为什么中国小区"树不大"</a><a class="l3" href="#3-6-5-对-停车难-f41-的连锁修正">3.6.5 对"停车难"（F41）的连锁修正</a><a class="l3" href="#3-6-6-按年代分-大地盘不是从来就有的">3.6.6 按年代分：大地盘不是从来就有的</a><a class="l3" href="#3-6-7-分期开发-不要一次全建">3.6.7 分期开发（不要一次全建）</a><a class="l2" href="#三-七-地块会切分-合并-建筑会扩建-2026-11-23-新增">三·七、地块会切分、合并，建筑会扩建（2026-11-23 新增）</a><a class="l3" href="#3-7-1-四个会变的东西-别混在一起">3.7.1 四个会变的东西（别混在一起）</a><a class="l3" href="#3-7-2-切分与合并的硬规则-写死-不许自由发挥">3.7.2 切分与合并的硬规则（写死，不许自由发挥）</a><a class="l3" href="#3-7-3-什么时候会自发发生">3.7.3 什么时候会自发发生</a><a class="l3" href="#3-7-4-对数据结构的影响-这条最容易漏">3.7.4 对数据结构的影响（这条最容易漏）</a><a class="l3" href="#3-7-5-视觉与-ui-契约">3.7.5 视觉与 UI 契约</a><a class="l3" href="#3-7-6-验收点-b3-交付时加">3.7.6 验收点（B3 交付时加）</a><a class="l3" href="#3-7-7-特殊建筑-大院型-玩家手动扩展范围-2026-11-23-新增">3.7.7 特殊建筑（"大院型"）：玩家手动扩展范围（2026-11-23 新增）</a><a class="l3" href="#3-7-8-扩展范围的机制-六条">3.7.8 扩展范围的机制（六条）</a><a class="l3" href="#3-7-9-与自动生长的分工-一句人话">3.7.9 与自动生长的分工（一句人话）</a><a class="l2" href="#四-容积率-密度与限高-code_era-驱动">四、容积率、密度与限高（code_era 驱动）</a><a class="l3" href="#4-1-层数的推导-唯一公式">4.1 层数的推导（唯一公式）</a><a class="l3" href="#4-2-code_era-如何决定这四项">4.2 code_era 如何决定这四项</a><a class="l3" href="#4-3-站点催化-tod-与-高铁新城-r18-新增">4.3 站点催化：TOD 与"高铁新城"（R18 新增）</a><a class="l2" href="#五-生长-升级与废弃">五、生长、升级与废弃</a><a class="l3" href="#5-1-生长条件-三个同时满足">5.1 生长条件（三个同时满足）</a><a class="l3" href="#5-2-等级-1-5-与升级">5.2 等级 1–5 与升级</a><a class="l3" href="#5-3-废弃与拆除">5.3 废弃与拆除</a><a class="l2" href="#六-数据契约">六、数据契约</a><a class="l3" href="#6-1-核心结构-soa-禁止逐对象">6.1 核心结构（SoA，禁止逐对象）</a><a class="l3" href="#6-2-bus-key">6.2 bus key</a><a class="l3" href="#6-3-config-config-sim-zoning-json">6.3 config（config/sim/zoning.json）</a><a class="l2" href="#七-验收点">七、验收点</a><a class="l2" href="#八-待定">八、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

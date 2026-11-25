@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第二批模型清单与提示词（道路 / 车辆 / 标识） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" class="on" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 资产与建模</div><h1 id="第二批模型清单与提示词-道路-车辆-标识">第二批模型清单与提示词（道路 / 车辆 / 标识）</h1>
+<blockquote>🅰 <strong>本文是「第二批 16 件的逐件规格 + 提示词」</strong>。<br>🅱 <strong>要粘给建模 AI 的总指令在 <code>docs/prompts/for-modeling-ai.md</code></strong>（SA-3 会照本文做）。</blockquote>
+<blockquote><strong>用途</strong>：直接复制规格去生产。<strong>16 个资产</strong>，目标是让 B2 的路网能真跑起来。<br><strong>前置</strong>：规范见 <code>14-model-prompts.md</code> §九，<strong>写实要求见 <code>realism-spec.md</code>（最高优先级）</strong>。<br><strong>与第一批最大的不同</strong>：这批大多是<strong>模块件</strong>（沿曲线拼）和<strong>会动的物件</strong>（要合批），不是独立建筑。</blockquote>
+<blockquote>🔴 <strong>本批必须达到"写实档"，不是第一批的"动画片档"</strong>（2026-11-24 开发者裁定）<br>第一批的问题已定位：<strong>0 张 normal/roughness/AO、8 个模型 PBR 参数完全相同、玻璃无反射、预览图无方向光与 AO</strong>。<br>⇒ 本批开工前，<strong>必须先有 <code>assets/materials/matlib.blend</code></strong>（由 SA-1 建，见 <code>agent-plan.md</code>），<br><strong>所有材质引用它，不许自己现造</strong>。硬指标见 <code>realism-spec.md</code> §四 / §八。<br>三条最容易漏的：<br>① <strong>每个材质必须有 normal + ORM</strong>（否则表面在光下是平的，就是塑料）<br>② <strong>颜色要去饱和 + 有脏污层</strong>（明度标准差 ≥ 0.04，不许平涂）<br>③ <strong>车辆必须有脏</strong>（下裙边泥点、轮拱溅泥）——干净车漆在 4.7 m 尺度下就是玩具车</blockquote>
+<blockquote>⚠ <strong>第一批返修与本批并行</strong>（返修单：<code>batch-01-fix.md</code>），两者都依赖 <code>matlib</code>。<br>第一批的 4 条技术修正仍要做：<code>construction</code> 轴心改 footprint 中心、<code>gas_station</code> 注明靠贴图降级、<br>面数余量花在轮廓、命名统一 <code>lod0/lod1</code>（截图仍用 <code>t1/t3</code>）。</blockquote>
+<hr>
+<h2 id="〇-本批三条额外铁律-比第一批更严">〇、本批三条额外铁律（比第一批更严）</h2>
+<h3 id="〇-一-桥梁-道路是模块-不是一整条">〇·一 桥梁/道路是<strong>模块</strong>，不是一整条</h3>
+<blockquote>❌ 别给一条 500 m 长的桥。要给<strong>一段 30 m 标准跨</strong>，引擎沿曲线拼。</blockquote>
+<div class="tw"><table><thead><tr><th>要求</th><th>说明</th></tr></thead><tbody><tr><td><strong>接缝在 ±X 两端</strong></td><td>长度方向沿 X 轴，两端切面<strong>完全对齐</strong>（同一断面、同一高度）</td></tr><tr><td><strong>长度是标准跨</strong></td><td>梁段 <strong>30 m</strong>（可拼接出任意长度）；桥墩 <strong>按标准跨一个</strong></td></tr><tr><td><strong>正面朝 −Z</strong></td><td>与建筑一致，避免引擎里再转</td></tr><tr><td><strong>不允许斜切/收分</strong></td><td>收分、变宽由引擎用缩放实现，不在模型里做</td></tr></tbody></table></div>
+<p>⚠ 如果你做成"一条完整的桥"，我只能用一个长度，<strong>其他长度的桥就全废了</strong>。</p>
+<h3 id="〇-二-车辆-行人是实例-面数预算只有建筑的-1-20">〇·二 车辆/行人是<strong>实例</strong>，面数预算只有建筑的 1/20</h3>
+<div class="tw"><table><thead><tr><th>类型</th><th>面数上限</th><th>为什么</th></tr></thead><tbody><tr><td>轿车 / 厢货</td><td><strong>≤ 1 200</strong></td><td>全城同屏可能上千辆</td></tr><tr><td>公交 / 卡车</td><td><strong>≤ 2 500</strong></td><td></td></tr><tr><td>电动自行车</td><td><strong>≤ 600</strong></td><td>数量最多</td></tr><tr><td>行人</td><td><strong>≤ 400</strong></td><td>上万个体，且只做人形轮廓</td></tr></tbody></table></div>
+<p>⚠ <strong>车轮必须是独立的圆盘/圆柱</strong>（不要用贴图圆的平面），否则侧看会看出是纸片。 ⚠ <strong>车窗必须是 <code>glass</code> 面</strong>，不要画在贴图里——白模档（T5）车要能看出是车。</p>
+<h3 id="〇-三-标识要双面可见-杆件独立">〇·三 标识要<strong>双面可见 + 杆件独立</strong></h3>
+<div class="tw"><table><thead><tr><th>要求</th><th>说明</th></tr></thead><tbody><tr><td>双面</td><td>从背后看不能消失（背面可以是同样的版面或灰色背板）</td></tr><tr><td>杆件独立</td><td>立杆与版面<strong>分成两个对象</strong>，高度可按地块调整</td></tr><tr><td>面数 ≤ 300</td><td>城里有上千个</td></tr></tbody></table></div>
+<h3 id="〇-四-写实要求-本批新增-第一批的失分点">〇·四 写实要求（本批新增，第一批的失分点）</h3>
+<blockquote>⚠ 第一批技术项全过但<strong>像动画片</strong>。根因已定位（<code>realism-spec.md</code> §一）：<br><strong>0 张 normal/roughness/AO、8 个模型 PBR 参数完全相同、玻璃无反射、预览图无方向光与 AO。</strong><br>本批<strong>不许重演</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>要求</th><th>具体</th></tr></thead><tbody><tr><td><strong>材质一律引用 <code>matlib</code></strong></td><td><code>assets/materials/matlib.blend</code>（SA-1 产出）。<strong>不许自己现造材质</strong></td></tr><tr><td><strong>每个材质必须有 normal + ORM</strong></td><td>没有法线 ⇒ 表面在光下是平的 ⇒ 就是塑料</td></tr><tr><td><strong>颜色去饱和 + 明度不均匀</strong></td><td>albedo 平均饱和度 ≤ 0.35，明度标准差 ≥ 0.04</td></tr><tr><td><strong>必须有脏污层</strong></td><td>见每条提示词里的【写实】行，<strong>逐条做，不许跳</strong></td></tr><tr><td><strong>预览图按统一预设渲</strong></td><td><code>render_preset.py</code>：太阳光 40° + HDRI + AO + ACES + 中性灰背景 + <strong>1.8 m 人形参照</strong></td></tr></tbody></table></div>
+<p>⚠ 每条提示词里的 <strong><code>【写实】</code> 行是本批新增的必做项</strong>，它写的是<strong>物理事实</strong>（什么污渍、在哪、多深）， 不是"photorealistic"这种风格词——<strong>风格词对 AI 无效，物理事实才有效</strong>。</p>
+<p>⚠ <strong>车辆组的写实关键不是精度，是"脏"</strong>：干净的 4.7 m 车漆在俯视视角下就是玩具车。 下裙边泥点、轮拱溅泥、轮毂内侧积灰，这三处一加立刻不一样。</p>
+<p>⚠ <strong>道路组的写实关键是"用过的痕迹"</strong>：混凝土的模板缝、雨痕、防撞墙撞痕、桥面轮辙。 新浇的混凝土在真实城市里几乎看不到。</p>
+<hr>
+<h2 id="一-道路与桥隧-6-个">一、道路与桥隧（6 个）</h2>
+<blockquote>⚠ 注意：<strong>路面、标线、路口路面本身不做模型</strong>（<code>15-model-inventory</code> §3.13.1）——<br>路面是断面沿曲线扫掠 + 标线贴图，路口是"段端点裁剪 + 装饰贴花"。所以这批只做<strong>构筑物与贴花</strong>。</blockquote>
+<h3 id="1-1-rd_elevated-高架桥-箱梁-独柱墩-防撞墙">1.1 rd_elevated 高架桥（箱梁 + 独柱墩 + 防撞墙）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>形式</td><td><strong>三段式模块</strong>：<code>梁段 / 桥墩 / 防撞墙</code> 分开交付，能各自拼接</td></tr><tr><td>尺寸</td><td>梁段 <strong>长 30 × 宽 18 × 高 2.0 m</strong>；桥墩 <strong>柱径 2.2 m、高按 8 m 基准</strong>；防撞墙 <strong>高 0.9 m、段长 30 m</strong></td></tr><tr><td>面数</td><td>梁段 ≤ 1500 / 桥墩 ≤ 400 / 防撞墙 ≤ 300</td></tr><tr><td>槽位</td><td><code>body</code> 混凝土 <code>#b9b6ae</code> · <code>base</code> 墩身 <code>#a9a59d</code> · <code>metal</code> 防撞墙钢筋栏杆 <code>#8d9296</code> · <code>sign</code> 侧面涂装/编号 <code>#0d47a1</code></td></tr></tbody></table></div>
+<p><strong>规格描述（给程序化建模）</strong></p>
+<pre class="code"><code>中国城市高架桥标准构件，三段式
+【梁段】预应力混凝土箱梁，长 30 m、宽 18 m（双向四车道）、梁高 2.0 m，
+        两侧有翼缘板挑出 1.2 m；底面平直，端面为垂直切面（用于对接）
+【桥墩】独柱式，柱径 2.2 m、标准高 8 m，柱顶设盖梁（宽 18 m、厚 1.2 m）
+【防撞墙】混凝土护栏高 0.9 m、段长 30 m，外侧带金属栏杆
+【中国要素】独柱墩（城市高架的标准做法）、梁侧排水管、伸缩缝、墩身反光标识
+【技术】单位米，+Y 向上，长度沿 X，接缝在 ±X 两端，轴心在接缝中心与底面
+【脏污等级】D2（混凝土结构、防撞墙有撞痕；⛔ 不许锈穿、不许裂缝、不许苔藓成片）
+【写实】混凝土箱梁有模板缝与竖向雨痕、防撞墙有撞击掉角与轮迹黑痕、桥面沥青有轮辙与排水篦子、伸缩缝橡胶条有积尘、独柱墩底部 1 m 内溅泥发深
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构（梁、墩、护栏都是实体），不要用贴图表现结构；
+        材质按 body/base/metal/sign 分区，不超过 6 个；每区给主色 hex
+【负向】斜拉索, 拱形, 双柱墩, 变宽, 收分, 整条桥一次成型</code></pre>
+<p><strong>验收</strong>：把梁段沿 X 拼 5 段后<strong>接缝不可见</strong>（同一断面、同一标高）；桥墩插在梁下高度可调；防撞墙能任意加长。</p>
+<hr>
+<h3 id="1-2-rd_bridge-跨河桥-中小跨梁桥">1.2 rd_bridge 跨河桥（中小跨梁桥）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td><strong>长 30 × 宽 16 m</strong>，梁高 1.6 m，桥台端面垂直</td></tr><tr><td>面数</td><td>≤ 2 000</td></tr><tr><td>槽位</td><td><code>body</code> 梁体 <code>#bdb9b0</code> · <code>base</code> 桥台/承台 <code>#a29e96</code> · <code>metal</code> 栏杆 <code>#8d9296</code> · <code>sign</code> 桥名牌 <code>#0d47a1</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市跨河梁桥，标准跨
+【规模】长 30 m、宽 16 m（双向四车道 + 两侧人行道）、梁高 1.6 m
+【结构】预制预应力空心板梁（或多箱室），两侧混凝土栏杆 + 金属扶手
+【中国要素】桥头栏杆端柱、桥名牌、梁底排水口、人行道与车行道高差
+【技术】单位米，+Y 向上，长度沿 X，两端垂直切面，轴心在接缝中心与底面
+【脏污等级】D2（桥墩有水位线污痕；⛔ 不许钢筋外露、不许栏杆缺失）
+【写实】同高架 + 桥墩有水位线污痕（常水位以上深、以下浅，且有青苔）、拱底有渗水白痕、栏杆有锈点
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构；材质按 body/base/metal/sign 分区；每区给 hex
+【负向】拱形, 斜拉索, 装饰性欧式栏杆, 石狮, 变宽</code></pre>
+<p><strong>验收</strong>：梁与栏杆在接缝处对齐；人行道比车行道高 0.15 m。</p>
+<hr>
+<h3 id="1-3-br_arch-拱桥-中国城市的-老桥-形象">1.3 br_arch 拱桥（中国城市的"老桥"形象）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td><strong>长 60 × 宽 14 m</strong>，拱高 9 m，<strong>单跨</strong>（不做多跨变体，多跨由引擎拼）</td></tr><tr><td>面数</td><td>≤ 3 500</td></tr><tr><td>槽位</td><td><code>body</code> 石砌/混凝土拱圈 <code>#c2bbaa</code> · <code>base</code> 桥台 <code>#a8a294</code> · <code>metal</code> 栏杆 <code>#8d9296</code> · <code>sign</code> 桥名牌 <code>#8b2e2e</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市老拱桥（石拱或钢筋混凝土拱），单跨
+【规模】长 60 m、宽 14 m、拱高 9 m、净跨 45 m
+【结构】实体拱圈 + 空腹式腹拱（可选 3 个小腹拱）+ 石砌桥台 + 石栏杆
+【中国要素】石栏杆望柱、桥头堡/碑、拱圈分块缝、桥面纵坡
+【技术】单位米，+Y 向上，长度沿 X，两端垂直切面可对接引桥，轴心在底面中心
+【脏污等级】D2（老桥，拱圈有风化；⛔ 不许结构破损、不许大面积苔藓）
+【写实】石材/混凝土拱圈有风化凹坑、拱顶有渗水白痕与青苔、栏杆有锈、桥面伸缩缝积尘
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构（拱圈必须是真实曲面，不是贴图画的）；材质 ≤6 槽；每区给 hex
+【负向】欧式多拱, 雕塑群, 彩色灯光, 斜拉索, 木结构</code></pre>
+<p><strong>验收</strong>：拱圈是<strong>真实曲面</strong>（侧面看有厚度）；栏杆望柱等距；桥面有纵坡。</p>
+<hr>
+<h3 id="1-4-rd_barrier-隔音屏-高架-快速路">1.4 rd_barrier 隔音屏（高架/快速路）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td><strong>单元长 4 m</strong>，高 3.5 m（可叠到 5 m）</td></tr><tr><td>面数</td><td>≤ 300 / 单元</td></tr><tr><td>槽位</td><td><code>body</code> 金属框 <code>#7e848a</code> · <code>glass</code> <strong>透明板</strong> <code>#a9c6d4</code> · <code>metal</code> 立柱 <code>#6f7377</code> · <code>sign</code> 反光条 <code>#d9b23a</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市高架隔音屏，标准单元
+【规模】单元长 4 m、高 3.5 m，立柱间距 4 m
+【结构】H 型钢立柱 + 透明板（下部）+ 金属吸音板（上部）+ 顶部弧形收边
+【中国要素】立柱根部反光标识、板块分格、顶部内倾（防溢出）
+【技术】单位米，长度沿 X，单元两端可无缝拼接，轴心在底边中心
+【脏污等级】D1–D2（玻璃下半脏是尾气附着，正常；⛔ 不许玻璃碎裂、不许框架锈穿）
+【写实】夹胶玻璃半透明且下半部脏（尾气附着，下深上浅）、铝框氧化发白、立柱根部被溅泥、顶部有积灰与鸟粪点
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】glass 槽必须是独立面（透明板），不要画在贴图里；材质 ≤6 槽；每区给 hex
+【负向】实心墙, 砖砌, 欧式栏杆, 单块无限长</code></pre>
+<p><strong>验收</strong>：拼 10 个单元后<strong>接缝对齐</strong>；透明板是独立 <code>glass</code> 面；T3 纯色时仍能看出"一道道立柱+板"。</p>
+<hr>
+<h3 id="1-5-rd_tunnel-隧道口-只做洞门">1.5 rd_tunnel 隧道口（只做洞门）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td>洞门 <strong>宽 24 × 高 9 m</strong>，遮光棚挑出 6 m</td></tr><tr><td>面数</td><td>≤ 1 500</td></tr><tr><td>槽位</td><td><code>body</code> 洞门端墙 <code>#b0aca4</code> · <code>base</code> 翼墙 <code>#9c988f</code> · <code>metal</code> 限高架 <code>#8d9296</code> · <code>sign</code> 隧道名牌 <code>#0d47a1</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市道路隧道洞门（只做外部，不做洞内）
+【规模】洞门宽 24 m、高 9 m，端墙厚 1.2 m，遮光棚挑出 6 m
+【结构】端墙 + 两侧翼墙 + 遮光棚（格栅）+ 限高架 + 洞口内衬 3 m（假深度）
+【中国要素】隧道名牌（蓝底白字）、限高 5 m 标志、洞口反光环、排水沟
+【技术】单位米，+Y 向上，洞口朝 −Z，轴心在洞口底边中心
+【⚠ 不做】洞内路面、灯带、风机、横通道（推 DLC/打磨年）
+【脏污等级】D2（洞门端墙有水渍；⛔ 青苔只在墙根 0.5 m 内、点状；不许涂鸦满墙）
+【写实】洞门端墙有大面积水渍与绿苔（靠近地面最重）、限高架漆皮脱落露锈、翼墙有模板缝
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】用 3 m 假深度内衬制造"进去"的错觉，别用贴图画黑洞；材质 ≤6 槽；每区给 hex
+【负向】隧道内部, 灯带, 通风机, 露天开挖, 欧式门楼</code></pre>
+<p><strong>验收</strong>：正面看有<strong>真实进深</strong>（3 m 内衬，不是贴图黑洞）；限高架独立可拆。</p>
+<hr>
+<h3 id="1-6-rd_junction_decal-路口铺装贴花-2d-不是模型">1.6 rd_junction_decal 路口铺装贴花（<strong>2D，不是模型</strong>）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>形式</td><td><strong>俯视 PNG 贴花</strong>，铺在程序化生成的路口路面上</td></tr><tr><td>规格</td><td>1024×1024，透明背景，<strong>正上方视角，无透视</strong></td></tr><tr><td>分档</td><td>按连接数：<strong>3 路 / 4 路 / 5 路以上</strong>，每档一套</td></tr><tr><td>内容</td><td>斑马线、停止线、导向箭头、转角铺装、安全岛、导流线</td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市路口地面标线贴花，俯视图，透明背景
+【内容】四向斑马线、停止线、直行/左转/右转导向箭头、中心导流线、转角人行道铺装
+【尺寸】1024×1024，正上方正交视角，无透视，无阴影
+【颜色】白线 #f2f2f2、黄线 #e8b21a、人行道灰 #b8b2a6、安全岛绿 #4f7a52
+【技术】PNG 透明底；四边可平铺对齐；标线宽度统一（车道线 15 cm 视觉宽度）
+【脏污等级】D2（标线磨损、轮迹压白；⛔ 不许标线完全消失、不许路面积水成塘）
+【写实】标线必须有磨损：断线、掉角、被轮迹磨白的段（新画的标线一眼假）；斑马线被轮胎压出两条黑色轮迹带；井盖与雨水篦子周边有污渍环；转角铺装砖缝清晰但缺角
+【⚠ 不做】路口路面模型、路缘石模型（都是程序化）
+【负向】透视, 阴影, 车辆, 行人, 写实沥青纹理（沥青由材质给，不在这里）</code></pre>
+<p><strong>验收</strong>：贴在任意角度路口上<strong>不歪</strong>（因为是俯视正交）；与车道线接得上；四边平铺无缝。</p>
+<hr>
+<h2 id="二-车辆与行人-6-个">二、车辆与行人（6 个）</h2>
+<blockquote>通用：<strong>长度沿 X</strong>（车头朝 −Z？不——车头朝 <strong>−Z</strong>，与建筑一致），<strong>轮胎接地 y=0</strong>，轴心在<strong>车体地面中心</strong>。<br>涂装写进 <code>sign</code> 槽；<strong>不要用真实品牌 logo</strong>，用"相似但虚构"的配色（法律与美术双重原因）。</blockquote>
+<h3 id="2-1-veh_sedan-轿车-4-个变体">2.1 veh_sedan 轿车（4 个变体）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td><strong>长 4.7 × 宽 1.8 × 高 1.45 m</strong></td></tr><tr><td>面数</td><td>≤ 1 200</td></tr><tr><td>槽位</td><td><code>body</code> 车漆（白 <code>#e8e8e6</code> / 黑 <code>#2b2b2e</code> / 银 <code>#b8bcc0</code> / 蓝 <code>#2f4f7a</code>）· <code>glass</code> 车窗 <code>#6d8798</code> · <code>metal</code> 轮辋/格栅 <code>#9aa0a6</code> · <code>base</code> 底盘/保险杠 <code>#3a3a3c</code> · <code>sign</code> 车灯 <code>#d9b23a</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市常见三厢轿车，比例写实，低模
+【规模】长 4.7 m、宽 1.8 m、高 1.45 m，轴距 2.7 m
+【结构】车身 + 独立四轮（圆柱/圆盘）+ 车窗玻璃面 + 前后灯 + 后视镜
+【要求】车轮必须是实体圆柱，不能是贴图圆片；车窗是独立 glass 面
+【技术】单位米，+Y 向上，车头朝 −Z，轮胎接地 y=0，轴心在车体地面中心
+【变体】4 种车漆（白/黑/银/蓝），同几何不同 slots
+【脏污等级】D1（在路上跑，有泥不破；⛔ 不许车身凹陷、不许玻璃碎裂）
+【写实】车漆有细微太阳纹与门把手周围划痕、下裙边与轮拱溅泥、玻璃有雨痕与洗车水渍、轮毂内侧积灰（外侧反而干净）
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构；材质 ≤6 槽；每区给 hex
+【负向】跑车, 加长, 圆润玩具感, 品牌 logo, 内部座椅, 打开的车门</code></pre>
+<p><strong>验收</strong>：侧看轮子是圆的、不穿地；T5 白模仍能看出"轿车比例"（长宽高比 + 车顶弧线）。</p>
+<hr>
+<h3 id="2-2-veh_bus-城市公交-2-个变体-单机-铰接">2.2 veh_bus 城市公交（2 个变体：单机 / 铰接）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td>单机 <strong>长 12 × 宽 2.5 × 高 3.2 m</strong>；铰接 <strong>长 18 m</strong>（两节 + 铰接棚）</td></tr><tr><td>面数</td><td>≤ 2 500</td></tr><tr><td>槽位</td><td><code>body</code> 车身涂装（城市蓝 <code>#1f5f9e</code> 或绿 <code>#2e7d32</code>）· <code>glass</code> 车窗 <code>#6d8798</code> · <code>metal</code> 轮辋 <code>#9aa0a6</code> · <code>base</code> 底盘 <code>#3a3a3c</code> · <code>sign</code> 线路牌/车头显示 <code>#e8b21a</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市公交客车，低地板单机（另出铰接版）
+【规模】长 12 m、宽 2.5 m、高 3.2 m；铰接版 18 m（两节，中间铰接棚）
+【结构】方正车身 + 大侧窗 + 车门（两门）+ 车顶空调罩 + 前后线路牌
+【中国要素】车头 LED 线路牌（红/黄字）、车身侧广告位、后门两扇、轮罩
+【技术】单位米，+Y 向上，车头朝 −Z，轮胎接地 y=0，轴心在车体地面中心
+【脏污等级】D1（广告膜起翘是常态；⛔ 不许车身锈穿、不许车窗破损）
+【写实】车身广告膜边缘起翘且有气泡、下裙边泥带、轮毂积灰、车窗内侧有线路贴纸、后轮后方有泥点飞溅
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构；材质 ≤6 槽；每区给 hex
+【负向】双层巴士, 欧式长途车, 品牌 logo, 打开的车门, 内部座椅</code></pre>
+<p><strong>验收</strong>：铰接版中间有<strong>铰接棚</strong>（黑色褶皱段）；车头线路牌位置明显。</p>
+<hr>
+<h3 id="2-3-veh_truck-重型卡车-牵引车-挂车或自卸">2.3 veh_truck 重型卡车（牵引车 + 挂车或自卸）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td>牵引车 <strong>长 6.8 × 宽 2.5 × 高 3.4 m</strong>；自卸车厢 长 5.6 m</td></tr><tr><td>面数</td><td>≤ 2 500</td></tr><tr><td>槽位</td><td><code>body</code> 驾驶室涂装（红 <code>#b3261e</code> / 蓝 <code>#1f5f9e</code>）· <code>glass</code> 车窗 · <code>metal</code> 车厢/罐体 <code>#9aa0a6</code> · <code>base</code> 底盘/挡泥板 <code>#3a3a3c</code> · <code>sign</code> 反光条 <code>#e8b21a</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国重型卡车（牵引车 + 半挂 / 自卸车），低模
+【规模】牵引车长 6.8 m、宽 2.5 m、高 3.4 m；半挂厢长 13 m；自卸车厢长 5.6 m
+【结构】高顶驾驶室 + 双后桥 + 车厢/罐体 + 侧防护栏 + 挡泥板
+【中国要素】车侧反光条（红白相间）、驾驶室顶部导流罩、车牌放大号
+【技术】单位米，+Y 向上，车头朝 −Z，轮胎接地 y=0，轴心在地面中心
+【脏污等级】D1–D2（货厢锈是常态；⛔ 不许货厢锈穿、不许轮胎瘪）
+【写实】货厢有锈斑与凹陷、轮胎侧壁泥、挡泥板内侧积泥、车架有油污
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构；材质 ≤6 槽；每区给 hex
+【负向】美式长鼻卡车, 品牌 logo, 打开车门, 内部结构</code></pre>
+<p><strong>验收</strong>：双后桥（两组轮）清晰；反光条在 T3 纯色下仍是一条 <code>sign</code> 色带。</p>
+<hr>
+<h3 id="2-4-veh_van-厢式货车-快递-搬家">2.4 veh_van 厢式货车（快递/搬家）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td><strong>长 5.4 × 宽 2.0 × 高 2.4 m</strong></td></tr><tr><td>面数</td><td>≤ 1 800</td></tr><tr><td>槽位</td><td><code>body</code> 货厢（白 <code>#eceff1</code>）· <code>glass</code> 车窗 · <code>metal</code> 轮辋 <code>#9aa0a6</code> · <code>base</code> 底盘 <code>#3a3a3c</code> · <code>sign</code> 涂装条（虚构快递配色：橙 <code>#e07b19</code> / 黑红 <code>#2b2b2e</code>+<code>#b3261e</code>）</td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市厢式货车（快递/搬家用），低模
+【规模】长 5.4 m、宽 2.0 m、高 2.4 m
+【结构】白色方形货厢 + 驾驶室 + 侧滑门 + 后双开门 + 车顶导流罩
+【中国要素】车身侧面涂装条与"快递"字样位置、后门反光贴、雨棚式尾板（可选）
+【技术】单位米，+Y 向上，车头朝 −Z，轮胎接地 y=0，轴心在地面中心
+【脏污等级】D1（涂装磨损，仍在使用；⛔ 不许车身大面积掉漆、不许门关不上）
+【写实】车漆有涂装磨损与掉漆点、后门有手印与污痕、下裙边泥、保险杠有轻微撞痕
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构；材质 ≤6 槽；每区给 hex
+【负向】真实品牌 logo, 冷链保温箱, 欧式厢货, 打开的车门</code></pre>
+<p><strong>验收</strong>：货厢是<strong>方正盒子</strong>（不是流线型）；侧面涂装是独立 <code>sign</code> 面。</p>
+<hr>
+<h3 id="2-5-veh_ebike-电动自行车-中国交通主体-数量最多">2.5 veh_ebike 电动自行车（<strong>中国交通主体，数量最多</strong>）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td><strong>长 1.8 × 宽 0.7 × 高 1.15 m</strong></td></tr><tr><td>面数</td><td>≤ 600</td></tr><tr><td>槽位</td><td><code>body</code> 车架（黑 <code>#2b2b2e</code> / 白 <code>#e8e8e6</code> / 红 <code>#b3261e</code>）· <code>metal</code> 轮毂/车篮 <code>#9aa0a6</code> · <code>base</code> 踏板与电池盒 <code>#3a3a3c</code> · <code>sign</code> 尾灯/挡风被 <code>#d9b23a</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市电动自行车（踏板式），极低模
+【规模】长 1.8 m、宽 0.7 m、高 1.15 m（含后视镜）
+【结构】踏板车架 + 前车筐 + 座椅 + 后货架 + 两轮 + 车把 + 脚踏
+【中国要素】前车筐（必备）、后座/货架、**冬季挡风被**（可选变体）、后视镜
+【技术】单位米，+Y 向上，车头朝 −Z，轮胎接地 y=0，轴心在地面中心
+【脏污等级】D1（塑料褪色、车筐变形；⛔ 不许车架锈断、不许缺轮）
+【写实】塑料件褪色发白（尤其挡泥板）、车筐有变形与锈、贴纸磨损、轮胎侧壁脏
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构（轮子必须是圆的）；材质 ≤6 槽；每区给 hex
+【负向】摩托车, 摩托引擎, 骑手, 品牌 logo, 高模细节（螺丝/线缆）</code></pre>
+<p><strong>验收</strong>：远看能分出"踏板车 + 车筐"；T5 白模仍像两轮车而非自行车。</p>
+<hr>
+<h3 id="2-6-ped_person-行人-4-个变体">2.6 ped_person 行人（4 个变体）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td><strong>高 1.70 m</strong>（另出 1.60 / 1.80 两个高度变体）</td></tr><tr><td>面数</td><td>≤ 400</td></tr><tr><td>槽位</td><td><code>body</code> 上衣（4 色：灰 <code>#8d9296</code> / 深蓝 <code>#2f4f7a</code> / 米 <code>#cfc6b8</code> / 黑 <code>#2b2b2e</code>）· <code>base</code> 裤装 <code>#3a3a3c</code> · <code>metal</code> 无 · <code>sign</code> 提袋/背包 <code>#b3261e</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市行人，极低模剪影级
+【规模】高 1.70 m，肩宽 0.45 m
+【结构】头（球/简化）+ 躯干 + 两臂 + 两腿 + 可选背包/提袋
+【要求】**不做面部、不做手指、不做衣褶**；靠比例与色块识别
+【技术】单位米，+Y 向上，正面朝 −Z，脚底 y=0，轴心在脚下中心
+【变体】4 种上衣色 + 2 个身高 + 3 个姿态（走/站/拎袋）
+【脏污等级】D1（衣物有色差与褶皱；⛔ 不许破衣烂衫、不许脏得像流浪汉）
+【写实】衣物有褶皱与色差（不许纯色平涂）、鞋子脏、包/袋有下垂感；不做面部、手指、衣褶几何（只做剪影），靠比例与色块
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】几何独立表达结构；材质 ≤6 槽；每区给 hex
+【负向】写实人脸, 手指, 头发细节, 影子, 多人组合</code></pre>
+<p><strong>验收</strong>：1.7 m 高、比例正常（不是大头娃娃）；4 个变体放在一起<strong>不会像同一人重复</strong>。</p>
+<hr>
+<h2 id="三-交通设施与标识-4-个">三、交通设施与标识（4 个）</h2>
+<h3 id="3-1-tf_traffic_light-信号灯-悬臂式">3.1 tf_traffic_light 信号灯（悬臂式）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td>立柱 <strong>高 6.5 m</strong>，悬臂 <strong>长 8 m</strong>，灯组 3 头</td></tr><tr><td>面数</td><td>≤ 400</td></tr><tr><td>槽位</td><td><code>body</code> 立柱与悬臂 <code>#4f5a5f</code> · <code>metal</code> 灯箱外壳 <code>#2b2b2e</code> · <code>sign</code> 灯面（红 <code>#c62828</code> / 黄 <code>#e8b21a</code> / 绿 <code>#2e7d32</code>）· <code>base</code> 基础 <code>#a9a59d</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市悬臂式信号灯
+【规模】立柱高 6.5 m（含基础 0.3 m）、悬臂长 8 m、灯箱 3 头横排
+【结构】圆形立柱 + 横臂 + 3 个灯箱（红黄绿）+ 背面遮光罩 + 基础
+【中国要素】横排三灯（不是竖排）、悬臂式（跨车道）、灯箱背面遮光罩
+【技术】单位米，+Y 向上，灯面朝 −Z，轴心在立柱底面中心
+【脏污等级】D1–D2（灯罩积灰、杆件锈点；⛔ 不许灯罩破损、不许杆件倾斜）
+【写实】灯罩积灰且内壁有飞虫点、杆件底部有锈与撞痕、横臂有焊点、反光膜褪色
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】灯面必须是独立面（sign 槽三色）；材质 ≤6 槽；每区给 hex
+【负向】竖排灯, 欧式灯柱, 全部红灯, 无悬臂, 雕塑装饰</code></pre>
+<p><strong>验收</strong>：横臂跨出车道；灯面是<strong>三块独立面</strong>（这样才能分别亮）。</p>
+<hr>
+<h3 id="3-2-tf_street_name-路名牌-蓝底白字-拼音">3.2 tf_street_name 路名牌（<strong>蓝底白字 + 拼音</strong>）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td>版面 <strong>1.6 × 0.45 m</strong>，立杆 <strong>高 2.6 m</strong></td></tr><tr><td>面数</td><td>≤ 200</td></tr><tr><td>槽位</td><td><code>body</code> 立杆 <code>#8d9296</code> · <code>sign</code> 版面蓝 <code>#0d47a1</code> · <code>base</code> 基础 <code>#a9a59d</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市路名牌（单柱式）
+【规模】立杆高 2.6 m、版面 1.6 × 0.45 m（双面）
+【内容】蓝底白字路名 + 下方拼音（如「人民路 RENMIN RD.」），四角圆角
+【结构】立杆 + 双面版面 + 顶部小盖
+【技术】单位米，+Y 向上，版面法线朝 ±Z（双面），轴心在立杆底面中心
+【要求】文字烘焙进 sign 贴图；版面**双面都必须有内容**
+【脏污等级】D2（牌面有贴纸残胶；⛔ 不许牌面变形、不许字迹不可读）
+【写实】牌面有小广告残胶与贴纸、边框锈、背面比正面更旧（双面要求）、立柱根部溅泥
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】T3 纯色时任是"蓝块 + 杆"，位置可辨；材质 ≤6 槽；每区给 hex
+【负向】英文路名无拼音, 竖排, 欧式雕花, 单面</code></pre>
+<p><strong>验收</strong>：双面都有版面；拼音在第二行；蓝色是标准路名牌蓝。</p>
+<hr>
+<h3 id="3-3-tf_bus_sign-公交站牌-与第一批的候车亭配套">3.3 tf_bus_sign 公交站牌（与第一批的候车亭配套）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td>牌面 <strong>宽 0.9 × 高 2.2 m</strong>，顶部站名牌 0.9 × 0.45 m</td></tr><tr><td>面数</td><td>≤ 300</td></tr><tr><td>槽位</td><td><code>body</code> 立杆 <code>#8d9296</code> · <code>sign</code> 站名牌蓝 <code>#0d47a1</code> · <code>base</code> 线路板白 <code>#f2f2f2</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市公交站牌（独立式，与候车亭分开）
+【规模】总高 2.6 m；顶部站名牌 0.9 × 0.45 m；下方线路板 0.9 × 1.6 m
+【内容】顶部蓝底白字站名；线路板列出线路号 + 首末站 + 首末班时间（小字，可读性靠色块）
+【结构】单柱 + 双面站名牌 + 线路板 + 顶部小檐
+【技术】单位米，+Y 向上，双面，轴心在立杆底面中心
+【脏污等级】D2（线路板被摸亮、贴纸叠加；⛔ 不许板面缺失、不许字迹不可读）
+【写实】线路板被反复触摸发亮且有污指印、贴纸层层叠加（新旧不一）、边框氧化
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】T3 纯色时是"蓝块 + 白板 + 杆"；材质 ≤6 槽；每区给 hex
+【负向】欧式站牌, 单面, 无线路板, 电子屏（另做）</code></pre>
+<p><strong>验收</strong>：站名牌与线路板<strong>两块分开</strong>；从背后也能看到内容。</p>
+<hr>
+<h3 id="3-4-tf_lamp-路灯-双臂式-主路用">3.4 tf_lamp 路灯（双臂式，主路用）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>尺寸</td><td>杆 <strong>高 10 m</strong>，双挑臂各 <strong>长 2.5 m</strong></td></tr><tr><td>面数</td><td>≤ 250</td></tr><tr><td>槽位</td><td><code>body</code> 杆体 <code>#6f7377</code> · <code>metal</code> 灯具 <code>#9aa0a6</code> · <code>sign</code> 灯面亮色 <code>#e8d9a8</code> · <code>base</code> 基础 <code>#a9a59d</code></td></tr></tbody></table></div>
+<p><strong>规格描述</strong></p>
+<pre class="code"><code>中国城市主干道路灯（双臂对称）
+【规模】杆高 10 m，两侧挑臂各 2.5 m，灯头下倾 15°
+【结构】圆台形杆 + 双侧挑臂 + 灯头 + 检修门 + 基础
+【中国要素】双臂对称、灯头扁长方形、杆身下部检修门、杆顶小避雷针
+【技术】单位米，+Y 向上，挑臂沿 ±X，轴心在底面中心
+【脏污等级】D1–D2（镀锌层白锈、底部溅泥；⛔ 不许灯杆锈穿、不许灯头缺失）
+【写实】灯杆镀锌层有白锈斑、底部 1 m 内溅泥、灯头罩有积灰与虫尸点、检修门有锈
+【必须交付】albedo + normal + ORM（SOURCE.md 写明打包方式）；checks/t1 t3 t5 + real（含 1.8 m 人形参照）
+【降级要求】灯头是独立面（sign 槽可夜间发光）；材质 ≤6 槽；每区给 hex
+【负向】单臂（另出变体）, 欧式铸铁灯柱, 装饰花纹, 吊挂灯笼</code></pre>
+<p><strong>验收</strong>：双臂对称；灯头可单独发光（独立槽）；沿路排列时朝向一致。</p>
+<hr>
+<h2 id="四-交付检查表">四、交付检查表</h2>
+<ul><li>[ ] 16 个资产，命名 <code>&amp;lt;id&amp;gt;_v01_lod0/lod1.glb</code></li><li>[ ] 每个附 <code>.slots.json</code>（hex 主色）</li><li>[ ] <strong>桥梁/道路/隔音屏的接缝在 ±X，拼 5 段不可见缝</strong></li><li>[ ] <strong>车辆轮胎是实体圆柱、接地 y=0、车头朝 −Z</strong></li><li>[ ] <strong>标识双面都有内容、杆件独立</strong></li><li>[ ] 面数：车 ≤1200/2500、电动车 ≤600、行人 ≤400、标识 ≤400</li><li>[ ] 每个都出 <strong>T1 / T3 / T5</strong> 三张检查图</li><li>[ ] 涂装<strong>不得使用真实品牌 logo</strong>（用相似但虚构的配色）</li><li>[ ] <strong>材质全部引用 <code>matlib</code></strong>（不许现造）</li><li>[ ] <strong>每个材质有 normal + ORM</strong></li><li>[ ] <strong>每条提示词的 <code>【写实】</code> 行都做了</strong>（逐条对，不许跳）</li><li>[ ] 每个出 **<code>*_real.png</code>**（统一渲染预设 + 1.8 m 人形参照）</li><li>[ ] <code>SOURCE.md</code> 声明 normal/ORM 打包方式</li></ul>
+<p>⚠ 本批最容易翻车的三处：<strong>做成整条桥 / 车轮做成贴图圆片 / 标识只有单面</strong>。</p>
+<p>⚠ 写实化最容易翻车的两处：<strong>又用一套 PBR 参数打天下 / <code>【写实】</code> 行当装饰没做</strong>。</p>
+<pre class="code" data-lang="bash"><code>python bench/check_assets.py assets/models      # 技术项
+python bench/check_realism.py assets/models     # 写实项（R-1~R-8）</code></pre>
+<p>两项都 0 FAIL 才算交付。人眼 V-1~V-6（<code>realism-spec.md</code> §8.2）逐条打勾。</p>
+<hr>
+<h2 id="五-下一批-预告">五、下一批（预告）</h2>
+<p>第三批：服务设施 9（幼儿园 / 小学 / 医院门诊 / 派出所 / 菜市场 / 地铁出入口 / 文化馆 / 图书馆 / 体育馆）</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-24</strong>：<strong>加写实约束</strong>（开发者：第一批"像动画片"，要求"几乎跟现实一样"）。</li></ul>
+<p>  ① 新增 §〇·四 写实要求（材质必须引用 matlib、必须有 normal+ORM、去饱和、脏污层、统一渲染预设）；   ② <strong>16 条提示词逐条插入 <code>【写实】</code> 行</strong>（写物理事实，不是风格词：哪脏、多深、什么痕迹）；   ③ 交付检查表加 5 项写实条目 + 两个检查脚本命令。</p>
+<ul><li><strong>2026-11-23</strong>：首版。16 个资产（道路与桥隧 6 / 车辆与行人 6 / 标识 4）。</li></ul>
+<p>  关键新增三条铁律：<strong>桥梁是 30 m 标准跨模块（接缝在 ±X）</strong>、<strong>车辆面数只有建筑的 1/20 且车轮必须是实体</strong>、   <strong>标识双面可见且杆件独立</strong>；路口只出 2D 俯视贴花（不做路面模型）。</p><div class="pager"><a href="assets-batch-01-fix.html">← 第一批返修单（8 个模型）</a><a href="design-16-progressive-play.html">16 · 渐进可玩：按城市等级切片，边做边玩 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#〇-本批三条额外铁律-比第一批更严">〇、本批三条额外铁律（比第一批更严）</a><a class="l3" href="#〇-一-桥梁-道路是模块-不是一整条">〇·一 桥梁/道路是模块，不是一整条</a><a class="l3" href="#〇-二-车辆-行人是实例-面数预算只有建筑的-1-20">〇·二 车辆/行人是实例，面数预算只有建筑的 1/20</a><a class="l3" href="#〇-三-标识要双面可见-杆件独立">〇·三 标识要双面可见 + 杆件独立</a><a class="l3" href="#〇-四-写实要求-本批新增-第一批的失分点">〇·四 写实要求（本批新增，第一批的失分点）</a><a class="l2" href="#一-道路与桥隧-6-个">一、道路与桥隧（6 个）</a><a class="l3" href="#1-1-rd_elevated-高架桥-箱梁-独柱墩-防撞墙">1.1 rd_elevated 高架桥（箱梁 + 独柱墩 + 防撞墙）</a><a class="l3" href="#1-2-rd_bridge-跨河桥-中小跨梁桥">1.2 rd_bridge 跨河桥（中小跨梁桥）</a><a class="l3" href="#1-3-br_arch-拱桥-中国城市的-老桥-形象">1.3 br_arch 拱桥（中国城市的"老桥"形象）</a><a class="l3" href="#1-4-rd_barrier-隔音屏-高架-快速路">1.4 rd_barrier 隔音屏（高架/快速路）</a><a class="l3" href="#1-5-rd_tunnel-隧道口-只做洞门">1.5 rd_tunnel 隧道口（只做洞门）</a><a class="l3" href="#1-6-rd_junction_decal-路口铺装贴花-2d-不是模型">1.6 rd_junction_decal 路口铺装贴花（2D，不是模型）</a><a class="l2" href="#二-车辆与行人-6-个">二、车辆与行人（6 个）</a><a class="l3" href="#2-1-veh_sedan-轿车-4-个变体">2.1 veh_sedan 轿车（4 个变体）</a><a class="l3" href="#2-2-veh_bus-城市公交-2-个变体-单机-铰接">2.2 veh_bus 城市公交（2 个变体：单机 / 铰接）</a><a class="l3" href="#2-3-veh_truck-重型卡车-牵引车-挂车或自卸">2.3 veh_truck 重型卡车（牵引车 + 挂车或自卸）</a><a class="l3" href="#2-4-veh_van-厢式货车-快递-搬家">2.4 veh_van 厢式货车（快递/搬家）</a><a class="l3" href="#2-5-veh_ebike-电动自行车-中国交通主体-数量最多">2.5 veh_ebike 电动自行车（中国交通主体，数量最多）</a><a class="l3" href="#2-6-ped_person-行人-4-个变体">2.6 ped_person 行人（4 个变体）</a><a class="l2" href="#三-交通设施与标识-4-个">三、交通设施与标识（4 个）</a><a class="l3" href="#3-1-tf_traffic_light-信号灯-悬臂式">3.1 tf_traffic_light 信号灯（悬臂式）</a><a class="l3" href="#3-2-tf_street_name-路名牌-蓝底白字-拼音">3.2 tf_street_name 路名牌（蓝底白字 + 拼音）</a><a class="l3" href="#3-3-tf_bus_sign-公交站牌-与第一批的候车亭配套">3.3 tf_bus_sign 公交站牌（与第一批的候车亭配套）</a><a class="l3" href="#3-4-tf_lamp-路灯-双臂式-主路用">3.4 tf_lamp 路灯（双臂式，主路用）</a><a class="l2" href="#四-交付检查表">四、交付检查表</a><a class="l2" href="#五-下一批-预告">五、下一批（预告）</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

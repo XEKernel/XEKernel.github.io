@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02 · 路网与地块：三表、围合面、可达性 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" class="on" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="02-路网与地块-三表-围合面-可达性">02 · 路网与地块：三表、围合面、可达性</h1>
+<blockquote>📌 <strong>涉及性能取舍时，结论统一登记在 <code>docs/design/19-tradeoffs.md</code></strong>；本文只说明"要什么"，不重复决定"砍什么"。</blockquote>
+<blockquote>依据：<code>decisions.md</code> <strong>RD6</strong>（地块由道路围合生成）/ <strong>RD1</strong>（规模）/ <strong>RD8</strong>（cs1_replica 不搬）。<br>本系统是<strong>全项目唯一的空间来源</strong>：没有它，<code>zoning</code> 没有对象可分区（<code>11-scale.md</code> §2.3）。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#二四张表不是三张">二、四张表（不是三张）</a></li><li><a href="#三数据契约">三、数据契约</a></li><li><a href="#三五画路交互与合法性2026-11-17-补">三·五、画路交互与合法性（2026-11-17 补）</a></li><li><a href="#三六曲线道路的几何与渲染2026-11-18-新增参考-cs1-逆向源码">三·六、曲线道路的几何与渲染（2026-11-18 新增，参考 CS1 逆向源码）</a></li><li><a href="#三七桥梁与隧道2026-11-18-新增">三·七、桥梁与隧道（2026-11-18 新增）</a></li><li><a href="#三八纵断面与路基路面高程--地形高程2026-11-18-新增">三·八、纵断面与路基：路面高程 ≠ 地形高程（2026-11-18 新增）</a></li><li><a href="#三九地形修改改地形不改路面2026-11-18-新增">三·九、地形修改：改地形不改路面（2026-11-18 新增）</a></li><li><a href="#三十走廊与断面组合一次画出组合型道路2026-11-25-新增">三·十、走廊与断面组合：一次画出组合型道路（2026-11-25 新增）</a></li><li><a href="#四更新流程">四、更新流程</a></li><li><a href="#五验收点">五、验收点</a></li><li><a href="#六待定">六、待定</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td>节点 / 路段 / 车道三表</td><td>车辆与行人（在 <code>traffic</code>）</td></tr><tr><td><strong>路网围合面</strong> <code>block_face</code>（→ 交给 <code>zoning</code> 细分成 parcel）</td><td>地块细分与用途（在 <code>zoning</code>）</td></tr><tr><td>道路等级与分层（快速路 / 主干 / 次干 / 支路）</td><td>地价（在 <code>finance</code>）</td></tr><tr><td><strong>可达性场</strong> <code>accessibility</code>（R1 的主输入）</td><td>拥堵（在 <code>traffic</code>）</td></tr><tr><td>玩家编辑的合法性校验</td><td>施工与造价（在 <code>finance</code>）</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-四张表-不是三张">二、四张表（不是三张）</h2>
+<div class="tw"><table><thead><tr><th>表</th><th>内容</th><th>数量级（2500 km²）</th></tr></thead><tbody><tr><td><strong>节点</strong> <code>node</code></td><td>交叉口 / 端点，<code>x, y</code>（int32 分米）</td><td>5 万–20 万</td></tr><tr><td><strong>路段</strong> <code>segment</code></td><td>连接两个节点，带等级、长度、车道数</td><td><strong>15 万</strong></td></tr><tr><td><strong>车道</strong> <code>lane</code></td><td>路段的可行驶单元，带宽度与转向</td><td>15 万 × 2–8</td></tr><tr><td><strong>围合面</strong> <code>block_face</code></td><td><strong>由路段围成的多边形</strong>（R6）</td><td><strong>2 万–6 万</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>第四张表是 R6 带来的</strong>，原来的设计只有三表。没有它整条链条断掉：</p>
+<pre class="code"><code>玩家画路 → 三表（点/线/道） → 求面 → block_face → zoning 细分 parcel → 建筑
+                                    ↑ 缺这一环，后面全断</code></pre>
+<hr>
+<h2 id="三-数据契约">三、数据契约</h2>
+<h3 id="3-1-node">3.1 node</h3>
+<div class="tw"><table><thead><tr><th>字段</th><th>类型</th><th>单位</th><th>说明</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>u32</code></td><td>—</td><td>稳定 ID，<strong>不能靠坐标索引</strong></td></tr><tr><td><code>x</code> / <code>y</code></td><td><code>i32</code></td><td>0.1 m</td><td>世界坐标</td></tr><tr><td><code>seg_range</code></td><td><code>u32, u16</code></td><td>—</td><td>该节点连接的路段（SoA 区间）</td></tr><tr><td><code>kind</code></td><td><code>u8</code></td><td>—</td><td>0 普通 / 1 交叉口 / 2 环岛 / 3 匝道</td></tr></tbody></table></div>
+<h3 id="3-2-segment">3.2 segment</h3>
+<div class="tw"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>u32</code></td><td>—</td></tr><tr><td><code>node_a</code> / <code>node_b</code></td><td><code>u32</code></td><td>端点</td></tr><tr><td><code>class</code></td><td><code>u8</code></td><td><strong>0 快速路 H / 1 主干 M / 2 次干 M / 3 支路 L</strong></td></tr><tr><td><code>length_dm</code></td><td><code>u32</code></td><td>长度（分米）</td></tr><tr><td><code>lanes</code></td><td><code>u8</code></td><td>车道数（1–8）</td></tr><tr><td><code>lanes_per_dir</code></td><td><code>u8</code></td><td>单向车道数</td></tr><tr><td><code>speed_limit</code></td><td><code>u8</code></td><td>km/h（快速路 80 / 主干 60 / 次干 40 / 支路 30）</td></tr><tr><td><strong><code>road_h_a</code> / <code>road_h_b</code></strong></td><td><code>i16</code></td><td><strong>路面设计高程（分米）</strong>。⚠ <strong>不是地形高程</strong>（§3.8.2）</td></tr><tr><td><strong><code>kind</code></strong></td><td><code>u8</code></td><td><strong>0 路基 / 1 桥梁 / 2 隧道</strong>（由填挖深度自动推导，§3.8.4）</td></tr><tr><td><code>max_grade_permille</code></td><td><code>u8</code></td><td>该段纵坡（千分比），校验用</td></tr><tr><td><code>curve_samples</code></td><td><code>u32, u16</code></td><td>曲线采样点（表现层用，sim 不读）</td></tr><tr><td><strong><code>corridor_id</code></strong></td><td><code>u32</code></td><td><strong>所属走廊</strong>（2026-11-25 加，§3.10.6）；独立单条路 = 自己的 corridor</td></tr><tr><td><strong><code>band_index</code></strong></td><td><code>u8</code></td><td><strong>第几条带</strong>（0 = 主）；同 corridor 内 band 不共享 node</td></tr><tr><td><strong><code>offset_dm</code></strong></td><td><code>i16</code></td><td><strong>相对 corridor 中线的横向偏移</strong>（分米，可负）</td></tr><tr><td><strong><code>name_id</code></strong></td><td><code>u32</code></td><td><strong>路名引用</strong>（0 = 未命名）。⚠ 路名是独立实体、<strong>不在 segment 上存文本</strong>，见 <code>18-signage</code> §二</td></tr></tbody></table></div>
+<p>⚠ <code>curve_samples</code> 是<strong>位置偏移</strong>，不是路径；<code>sim</code> 只用 <code>length_dm</code> 与 <code>node_a/b</code>。 ⚠ <strong><code>road_h</code> 与地形高程是两回事</strong>：地形由 <code>map</code> 提供，<code>road_h</code> 是设计值， 两者之差就是填挖深度（§3.8.2）。<strong>存存档必须两个都有。</strong></p>
+<h3 id="3-3-block_face-r6-的核心产出">3.3 block_face（R6 的核心产出）</h3>
+<div class="tw"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>id</code></td><td><code>u32</code></td><td>稳定 ID</td></tr><tr><td><code>vertex_range</code></td><td><code>u32, u16</code></td><td>顶点（顺序排列，逆时针）</td></tr><tr><td><code>area_dm2</code></td><td><code>u64</code></td><td>面积（平方分米）→ 平方米要 ÷100</td></tr><tr><td><code>parcel_range</code></td><td><code>u32, u16</code></td><td>细分出的 parcel 区间</td></tr><tr><td><code>edge_segments</code></td><td><code>u32, u16</code></td><td>该面由哪些路段围成（<strong>沿街面宽计算的依据</strong>）</td></tr></tbody></table></div>
+<p><strong>求面算法</strong>：半边结构（DCEL）。</p>
+<ol><li>从每个 <code>segment</code> 生成两条有向半边</li><li>在每个节点按极角排序，做 next/prev 链接</li><li>遍历出所有面，丢弃外部面（面积为负或逆时针判反）</li><li>复杂度和为 <strong>O(E log E)</strong>，只在玩家编辑时跑，<strong>不在每 tick 跑</strong></li></ol>
+<p>⚠ <strong>求面必须在 <code>road</code> 里做完</strong>，<code>zoning</code> 只接收成品。理由：它是拓扑问题，不是分区问题。</p>
+<h3 id="3-4-accessibility-r1-的主输入">3.4 accessibility（R1 的主输入）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>内容</th></tr></thead><tbody><tr><td>表示</td><td><strong>50 m 派生栅格</strong>（<code>u16</code>，0–65535），随 <code>block_face</code> 重算</td></tr><tr><td>算法</td><td>从"高等级路入口 + 公共设施"出发做<strong>多源最短路</strong>，按距离衰减</td></tr><tr><td>刷新</td><td>玩家改路时重算（增量）；否则不重算</td></tr><tr><td>备注</td><td><strong>不进存档</strong>，读档后重算（<code>11-scale.md</code> §2.4）</td></tr></tbody></table></div>
+<hr>
+<h2 id="三-五-画路交互与合法性-2026-11-17-补">三·五、画路交互与合法性（2026-11-17 补）</h2>
+<blockquote>画路是玩家<strong>做得最多</strong>的动作。它必须是"顺手的"，同时"不许乱来"。</blockquote>
+<h3 id="3-5-1-三种画法">3.5.1 三种画法</h3>
+<div class="tw"><table><thead><tr><th>画法</th><th>操作</th><th>适合</th><th>自动行为</th></tr></thead><tbody><tr><td><strong>拖拽曲线</strong></td><td>按住拖动，松手成路</td><td>主干、快速路</td><td>自动生成三次贝塞尔，<strong>自动吸附到已有路口</strong></td></tr><tr><td><strong>直线段</strong></td><td>点击两点</td><td>支路、方格网</td><td>自动平分车道、自动对齐</td></tr><tr><td><strong>延伸</strong></td><td>从既有路端点往外拖</td><td>扩张</td><td>继承原路等级与车道数</td></tr></tbody></table></div>
+<p>⚠ <strong>必须自动吸附</strong>：路口没对齐会造成"断头路 + 面求不出来"，玩家会以为游戏坏了。 吸附半径 <strong>8 m</strong>，吸附时给视觉提示（高亮圆点）。</p>
+<p>⚠ <strong>不用"自由曲线"</strong>：CS 的曲线工具很强，但那是高级玩家的需求。 本体只做"够用"，<strong>复杂曲线交给 Mod</strong>（<code>13-player-loop</code> §三）。</p>
+<h3 id="3-5-2-合法性-五条-每条都带具体理由">3.5.2 合法性：五条，每条都带具体理由</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>禁止</th><th>提示</th></tr></thead><tbody><tr><td>1</td><td>穿水体</td><td>「需要桥梁，当前未解锁」/「跨度 320 m 超出现有条件」</td></tr><tr><td>2</td><td>穿建筑</td><td>「此处有 3 栋建筑，需先拆除（¥X 万）」→ <strong>允许一键拆除</strong></td></tr><tr><td>3</td><td>穿 <code>E</code> 类基本农田</td><td>「需要办理占补平衡（¥X 万）」</td></tr><tr><td>4</td><td>坡度过陡</td><td>「坡度 14 %，超过道路上限 10 %」</td></tr><tr><td>5</td><td>资金不足</td><td>「需要 ¥12.4 万，当前余额 ¥3.1 万」</td></tr></tbody></table></div>
+<p>⚠ <strong>第 2 条允许"一键拆除"</strong>：如果不给，玩家为了修一条路要手动拆 20 栋楼， 体验会崩。<strong>代价是钱，不是麻烦。</strong></p>
+<h3 id="3-5-3-造价与拆迁">3.5.3 造价与拆迁</h3>
+<pre class="code"><code>造价 = 长度 × 每米单价(按等级) + 拆迁补偿 + 桥梁/隧道附加</code></pre>
+<div class="tw"><table><thead><tr><th>等级</th><th>每米单价</th><th>说明</th></tr></thead><tbody><tr><td>支路 <code>L</code></td><td>低</td><td>3.5–5 m 宽</td></tr><tr><td>次干 <code>M2</code></td><td>中</td><td>双向 4 车道</td></tr><tr><td>主干 <code>M1</code></td><td>高</td><td>双向 6 车道</td></tr><tr><td>快速路 <code>H</code></td><td><strong>最高</strong></td><td><strong>需立交，不能平交</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>快速路不许平交</strong>：与任何既有道路相交必须是立交（自动生成匝道或<strong>拒绝</strong>）。 这条不做，快速路会变成"最堵的路"。</p>
+<h3 id="3-5-4-拆除与级联">3.5.4 拆除与级联</h3>
+<div class="tw"><table><thead><tr><th>行为</th><th>级联</th></tr></thead><tbody><tr><td>拆一条路</td><td>四张表同步删 → <strong>受影响的面重求</strong> → <code>zoning</code> 收到"面变了"</td></tr><tr><td>面消失</td><td>其下 parcel 与建筑<strong>标记为待处理</strong>（不自动删，等玩家决策）</td></tr><tr><td>面合并</td><td>两个面合成一个 → parcel 重新细分</td></tr></tbody></table></div>
+<p>⚠ <strong>面消失不自动删建筑</strong>：玩家可能想保留那块地上的房子（变成"飞地"）。 让玩家选，比自动删更安全。</p>
+<h2 id="三-六-曲线道路的几何与渲染-2026-11-18-新增-参考-cs1-逆向源码">三·六、曲线道路的几何与渲染（2026-11-18 新增，参考 CS1 逆向源码）</h2>
+<blockquote>用户：「最应该"抄"的是 CS1 的道路修建系统，尤其是曲线道路。说起来简单，<br>就是画贝塞尔曲线，<strong>但是道路也是一个模型，怎么弯曲模型还不别扭也是重点需要学习的地方</strong>。」</blockquote>
+<p><strong>这是本篇之前完全没写的一节</strong>——<code>02-road</code> 只写了图和面，没写"路长什么样"。</p>
+<h3 id="3-6-1-数据模型-只存-4-个量-不存采样点">3.6.1 ⭐ 数据模型：只存 4 个量，不存采样点</h3>
+<p>CS1 的 <code>NetSegment</code> 只有这几个几何字段（<code>NetSegment.cs:83–87</code>）：</p>
+<pre class="code" data-lang="csharp"><code>public Vector3 m_middlePosition;
+public Vector3 m_startDirection;
+public Vector3 m_endDirection;
+// 加上两端 NetNode 的 m_position</code></pre>
+<p><strong>三次贝塞尔由它们反推</strong>（<code>Bezier3(a, b, c, d)</code>）：</p>
+<div class="tw"><table><thead><tr><th>控制点</th><th>值</th></tr></thead><tbody><tr><td><code>a</code></td><td>起点节点位置</td></tr><tr><td><code>b</code></td><td><code>a + m_startDirection × k</code></td></tr><tr><td><code>c</code></td><td><code>d + m_endDirection × k</code></td></tr><tr><td><code>d</code></td><td>终点节点位置</td></tr></tbody></table></div>
+<p>⭐ <strong>存档只存 4 个向量，不存曲线采样点。</strong> 曲线在任何时候按 <code>Bezier3.Position(t)</code> / <code>Tangent(t)</code> 现算 —— 存档小、插值永远平滑。 ⚠ <strong>我们如果按"每 2 m 存一个点"来存路，存档会膨胀 50 倍，而且改曲线要重算全部点。</strong></p>
+<h3 id="3-6-2-弯曲不是-拉伸模型-是-沿曲线扫掠断面">3.6.2 ⚠ 弯曲不是"拉伸模型"，是"沿曲线扫掠断面"</h3>
+<p>这是本节最重要的一条。<strong>两种做法的差别直接决定路"别扭不别扭"</strong>：</p>
+<div class="tw"><table><thead><tr><th>做法</th><th>结果</th></tr></thead><tbody><tr><td>❌ 拿直的静态 mesh，用 scale / rotation 去凑</td><td><strong>被拉长、接缝错位、边线歪</strong>——就是"别扭"的来源</td></tr><tr><td>✅ <strong>按曲线重新生成顶点</strong>（sweep 扫掠）</td><td>宽度恒定、边线跟随、贴图不拉伸</td></tr></tbody></table></div>
+<p><strong>扫掠的算法</strong>：</p>
+<pre class="code"><code>for t in 0..1 按弧长等距采样:
+    pos  = Bezier3.Position(t)
+    tan  = Bezier3.Tangent(t).normalized()
+    side = cross(tan, up).normalized()      # 横向
+    for each 断面点 p in cross_section:
+        顶点 = pos + side * p.x + up * p.y</code></pre>
+<p>⚠ <strong>必须按弧长等距采样，不能按参数 <code>t</code> 等距</strong>： 贝塞尔的 <code>t</code> 不是匀速的——<strong>弯的地方点在疏、直的地方点在密</strong>， 按 <code>t</code> 采样会导致弯道顶点过少、直线段顶点过多。</p>
+<h3 id="3-6-3-断面-cross-section-一条-2d-折线">3.6.3 断面（cross-section）：一条 2D 折线</h3>
+<div class="tw"><table><thead><tr><th>段</th><th>内容</th></tr></thead><tbody><tr><td>中心线</td><td>车道分隔线</td></tr><tr><td>车道</td><td>按等级 2/4/6 条</td></tr><tr><td>路缘石</td><td>混凝土，抬升 15 cm</td></tr><tr><td>人行道</td><td>宽度按等级</td></tr><tr><td>绿化带 / 隔离带</td><td>可选</td></tr></tbody></table></div>
+<p>⚠ <strong>断面模板进 <code>config/sim/road.json</code>，不写死</strong>（宪法 L5）。 ⚠ <strong>同一个断面沿曲线扫掠 ⇒ 宽度天然恒定</strong>，不会出现"弯道变窄"。</p>
+<h3 id="3-6-4-曲率过大就插节点-cs1-的-bend-节点">3.6.4 ⭐ 曲率过大就插节点（CS1 的 Bend 节点）</h3>
+<p>CS1 有两个开关（<code>NetInfo.cs:280–282, 738–740</code>）： <code>m_enableBendingSegments</code> / <code>m_disableBendNodes</code>，以及 <code>NetNode.Flags.Bend</code>。</p>
+<p><strong>含义</strong>：段内曲率超过阈值时，<strong>把一段拆成两段，中间插一个 <code>Bend</code> 节点</strong>。</p>
+<div class="tw"><table><thead><tr><th>好处</th><th>说明</th></tr></thead><tbody><tr><td>每段曲率可控</td><td>单段弯曲过大时 mesh 会自交、翻面</td></tr><tr><td>存档小</td><td>仍然每段只存 4 个量</td></tr><tr><td>附属件可复用</td><td>护栏、路灯、车道线按段重复</td></tr></tbody></table></div>
+<p>⚠ <strong>阈值要按"最大曲率"而不是"总转角"</strong>：一个很长的缓弯不会自交， 但一个很短的急弯会。<strong>用曲率半径判定</strong>（如半径 &lt; 2 × 路宽 ⇒ 必须插节点）。</p>
+<h3 id="3-6-5-交叉口-cs1-不是预制件-是-裁剪-条件变体-缩放">3.6.5 ⚠ 交叉口：CS1 <strong>不是预制件</strong>，是「裁剪 + 条件变体 + 缩放」</h3>
+<blockquote>⚠ <strong>本节 2026-11-18 修正过一次。</strong> 初版写的是"CS1 用预制路口 mesh 按连接数分类"，<br><strong>这是错的</strong>。用户指出「开启无碰撞模组时可以 8 条路接一个路口」，查源码后确认：</blockquote>
+<div class="tw"><table><thead><tr><th>机制</th><th>源码位置</th><th>作用</th></tr></thead><tbody><tr><td><strong><code>m_clipSegmentEnds</code> + <code>GetEndRadius()</code></strong></td><td><code>NetSegment.cs:1594, 1639</code>；<code>NetAI.cs:980</code></td><td><strong>段端点在路口处被裁成圆头</strong>，路面本身是参数化的</td></tr><tr><td><strong><code>m_minOtherTags</code> / <code>m_maxSameTags</code> / <code>m_maxOtherTags</code></strong></td><td><code>NetInfo.cs:397–407</code>，<strong><code>[ValueRange(0, 8)]</code></strong></td><td>节点装饰件的<strong>渲染条件按"连接段数 0–8 + 标签"筛</strong></td></tr><tr><td><strong><code>m_meshScales</code> / <code>m_sideScales</code></strong></td><td><code>NetNode.cs:600, 717, 1055</code></td><td>节点 mesh 按<strong>左右矩阵 + 缩放向量</strong>适配不同宽度</td></tr></tbody></table></div>
+<p><strong>⇒ 路面之所以能接 8 条，是因为它被"裁"出来的，不是"拼"出来的。</strong></p>
+<h4 id="三个要点">三个要点</h4>
+<p><strong>① 路面：裁剪，不拼装</strong></p>
+<p>每段路在节点处按 <code>GetEndRadius</code> 把端头<strong>裁成圆角</strong>（<code>info.m_netAI.GetEndRadius() * 1.3333f</code>）。 所有进入该节点的段各自被裁一次 ⇒ <strong>中间自然空出一个"补丁区"</strong>， 再由节点装饰件盖住。</p>
+<p>⚠ <strong>这个做法对"任意条数、任意角度"天然成立</strong>——因为没有"4 向 / 8 向"这种东西。</p>
+<p><strong>② 节点装饰件：按连接数条件选变体</strong></p>
+<p><code>NetInfo.Node</code> 上挂着筛选条件（值域明确是 <strong>0–8</strong>）：</p>
+<pre class="code" data-lang="csharp"><code>[ValueRange(0, 8)] public byte m_maxSameTags = 8;   // 同标签连接数上限
+[ValueRange(0, 8)] public byte m_minOtherTags;      // 异标签连接数下限
+[ValueRange(0, 8)] public byte m_maxOtherTags = 8;  // 异标签连接数上限</code></pre>
+<p>⇒ 同一个预制体可以挂<strong>多个装饰变体</strong>（斑马线 / 人行道转角 / 安全岛）， 按"这个路口有几条路接进来"自动选。</p>
+<p>⚠ <strong>注意值域是 0–8，不是"任意"</strong>：CS1 实际上限就是 <strong>8 条</strong>。 超过 8 条连接的极端情况会退化。</p>
+<p><strong>③ mesh 靠矩阵缩放，不靠多套资源</strong></p>
+<p><code>m_meshScales</code> + <code>m_sideScales</code> 把节点面片拉伸到合适尺寸。 ⇒ <strong>一套 mesh 覆盖所有宽度组合</strong>，不是每种路口一个 mesh。</p>
+<h4 id="我们的做法-修正后">我们的做法（修正后）</h4>
+<div class="tw"><table><thead><tr><th>项</th><th>方案</th></tr></thead><tbody><tr><td><strong>路面</strong></td><td>✅ <strong>段端点裁剪</strong>（<code>clip_end_radius = 半路宽 × 1.33</code>），支持任意条数</td></tr><tr><td><strong>节点装饰</strong></td><td>⚠ <strong>按连接数分档</strong>（1 / 2 / 3 / 4 / 5–8），每档一套斑马线与人行道</td></tr><tr><td><strong>缩放</strong></td><td>一套 mesh + 矩阵缩放，不按角度做多套</td></tr><tr><td><strong>上限</strong></td><td><strong>8 条</strong>（与 CS1 一致，超过就退化处理）</td></tr></tbody></table></div>
+<p>⚠ <strong>这比"角度档位（30/45/60/90）"简单得多</strong>： <strong>角度不用管</strong>——因为路面是裁出来的，任意角度都自然； <strong>只有铺装贴花需要按连接数分档</strong>，而那是 2D 贴图，成本极低。</p>
+<p>⚠ <strong>但仍不做"车道级连接"</strong>（见 §3.6.9）：每个车道怎么接到对面车道， 是另一套系统（CS1 有，我们没有）。<strong>我们的车在路口按 OD 方向直接转，不做逐车道引导。</strong></p>
+<h3 id="3-6-5b-车道级连接-做-但分四级-2026-11-25-重写-r35">3.6.5b 车道级连接：<strong>做</strong>，但分四级（2026-11-25 重写，R35）</h3>
+<blockquote>⚠ <strong>本节推翻了 2026-11-18 的旧结论</strong>（原文：「不做车道级连接，接受'车不按线走'的代价」）。<br>开发者 2026-11-25：「车道级连接我觉得可以做一下，毕竟高自由度也是这个游戏的特点。」<br><strong>旧判断错在哪</strong>：它把这件事当成"从零建一张车道图"。<br>但 <code>08-traffic</code> §3.6.2 <strong>早已定"agent 生成时按 OD 方向定车道归属"</strong><br>（左转靠左 / 右转靠右 / 直行居中）——<strong>车本来就在正确的车道上</strong>。<br>缺的只是<strong>路口内那一段的连接关系</strong>。代价比原估低一个量级。</blockquote>
+<h4 id="四级划分-只做-lv0-lv2">四级划分（只做 Lv0–Lv2）</h4>
+<div class="tw"><table><thead><tr><th>级</th><th>内容</th><th>做不做</th><th>谁定</th></tr></thead><tbody><tr><td><strong>Lv0</strong></td><td>车道归属（生成时按转向定一次 + 抖动）</td><td>✅ 已有</td><td><code>08-traffic</code> §3.6.2</td></tr><tr><td><strong>Lv1</strong></td><td><strong>逐车道转向集合</strong>：每条进口道能左 / 直 / 右 / 掉头中的哪几种（<strong>可混行</strong>）</td><td>✅ <strong>必做</strong></td><td>预设序列（默认）/ 玩家（自由档）</td></tr><tr><td><strong>Lv2</strong></td><td><strong>路口内车道连接</strong>：进口道 → 出口道的对应关系</td><td>✅ <strong>做</strong></td><td>规则推导 + 玩家覆盖</td></tr><tr><td><strong>Lv3</strong></td><td>段内逐车变道（MOBIL 类）</td><td>❌ <strong>不做</strong></td><td>与代表性 agent 冲突，代价高</td></tr></tbody></table></div>
+<h4 id="关键约束-lane_links-由规则推导-只存覆盖">⭐ 关键约束：lane_links 由规则推导，<strong>只存覆盖</strong></h4>
+<p>这是让代价可控的唯一办法。若全量存盘： 4 进口 × 4 道 × 3 转向 ≈ 48 条/路口，数万路口 = <strong>百万级连接</strong>，存档与内存都吃不消。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>做法</th></tr></thead><tbody><tr><td>默认连接</td><td><strong>推导</strong>（见下表），不存</td></tr><tr><td>玩家覆盖</td><td>只在自由档可改，<strong>稀疏存盘</strong>（通常为 0 条）</td></tr><tr><td>弧线</td><td>路口内 <strong>Bezier</strong> 生成，用入口/出口车道中心线的切线；<strong>不存采样点</strong>（表现层算）</td></tr></tbody></table></div>
+<p><strong>Lv2 的连接由 Lv1 的 <code>turn_mask</code> 推导</strong>（不再按"最左/最右"）：</p>
+<div class="tw"><table><thead><tr><th>进口道的 <code>turn_mask</code></th><th>连到哪些出口方向</th><th>出口车道怎么选</th></tr></thead><tbody><tr><td>含<strong>左转</strong></td><td>目标方向的左侧出口</td><td>按<strong>序号顺序</strong>映射到目标方向的最左 <code>k</code> 条（k = 该进口含左转的道数）</td></tr><tr><td>含<strong>直行</strong></td><td>对向直行出口</td><td><strong>同位映射</strong>（第 j 条直行道 → 第 j 条直行出口道）</td></tr><tr><td>含<strong>右转</strong></td><td>目标方向的右侧出口</td><td>映射到目标方向的最右 <code>m</code> 条</td></tr><tr><td>含<strong>掉头</strong></td><td>对向最左出口</td><td>一对一</td></tr><tr><td><strong>混行</strong>（含 2 种以上）</td><td><strong>每一种都可能</strong>，按流量比例分流</td><td>出口侧按可用车道数均摊</td></tr></tbody></table></div>
+<p>⚠ <strong>混行车道是"一对多"</strong>：一条 <code>直左</code> 道既可能直行也可能左转， 所以它在路口内有<strong>两条</strong>弧线，按转向比例分配流量。<strong>这是 Lv1 允许混行的直接后果，必须支持。</strong></p>
+<h4 id="lv1-逐车道转向集合-不是-几左几直几右">⭐ Lv1：<strong>逐车道转向集合</strong>，不是"几左几直几右"</h4>
+<blockquote>⚠ <strong>2026-11-25 修正</strong>：本节第一版写的是「左转 = 最左 <code>n_l</code> 条 / 直行 = 中间 / 右转 = 最右 <code>n_r</code> 条」。<br>开发者指出：「<strong>大路口可能有多个车道，并且并不是左转道就在道路左边，右转道就在道路右边</strong>，<br>这条在大路口多车道不成立。」<br>查 GB 50647-2011 §4.2.2 后确认他说得对：规范原文明确允许<br>「设置左转、直行和右转<strong>专用车道</strong>或<strong>直左、直右混行车道</strong>」——<br><strong>"每条道纯专用、左转必在最左"是美式思维，不是中国规则。</strong></blockquote>
+<p><strong>数据表达</strong>：每条进口道一个 <code>turn_mask</code>（u8 位掩码）</p>
+<div class="tw"><table><thead><tr><th>bit</th><th>含义</th></tr></thead><tbody><tr><td>0</td><td>左转</td></tr><tr><td>1</td><td>直行</td></tr><tr><td>2</td><td>右转</td></tr><tr><td>3</td><td>掉头</td></tr></tbody></table></div>
+<p>例：<code>0b0011</code>（左+直）= 直左混行；<code>0b0110</code>（直+右）= 直右混行；<code>0b0001</code> = 左转专用。</p>
+<h5 id="默认序列-按进口道数-中国常见形态">默认序列（按进口道数，中国常见形态）</h5>
+<div class="tw"><table><thead><tr><th>进口道数</th><th>默认序列（从左到右）</th><th>说明</th></tr></thead><tbody><tr><td>1</td><td><code>[直左直右]</code></td><td>老城窄路 / 丁字路，<strong>全混行</strong></td></tr><tr><td><strong>2</strong></td><td><strong><code>[直左, 直右]</code></strong></td><td>⭐ <strong>中国最常见的形态</strong>（不是"一左一直一右"）</td></tr><tr><td>3</td><td><code>[左, 直, 直右]</code></td><td>左转流量够一个专用道时</td></tr><tr><td>3（无左转需求）</td><td><code>[直, 直, 直右]</code></td><td>丁字路</td></tr><tr><td>4</td><td><code>[左, 直, 直, 右]</code></td><td>标准四道</td></tr><tr><td>5</td><td><code>[左, 左, 直, 直, 右]</code></td><td><strong>双左</strong>（左转 ≥10 辆/周期，或需长 ≥90 m）</td></tr><tr><td>6</td><td><code>[左, 左, 直, 直, 直, 右]</code></td><td>主干 × 主干</td></tr></tbody></table></div>
+<h5 id="允许的-非标准-排列-是现实-不是-bug">⚠ 允许的"非标准"排列（是现实，不是 bug）</h5>
+<div class="tw"><table><thead><tr><th>排列</th><th>现实成因</th><th>例子</th></tr></thead><tbody><tr><td><strong>掉头道在最右</strong></td><td>大型车转弯半径不足，一把转不过来</td><td>北京、部分省会主干路</td></tr><tr><td><strong>左转道右置</strong></td><td>同上；或货运通道需要大半径</td><td>工业区、物流园出入口</td></tr><tr><td><strong>直行在最左</strong></td><td>有左转待转区时，最左是直行</td><td>新区大路口</td></tr><tr><td><strong>公交专用在最右</strong></td><td>BRT / 公交专用道靠右，右转道退到内侧</td><td>有 BRT 的城市</td></tr><tr><td><strong>左转为 0 条</strong></td><td>对向是单行道 / 丁字路</td><td>普遍</td></tr></tbody></table></div>
+<p>⇒ <strong>这五种都必须是玩家可配的，不能写死在推导规则里。</strong></p>
+<h5 id="国标阈值-决定-要不要把混行升级成专用道">国标阈值（决定"要不要把混行升级成专用道"）</h5>
+<p><code>gb-standards</code> §3.7.3 的来源，作为<strong>默认序列的推导依据</strong>：</p>
+<div class="tw"><table><thead><tr><th>条件</th><th>规范建议</th><th>我们的做法</th></tr></thead><tbody><tr><td>高峰 15 min 内每周期左转 <strong>&gt;2 辆</strong></td><td>宜设左转专用道</td><td>从 <code>直左</code> 升级为 <code>左</code></td></tr><tr><td>每周期左转 <strong>≥10 辆</strong>，或需长 <strong>≥90 m</strong></td><td>宜设 <strong>2 条</strong>左转专用道</td><td>增加第 2 条左转道</td></tr><tr><td>每周期右转 <strong>≥4 辆</strong>，或空间允许</td><td>宜设右转专用道</td><td>从 <code>直右</code> 升级为 <code>右</code></td></tr><tr><td>新建交叉口</td><td>宜利用<strong>中央分隔带</strong>增辟左转道</td><td><code>approach_extra</code> 优先占用中央分隔带</td></tr></tbody></table></div>
+<p>⚠ <strong><code>turn_mask</code> 数组长度必须 = 该进口的实际车道数</strong>，且<strong>至少有一条道含"直行"或"左/右"</strong> （不能出现"这条道什么都不能走"）。</p>
+<h4 id="进口道展宽-2026-11-25-新增-之前完全没这个概念">⭐ 进口道展宽（2026-11-25 新增，之前完全没这个概念）</h4>
+<blockquote>路段 4 车道 → 路口进口 5 车道（多一条左转专用）。中国路口看起来"更挤"，就是因为它。</blockquote>
+<div class="tw"><table><thead><tr><th>参数</th><th>规范值（<code>gb-standards</code> §3.7.2）</th><th>用途</th></tr></thead><tbody><tr><td>展宽段长度 <code>Ls</code></td><td>支路 ≥<strong>30 m</strong>、次干 ≥<strong>40–50 m</strong>、主干 ≥<strong>50–70 m</strong></td><td>与支路相交取下限，与干路取上限</td></tr><tr><td>渐变段 <code>Ld</code></td><td>干路 ≥<strong>20 m</strong>、支路 ≥<strong>15 m</strong></td><td>车道数过渡</td></tr><tr><td>进口道车道宽</td><td>新建 ≥<strong>3.0 m</strong>；改建受限 ≥<strong>2.8 m</strong>；公交/大车 ≥<strong>3.0 m</strong></td><td>⚠ <strong>比路段窄</strong>是正常的</td></tr><tr><td>设公交港湾</td><td>展宽再 <strong>+3 m</strong></td><td>—</td></tr><tr><td>进出口总宽 &gt;<strong>16 m</strong></td><td><strong>必须设行人安全岛</strong>，展宽再 <strong>+2 m</strong></td><td>—</td></tr></tbody></table></div>
+<p><strong>数据表达</strong>（不新增 segment，只在节点上记，几何由表现层画）：</p>
+<pre class="code"><code>node.approach = [
+  { dir: 0, extra_lanes: 1, widen_len_m: 60, turn_mask: [左, 直, 直, 右, 右] },
+  { dir: 1, extra_lanes: 0, widen_len_m: 0,  turn_mask: [直左, 直右] },
+  ...
+]</code></pre>
+<ul><li><strong>实际进口车道数</strong> = <code>segment.lanes_per_dir + approach.extra_lanes</code></li><li><code>extra_lanes = 0</code> 表示不展宽（支路、老城窄路常见）</li><li>⚠ <strong>不为展宽段单独生成 segment</strong>：数万路口 × 3 进口 = 十几万段，会让顶点预算爆。</li></ul>
+<p>  展宽段只在<strong>通行能力计算</strong>与<strong>表现层几何</strong>里存在。</p>
+<p>⚠ <strong>标线导向箭头由 <code>turn_mask</code> 推导</strong>（<code>§3.10.14</code>）——<strong>这是 Lv1 最直接的视觉收益</strong>： 箭头不再"随便画"，而是与车道功能一致。</p>
+<h4 id="为什么值得做-三条肉眼可见的假">为什么值得做（三条肉眼可见的假）</h4>
+<div class="tw"><table><thead><tr><th>现状（不连接）</th><th>做了以后</th></tr></thead><tbody><tr><td>导向箭头与车流方向对不上</td><td>箭头标左转，车就真的从左转道走</td></tr><tr><td>4 个方向同时右转，车在路口中心<strong>打结</strong></td><td>各走各的外侧弧线，不相交</td></tr><tr><td>排队形态是均匀的</td><td><strong>左转道排长队、直行道空</strong>（真实路口的辨识特征）</td></tr></tbody></table></div>
+<p>另外为三样东西留了接口（<code>12-china-features</code> 有登记，本体可不做）： <strong>左转待转区 / 可变车道 / 潮汐车道</strong>。</p>
+<h4 id="数据结构">数据结构</h4>
+<p><code>node</code> 加一个<strong>稀疏</strong>字段（B2 就预留，B5 才填）：</p>
+<div class="tw"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>lane_links_override</code></td><td>稀疏数组（可为空）</td><td>每项 <code>{from_seg, from_lane, to_seg, to_lane, turn}</code>；<strong>空 = 全部用推导</strong></td></tr><tr><td><code>approach</code></td><td>每进口方向一项</td><td><code>{dir, extra_lanes, widen_len_m, turn_mask[]}</code>；⚠ <strong><code>turn_mask</code> 是位掩码数组，不是三个计数</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>B2 只预留字段、不实现连接生成</strong>（B2 的目标是"能围合出地块"，不是"车按线走"）。 ⚠ 存档：加这两个字段 ⇒ <code>FORMAT_VERSION</code> 在 <code>§3.10</code> 的基础上<strong>再 +1</strong>。</p>
+<h4 id="验收">验收</h4>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>判据</th></tr></thead><tbody><tr><td><strong>RD-L1</strong></td><td>Lv1 的 <code>turn_mask[]</code> 长度恒等于该进口车道数（任何时候）</td><td>遍历全部节点</td></tr><tr><td><strong>RD-L2</strong></td><td>⭐ 导向箭头与 <code>turn_config</code> <strong>完全一致</strong></td><td>逐车道比对</td></tr><tr><td><strong>RD-L3</strong></td><td>Lv2 推导出的连接<strong>不产生交叉</strong>（同向连接不互相穿过）</td><td>几何相交检测 = 0</td></tr><tr><td><strong>RD-L4</strong></td><td>玩家覆盖值存档往返不变；清空覆盖后回到推导值</td><td>探针比对</td></tr><tr><td><strong>RD-L5</strong></td><td>4 个方向同时右转，<strong>弧线互不相交</strong></td><td>目视 + 几何检测</td></tr><tr><td><strong>RD-L6</strong></td><td>⭐ <code>turn_mask</code> 长度 = <code>lanes_per_dir + extra_lanes</code>；且每条道至少有一种转向</td><td>遍历全部节点</td></tr><tr><td><strong>RD-L7</strong></td><td>展宽段长度与渐变段落在国标区间（按道路等级）</td><td>支路 30 / 次干 40–50 / 主干 50–70；渐变段 干路 ≥20、支路 ≥15</td></tr><tr><td><strong>RD-L8</strong></td><td>允许"掉头最右 / 左转右置 / 直行最左"三种非标准排列<strong>存在且不报错</strong></td><td>手动配一次，往返存档</td></tr></tbody></table></div>
+<p>⚠ <strong>RD-L2 是最容易"实现成能跑但不对"的一条</strong>：箭头画一套、车走另一套， 玩家第一眼就会觉得"这游戏假"。</p>
+<h4 id="明确不做-防膨胀">明确不做（防膨胀）</h4>
+<div class="tw"><table><thead><tr><th>不做</th><th>为什么</th></tr></thead><tbody><tr><td>Lv3 段内逐车变道</td><td>维持 <code>08</code> §3.6.2 的"生成时定 + 抖动"；逐车变道要车道级队列，代价高</td></tr><tr><td><strong>车道级流量分配</strong>（把 OD 精确分到每条车道）</td><td>按<strong>转向组</strong>分配即可（左转组/直行组/右转组），不逐车道</td></tr><tr><td><code>lane_links</code> <strong>全量存盘</strong></td><td>只存覆盖；全量存是百万级</td></tr><tr><td>路口内<strong>物理</strong>（信号配时联动车道）</td><td>信号属 <code>08-traffic</code>，本节只管几何连接</td></tr></tbody></table></div>
+<hr>
+<h3 id="3-6-6-贴图必须沿弧长展开-不能按段长">3.6.6 贴图必须沿弧长展开，不能按段长</h3>
+<div class="tw"><table><thead><tr><th>UV</th><th>正确做法</th></tr></thead><tbody><tr><td><code>u</code></td><td>横向位置 ÷ 断面总宽</td></tr><tr><td><code>v</code></td><td><strong>累计弧长 ÷ 重复长度</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>按段长做 <code>v</code> 会导致长段贴图被拉伸</strong>：同样一条车道线，100 m 段和 20 m 段的 虚实间隔会不一样。<strong>必须用弧长，不能用 <code>t</code> 或段长。</strong></p>
+<h3 id="3-6-7-顶点预算-这一节决定能不能跑-15-万段">3.6.7 顶点预算（这一节决定能不能跑 15 万段）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>估算</th></tr></thead><tbody><tr><td>路段数</td><td>≤ 15 万（<code>08-traffic</code> §6）</td></tr><tr><td>每段采样点</td><td><strong>约 30 个</strong>（60 m 段 ÷ 2 m）</td></tr><tr><td>断面点数</td><td>约 8 个（双向 4 车道 + 两侧人行道）</td></tr><tr><td>每采样点顶点</td><td>8</td></tr><tr><td><strong>全图顶点</strong></td><td>15 万 × 30 × 8 = <strong>3600 万</strong> ⚠ 太大</td></tr></tbody></table></div>
+<p>⇒ <strong>必须 LOD 分级</strong>：</p>
+<div class="tw"><table><thead><tr><th>距离</th><th>采样步长</th><th>断面简化</th><th>估算顶点</th></tr></thead><tbody><tr><td>近（&lt; 300 m）</td><td>1.5 m</td><td>完整 8 点</td><td>—</td></tr><tr><td>中（300 m–1.5 km）</td><td>6 m</td><td>4 点</td><td>—</td></tr><tr><td>远（&gt; 1.5 km）</td><td>24 m</td><td>2 点（只有路面）</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>远景到一定程度直接换成"贴地面的条带"</strong>，不做扫掠。</p>
+<h3 id="3-6-8-验收点">3.6.8 验收点</h3>
+<p>本节的断言并入 <strong>§五 主验收表</strong>（RD13–RD17），不在这里重复。 ⚠ <strong>RD14（急弯不自交）是"别扭不别扭"的判据</strong>——急弯自交是最容易被玩家截图吐槽的 bug。</p>
+<h2 id="三-七-桥梁与隧道-2026-11-18-新增">三·七、桥梁与隧道（2026-11-18 新增）</h2>
+<blockquote>用户：「还有就是桥梁隧道这些，桥梁除了普通的桥之外还有悬索桥斜拉桥。<br><strong>CS1 那个是悬索桥，但是其实和真正的悬索桥相比还是很小。</strong>」</blockquote>
+<p><strong>CS1 的桥"看着小"，原因很具体</strong>：它是把桥当成"一段特殊路面"生成的， <strong>塔高与主缆垂度没有按跨度放大</strong>，所以 1 km 跨径的桥看起来也像 200 m 的。</p>
+<h3 id="3-7-1-第一条规则-桥型由跨度决定-不由玩家选">3.7.1 ⭐ 第一条规则：<strong>桥型由跨度决定，不由玩家选</strong></h3>
+<p>这是工程事实，也是玩法设计的关键——<strong>它把"选桥型"变成"选过江位置"</strong>。</p>
+<div class="tw"><table><thead><tr><th>主跨</th><th>桥型</th><th>说明</th></tr></thead><tbody><tr><td><strong>&lt; 60 m</strong></td><td><strong>梁桥</strong>（简支/连续）</td><td>最常见。城市高架、小河</td></tr><tr><td><strong>60 – 300 m</strong></td><td><strong>连续梁 / 刚构</strong></td><td>跨江中段、跨深谷</td></tr><tr><td><strong>300 – 800 m</strong></td><td><strong>斜拉桥</strong>（cable-stayed）</td><td>中国最强项。苏通、沪苏通、常泰</td></tr><tr><td><strong>&gt; 800 m</strong></td><td><strong>悬索桥</strong>（suspension）</td><td>特大跨。西堠门、南沙、深中</td></tr><tr><td><strong>深谷 / 峡谷</strong></td><td><strong>拱桥</strong>（arch）</td><td>中国世界纪录最多的一类（平南三桥 575 m）</td></tr></tbody></table></div>
+<p>⭐ <strong>中国是桥梁大国</strong>：世界前 10 大跨径斜拉桥中国占多数，悬索桥前 10 中国也占一半以上。 <strong>跨江大桥是中国城市天际线的一部分</strong>（武汉、南京、重庆、上海）。</p>
+<p>⚠ <strong>玩家不选桥型，只选"在哪过江"</strong>： 想过窄的地方 → 梁桥，便宜；想过宽的地方 → 必须悬索桥，极贵。 <strong>这个决策比"选桥型"有意思得多，也更真实。</strong></p>
+<h3 id="3-7-2-造价-不是线性-是超线性">3.7.2 ⚠ 造价：不是线性，是<strong>超线性</strong></h3>
+<div class="tw"><table><thead><tr><th>桥型</th><th>每公里造价（相对普通路的倍数）</th></tr></thead><tbody><tr><td>梁桥</td><td><strong>× 5 – 8</strong></td></tr><tr><td>连续梁 / 刚构</td><td>× 8 – 12</td></tr><tr><td><strong>斜拉桥</strong></td><td>× 15 – 25</td></tr><tr><td><strong>悬索桥</strong></td><td><strong>× 20 – 40</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>真实参照</strong>：苏通大桥约 65 亿 / 8.2 km ≈ <strong>8 亿/km</strong>； 普通高速公路 1–2 亿/km；港珠澳大桥 55 km 1269 亿 ≈ <strong>23 亿/km</strong>（含隧道与人工岛）。</p>
+<p>⭐ <strong>超线性的意义</strong>：跨度翻倍，造价可能翻三倍。 ⇒ <strong>玩家会自然地去找"最窄的过江点"</strong>——这就是真实的选址逻辑。</p>
+<h3 id="3-7-3-隧道-vs-桥-一个真实的两难">3.7.3 隧道 vs 桥：一个真实的两难</h3>
+<div class="tw"><table><thead><tr><th></th><th>桥</th><th>隧道</th></tr></thead><tbody><tr><td>造价（同等长度）</td><td>较便宜</td><td><strong>更贵</strong>（尤其水下段）</td></tr><tr><td><strong>通航</strong></td><td>⚠ <strong>占用净空，限制大船</strong></td><td>✅ 不影响</td></tr><tr><td><strong>天际线</strong></td><td>⚠ 可能破坏（也可能是卖点）</td><td>✅ 不影响</td></tr><tr><td>长度</td><td>跨度越大越贵（超线性）</td><td>相对线性</td></tr><tr><td>施工期</td><td>较长</td><td><strong>很长</strong></td></tr></tbody></table></div>
+<h4 id="通航净空-一个真实的历史约束">⚠ 通航净空：一个真实的历史约束</h4>
+<p><strong>南京长江大桥净空 24 m</strong>，直接限制了大型海轮进入长江上游—— 这是一个被反复讨论的真实问题（"长江被桥锁住"）。</p>
+<p><strong>做成机制</strong>：</p>
+<ul><li>桥有 <code>clearance_m</code>（净空高度），由桥型与塔高决定</li><li>⭐ <strong>不足净空的航道，大船不能过</strong> —— 水运已进本体，见 <code>08-traffic</code> §3.9.4</li></ul>
+<p>⚠ <strong>2026-11-20 闭环</strong>：这里的 <code>clearance_m</code> 现在有了<strong>下游后果</strong>—— <strong>一座桥的净空就是它上游航道的上限</strong>。建一座 12 m 净空的连续梁很省钱， 但<strong>上游港口十年发展不起来</strong>；拆桥重建的钱远超当初省下的。 （南京长江大桥 24 m 挡住万吨级海轮，是真实案例。）</p>
+<ul><li>⚠ <strong>不做水运时，这个约束只影响"造价"</strong>（净空要求高的地方必须建更高更贵的桥）</li></ul>
+<p>⚠ <strong>桥面上不能接支路</strong>（除引桥）：这是几何约束，也是机制约束—— <strong>一座桥就是一个瓶颈</strong>，玩家无法在桥中间开口。</p>
+<h3 id="3-7-4-视觉参数-这一节决定-看着大不大">3.7.4 视觉参数（这一节决定"看着大不大"）</h3>
+<p>⚠ <strong>CS1 的教训：塔高与主缆垂度必须按跨度算，不能用固定值。</strong></p>
+<div class="tw"><table><thead><tr><th>桥型</th><th>塔高</th><th>主缆/索面</th><th>加劲梁</th></tr></thead><tbody><tr><td><strong>斜拉桥</strong></td><td><strong>≈ 主跨 ÷ 4.5</strong></td><td><strong>扇形或竖琴形</strong>索面，索距 10–15 m</td><td>箱梁</td></tr><tr><td><strong>悬索桥</strong></td><td><strong>≈ 主跨 ÷ 8</strong>（塔顶标高）</td><td><strong>主缆抛物线</strong>，垂度 ≈ 跨径 ÷ 10 – 12</td><td>扁平箱梁</td></tr><tr><td>连续梁</td><td>无塔</td><td>无缆</td><td>变高度箱梁</td></tr><tr><td>拱桥</td><td>拱高 ≈ 跨径 ÷ 5 – 6</td><td>—</td><td>拱肋 + 吊杆</td></tr></tbody></table></div>
+<p><strong>算个数</strong>：</p>
+<div class="tw"><table><thead><tr><th>跨径</th><th>悬索桥塔高（÷8）</th><th>斜拉桥塔高（÷4.5）</th></tr></thead><tbody><tr><td>200 m</td><td>25 m（不需悬索）</td><td>44 m</td></tr><tr><td>800 m</td><td><strong>100 m</strong></td><td>178 m</td></tr><tr><td><strong>1 600 m</strong></td><td><strong>200 m</strong></td><td>—（超斜拉范围）</td></tr></tbody></table></div>
+<p>⇒ <strong>一座 1.6 km 的悬索桥，塔高 200 m，相当于 60 层楼。</strong> <strong>这个"高"才是玩家看到"这是座大桥"的原因。</strong></p>
+<p>⚠ <strong>如果塔高按固定值（比如 40 m）画，1.6 km 的桥就会像一条贴在水面上的带子</strong>—— 这就是 CS1 的问题。</p>
+<p>⚠ <strong>远景 LOD 时塔高必须保留</strong>：塔是轮廓的主要识别特征，不能因为远就削掉。</p>
+<h3 id="3-7-5-数据模型-桥是-路段的一种-不是独立实体">3.7.5 数据模型：桥是"路段的一种"，不是独立实体</h3>
+<div class="tw"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody><tr><td><code>segment.kind</code></td><td><code>road</code> / <code>bridge_beam</code> / <code>bridge_continuous</code> / <strong><code>bridge_cable</code></strong> / <strong><code>bridge_suspension</code></strong> / <code>bridge_arch</code> / <code>tunnel</code></td></tr><tr><td><code>segment.clearance_m</code></td><td>净空高度（桥）</td></tr><tr><td><code>segment.span_m</code></td><td>主跨长度（决定桥型与塔高）</td></tr><tr><td><code>segment.pier_count</code></td><td>桥墩数（由跨度与河床算）</td></tr></tbody></table></div>
+<p>⚠ <strong>不新增实体类型</strong>：桥仍然是 <code>NetSegment</code>，只是 <code>kind</code> 不同、mesh 生成规则不同。 <strong>这保住了 D5（每系统 ≤3 文件）和 D4（8 个目录）。</strong></p>
+<p>⚠ <strong>桥型由 <code>span_m</code> 自动推导</strong>（§3.7.1 的表），<strong>不存玩家选择</strong>—— 存了就会出现"存档里是悬索桥，但跨度只有 100 m"的矛盾。</p>
+<h3 id="3-7-6-验收点">3.7.6 验收点</h3>
+<p>本节断言并入 <strong>§五 主验收表</strong>（RD18–RD21）。 ⚠ <strong>RD18（大连桥塔高按跨度算）是"看着大不大"的唯一判据</strong>。</p>
+<h2 id="三-八-纵断面与路基-路面高程-地形高程-2026-11-18-新增">三·八、纵断面与路基：路面高程 ≠ 地形高程（2026-11-18 新增）</h2>
+<blockquote>用户：「桥与地面连接处、隧道与道路连接处的处理，以及隧道内路口；<br>还有就是<strong>我国的高速公路是有垫高的，目的是为了平整</strong>。<br>如果按照地形的话会有起伏，**在 CS1 的一些第一人称视角模组里，在高速上以及铁路上，<br>地形经常有起伏，在现实是很不安全的**。」</blockquote>
+<h3 id="3-8-1-这是-cs1-的物理硬伤-路-贴-在地形上">3.8.1 ⚠ 这是 CS1 的物理硬伤：路"贴"在地形上</h3>
+<p><strong>CS1 的做法</strong>：路面高程直接取地形高程 ⇒ 地形起伏 → 路面跟着起伏。</p>
+<p><strong>真实公路的做法</strong>：<strong>路面有独立的纵断面设计</strong>，为了平顺， 低洼处<strong>填土</strong>（路堤），高处<strong>挖山</strong>（路堑）。</p>
+<div class="tw"><table><thead><tr><th></th><th>CS1</th><th>真实</th><th>我们</th></tr></thead><tbody><tr><td>路面高程来源</td><td><strong>地形高程</strong></td><td><strong>独立设计，受纵坡限制</strong></td><td>独立设计</td></tr><tr><td>遇到沟谷</td><td>路面跟着下去</td><td><strong>填方或架桥</strong></td><td>填方/架桥</td></tr><tr><td>遇到山丘</td><td>路面跟着上去</td><td><strong>挖方或打隧道</strong></td><td>挖方/隧道</td></tr><tr><td>第一人称感受</td><td><strong>起伏，不真实</strong></td><td>平顺</td><td>平顺</td></tr></tbody></table></div>
+<p>⭐ <strong>一句话：路是"设计出来的"，不是"铺在地形上的"。</strong> 这是本节的出发点，也是 CS1 那个模组吐槽的根源。</p>
+<h3 id="3-8-2-三个高程-必须分开存">3.8.2 三个高程（必须分开存）</h3>
+<div class="tw"><table><thead><tr><th>量</th><th>含义</th></tr></thead><tbody><tr><td><code>terrain_h</code></td><td>地形原始高程（<code>map</code> 提供）</td></tr><tr><td><strong><code>road_h</code></strong></td><td><strong>路面设计高程</strong>（玩家修路时确定，可调）</td></tr><tr><td><code>fill_h = road_h − terrain_h</code></td><td><strong>正 = 填方（路堤）</strong> / <strong>负 = 挖方（路堑）</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>存档必须同时存 <code>terrain_h</code> 与 <code>road_h</code></strong>： 只存一个的话，改地形或改路面都会让另一个失效。</p>
+<h3 id="3-8-3-纵坡限值-这是-平-的量化标准">3.8.3 纵坡限值（这是"平"的量化标准）</h3>
+<div class="tw"><table><thead><tr><th>道路等级</th><th>设计速度</th><th><strong>最大纵坡</strong></th></tr></thead><tbody><tr><td>高速公路</td><td>120 km/h</td><td><strong>3 %</strong></td></tr><tr><td>高速公路</td><td>100 km/h</td><td>4 %</td></tr><tr><td>一级公路</td><td>80 km/h</td><td>5 %</td></tr><tr><td>二级公路</td><td>60 km/h</td><td>6 %</td></tr><tr><td>城市快速路</td><td>80 km/h</td><td>4 %</td></tr><tr><td>城市主干路</td><td>60 km/h</td><td>5 %</td></tr><tr><td>城市支路</td><td>30 km/h</td><td>8 %</td></tr></tbody></table></div>
+<p>⚠ <strong>数值来源标注</strong>：以上为常见取值，<strong>需核对 <code>docs/reference/gb-standards.md</code> 原文</strong> （JTG B01《公路工程技术标准》/ CJJ 37《城市道路工程设计规范》）。<strong>未核对前不得写死进 <code>config/</code></strong>。</p>
+<p>⚠ <strong>120 km/h 高速只允许 3 %</strong>：这是"中国高速看起来平"的直接原因。 <strong>3 % 意味着 1 km 只能升降 30 m</strong> —— 所以遇到 100 m 的沟，必须架桥。</p>
+<h3 id="3-8-4-填挖深度自动决定形式-不需要玩家选">3.8.4 ⭐ 填挖深度自动决定形式（不需要玩家选）</h3>
+<p>这跟"桥型由跨度决定"（§3.7.1）是同一个逻辑：<strong>工程条件决定形式</strong>。</p>
+<div class="tw"><table><thead><tr><th><code>fill_h</code></th><th>形式</th><th>说明</th></tr></thead><tbody><tr><td><strong>−2 m ~ +3 m</strong></td><td><strong>路基</strong>（填方或挖方）</td><td>最常见，两侧做边坡</td></tr><tr><td><strong>+3 m ~ +8 m</strong></td><td><strong>路堤</strong>（高填方）</td><td>边坡变长，占地大，可能改桥更省</td></tr><tr><td><strong>&gt; +8 m</strong></td><td><strong>桥梁</strong>（高架）</td><td>填方太贵且不稳定</td></tr><tr><td><strong>−3 m ~ −15 m</strong></td><td><strong>路堑</strong>（深挖方）</td><td>两侧是边坡或挡墙</td></tr><tr><td><strong>&lt; −15 m</strong></td><td><strong>隧道</strong></td><td>挖方太贵且破坏山体</td></tr></tbody></table></div>
+<p>⚠ <strong>阈值进 <code>config</code>，可按造价平衡调整</strong>。 ⚠ <strong>这条让"桥/隧道"变成自动结果</strong>，玩家只需要决定<strong>路线怎么走</strong>。</p>
+<h3 id="3-8-5-连接处-桥台引道-与-隧道洞门">3.8.5 连接处：桥台引道 与 隧道洞门</h3>
+<h4 id="桥梁-地面">桥梁 ↔ 地面</h4>
+<div class="tw"><table><thead><tr><th>部件</th><th>作用</th></tr></thead><tbody><tr><td><strong>桥台</strong>（abutment）</td><td>桥与路基的支点</td></tr><tr><td><strong>引道</strong>（approach slab）</td><td>从桥面高程过渡到路基高程</td></tr><tr><td><strong>锥坡</strong>（护坡）</td><td>桥台两侧的斜面</td></tr></tbody></table></div>
+<p>⚠ <strong>引道长度受纵坡限制</strong>：桥面比地面高 10 m、纵坡 3 % ⇒ <strong>引道至少 333 m</strong>。 ⚠ <strong>这会吃掉大量用地</strong> —— 真实的高架桥两侧往往有很长的引道。</p>
+<p>⚠ <strong>如果引道太长（占地超预算），玩家应该改走隧道或改线</strong>。</p>
+<h4 id="隧道-道路">隧道 ↔ 道路</h4>
+<div class="tw"><table><thead><tr><th>部件</th><th>作用</th></tr></thead><tbody><tr><td><strong>洞门</strong>（portal）</td><td>端墙式 / 翼墙式 / <strong>削竹式</strong>（中国常用，与山体融合）</td></tr><tr><td><strong>明洞</strong></td><td>洞口前一段"半开敞"结构，防落石</td></tr><tr><td><strong>过渡段</strong></td><td>隧道内到洞外的宽度与照明过渡</td></tr></tbody></table></div>
+<p>⚠ <strong>隧道内纵坡有额外限制</strong>（排水与通风）：一般 ≤ 3 %，且<strong>单向坡</strong>更安全。</p>
+<h3 id="3-8-6-隧道内路口-不做-除地下快速路">3.8.6 ⚠ 隧道内路口：不做（除地下快速路）</h3>
+<p>用户提到"隧道内路口"。分两种情况：</p>
+<div class="tw"><table><thead><tr><th>场景</th><th>现实</th><th>我们</th></tr></thead><tbody><tr><td><strong>山岭隧道</strong></td><td>❌ 不可能有路口</td><td><strong>不做</strong></td></tr><tr><td><strong>城市地下快速路</strong>（上海北横通道、深圳妈湾）</td><td>✅ 可以有分岔匝道</td><td><strong>暂不做</strong>（推 DLC）</td></tr></tbody></table></div>
+<p>⚠ <strong>隧道内路口需要在三维空间里做立交</strong>，复杂度和"地面路口"不是一个量级。 ⚠ <strong>本体只做"隧道是路段的连续延伸"</strong>，不接任何支路（与 §3.7.3 一致）。</p>
+<h3 id="3-8-7-土方量是造价的大头">3.8.7 ⚠ 土方量是造价的大头</h3>
+<pre class="code"><code>填方量 ≈ 断面积 × 长度，断面积 ≈ 半路宽 × fill_h × 2（两侧边坡）
+造价 = 土方量 × 单价 + 边坡防护 + 占地补偿</code></pre>
+<div class="tw"><table><thead><tr><th>项</th><th>说明</th></tr></thead><tbody><tr><td>土方单价</td><td>按立方米计</td></tr><tr><td><strong>占地补偿</strong></td><td>高填方/深挖方的边坡要占地，<strong>要付征地费</strong></td></tr><tr><td>边坡防护</td><td>高填方需要挡墙或加筋</td></tr></tbody></table></div>
+<p>⭐ <strong>这制造了一个真实的两难</strong>： <strong>"直"和"平"是矛盾的</strong> —— 走得直就要大量填挖（贵），走得平就要绕（远）。 <strong>这正是真实公路选线的核心矛盾。</strong></p>
+<h3 id="3-8-8-验收点">3.8.8 验收点</h3>
+<p>本节断言并入 <strong>§五 主验收表</strong>（RD22–RD26）。 ⚠ <strong>RD22 是本节存在的理由</strong>：如果这条不过，第一人称看高速还是起伏的—— <strong>就是 CS1 那个被吐槽的模组效果</strong>。</p>
+<h2 id="三-九-地形修改-改地形不改路面-2026-11-18-新增">三·九、地形修改：改地形不改路面（2026-11-18 新增）</h2>
+<blockquote>用户：「还有地形修改，在 CS1 里面也有。」</blockquote>
+<p><strong>CS1 确实有，而且有个著名的毛病</strong>：改完地形后建筑<strong>悬空</strong>、路面被地形<strong>穿透</strong>、 或者路面跟着地形一起起伏。我们要提前避开。</p>
+<h3 id="3-9-1-核心规则-改地形不动-road_h">3.9.1 ⚠ 核心规则：<strong>改地形不动 road_h</strong></h3>
+<p>这是 §三·八 的直接推论，也是本节最重要的一条。</p>
+<div class="tw"><table><thead><tr><th></th><th>改地形后</th></tr></thead><tbody><tr><td><code>terrain_h</code></td><td><strong>变</strong>（玩家的操作结果）</td></tr><tr><td><strong><code>road_h</code>（路面高程）</strong></td><td>❌ <strong>不变</strong></td></tr><tr><td><code>fill_h</code>（填挖深度）</td><td><strong>跟着变</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>如果路面跟着地形一起动，就等于退回了 CS1 的做法</strong>—— 玩家挖个坑，高速就跟着塌下去，纵坡立刻超限。</p>
+<p>⭐ <strong>正确的表现</strong>：玩家在路旁挖 5 m 深坑 → <strong>路面悬在原高度</strong>，路基变成高填方（边坡更长），或者<strong>自动升级为桥梁</strong>。</p>
+<h3 id="3-9-2-改地形可能改变路段形式-这是联动-不是-bug">3.9.2 ⭐ 改地形可能改变路段形式（这是联动，不是 bug）</h3>
+<div class="tw"><table><thead><tr><th>改地形后 <code>fill_h</code></th><th>路段形式</th></tr></thead><tbody><tr><td>−2 ~ +3 m</td><td>路基</td></tr><tr><td>挖深到 −15 m 以下</td><td><strong>自动变隧道</strong></td></tr><tr><td>填高到 +8 m 以上</td><td><strong>自动变桥梁</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>必须提示玩家</strong>：「此操作将使 3 段路变为桥梁，造价 +¥X」。 <strong>不能静默改变形式</strong>——那是玩家最不能接受的事。</p>
+<h3 id="3-9-3-三种操作">3.9.3 三种操作</h3>
+<div class="tw"><table><thead><tr><th>操作</th><th>交互</th><th>说明</th></tr></thead><tbody><tr><td><strong>升降刷</strong></td><td>圆形刷子 + 强度档</td><td>最常用。可升可降</td></tr><tr><td><strong>平整</strong></td><td>框选 → 取目标高程</td><td>建大项目前最有用</td></tr><tr><td><strong>水体</strong></td><td>刷子（需临水或允许开挖）</td><td>⚠ 挖到地下水位的坑会<strong>自动积水</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>不做"自由雕刻"</strong>（那是 3D 建模软件的事）。 ⚠ <strong>不做"导入高度图"</strong>（那是地图编辑器的功能，见 <code>plan.md</code> B1.5）。</p>
+<h3 id="3-9-4-已有建筑的地块-不能随便改">3.9.4 ⚠ 已有建筑的地块：不能随便改</h3>
+<p><strong>这是 CS1 悬空 bug 的根源</strong>：改了地形，建筑底部就悬空或被埋。</p>
+<div class="tw"><table><thead><tr><th>情况</th><th>规则</th></tr></thead><tbody><tr><td><strong>建筑所在 parcel</strong></td><td><strong>地形改动限制 ±1 m</strong>（超出则拒绝，提示"需先拆除建筑"）</td></tr><tr><td>建筑<strong>相邻</strong> parcel</td><td>允许改，但 <strong>±3 m 内</strong>，否则可能影响地基</td></tr><tr><td>空 parcel</td><td>不限（只受土方成本约束）</td></tr><tr><td><strong>道路占用范围</strong></td><td>允许改（会改变填挖深度，见 §3.9.2）</td></tr></tbody></table></div>
+<p>⚠ <strong>±1 m / ±3 m 是初始值</strong>，可调。 ⚠ <strong>"需先拆除建筑"比"允许悬空"好一万倍</strong>——玩家宁愿多一步操作，也不要看到悬空的楼。</p>
+<h3 id="3-9-5-成本-就是土方量">3.9.5 成本：就是土方量</h3>
+<pre class="code"><code>成本 = 体积 × 单价 × 硬度系数 + 已有建筑保护费</code></pre>
+<div class="tw"><table><thead><tr><th>项</th><th>说明</th></tr></thead><tbody><tr><td>体积</td><td>刷子面积 × 平均高差</td></tr><tr><td><strong>硬度系数</strong></td><td><strong>岩石 &gt; 土 &gt; 沙</strong>（挖石贵得多）</td></tr><tr><td>已有建筑保护费</td><td>在建筑附近施工的额外成本（真实存在）</td></tr></tbody></table></div>
+<p>⚠ <strong>不允许"免费微调"</strong>：哪怕升 0.5 m 也要收钱。 否则玩家会用它做"零成本找平"，绕过纵断面限制。</p>
+<h3 id="3-9-6-必须走施工期-不能瞬间变化">3.9.6 ⚠ 必须走施工期，不能瞬间变化</h3>
+<div class="tw"><table><thead><tr><th>阶段</th><th>时长</th><th>表现</th></tr></thead><tbody><tr><td>土方施工</td><td>体积 / 日产能</td><td><strong>土方车进出、地面逐渐变化</strong></td></tr><tr><td>完成</td><td>—</td><td>地形定型</td></tr></tbody></table></div>
+<p>⚠ <strong>瞬间塌陷会让玩家以为出了 bug</strong>。而且土方车正好是 <code>10-presentation</code> §六·五 施工阶段已经有的视觉（<code>dump_truck</code>），<strong>复用即可</strong>。</p>
+<h3 id="3-9-7-与沉陷区的联动-f73">3.9.7 ⭐ 与沉陷区的联动（F73）</h3>
+<p>这是本节最有价值的联动：<strong>采煤沉陷 = 被迫的地形下降</strong>。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>说明</th></tr></thead><tbody><tr><td>沉陷</td><td>采煤区域的 <code>terrain_h</code> 随时间下降（<code>05-employment</code> §四 的 <code>subsidence</code>）</td></tr><tr><td>后果</td><td>路面变成高填方 → 可能变桥；建筑地基外露</td></tr><tr><td><strong>玩家可以填回来</strong></td><td>用升降刷 + 土方成本 = <strong>复垦</strong></td></tr><tr><td>⚠ 但填不平<strong>沉陷的坑</strong>（地下的空洞还在）</td><td>治标不治本</td></tr></tbody></table></div>
+<p>⭐ <strong>这形成一个真实的循环</strong>：采煤赚钱 → 地面沉陷 → 花钱复垦 → <strong>净收益没有想象的高</strong>。 <strong>这是"资源诅咒"在物理层面的表现</strong>，比纯数值惩罚有力得多。</p>
+<h3 id="3-9-8-存档-高度图必须存">3.9.8 存档：高度图必须存</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>说明</th></tr></thead><tbody><tr><td><code>heightmap</code></td><td><strong>玩家修改后的完整高度图</strong>（不是种子 + 补丁）</td></tr><tr><td>或 <code>seed + diff</code></td><td>种子 + 修改记录（<strong>体积小，但回放必须确定</strong>）</td></tr></tbody></table></div>
+<p>⚠ <strong>推荐存完整高度图</strong>：<strong>50×50 km</strong> 的 50 m 栅格 = <strong>1000×1000 = 100 万格 × 2 B = 2 MB</strong>（<code>11-scale</code> §2.1 同一口径）。 ❌ 不用"种子 + 补丁"：一旦生成算法改了，补丁就失效。<strong>存档必须能十年后打开</strong>。</p>
+<h3 id="3-9-9-验收点">3.9.9 验收点</h3>
+<p>本节断言并入 <strong>§五 主验收表</strong>（<strong>RD22–RD30</strong>：路面不贴地形 / 填挖变桥隧 / 引道 / 存两份高程 / 改地形不动 road_h / 建筑下面禁改 / 走施工期）。 ⚠ <strong>R27 是本节的核心</strong>——这条不过，就等于退回了 CS1 的"路贴地形"。 ⚠ <strong>R29 是"建筑不悬空"的保证</strong>。</p>
+<h2 id="三-十-走廊与断面组合-一次画出组合型道路-2026-11-25-新增">三·十、走廊与断面组合：一次画出组合型道路（2026-11-25 新增）</h2>
+<blockquote>开发者原话：「城脉的道路修建系统除了道路连接方式、绘制道路、路口等逻辑和 CS1 一样，<br>我想做一种一次性就完成组合型道路的绘制（比如双层高架，带辅道的道路，带绿化的，混合型道路等）。<br>还有就是 CS1 一次只能绘制一条单行道，但是当我们修建高速的时候有时候单行道之间的距离有变化，<br>强迫症看了难受，所以应该可以一次性绘制两条单行道。」<br>⚠ 这一节改的是 <strong>B2 的核心数据结构</strong>，必须在 B2 动工前定死（<code>plan.md</code> 说 B2 是全项目最关键一批）。</blockquote>
+<h3 id="3-10-1-问题-现有模型是-一-segment-一断面-不够用了">3.10.1 问题：现有模型是「一 segment = 一断面」，不够用了</h3>
+<p><code>§3.6.3</code> 的断面是<strong>一条 2D 折线</strong>（车道 / 路缘 / 人行道 / 绿化带），沿曲线扫掠。 但一个 <code>segment</code> 只有一组 <code>class / lanes / lanes_per_dir</code>（<code>§3.2</code>）， 所以<strong>一条路只能有一种等级、一种车道数</strong>。</p>
+<p>以下四种东西用现有模型做不出来：</p>
+<div class="tw"><table><thead><tr><th>要做的</th><th>为什么现有模型不行</th></tr></thead><tbody><tr><td><strong>带辅道的干道</strong></td><td>主路 60 km/h + 辅道 30 km/h，是<strong>两种等级、两种通行能力</strong></td></tr><tr><td><strong>双层高架</strong></td><td>上层快速路 + 地面辅路，<strong>两个路面高程、两套车流</strong></td></tr><tr><td><strong>分离式路基</strong>（两条单行道）</td><td>横向相距 4–20 m，中间是分隔带，<strong>不是一个断面的中线两侧</strong></td></tr><tr><td><strong>混合型</strong>（主+辅+非机动车+绿化）</td><td>断面能表达车道序列，但<strong>不能表达"其中一段是独立可通行的路"</strong></td></tr></tbody></table></div>
+<p>⚠ 关键区分：<strong>断面内分带 ≠ 可以通行</strong>。 一条 4 车道的断面里，车道不各自"可通行"；但辅道必须能独立通行（有自己的限速、自己的车流、自己会堵）。</p>
+<h3 id="3-10-2-解法-加一层-corridor-走廊">3.10.2 解法：加一层 corridor（走廊）</h3>
+<p><strong>一个 corridor = 玩家一次绘制。</strong> 它沿一条路径扫掠出 <strong>1–3 个 band（带）</strong>， 每个 band 是一条<strong>独立可通行的路</strong>（自己的一套 segment 链）。</p>
+<pre class="code"><code>corridor（一次绘制，一条路径，一个模板）
+  ├─ band 0  主路     off =   0 m   h = 0 m    class=1   60 km/h
+  │    └─ part（断面分带，从左到右）
+  │         人行 3m │ 非机动车 2.5m │ 机非绿化 1.5m │ 机动车 ×4 │ 中央绿化 3m │ …
+  ├─ band 1  辅道右   off = +14 m   h = 0 m    class=3   30 km/h
+  └─ band 2  高架     off =   0 m   h = +9 m   class=0   80 km/h</code></pre>
+<div class="tw"><table><thead><tr><th>层</th><th>是什么</th><th>谁能改</th></tr></thead><tbody><tr><td><strong>corridor</strong></td><td>一次绘制、一条路径、1–3 个 band</td><td>玩家（画线）</td></tr><tr><td><strong>band</strong></td><td>一条<strong>独立可通行</strong>的路（自己的 segment 链）</td><td>玩家（模板 / 增删 band）</td></tr><tr><td><strong>part</strong></td><td>band 内的<strong>断面分带</strong>（车道组 / 非机动车 / 人行 / 绿化 / 停车）</td><td>玩家（参数化组合，见 §3.10.11）</td></tr></tbody></table></div>
+<ul><li><code>off</code> = 相对路径中线的<strong>横向偏移</strong>（band 级）</li><li><code>h</code> = 相对地面（地形高程）的<strong>抬升</strong></li><li>每个 band 沿路径生成自己的 segment 链，<strong>segment 之间不共享 <code>node</code></strong>（见 §3.10.6）</li><li>⚠ <strong>part 不是可通行单元</strong>——它只是 band 的横截面组成。车在 band 内跑，part 决定"能跑几股道"</li></ul>
+<h3 id="3-10-3-必须遵守的五条规则">3.10.3 必须遵守的五条规则</h3>
+<p>这几条决定"能不能实现"，不是风格问题。</p>
+<div class="tw"><table><thead><tr><th>#</th><th>规则</th><th>不遵守的后果</th></tr></thead><tbody><tr><td><strong>C-1</strong></td><td>⭐ <strong>只有「贴地且可通行」的 band 产生围合面</strong></td><td>高架上跨会把地块切成一堆碎条（违反 R6 常识）</td></tr><tr><td><strong>C-2</strong></td><td>每个 band 独立计算通行能力；<strong>只有 band 0 是导航主路径</strong></td><td>辅道和主路混在一起算，堵不堵分不清</td></tr><tr><td><strong>C-3</strong></td><td>同一 corridor 内，band 的横向偏移<strong>单调不交叉</strong></td><td>两条路在图上互相穿过，画出来的地块是缠在一起的</td></tr><tr><td><strong>C-4</strong></td><td><strong>路口只在 corridor 之间</strong>；band 之间不设路口，只有"开口"</td><td>主辅路之间满是路口，等于没有辅道</td></tr><tr><td><strong>C-5</strong></td><td>一次成型后可拆：拆 band = 删该 band 全部 segment；拆 corridor = 全删</td><td>拆一半留下孤儿 segment，围合面算错</td></tr></tbody></table></div>
+<p><strong>C-1 的判定式</strong>：</p>
+<pre class="code"><code>参与围合  ⟺  (h - 0) ≤ 0.5 m  AND  kind ≠ 隧道</code></pre>
+<p>⚠ <strong>C-1 最容易漏，漏了就是灾难</strong>：一座双层高架会让地面地块被"上层投影线"切开， 而玩家的常识是"高架下面是连通的"。这一条必须写进 <code>03-zoning</code> 的围合算法里。</p>
+<p>⚠ <strong>围合多边形的取法（避免地块面积算错）</strong>： 节点几何用 <strong>band 0</strong> 的路径；宽度用<strong>贴地 band 的最外缘</strong>（左右各取最外侧贴地 band 的外边）。 这样"辅道在外侧"的干道，地块边界落在辅道外缘，而不是主路边缘。</p>
+<h3 id="3-10-4-预置模板-进-config-sim-road_corridor-json-不写死-宪法-l5">3.10.4 预置模板（进 config/sim/road_corridor.json，不写死 · 宪法 L5）</h3>
+<div class="tw"><table><thead><tr><th>模板 id</th><th>bands</th><th>断面</th><th>用途</th></tr></thead><tbody><tr><td><code>local</code></td><td>1</td><td>2 车道 + 两侧人行道</td><td>支路 / 村道（V0 唯一要的）</td></tr><tr><td><code>local_bike</code></td><td>1</td><td>2 车道 + 非机动车道</td><td>县城常见</td></tr><tr><td><code>arterial</code></td><td>1</td><td>4 车道 + 中央分隔</td><td>主干</td></tr><tr><td><strong><code>arterial_bus</code></strong></td><td><strong>3</strong></td><td>主 4 车道 + 两侧辅道</td><td><strong>带辅道的干道</strong></td></tr><tr><td><strong><code>arterial_green</code></strong></td><td>1（分带）</td><td>主 4 + 中央绿化 3 m + 两侧非机动车道</td><td><strong>带绿化的混合型</strong></td></tr><tr><td><strong><code>express_split</code></strong></td><td><strong>2</strong></td><td>两条单行道，<strong>分隔带宽度可变</strong></td><td><strong>分离式路基 / 高速</strong></td></tr><tr><td><strong><code>express_double</code></strong></td><td><strong>2</strong></td><td>地面辅路 + 高架快速路</td><td><strong>双层高架</strong></td></tr><tr><td><code>express_double_ramp</code></td><td>3</td><td>地面 + 高架 + 匝道</td><td>⬜ <strong>B5 再做</strong>（匝道连接两层，属特殊连接）</td></tr></tbody></table></div>
+<p>⚠ <strong>B2 只做 <code>local</code> / <code>arterial</code> / <code>express_split</code></strong>。 <code>arterial_bus</code> / <code>arterial_green</code> / <code>express_double</code> 是 B5 前的打磨项（V1 之后）； <code>express_double_ramp</code> 明确推到 B5。</p>
+<p>⚠ <strong>模板只是"预设组合"，不是全部可能</strong>：完整可调属性见 <strong>§3.10.11</strong>（七组属性矩阵）， 自由度分级见 <strong>§3.10.12</strong>。模板的作用是"让不会调的人也能一键铺路"，不是限制。</p>
+<p>⚠ <code>arterial_green</code> 用<strong>一个 band + 断面分带</strong>（绿化带不是独立可通行）， 所以它是"断面的活"；而 <code>arterial_bus</code> 是"corridor 的活"。<strong>两者不是一回事，别混实现。</strong></p>
+<h3 id="3-10-5-双单行道间距可变-开发者点名的那个痛点">3.10.5 ⭐ 双单行道间距可变（开发者点名的那个痛点）</h3>
+<p><strong>问题</strong>：CS1 一次只能画一条单行道，修高速时两条单行道间距一旦变化，就得手工对齐，画出来不平行。</p>
+<p><strong>解法</strong>：<code>express_split</code> 模板在绘制时给<strong>一个参数 <code>sep</code>（分隔带宽度）</strong>，而不是画两次。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>取值</th></tr></thead><tbody><tr><td>默认 <code>sep</code></td><td><strong>4 m</strong>（中央分隔带，含护栏）</td></tr><tr><td>允许范围</td><td><strong>2–30 m</strong>（过桥/过河时变宽）</td></tr><tr><td>每个<strong>节点</strong>可单独设 <code>sep</code></td><td>段内按两端节点<strong>线性插值</strong></td></tr><tr><td>band 横向偏移</td><td><code>off = ±(sep/2 + lane_w × lanes_per_dir/2)</code></td></tr><tr><td>保证</td><td><strong>两条 band 全程严格平行</strong>，间距误差 ≤ 0.1 m</td></tr></tbody></table></div>
+<p>⚠ 这样"一次画完就天然齐"，不需要玩家数格子。<strong>这是与 CS1 的关键体验差异</strong>，要写进 B2 验收。</p>
+<p>⚠ <code>sep</code> 变化处<strong>必须平滑过渡</strong>（按路径弧长插值偏移），否则会出现折角。 <code>§3.6.2</code> 的"断面沿曲线扫掠"正好支持这一点——每段只需在两端有不同偏移量。</p>
+<h3 id="3-10-6-数据结构影响-b2-实现时必读">3.10.6 ⚠ 数据结构影响（B2 实现时必读）</h3>
+<p><strong><code>segment</code> 加三个字段</strong>（<code>§3.2</code> 表已补）：</p>
+<div class="tw"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>corridor_id</code></td><td><code>u32</code></td><td>所属走廊；独立单条路 = 自己的 corridor（1 band）</td></tr><tr><td><code>band_index</code></td><td><code>u8</code></td><td>第几条带（0 = 主）</td></tr><tr><td><code>offset_dm</code></td><td><code>i16</code></td><td>相对 corridor 中线的横向偏移（分米，可负）</td></tr></tbody></table></div>
+<p><strong><code>node</code> 不共享</strong>（每个 band 一套 node）。理由：</p>
+<div class="tw"><table><thead><tr><th>方案</th><th>后果</th></tr></thead><tbody><tr><td><strong>不共享</strong>（选这个）</td><td>每个 band 是干净的可通行网络；路口判定只看自己的 node</td></tr><tr><td>共享</td><td>一个 node 上挂 3 条不同 band 的路段，"这个路口有几条路"的判定立刻变复杂，且 C-4 难守</td></tr></tbody></table></div>
+<p>⚠ <strong>代价</strong>：节点数 ×band 数（最多 3 倍）。按 <code>§3.6.7</code> 的顶点预算，15 万段 × 3 band 仍在预算内， 但要<strong>在 B2 实测一次</strong>（<code>11-scale</code> 的实测表要补一行）。</p>
+<p><strong>存档</strong>：加三个字段 ⇒ <code>FORMAT_VERSION + 1</code>（<code>save_game.cs</code> 当前是 3，改完是 4）， 并写迁移 <code>V3ToV4</code>（旧档的 segment 一律补 <code>corridor_id = 新建</code>、<code>band_index = 0</code>、<code>offset_dm = 0</code>）。</p>
+<p>⚠ <strong>这条必须在 B2 之前把 T5（冻结存档基线）做完</strong>——否则没有旧档可以验迁移。</p>
+<h3 id="3-10-7-造价与拆迁-按走廊算-不按-band-算">3.10.7 造价与拆迁（按走廊算，不按 band 算）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>算法</th></tr></thead><tbody><tr><td>造价</td><td><code>Σ(band 断面积 × 长度 × 该 band 单价)</code>；高架 band 按<strong>桥梁单价</strong>（<code>§3.7.2</code> 超线性）</td></tr><tr><td>拆迁</td><td>按 corridor 的<strong>总占地宽度</strong>（最外侧贴地 band 的外缘）一次性统计，<strong>不重复计</strong></td></tr><tr><td>示例</td><td><code>express_double</code>：地面段按主干单价、高架段按桥梁单价，<strong>不是两层各算一遍路基</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>容易算错的地方</strong>：双层高架的地面层往往比独立主干道窄（因为上层分担了流量）， 但占地宽度是<strong>上下两层取大</strong>，不是相加。</p>
+<h3 id="3-10-8-对下游系统的影响-b2-之后照这个接">3.10.8 对下游系统的影响（B2 之后照这个接）</h3>
+<div class="tw"><table><thead><tr><th>系统</th><th>影响</th></tr></thead><tbody><tr><td><code>03-zoning</code></td><td>围合面<strong>只认贴地 band</strong>（C-1）；地块边界取<strong>最外侧贴地 band 外缘</strong></td></tr><tr><td><code>08-traffic</code></td><td>通行能力按 band 汇总；<strong>导航只在 band 0</strong> 上做最短路径；辅道由"开口"进出</td></tr><tr><td><code>10-presentation</code></td><td>每个 band 一个 <code>road_view</code> 实例；高架单独一层（避免 z-fighting），层高差 ≥ 6 m</td></tr><tr><td><code>09-core-tick</code></td><td><strong>不变</strong>（corridor 不是系统，是路网内部结构）</td></tr><tr><td><code>06-finance-land</code></td><td>地价计算看"最近的可达 band"的等级，不看 corridor</td></tr><tr><td>存档</td><td><code>segment</code> 加 3 字段 ⇒ <code>FORMAT_VERSION + 1</code></td></tr></tbody></table></div>
+<h3 id="3-10-9-验收-b2-必须全过">3.10.9 验收（B2 必须全过）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>判据</th></tr></thead><tbody><tr><td><strong>RD-C1</strong></td><td>画一条 <code>express_split</code>，两条 band <strong>全程平行</strong></td><td>任意采样点间距误差 ≤ 0.1 m</td></tr><tr><td><strong>RD-C2</strong></td><td>改某节点 <code>sep</code> 4→12 m，两条 band 平滑过渡</td><td>无折角（转角 ≤ 0.5°）</td></tr><tr><td><strong>RD-C3</strong></td><td>⭐ <code>express_double</code> 的<strong>上层不产生围合面</strong>，地面层正常产生</td><td>地块数量与"只有地面路"时一致</td></tr><tr><td><strong>RD-C4</strong></td><td>拆 corridor 后无残留</td><td>该 corridor 的所有 segment / node 全部消失</td></tr><tr><td><strong>RD-C5</strong></td><td>存档往返后 <code>corridor_id / band_index / offset_dm</code> 不变</td><td>探针比对</td></tr><tr><td><strong>RD-C6</strong></td><td>旧档（<code>FORMAT_VERSION 3</code>）能迁移到 4 并正常跑 100 游戏日</td><td>迁移回归（<code>bench/check_save_compat.py</code>）</td></tr><tr><td><strong>RD-C7</strong></td><td>⭐ 3 车道接 4 车道，<strong>两侧边线连续</strong></td><td>边线横向误差 ≤ 5 cm（<code>align</code> 生效）</td></tr><tr><td><strong>RD-C8</strong></td><td>标线由 part 序列自动推导，且可覆盖</td><td>改 part 宽度后标线跟着动；覆盖值存档往返不变</td></tr></tbody></table></div>
+<p>⚠ <strong>RD-C3 是最容易被"实现成能跑但不对"的一条</strong>：双层高架看起来正常， 但地块被上层投影线切碎了——玩家会在"高架桥下面不能盖房"这件事上困惑。</p>
+<h3 id="3-10-10-明确不做">3.10.10 明确不做</h3>
+<div class="tw"><table><thead><tr><th>不做</th><th>理由</th></tr></thead><tbody><tr><td>车道级连接（进口道→出口道）</td><td><code>§3.6.5b</code> 已定：OD 聚合下没贡献，代价是一个子系统</td></tr><tr><td>匝道（<code>express_double_ramp</code>）</td><td>推到 B5；匝道要"连接两个不同 band 的端点"，属特殊连接</td></tr><tr><td>断面内车道之间的变道</td><td>同上，属微观模拟</td></tr><tr><td><strong>自由拖动每条车道到任意位置</strong></td><td>断面是<strong>参数化组合</strong>（选车道数、调宽度、加绿化），<strong>不是自由画折线</strong>。理由见 §3.10.12：任意折线会让围合面与通行能力不可预测</td></tr><tr><td>车道级连接件（CSUR 的 <code>4R=2R2R4P</code> 那种）</td><td><code>§3.6.5b</code> 已定不做。<strong>我们从 CSUR 只取"断面自由 + 对齐"，不取"车道级连接"</strong>（见 §3.10.11 前言）</td></tr></tbody></table></div>
+<hr>
+<h3 id="3-10-11-断面属性矩阵-七组-这才是-自定义-的全集">3.10.11 ⭐ 断面属性矩阵（七组，这才是"自定义"的全集）</h3>
+<blockquote>开发者原话：「我说的道路修建系统只是我想到的功能，并不是说只有这些，比如还可以自定义车道数，<br>路边绿化，道路标线等各种属性，有点像 CSUR 模组。」<br>⚠ 上一版只给了 8 个<strong>模板</strong>（<code>local</code> / <code>arterial_bus</code> / <code>express_split</code> …），<br>那是"预设"，不是"属性全集"。本节把可调属性列全。</blockquote>
+<h4 id="先说清-csur-取什么-不取什么">先说清 CSUR 取什么、不取什么</h4>
+<p>CSUR 的核心是<strong>按"道"修建</strong>：每个组件代表一组车道（如 <code>4R</code> = 右侧 4 条、<code>3L5</code> = 左侧 3 条偏移到第 5 道）， 模块由<strong>首尾两端车道组的组合</strong>定义（<code>base</code> / <code>shift</code> / <code>transition</code> / <code>ramp</code>）， 所以它能做到"3 车道扩 4 车道时从右侧加，而不是居中"。</p>
+<div class="tw"><table><thead><tr><th>CSUR 的能力</th><th>我们取不取</th><th>理由</th></tr></thead><tbody><tr><td><strong>断面按车道组自由组合</strong></td><td>✅ <strong>取</strong></td><td>这正是"自定义车道数/绿化/标线"的本质</td></tr><tr><td><strong>标线随配置自动生成</strong></td><td>✅ <strong>取</strong></td><td>手画标线是 CS1 造景玩家最大的时间黑洞</td></tr><tr><td><strong>左/中/右对齐</strong>（3→4 车道从一侧加）</td><td>✅ <strong>取</strong></td><td>我们的 <code>offset_dm</code> 天然支持</td></tr><tr><td><strong>车道级连接件</strong>（第 1 道接第 3 道）</td><td>❌ <strong>不取</strong></td><td><code>§3.6.5b</code> 已定不做；我们靠 OD 聚合，不需要</td></tr></tbody></table></div>
+<p>⚠ <strong>一句话</strong>：CSUR 的自由度是"<strong>道级连接</strong>"，我们要的是"<strong>断面自由</strong>"。 两者在"横截面能随便配"这一层重合，但连接层完全不同。<strong>别照搬它的模块系统，那是另一个子系统。</strong></p>
+<h4 id="七组属性">七组属性</h4>
+<p><strong>A. 横断面组成</strong>（band 的 part 序列，从左到右）</p>
+<div class="tw"><table><thead><tr><th>属性</th><th>可取值</th><th>默认</th></tr></thead><tbody><tr><td>人行道</td><td>无 / 单侧 / 双侧；宽 1.5–8 m</td><td>双侧 3 m（支路）</td></tr><tr><td>非机动车道</td><td>无 / 有；宽 1.5–3.5 m；与机动车<strong>标线</strong>还是<strong>物理</strong>隔离</td><td>无（支路）/ 2.5 m（主干）</td></tr><tr><td>机非分隔</td><td>无 / 标线 / 护栏 / 绿化带（0.5–3 m）</td><td>无</td></tr><tr><td>机动车道</td><td><strong>单向 1–8 条</strong>；宽度按 <strong>CJJ 37 §5.3.2 四格表</strong>（见下）</td><td>3.25（小客车专用 / ≤60）</td></tr><tr><td>车道类型</td><td>普通 / <strong>公交专用</strong> / <strong>BRT</strong> / 可变车道 / 潮汐</td><td>普通</td></tr><tr><td>中央分隔</td><td>无 / 标线 / 护栏 / <strong>绿化带 0.5–20 m</strong></td><td>标线（支路）/ 3 m 绿化（主干）</td></tr><tr><td>路侧停车带</td><td>无 / 平行 / 斜列；宽 2.0–5.5 m</td><td>无</td></tr><tr><td>路缘</td><td>平缘（0）/ 立缘（0.15 m）</td><td>立缘</td></tr><tr><td>建筑退线</td><td>0–15 m（红线到建筑）</td><td>按 <code>03-zoning</code> 逐地块</td></tr></tbody></table></div>
+<h5 id="车道宽度的国标四格-gb-standards-3-6-cjj-37-5-3-2">车道宽度的国标四格（gb-standards §3.6，CJJ 37 §5.3.2）</h5>
+<div class="tw"><table><thead><tr><th>车型 / 车道类型</th><th>设计速度 <strong>&gt;60</strong> km/h</th><th>设计速度 <strong>≤60</strong> km/h</th></tr></thead><tbody><tr><td>大型车或混行车道</td><td><strong>3.75 m</strong></td><td><strong>3.50 m</strong></td></tr><tr><td><strong>小客车专用车道</strong></td><td>3.50 m</td><td><strong>3.25 m</strong> ← 中国城市常态</td></tr></tbody></table></div>
+<p>⚠ <strong>2026-11-25 修正</strong>：上一版写"3.0 / 3.25 / 3.5 / 3.75 四选一"，把「车型」和「设计速度」两个维度 混成了四个并列数字。<strong>正确规则是先看车型、再看设计速度。</strong> ⚠ <strong>交叉口进口道可以更窄</strong>（新建 ≥3.0、改建受限 ≥2.8、公交/大车 ≥3.0，<code>gb-standards</code> §3.7.1）—— <strong>同一个值不许同时套路段与路口</strong>。</p>
+<p>⚠ <strong>总宽度必须落在车道宽度的整数倍上</strong>（否则拼不出整道）。 系统自动校验并<strong>吸附</strong>到最近合法宽度，不报错——报错会让玩家反复试。 ⚠ <strong>但"不合法"也要能建出来</strong>：<code>gb-standards</code> §3.7.5 定了"现实偏差"层—— 老城红线受限时 2.8 m 的车道是真实存在的，<strong>被允许</strong>，只是会在规范视图里标黄。 <strong>判据：偏离要能说出一条现实成因（老城红线 / 大型车半径 / 历史路网），说不出就是设计错误。</strong></p>
+<p><strong>B. 标线</strong>（⭐ <strong>自动推导，可覆盖</strong>，见 §3.10.14）</p>
+<div class="tw"><table><thead><tr><th>属性</th><th>可取值</th></tr></thead><tbody><tr><td>中心线</td><td>单黄实线 / 双黄实线 / 黄虚线（可跨越）；⚠ <strong>具体形式待按 GB 5768.3 核对</strong>（<code>gb-standards</code> §3.8）</td></tr><tr><td>车道分界</td><td>白虚线（默认）/ 白实线（临近路口 30 m 内自动变实）</td></tr><tr><td>边缘线</td><td>白实线</td></tr><tr><td>导向箭头</td><td>直行 / 左转 / 右转 / 掉头 / 直左 / 直右（按车道位置自动配，可覆盖）</td></tr><tr><td>公交专用道</td><td>黄虚线 + 时段文字（如 <code>7:00-9:00 17:00-19:00</code>）</td></tr><tr><td>特殊标线</td><td>减速标线 / 导流线 / 菱形（人行横道预告）/ 非机动车标识</td></tr><tr><td>斑马线 / 停止线</td><td>路口处自动生成（<code>§3.6.5</code> 的条件装饰件）</td></tr></tbody></table></div>
+<p><strong>C. 竖向与结构</strong></p>
+<div class="tw"><table><thead><tr><th>属性</th><th>可取值</th></tr></thead><tbody><tr><td>类型</td><td>路基 / 桥梁 / 隧道 / 高架（由填挖深度自动推导，<code>§3.8.4</code>）</td></tr><tr><td>高架层数</td><td>1–3 层（叠层 corridor）</td></tr><tr><td>挡墙 / 护坡</td><td>无 / 重力式 / 悬臂式 / 加筋土</td></tr><tr><td>纵坡</td><td>自动校验（<code>§3.8</code>）</td></tr></tbody></table></div>
+<p><strong>D. 等级与运营</strong></p>
+<div class="tw"><table><thead><tr><th>属性</th><th>可取值</th><th>影响</th></tr></thead><tbody><tr><td>等级</td><td>快速路 / 主干 / 次干 / 支路 / 内部</td><td>通行能力、限速上限、面宽要求</td></tr><tr><td>限速</td><td>30–120 km/h</td><td>OD 分配的阻抗</td></tr><tr><td>方向</td><td>双向 / 单向</td><td>—</td></tr><tr><td>货运禁行</td><td>开 / 关</td><td>OD 里的货车绕行</td></tr><tr><td>收费</td><td>开 / 关（仅快速路）</td><td>财政 + 阻抗</td></tr></tbody></table></div>
+<p><strong>E. 绿化</strong></p>
+<div class="tw"><table><thead><tr><th>属性</th><th>可取值</th><th>默认</th></tr></thead><tbody><tr><td>中央绿化带</td><td>无 / 有（宽 0.5–20 m）</td><td>3 m（主干）</td></tr><tr><td>两侧绿化带</td><td>无 / 有（宽 1–10 m）</td><td>无</td></tr><tr><td>行道树</td><td>无 / 有；间距 4–12 m；树种按 <code>climate_zone</code></td><td>8 m</td></tr><tr><td>树池</td><td>方形 / 圆形 / 连体</td><td>方形</td></tr></tbody></table></div>
+<p><strong>F. 附属设施</strong>（⚠ <strong>不是道路模型，是 L3 摆件沿 band 生成</strong>，见 <code>17-asset-layers</code>）</p>
+<div class="tw"><table><thead><tr><th>属性</th><th>可取值</th><th>默认间距</th></tr></thead><tbody><tr><td>路灯</td><td>单臂 / 双臂 / 多臂；高 8–14 m</td><td>30 m</td></tr><tr><td>信号灯</td><td>有 / 无（默认只在路口）</td><td>—</td></tr><tr><td>标志牌</td><td>限速 / 指路 / 禁令</td><td>按需</td></tr><tr><td>公交站</td><td>有 / 无</td><td>按需</td></tr><tr><td>护栏 / 隔离桩</td><td>有 / 无</td><td>—</td></tr><tr><td>井盖 / 雨水篦子</td><td>有 / 无</td><td>25 m</td></tr><tr><td>监控杆 / 电子警察</td><td>有 / 无</td><td>按需</td></tr></tbody></table></div>
+<p><strong>G. 对齐</strong>（从 CSUR 学的关键一条，见 §3.10.15）</p>
+<div class="tw"><table><thead><tr><th>取值</th><th>用在什么场景</th></tr></thead><tbody><tr><td>居中（默认）</td><td>双向对称路</td></tr><tr><td>左对齐</td><td>3 车道扩 4 车道时，<strong>从右侧加一条</strong>，左侧边线不动</td></tr><tr><td>右对齐</td><td>同上，从左侧加</td></tr><tr><td>自定义偏移</td><td>两条单行道间距变化（<code>express_split</code> 的 <code>sep</code>）</td></tr></tbody></table></div>
+<h3 id="3-10-12-三档自由度-不设这一档-ui-会变成-csur-那种学习成本">3.10.12 ⭐ 三档自由度（不设这一档，UI 会变成 CSUR 那种学习成本）</h3>
+<blockquote>CSUR 最大的问题不是设计，是<strong>新手学不会</strong>：要理解 <code>4R=2R2R4P</code> 这种命名才能修路。<br>所以我们提供三档，<strong>产出同一种数据结构</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>档</th><th>面向</th><th>能调什么</th><th>UI 形态</th><th>默认</th></tr></thead><tbody><tr><td><strong>① 自动</strong></td><td>绝大多数玩家</td><td><strong>只选等级</strong>（快速/主干/次干/支路/内部）</td><td>一个图标，点了就画</td><td>✅ 默认</td></tr><tr><td><strong>② 预设</strong></td><td>想微调的玩家</td><td>模板 + <strong>5–8 个滑块</strong>（车道数、限速、绿化宽、有无非机动车道、停车带）</td><td>一个小面板</td><td>—</td></tr><tr><td><strong>③ 自由</strong></td><td>高阶玩家</td><td>§3.10.11 的<strong>全部属性</strong>，逐 part 组合</td><td>车道条编辑器（像 CSUR 面板）</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>三档产出的数据结构完全一样</strong>（corridor → band → part），区别只在<strong>编辑界面</strong>。 所以：<strong>用"自动"铺的路，之后可以用"自由"档改</strong>。这条是设计底线，不满足就别做分档。</p>
+<p>⚠ <strong>不允许"任意画折线"</strong>（§3.10.10 已列）：自由档也是<strong>参数化组合</strong> （选"这里加 3 m 绿化"），不是拖着车道线到任意位置。 理由：任意折线会让<strong>围合面</strong>与<strong>通行能力</strong>不可预测，且存档无法复现。</p>
+<h3 id="3-10-13-part-的数据表达-b2-实现时看">3.10.13 part 的数据表达（B2 实现时看）</h3>
+<pre class="code"><code>band {
+  parts: [                       # 从左到右有序
+    { kind: sidewalk,   width_dm: 30 },
+    { kind: bike,       width_dm: 25, isolation: marking },
+    { kind: lane_group, count: 2, lane_w_dm: 35, lane_type: normal, arrows: [left, straight] },
+    { kind: median,     width_dm: 30, green: true },
+    { kind: lane_group, count: 2, lane_w_dm: 35, lane_type: normal, arrows: [straight, right] },
+    { kind: bike,       width_dm: 25, isolation: marking },
+    { kind: sidewalk,   width_dm: 30 }
+  ]
+}</code></pre>
+<div class="tw"><table><thead><tr><th>规则</th><th>说明</th></tr></thead><tbody><tr><td><code>parts</code> 从左到右有序</td><td>不存 x 坐标，只存宽度序列（推导位置，避免不一致）</td></tr><tr><td>总宽 = Σ<code>width_dm</code></td><td>自动校验；不合法时<strong>吸附</strong>到最近合法值</td></tr><tr><td><code>lane_group</code> 是唯一承载车流的部分</td><td>其余 part 不参与通行能力计算</td></tr><tr><td>车道数 = Σ<code>lane_group.count</code></td><td>单向；另一方向由逆向 part 或另一 band 承担</td></tr><tr><td><strong>存档只存 part 序列与宽度</strong></td><td>不存推导出的标线、不存 mesh —— 换实现方式不用改存档</td></tr></tbody></table></div>
+<p>⚠ <strong>part 序列是"形状数据"，属 R34 的「绝不能浅」清单</strong>（改形状要重写下游）。 所以 <strong>B2 只实现 <code>local</code> 用到的那几种 part</strong>（人行道 / lane_group / 标线中心线）， 但<strong>数据结构要能容纳全部 part 种类</strong>。</p>
+<h3 id="3-10-14-标线自动推导-从-csur-学的最实用的一条">3.10.14 标线自动推导（从 CSUR 学的最实用的一条）</h3>
+<blockquote>CS1 造景玩家最大的时间黑洞是"手画标线"。CSUR 的标线是<strong>从车道配置推出来的</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>条件</th><th>自动生成</th></tr></thead><tbody><tr><td>双向且中央分隔为"标线"</td><td>中心线：主干用<strong>双黄实线</strong>，支路用<strong>单黄实线</strong></td></tr><tr><td>相邻两条 lane 同向</td><td><strong>白虚线</strong>（车道分界）</td></tr><tr><td>同向 lane 临近路口 <strong>30 m</strong> 内</td><td>白虚线 → <strong>白实线</strong></td></tr><tr><td>band 最外侧车道</td><td><strong>白实线</strong>（边缘线）</td></tr><tr><td><code>turn_mask</code> = 左+直（混行）</td><td>导向箭头画<strong>复合箭头</strong>（直左箭头，GB 5768 有标准图式），不是两个箭头并排</td></tr><tr><td><code>turn_mask</code> = 直+右（混行）</td><td>复合箭头（直右）</td></tr><tr><td><code>turn_mask</code> 只有单一功能</td><td>单元箭头（左 / 直 / 右 / 掉头）</td></tr><tr><td><del>车道位置在最左</del></td><td>⚠ <strong>不再按位置推箭头，一律按 <code>turn_mask</code></strong>（2026-11-25 修正：位置与功能无必然关系）</td></tr><tr><td><code>lane_type = bus</code></td><td>黄虚线 + 时段文字</td></tr><tr><td>进入路口</td><td><strong>停止线 + 斑马线</strong>（<code>§3.6.5</code> 的条件装饰件）</td></tr></tbody></table></div>
+<p>⚠ <strong>可覆盖</strong>：玩家能在自由档里改任意一条（比如把某条车道改回"直行"）。 <strong>覆盖值进存档，推导值不进</strong>（推导值由配置重算，改规则自动生效）。</p>
+<h3 id="3-10-15-对齐-左-中-右-3-车道扩-4-车道为什么需要它">3.10.15 对齐：左 / 中 / 右（3 车道扩 4 车道为什么需要它）</h3>
+<p><strong>问题（CS1 的真实缺陷）</strong>：3 车道接 4 车道时，CS1 是<strong>居中对接</strong>， 结果是两边各多出半条道的错位。现实中是从<strong>一侧加一条</strong>，另一侧边线不动。</p>
+<p>我们的解：<code>band.align</code> 三值 + <code>offset_dm</code>。</p>
+<div class="tw"><table><thead><tr><th><code>align</code></th><th>行为</th><th>用在哪</th></tr></thead><tbody><tr><td><code>center</code></td><td>两侧对称扩</td><td>双向路（默认）</td></tr><tr><td><code>left</code></td><td><strong>左边线固定</strong>，右侧加宽</td><td>靠中央分隔一侧对齐（如匝道分流）</td></tr><tr><td><code>right</code></td><td>右边线固定，左侧加宽</td><td>最常见：<strong>车道数增加时从内侧加</strong></td></tr><tr><td><code>manual</code></td><td>直接给 <code>offset_dm</code></td><td><code>express_split</code> 两单行道间距变化</td></tr></tbody></table></div>
+<p>⚠ <strong>这条几乎不花代价</strong>（我们已经存了 <code>offset_dm</code>），但<strong>视觉收益极大</strong>： 玩家会觉得"这路是设计过的"，而不是"两条管子插在一起"。 ⚠ 验收：<strong>RD-C7</strong>（见 §3.10.9）——3 车道接 4 车道，<strong>两侧边线必须连续</strong>（误差 ≤5 cm）。</p>
+<h2 id="四-更新流程">四、更新流程</h2>
+<div class="tw"><table><thead><tr><th>时机</th><th>做什么</th></tr></thead><tbody><tr><td>玩家画/拆路</td><td>三表增量维护 → <strong>重求受影响的面</strong> → 重算可达性 → 发 <code>road.*</code></td></tr><tr><td>每次改路</td><td>必须发 <code>road.block_faces</code>，<code>zoning</code> 才有活干</td></tr><tr><td>其他时候</td><td><strong>什么都不做</strong>（本系统是事件驱动的，不占 tick 预算）</td></tr></tbody></table></div>
+<p>⚠ <strong>改路必须级联到 <code>zoning</code></strong>：面变了 → parcel 要重新细分 → 建筑可能被拆。 这条要在 <code>zoning</code> 侧处理，<code>road</code> 只负责"面变了"这个事实。</p>
+<hr>
+<h2 id="五-验收点">五、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>RD1</strong></td><td>画一个矩形路环，<strong>能求出 1 个正确的 <code>block_face</code></strong>（面积误差 &lt; 1 %）</td><td>探针打印面积</td></tr><tr><td><strong>RD2</strong></td><td>画两个相邻路环，求出 <strong>2 个面</strong>，共享的边只出现一次</td><td>探针检查 <code>edge_segments</code></td></tr><tr><td><strong>RD3</strong></td><td>一条断头路（不围合）<strong>不产生面</strong></td><td>探针断言面数不增</td></tr><tr><td><strong>RD4</strong></td><td>围合面数量在 2500 km² 满图下 <strong>≤ 6 万</strong>，求面一次 <strong>≤ 200 ms</strong></td><td><code>probe_structure</code></td></tr><tr><td><strong>RD5</strong></td><td>分层路网：<code>A*</code> 从 L 层入口到 H 层再回 L，<strong>搜索节点数 &lt; 全图 5 %</strong></td><td>探针计数</td></tr><tr><td><strong>RD6</strong></td><td>拆掉一条路，受影响的面<strong>自动合并或消失</strong>，且无孤儿顶点</td><td>探针检查引用完整性</td></tr><tr><td><strong>RD7</strong></td><td>可达性场：路网密度翻倍处 <code>accessibility</code> 明显更高</td><td>探针两点对比</td></tr><tr><td><strong>RD8</strong></td><td>存档 → 读档后三表与 <code>block_face</code> 完全一致；<code>accessibility</code> 重算结果一致</td><td>探针比对</td></tr><tr><td><strong>RD9</strong></td><td><strong>删除一个面后，它下面的 parcel 与建筑被正确标记为待处理</strong>（不泄漏）</td><td>探针检查</td></tr><tr><td><strong>RD10</strong></td><td>两条路的端点相距 8 m 内时<strong>自动吸附成一个路口</strong>，且求面正确</td><td>手动 + 探针</td></tr><tr><td><strong>RD11</strong></td><td>快速路与既有道路相交时<strong>拒绝平交</strong>（或自动生成立交），不出现"最堵的快速路"</td><td>手动</td></tr><tr><td><strong>RD12</strong></td><td>画路穿过 3 栋建筑时<strong>提供一键拆除</strong>，且扣款正确</td><td>手动</td></tr><tr><td><strong>RD13</strong></td><td>弯曲路段<strong>宽度恒定</strong>（任意 t 处横截面宽度差 &lt; 1 %）</td><td>探针采样</td></tr><tr><td><strong>RD14</strong></td><td>90° 急弯<strong>不出现自交或翻面</strong>（曲率超限自动插 <code>Bend</code> 节点）</td><td>截图 + 探针</td></tr><tr><td><strong>RD15</strong></td><td>贴图沿<strong>弧长</strong>重复：100 m 段与 20 m 段的虚实间隔一致</td><td>截图对比</td></tr><tr><td><strong>RD16</strong></td><td>存档只含每段 <strong>4 个向量</strong>，不含曲线采样点</td><td>打开存档检查</td></tr><tr><td><strong>RD17</strong></td><td>全图 15 万段在 LOD 下<strong>顶点总数 &lt; 800 万</strong></td><td><code>probe_structure</code></td></tr><tr><td><strong>RD18</strong></td><td>跨度 1 600 m 的桥，<strong>塔高 ≈ 200 m</strong>（÷8），不是固定值</td><td>探针 + 截图</td></tr><tr><td><strong>RD19</strong></td><td>桥型<strong>由跨度自动推导</strong>，存档里<strong>没有</strong>"桥型"字段</td><td>打开存档检查</td></tr><tr><td><strong>RD20</strong></td><td>同等长度下桥面<strong>不能接支路</strong>（中间无法开口）</td><td>手动</td></tr><tr><td><strong>RD21</strong></td><td>造价随跨度<strong>超线性</strong>：跨径翻倍，造价至少 ×2.5</td><td>探针两支</td></tr><tr><td><strong>RD22</strong></td><td>⭐ <strong>路面不贴地形</strong>：地形有 50 m 起伏处，<strong>路面纵坡仍 ≤ 3 %</strong></td><td>探针采样高程</td></tr><tr><td><strong>RD23</strong></td><td>填方 &gt; 8 m <strong>自动变桥梁</strong>；挖方 &gt; 15 m <strong>自动变隧道</strong></td><td>探针</td></tr><tr><td><strong>RD24</strong></td><td>桥面高出地面 10 m 时，<strong>引道 ≥ 333 m</strong>（3 % 纵坡约束）</td><td>探针</td></tr><tr><td><strong>RD25</strong></td><td>存档<strong>同时存</strong> <code>terrain_h</code> 与 <code>road_h</code></td><td>打开存档</td></tr><tr><td><strong>RD26</strong></td><td>隧道内<strong>不出现任何路口/支路</strong></td><td>手动</td></tr><tr><td><strong>RD27</strong></td><td>⭐ <strong>改地形不动 <code>road_h</code></strong>：路旁挖 5 m，路面高程不变，填挖深度 +5 m</td><td>探针</td></tr><tr><td><strong>RD28</strong></td><td>填挖超阈值时<strong>自动变桥梁/隧道，且提前提示</strong>（不静默）</td><td>探针 + 手动</td></tr><tr><td><strong>RD29</strong></td><td>建筑所在 parcel <strong>地形改动 &gt; ±1 m 被拒绝</strong>，提示"需先拆除建筑"</td><td>手动</td></tr><tr><td><strong>RD30</strong></td><td>地形修改<strong>走施工期</strong>（能看到土方车），不瞬间变化</td><td>手动</td></tr><tr><td><strong>RD31</strong></td><td>存档含<strong>完整高度图</strong>（≈720 KB），不依赖生成算法</td><td>打开存档</td></tr></tbody></table></div>
+<p>⚠ <strong>R1/R2/R3 是 R6 能否成立的最小证据集</strong>：三条不过，整条"路围合地块"的链条就是假的， 要回 B2 重做，不许往上盖。</p>
+<p>⚠ <strong>R4 决定 2500 km² 能不能做</strong>：求面是 O(E log E)，15 万条边在 GDScript 里可能吃力， <strong>如果超 200 ms 就把求面挪进 <code>native/sim_core</code></strong>（R1 已允许）。</p>
+<hr>
+<h2 id="六-待定">六、待定</h2>
+<ol><li><strong>环岛 / 立交 / 高架</strong>是否进可玩版 —— 立交的拓扑复杂度高，建议只做<strong>简单互通</strong></li><li><strong>曲线的表示</strong>：三次贝塞尔还是折线采样？表现层决定即可，<code>sim</code> 只要长度</li><li><strong>车道级转向</strong>（左转专用道）—— 影响通行能力，但会显著增加数据量</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-18（五）</strong>：新增 <strong>§三·九 地形修改</strong>。依据用户「还有地形修改，在 CS1 里面也有」：</li></ul>
+<p>  ⚠ CS1 在这块有著名毛病（建筑悬空 / 路面被地形穿透 / 路面跟着起伏），三条都要提前避开。   ① ⭐ <strong>核心规则：改地形不动 <code>road_h</code></strong>，只有 <code>fill_h</code> 变——   <strong>否则玩家挖个坑，高速就跟着塌下去，纵坡立刻超限</strong>（退回 CS1）；   ② <strong>改地形可能改变路段形式</strong>（填到 +8 m 变桥、挖到 −15 m 变隧道），   但<strong>必须提前提示，不能静默改变</strong>；   ③ 三种操作（升降刷 / 平整 / 水体），<strong>不做自由雕刻与高度图导入</strong>（后者是 B1.5 地图编辑器的事）；   ④ ⚠ <strong>建筑所在 parcel 地形改动限 ±1 m</strong>（超出拒绝并提示"需先拆除建筑"）——   <strong>"需先拆除"比"允许悬空"好一万倍</strong>；   ⑤ 成本 = 土方量 × 硬度（岩&gt;土&gt;沙），<strong>不允许免费微调</strong>（否则绕过纵断面限制）；   ⑥ <strong>必须走施工期</strong>（复用 <code>dump_truck</code> 视觉），瞬间塌陷会被当成 bug；   ⑦ ⭐ <strong>与沉陷区 F73 联动</strong>：采煤赚钱 → 地面沉陷 → 花钱复垦 → <strong>净收益没有想象的高</strong>，   这是"资源诅咒"在物理层面的表现；   ⑧ 存档<strong>存完整高度图</strong>（≈720 KB），<strong>不用"种子+补丁"</strong>（生成算法一改就失效，存档要十年后可开）。   新增 R27–R31 五条断言。</p>
+<ul><li><strong>2026-11-18（四）</strong>：新增 <strong>§三·八 纵断面与路基</strong>。依据用户指出「**我国的高速公路是有垫高的，</li></ul>
+<p>  目的是为了平整<strong>；CS1 的第一人称模组里高速和铁路经常跟着地形起伏，现实很不安全」：   ⚠ </strong>这是 CS1 的物理硬伤：路面高程直接取地形高程。<strong>   ① </strong>三个高程必须分开存<strong>：<code>terrain_h</code> / </strong><code>road_h</code><strong> / <code>fill_h</code>（填挖深度）；   ② </strong>纵坡限值<strong>（高速 120 km/h 只允许 </strong>3 %<strong>，即 1 km 只能升降 30 m）——    ⚠ 数值需核对 <code>gb-standards</code> 原文，未核对前不写死；   ③ ⭐ </strong>填挖深度自动决定形式<strong>（−2~+3 m 路基 / &gt;+8 m 桥梁 / &lt;−15 m 隧道），    与"桥型由跨度决定"同一逻辑：</strong>工程条件决定形式，玩家只决定路线<strong>；   ④ </strong>连接处<strong>：桥台 + 引道（</strong>桥高 10 m ⇒ 引道至少 333 m<strong>）+ 锥坡；隧道洞门（削竹式）+ 明洞；   ⑤ </strong>隧道内路口不做<strong>（山岭隧道不可能；地下快速路推 DLC）；   ⑥ ⚠ </strong>土方量是造价大头<strong> ⇒ 制造真实两难：</strong>"直"和"平"是矛盾的**。   <code>segment</code> 契约加 <code>road_h_a/b</code> / <code>kind</code> / <code>max_grade_permille</code>。新增 R22–R26 五条断言。</p>
+<ul><li><strong>2026-11-18（三）</strong>：新增 <strong>§三·七 桥梁与隧道</strong>。依据用户「桥梁除普通桥还有悬索桥斜拉桥，</li></ul>
+<p>  <strong>CS1 那个是悬索桥但和真正的悬索桥相比还是很小</strong>」：   ① ⭐ <strong>桥型由跨度决定，玩家不选</strong>（&lt;60 梁 / 60–300 连续 / 300–800 斜拉 / &gt;800 悬索 / 峡谷拱）   ⇒ <strong>把"选桥型"变成"选过江位置"</strong>，这个决策更有意思也更真实；   ② <strong>造价超线性</strong>（梁 ×5–8 → 悬索 ×20–40），跨径翻倍造价至少 ×2.5；   ③ <strong>隧道 vs 桥的真实两难</strong>：隧道更贵但不占通航净空（<strong>南京长江大桥 24 m 净空锁住长江上游</strong>是真实约束）；   ④ ⭐ <strong>塔高必须按跨度算</strong>：悬索 <strong>主跨 ÷ 8</strong>、斜拉 <strong>÷ 4.5</strong>、主缆垂度 ÷ 11   —— <strong>1.6 km 悬索桥塔高 200 m（60 层楼），这才是"看着是座大桥"的原因</strong>；   <strong>CS1 用固定塔高，所以 1 km 的桥像 200 m 的</strong>；   ⑤ <strong>桥是路段的一种</strong>（<code>segment.kind</code>），不新增实体，保住 D4/D5；桥型由 <code>span_m</code> 推导、<strong>存档不存桥型</strong>。   新增 R18–R21 四条断言。</p>
+<ul><li><strong>2026-11-18（二）</strong>：⚠ <strong>§3.6.5 修正</strong>——初版写"CS1 用预制路口 mesh 按连接数分类"<strong>是错的</strong>。</li></ul>
+<p>  用户指出「开启无碰撞模组时可以 8 条路接一个路口」，查源码确认真实机制是三层：   <strong>① 段端点裁剪</strong>（<code>m_clipSegmentEnds</code> + <code>GetEndRadius()</code>，<code>NetSegment.cs:1594</code>）⇒ 任意条数天然成立；   <strong>② 节点装饰件按"连接段数 0–8 + 标签"条件渲染</strong>（<code>NetInfo.cs:397–407</code>，<code>[ValueRange(0,8)]</code>）；   <strong>③ mesh 靠 <code>m_meshScales</code>/<code>m_sideScales</code> 矩阵缩放</strong>，不是每种路口一套资源。   ⇒ <strong>角度完全不用管</strong>（路面是裁出来的），<strong>只有铺装贴花按连接数分档</strong>（2D 贴图，成本极低）。   另新增 <strong>§3.6.5b 边界：不做车道级连接</strong>（CS1 做逐车道连接，我们用 OD + 代表性 agent，   车道级细节对宏观流量无贡献）。</p>
+<ul><li><strong>2026-11-18</strong>：新增 <strong>§三·六 曲线道路的几何与渲染</strong>（用户指出"道路也是模型，</li></ul>
+<p>  怎么弯曲还不别扭"是 CS1 最值得学的部分；此前本篇完全没写渲染）。   参考 CS1 逆向源码（<code>docs/reference/cs1-decomp-notes.md</code>）：   ① <strong>数据模型只存 4 个向量</strong>（中点/起向/终向 + 两端节点），曲线随时现算，<strong>存档不存采样点</strong>；   ② ⚠ <strong>弯曲不是拉伸静态 mesh，是沿曲线扫掠断面</strong>——而且<strong>必须按弧长等距采样</strong>（按 <code>t</code> 会弯道疏直线密）；   ③ <strong>曲率超限就插 <code>Bend</code> 节点</strong>（CS1 <code>m_enableBendingSegments</code>），按<strong>曲率半径</strong>判定不是总转角；   ④ <del>交叉口用预制 mesh + 角度档位（30/45/60/90）</del> ⛔ <strong>这条已被同日「(二)」的 §3.6.5 修正推翻</strong>：      交叉口是<strong>段端点裁剪 + 节点装饰件</strong>，不是预制件。保留此行只为留痕，<strong>不要再按它实现</strong>。   ⑤ 贴图 <code>v</code> 用<strong>累计弧长</strong>，不用段长（否则长段被拉伸）；   ⑥ 顶点预算：15 万段 × 30 采样 × 8 点 = 3600 万，<strong>必须 LOD 分级</strong>到 &lt; 800 万。   新增 R13–R17 五条断言。</p>
+<ul><li><strong>2026-11-17</strong>：新增 <strong>§三·五 画路交互与合法性</strong>（补系统间接合的空白）：</li></ul>
+<p>  三种画法（拖拽曲线/直线段/延伸）+ <strong>必须自动吸附（8 m，否则求不出面）</strong>、   <strong>五条合法性校验且每条带具体理由</strong>（穿水体/穿建筑/穿农田/坡度过陡/资金不足）、   ⚠ <strong>穿建筑允许"一键拆除"</strong>（代价是钱不是麻烦）、造价公式、<strong>快速路不许平交</strong>、   拆除的面级联规则（<strong>面消失不自动删建筑，让玩家选</strong>）。</p>
+<ul><li><strong>2026-11-16</strong>：首版（B0 交付项之三，AI 起草）。按 R6 建立：<strong>四张表</strong>（节点/路段/车道/<strong>围合面</strong>）、</li></ul>
+<p>  DCEL 求面流程、可达性派生栅格、9 条验收断言。   ⚠ 明确指出<strong>第四张表是 R6 带来的</strong>，以及"没有它整条链条断掉"。</p><div class="pager"><a href="design-01-playable-definition.html">← [迁移] 来源说明</a><a href="design-03-zoning.html">03 · 分区与生长：用地分类、小区、容积率、生长与废弃 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#二-四张表-不是三张">二、四张表（不是三张）</a><a class="l2" href="#三-数据契约">三、数据契约</a><a class="l3" href="#3-1-node">3.1 node</a><a class="l3" href="#3-2-segment">3.2 segment</a><a class="l3" href="#3-3-block_face-r6-的核心产出">3.3 block_face（R6 的核心产出）</a><a class="l3" href="#3-4-accessibility-r1-的主输入">3.4 accessibility（R1 的主输入）</a><a class="l2" href="#三-五-画路交互与合法性-2026-11-17-补">三·五、画路交互与合法性（2026-11-17 补）</a><a class="l3" href="#3-5-1-三种画法">3.5.1 三种画法</a><a class="l3" href="#3-5-2-合法性-五条-每条都带具体理由">3.5.2 合法性：五条，每条都带具体理由</a><a class="l3" href="#3-5-3-造价与拆迁">3.5.3 造价与拆迁</a><a class="l3" href="#3-5-4-拆除与级联">3.5.4 拆除与级联</a><a class="l2" href="#三-六-曲线道路的几何与渲染-2026-11-18-新增-参考-cs1-逆向源码">三·六、曲线道路的几何与渲染（2026-11-18 新增，参考 CS1 逆向源码）</a><a class="l3" href="#3-6-1-数据模型-只存-4-个量-不存采样点">3.6.1 ⭐ 数据模型：只存 4 个量，不存采样点</a><a class="l3" href="#3-6-2-弯曲不是-拉伸模型-是-沿曲线扫掠断面">3.6.2 ⚠ 弯曲不是"拉伸模型"，是"沿曲线扫掠断面"</a><a class="l3" href="#3-6-3-断面-cross-section-一条-2d-折线">3.6.3 断面（cross-section）：一条 2D 折线</a><a class="l3" href="#3-6-4-曲率过大就插节点-cs1-的-bend-节点">3.6.4 ⭐ 曲率过大就插节点（CS1 的 Bend 节点）</a><a class="l3" href="#3-6-5-交叉口-cs1-不是预制件-是-裁剪-条件变体-缩放">3.6.5 ⚠ 交叉口：CS1 不是预制件，是「裁剪 + 条件变体 + 缩放」</a><a class="l4" href="#三个要点">三个要点</a><a class="l4" href="#我们的做法-修正后">我们的做法（修正后）</a><a class="l3" href="#3-6-5b-车道级连接-做-但分四级-2026-11-25-重写-r35">3.6.5b 车道级连接：做，但分四级（2026-11-25 重写，R35）</a><a class="l4" href="#四级划分-只做-lv0-lv2">四级划分（只做 Lv0–Lv2）</a><a class="l4" href="#关键约束-lane_links-由规则推导-只存覆盖">⭐ 关键约束：lane_links 由规则推导，只存覆盖</a><a class="l4" href="#lv1-逐车道转向集合-不是-几左几直几右">⭐ Lv1：逐车道转向集合，不是"几左几直几右"</a><a class="l4" href="#进口道展宽-2026-11-25-新增-之前完全没这个概念">⭐ 进口道展宽（2026-11-25 新增，之前完全没这个概念）</a><a class="l4" href="#为什么值得做-三条肉眼可见的假">为什么值得做（三条肉眼可见的假）</a><a class="l4" href="#数据结构">数据结构</a><a class="l4" href="#验收">验收</a><a class="l4" href="#明确不做-防膨胀">明确不做（防膨胀）</a><a class="l3" href="#3-6-6-贴图必须沿弧长展开-不能按段长">3.6.6 贴图必须沿弧长展开，不能按段长</a><a class="l3" href="#3-6-7-顶点预算-这一节决定能不能跑-15-万段">3.6.7 顶点预算（这一节决定能不能跑 15 万段）</a><a class="l3" href="#3-6-8-验收点">3.6.8 验收点</a><a class="l2" href="#三-七-桥梁与隧道-2026-11-18-新增">三·七、桥梁与隧道（2026-11-18 新增）</a><a class="l3" href="#3-7-1-第一条规则-桥型由跨度决定-不由玩家选">3.7.1 ⭐ 第一条规则：桥型由跨度决定，不由玩家选</a><a class="l3" href="#3-7-2-造价-不是线性-是超线性">3.7.2 ⚠ 造价：不是线性，是超线性</a><a class="l3" href="#3-7-3-隧道-vs-桥-一个真实的两难">3.7.3 隧道 vs 桥：一个真实的两难</a><a class="l4" href="#通航净空-一个真实的历史约束">⚠ 通航净空：一个真实的历史约束</a><a class="l3" href="#3-7-4-视觉参数-这一节决定-看着大不大">3.7.4 视觉参数（这一节决定"看着大不大"）</a><a class="l3" href="#3-7-5-数据模型-桥是-路段的一种-不是独立实体">3.7.5 数据模型：桥是"路段的一种"，不是独立实体</a><a class="l3" href="#3-7-6-验收点">3.7.6 验收点</a><a class="l2" href="#三-八-纵断面与路基-路面高程-地形高程-2026-11-18-新增">三·八、纵断面与路基：路面高程 ≠ 地形高程（2026-11-18 新增）</a><a class="l3" href="#3-8-1-这是-cs1-的物理硬伤-路-贴-在地形上">3.8.1 ⚠ 这是 CS1 的物理硬伤：路"贴"在地形上</a><a class="l3" href="#3-8-2-三个高程-必须分开存">3.8.2 三个高程（必须分开存）</a><a class="l3" href="#3-8-3-纵坡限值-这是-平-的量化标准">3.8.3 纵坡限值（这是"平"的量化标准）</a><a class="l3" href="#3-8-4-填挖深度自动决定形式-不需要玩家选">3.8.4 ⭐ 填挖深度自动决定形式（不需要玩家选）</a><a class="l3" href="#3-8-5-连接处-桥台引道-与-隧道洞门">3.8.5 连接处：桥台引道 与 隧道洞门</a><a class="l4" href="#桥梁-地面">桥梁 ↔ 地面</a><a class="l4" href="#隧道-道路">隧道 ↔ 道路</a><a class="l3" href="#3-8-6-隧道内路口-不做-除地下快速路">3.8.6 ⚠ 隧道内路口：不做（除地下快速路）</a><a class="l3" href="#3-8-7-土方量是造价的大头">3.8.7 ⚠ 土方量是造价的大头</a><a class="l3" href="#3-8-8-验收点">3.8.8 验收点</a><a class="l2" href="#三-九-地形修改-改地形不改路面-2026-11-18-新增">三·九、地形修改：改地形不改路面（2026-11-18 新增）</a><a class="l3" href="#3-9-1-核心规则-改地形不动-road_h">3.9.1 ⚠ 核心规则：改地形不动 road_h</a><a class="l3" href="#3-9-2-改地形可能改变路段形式-这是联动-不是-bug">3.9.2 ⭐ 改地形可能改变路段形式（这是联动，不是 bug）</a><a class="l3" href="#3-9-3-三种操作">3.9.3 三种操作</a><a class="l3" href="#3-9-4-已有建筑的地块-不能随便改">3.9.4 ⚠ 已有建筑的地块：不能随便改</a><a class="l3" href="#3-9-5-成本-就是土方量">3.9.5 成本：就是土方量</a><a class="l3" href="#3-9-6-必须走施工期-不能瞬间变化">3.9.6 ⚠ 必须走施工期，不能瞬间变化</a><a class="l3" href="#3-9-7-与沉陷区的联动-f73">3.9.7 ⭐ 与沉陷区的联动（F73）</a><a class="l3" href="#3-9-8-存档-高度图必须存">3.9.8 存档：高度图必须存</a><a class="l3" href="#3-9-9-验收点">3.9.9 验收点</a><a class="l2" href="#三-十-走廊与断面组合-一次画出组合型道路-2026-11-25-新增">三·十、走廊与断面组合：一次画出组合型道路（2026-11-25 新增）</a><a class="l3" href="#3-10-1-问题-现有模型是-一-segment-一断面-不够用了">3.10.1 问题：现有模型是「一 segment = 一断面」，不够用了</a><a class="l3" href="#3-10-2-解法-加一层-corridor-走廊">3.10.2 解法：加一层 corridor（走廊）</a><a class="l3" href="#3-10-3-必须遵守的五条规则">3.10.3 必须遵守的五条规则</a><a class="l3" href="#3-10-4-预置模板-进-config-sim-road_corridor-json-不写死-宪法-l5">3.10.4 预置模板（进 config/sim/road_corridor.json，</a><a class="l3" href="#3-10-5-双单行道间距可变-开发者点名的那个痛点">3.10.5 ⭐ 双单行道间距可变（开发者点名的那个痛点）</a><a class="l3" href="#3-10-6-数据结构影响-b2-实现时必读">3.10.6 ⚠ 数据结构影响（B2 实现时必读）</a><a class="l3" href="#3-10-7-造价与拆迁-按走廊算-不按-band-算">3.10.7 造价与拆迁（按走廊算，不按 band 算）</a><a class="l3" href="#3-10-8-对下游系统的影响-b2-之后照这个接">3.10.8 对下游系统的影响（B2 之后照这个接）</a><a class="l3" href="#3-10-9-验收-b2-必须全过">3.10.9 验收（B2 必须全过）</a><a class="l3" href="#3-10-10-明确不做">3.10.10 明确不做</a><a class="l3" href="#3-10-11-断面属性矩阵-七组-这才是-自定义-的全集">3.10.11 ⭐ 断面属性矩阵（七组，这才是"自定义"的全集）</a><a class="l4" href="#先说清-csur-取什么-不取什么">先说清 CSUR 取什么、不取什么</a><a class="l4" href="#七组属性">七组属性</a><a class="l3" href="#3-10-12-三档自由度-不设这一档-ui-会变成-csur-那种学习成本">3.10.12 ⭐ 三档自由度（不设这一档，UI 会变成 CSUR 那种学习成本）</a><a class="l3" href="#3-10-13-part-的数据表达-b2-实现时看">3.10.13 part 的数据表达（B2 实现时看）</a><a class="l3" href="#3-10-14-标线自动推导-从-csur-学的最实用的一条">3.10.14 标线自动推导（从 CSUR 学的最实用的一条）</a><a class="l3" href="#3-10-15-对齐-左-中-右-3-车道扩-4-车道为什么需要它">3.10.15 对齐：左 / 中 / 右（3 车道扩 4 车道为什么需要它）</a><a class="l2" href="#四-更新流程">四、更新流程</a><a class="l2" href="#五-验收点">五、验收点</a><a class="l2" href="#六-待定">六、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

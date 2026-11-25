@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>渲染层选型：要不要把渲染换成 WebUI（Three.js） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" class="on" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 审查与报告</div><h1 id="渲染层选型-要不要把渲染换成-webui-three-js">渲染层选型：要不要把渲染换成 WebUI（Three.js）</h1>
+<blockquote>## ⛔ 结论：已否决（R33，2026-11-22）<br>开发者拍板：「<strong>干脆还是继续 Godot 吧</strong>」。<br>本报告<strong>保留原样留档</strong>，理由与"重议触发条件（W-1/W-2/W-3）"见 <code>decisions.md</code> 的 <strong>R33</strong>。<br>留档价值：里面的工具链实测（MSVC 有 / SDK 缺 / MSYS2 遮蔽 <code>link.exe</code>）与 Three.js 实例化边界<br>（1–10 万、每帧写矩阵是瓶颈）<strong>以后仍有参考价值</strong>，不要删。</blockquote>
+<blockquote>2026-11-22，开发者提出：「模拟等逻辑计算用 C#，渲染等用 WebUI，这样动画也好做，Three.js 也不错。」<br>本文是<strong>提案 + 可判定的实测计划</strong>。裁定已出：<strong>R33 否决，继续 Godot</strong>（见篇首横幅）。</blockquote>
+<hr>
+<h2 id="〇-先说结论">〇、先说结论</h2>
+<p><strong>这个方向值得认真试，而且现在是唯一低成本的窗口期</strong> —— 但<strong>不要凭感觉换</strong>，先做一次 30–60 分钟能跑完的压测（§五）， 用四项硬指标决定。理由是：</p>
+<ol><li><strong>你对 UI 的不满，是这套技术栈造成的，不是设计没想清楚</strong>。Godot 的 Control 节点在布局、动画、主题上都要手写坐标与 Tween；</li></ol>
+<p>   Web 有 CSS 的 flex/grid + transition，同一件事的迭代成本差一个数量级。这一条换栈能结构性解决，调参解决不了。</p>
+<ol><li><strong>现在换损失最小</strong>：<code>scripts/view/</code> <strong>还是 0 行实现</strong>（5 个占位文件），3D 渲染一行都还没写。</li></ol>
+<p>   唯一会废弃的是 <code>scripts/ui/</code> 那 1366 行 —— 而那正是你不满意的部分，<strong>废弃它反而省事</strong>。</p>
+<ol><li><strong>模拟层已经天然可迁移</strong>：<code>core/</code> 与 <code>sim/</code> 按宪法 §四<strong>零 Godot 引用</strong>（138 条断言全在纯 .NET 里跑通）。</li></ol>
+<p>   换句话说，这半年一直在为"引擎可换"做准备，只是没明说。</p>
+<p>⛔ <strong>不推荐</strong>"Godot 渲染 3D + 网页做 UI"的混合方案：需要在 Godot 里嵌 WebView（CEF 系集成不成熟、包体翻倍、输入焦点打架）。 要做就做整栈，别做半栈。</p>
+<hr>
+<h2 id="一-先把你这个想法拆成可检验的命题">一、先把你这个想法拆成可检验的命题</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>命题</th><th>现状判断</th></tr></thead><tbody><tr><td>1</td><td><strong>C# 只做模拟</strong></td><td>✅ 已经是事实（<code>core/</code>+<code>sim/</code> 零引擎引用），不需要改架构，只需要把"宿主"从 Godot 换成一个普通进程</td></tr><tr><td>2</td><td><strong>WebUI 渲染更好做动画</strong></td><td>✅ 基本成立。CSS transition/WAAPI 比 Tween 省事；布局有 flex/grid，不用手写像素坐标</td></tr><tr><td>3</td><td><strong>Three.js 现在够用</strong></td><td>⚠ <strong>分两半</strong>：静态建筑够用；<strong>每帧更新的车辆是硬瓶颈</strong>，见 §三</td></tr><tr><td>4</td><td><strong>换过去整体更省</strong></td><td>⚠ 不一定。UI 省 3–4 周，3D 基础件（剔除/LOD/地形流式）多花 2–4 周，净差可能只有 0–2 周</td></tr></tbody></table></div>
+<p>⚠ 命题 3 是我最担心的一条，也是唯一必须<strong>实测</strong>才能定的。</p>
+<hr>
+<h2 id="二-已核实的本机事实-2026-11-22">二、已核实的本机事实（2026-11-22）</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>结果</th><th>影响</th></tr></thead><tbody><tr><td>Node / npm</td><td><strong>v22.23.2 / 10.9.8</strong></td><td>Electron 路线可用</td></tr><tr><td>Rust / Cargo</td><td><strong>1.97.1</strong>，rustup 装了 <strong>gnu + msvc 两套</strong>，默认 <code>x86_64-pc-windows-msvc</code></td><td>有 Rust；Tauri 只支持 msvc</td></tr><tr><td><strong>MSVC 编译器</strong></td><td>✅ <strong>在</strong>：<code>D:\Microsoft Visual Studio\VC\Tools\MSVC\</code> 有 <strong>14.44.35207 / 14.51.36231</strong> 两套，<code>cl.exe</code> 存在</td><td>编译器没问题</td></tr><tr><td><strong>Windows SDK 导入库</strong></td><td>❌ <strong>缺</strong>：<code>D:\Windows Kits\10.0.18362.0\</code> 只是空壳，<strong>全盘找不到 <code>kernel32.lib</code></strong></td><td>⚠ <strong>链接必然失败</strong>。这才是真卡点，不是"没有 MSVC"</td></tr><tr><td><strong><code>link.exe</code> 被遮蔽</strong></td><td>⚠ <code>which link.exe</code> → <code>/usr/bin/link.exe</code>（<strong>MSYS2 / Git-Bash 自带的 coreutils <code>link</code></strong>）</td><td>在 MSYS2 的 shell 里直接 <code>cargo build</code> 会调到错误的链接器；要改用 vcvars64 的干净环境</td></tr><tr><td><code>vswhere</code> 查不到实例</td><td>⚠ <code>vswhere -all -products *</code> 返回 <code>[]</code></td><td>这套 VS 是<strong>整目录搬过来的</strong>，没注册进 Installer，所以装组件得走另一条路（历史上 <code>winsdksetup.exe</code> 在本机静默失败过）</td></tr><tr><td>已装 WebView2</td><td>✅（Edge 自带）</td><td>"直接用 Edge 打开本地页面"完全可行，开发期不需要壳</td></tr><tr><td>Godot 4.7.1 mono</td><td>✅</td><td>现状可继续</td></tr></tbody></table></div>
+<blockquote>⚠ <strong>更正（2026-11-22，开发者指出后复核）</strong>：上一版写"Windows SDK 缺 ⇒ 没有 MSVC"，<strong>不准确</strong>。<br>编译器两套都在，缺的是 <strong>SDK 的导入库</strong>；叠加 <strong>MSYS2 的 <code>link.exe</code> 遮蔽</strong>，才表现为"一链接就炸"。<br>两件事修法完全不同：补 SDK 是装组件，遮蔽问题只是<strong>环境变量顺序</strong>。</blockquote>
+<p><strong>⇒ 壳的现实排序：Edge 直开（0 成本）→ Electron（80–200 MB，但一致）→ Tauri（3–10 MB，补 SDK 后可用）。</strong></p>
+<h3 id="2-0-tauri-在本机被证明可行-开发者指出后复核">2.0 ⭐ Tauri 在本机<strong>被证明可行</strong>（开发者指出后复核）</h3>
+<p>开发者说：「我的那个 QQ 动态归档软件就是用 Rust + Tauri 的」。查证 <code>D:\project\QzoneArchive-main</code>：</p>
+<div class="tw"><table><thead><tr><th>证据</th><th>内容</th></tr></thead><tbody><tr><td><code>src-tauri/Cargo.toml</code></td><td><code>tauri = "2"</code>（本地 registry 里 <code>tauri-2.11.5</code> 等 <strong>14 个</strong> crate 都在）</td></tr><tr><td><code>target/debug/deps/*.d</code></td><td>引用 <strong><code>~\.cargo\registry\…</code></strong> ⇒ <strong>就是这台机器、这个用户编译的</strong></td></tr><tr><td><code>target/**/deps/*.pdb</code></td><td>存在 ⇒ 当时用的是 <strong>MSVC 工具链</strong>且链接成功</td></tr><tr><td>产物时间</td><td>2026-10-31 23:05 / 23:41</td></tr></tbody></table></div>
+<p>⇒ <strong>Tauri 不是"理论上能"，是"这台机器上真跑起来过"。</strong> 这条把"壳"从风险项降为可选项。</p>
+<h3 id="2-0-1-但现在构建不了-两个原因都实测到了具体报错">2.0.1 但现在构建不了 —— 两个原因都实测到了具体报错</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>现象</th><th>实测证据</th><th>修法</th></tr></thead><tbody><tr><td>1</td><td><strong><code>link.exe</code> 被 MSYS2 抢走</strong></td><td><code>cargo build</code> 报 <code>link: missing operand after '\377\376'</code> + <code>Try 'link --help'</code> —— 这是 <strong>GNU coreutils 的 <code>link</code></strong>，不是 MSVC 的</td><td>把 MSVC 的 <code>bin\Hostx64\x64</code> <strong>前置到 PATH</strong>（或改用 Developer Command Prompt）</td></tr><tr><td>2</td><td><strong>修完 PATH 后又死在 SDK</strong></td><td><code>LNK1181: 无法打开输入文件"advapi32.lib"</code>；再查 <code>D:\Windows Kits\10\</code> <strong>只剩 <code>Catalogs/</code></strong>，没有 <code>Include/</code>、<code>Lib/</code></td><td>重装 Windows SDK 的 SDK 本体（注册表 <code>KitsRoot10 = D:\Windows Kits\10\</code> 还在，但内容被清空了）</td></tr></tbody></table></div>
+<p>⚠ <strong>顺带的影响</strong>：你那个 QzoneArchive <strong>现在也构建不了</strong>（<code>cargo build</code> 会死在第 1 或第 2 步）。 不是代码坏了，是环境被清过。补回 SDK 即可，不用改任何代码。</p>
+<p>⚠ <strong>别把它当成"换不换 Web"的依据</strong>：这两条只决定<strong>打包体积</strong>（Tauri 3–10 MB vs Electron 80–200 MB）， 不决定"要不要把渲染改到 Web"。方向该不该转，看 §五 的四项指标。</p>
+<h3 id="2-1-实测定论-编译过-链接死-2026-11-22">2.1 实测定论：编译过、链接死（2026-11-22）</h3>
+<p>用一个<strong>不含任何头文件</strong>的空 <code>main</code> 跑 MSVC，把"缺什么"和"环境问题"分开：</p>
+<div class="tw"><table><thead><tr><th>步骤</th><th>命令（要点）</th><th>结果</th></tr></thead><tbody><tr><td>仅编译</td><td><code>cl -nologo -c t.c</code></td><td>✅ 通过，生成 <code>t.obj</code></td></tr><tr><td>直接链接</td><td><code>cl -nologo t.c</code></td><td>❌ <code>LNK1104: 无法打开文件 LIBCMT.lib</code>（没设 <code>LIB</code>，属环境问题，不是缺文件）</td></tr><tr><td>指定 MSVC 的 lib 后链接</td><td><code>cl -nologo t.c -link -LIBPATH:D:/…/MSVC/14.51.36231/lib/x64</code></td><td>❌ <strong><code>LNK1104: 无法打开文件 kernel32.lib</code></strong></td></tr></tbody></table></div>
+<p>⇒ <strong>编译器完好，缺的是 Windows SDK 的导入库。</strong> 这一步把"猜"变成了结论。</p>
+<p>同一个过程中还实测到 <strong>MSYS2 冲突的具体形状</strong>（不是玄学）：</p>
+<div class="tw"><table><thead><tr><th>现象</th><th>原因</th><th>规避</th></tr></thead><tbody><tr><td><code>/nologo</code> 被当成路径，报 <code>warning D9024: 无法识别源文件类型 F:/Git/nologo</code></td><td>MSYS2 把 <code>/xxx</code> 自动转成 Windows 路径</td><td>① 参数改用 <code>-nologo</code> ② 或设 <code>MSYS2_ARG_CONV_EXCL="*"</code></td></tr><tr><td><code>which link.exe</code> → <code>/usr/bin/link.exe</code></td><td>Git-Bash 自带 coreutils 的 <code>link</code>（硬链接工具）遮蔽了 MSVC 链接器</td><td>在 vcvars64 的干净环境里编译，别在 MSYS2 shell 里直接 <code>cargo build</code></td></tr><tr><td><code>-LIBPATH:/d/...</code> 被忽略</td><td>链接器不认 <code>/d/</code> 这种 POSIX 路径</td><td>一律用 <code>D:/...</code> 盘符形式</td></tr></tbody></table></div>
+<hr>
+<h2 id="三-three-js-的真实边界-查证-换算到本项目">三、Three.js 的真实边界（查证 + 换算到本项目）</h2>
+<p>查到的公开实测与经验值（2026）：</p>
+<div class="tw"><table><thead><tr><th>事实</th><th>数据</th></tr></thead><tbody><tr><td><code>InstancedMesh</code> 动画实例数</td><td><strong>1 万–10 万</strong> 视几何复杂度；<strong>每帧在 JS 里改 4×4 矩阵是主要瓶颈</strong></td></tr><tr><td>逐实例剔除的临界点</td><td><strong>&gt;1 万</strong> 就要考虑上 WebGPU compute，CPU 端剔除撑不住</td></tr><tr><td>单体 <code>InstancedMesh</code> 的坑</td><td><strong>只有一个包围球</strong>，因此视锥剔除对它无效 → 必须<strong>按空间分块</strong>成多个 mesh</td></tr><tr><td>WebGPU vs WebGL（RTX 3060 级，5 万实例）</td><td>42 fps → <strong>118 fps</strong>；CPU 占用 65% → 15%</td></tr></tbody></table></div>
+<p>换算到城脉的负载：</p>
+<div class="tw"><table><thead><tr><th>负载</th><th>数量</th><th>在 Web 里的可行性</th></tr></thead><tbody><tr><td><strong>建筑（静态）</strong></td><td>5 万–15 万栋</td><td>✅ <strong>完全可行</strong>。静态实例不每帧上传矩阵；按 2km 瓦片分块后视锥剔除有效（这正是我们 <code>11-scale</code> 已定的分块方案）</td></tr><tr><td><strong>地形</strong></td><td>100 万格（50 m 派生栅格）/ 2500 km²</td><td>✅ 可行，但<strong>要自己写</strong>分块 mesh + LOD + 流式加载（Three.js 是库不是引擎，没有现成的）</td></tr><tr><td><strong>车辆（每帧动）</strong></td><td><strong>8 万基线 / 15 万上限</strong></td><td>⚠ <strong>最危险的一项</strong>。8 万 × 16 float = 128 万 float/帧，纯 JS 写矩阵大概率超 16 ms 预算</td></tr><tr><td>人口数据</td><td>1000 万</td><td>✅ 无关渲染，只在 sim 侧</td></tr></tbody></table></div>
+<p>车辆的三条解法（需要 spike 验哪条够）：</p>
+<ol><li><strong>只渲染视锥内</strong>：1080p 视野里通常只有 1–3 万辆车 → 回到可行区间（但要每帧做一遍剔除，成本自己扛）</li><li><strong>GPU 端推进</strong>：sim 只给"每辆车每 N 秒的路径控制点 + 时刻"，位置在 <strong>vertex shader 里按时间插值</strong> → CPU 零更新</li><li><strong>降低渲染数量</strong>：CS1 屏幕上真正能看清的车也就几千辆，其余用假车流/尾迹代替（这条与 <code>11-scale</code> 的 LOD 策略一致）</li></ol>
+<p>⚠ 顺带一个<strong>必须记住的教训</strong>（来自上面的查证）： 单体 <code>InstancedMesh</code> 只有一个包围球 → 视锥剔除失效，顶点着色器会把全世界都跑一遍。 <strong>这正是 <code>11-scale</code> §2.5 已经定的"按 archetype × 2km 区块分块"</strong> —— 这个设计在 Web 里同样是命门，换个栈也要照做。</p>
+<hr>
+<h2 id="四-两个方案的正面对比">四、两个方案的正面对比</h2>
+<h3 id="方案-a-整栈-web-c-模拟服务-three-js-客户端">方案 A：整栈 Web（C# 模拟服务 + Three.js 客户端）</h3>
+<pre class="code"><code>┌─────────────────────────┐      WebSocket（二进制）      ┌──────────────────────────┐
+│  Chengmai.Sim (纯 .NET) │ ───────────────────────────▶ │  客户端（Three.js + DOM） │
+│  core/ + sim/ 原样搬   │ ◀─────────────────────────── │  地形 / 建筑 / 车流 / UI  │
+└─────────────────────────┘        指令 / 快照 / 增量      └──────────────────────────┘
+                                                             ↑ 壳：Edge 直开 / Electron / Tauri</code></pre>
+<div class="tw"><table><thead><tr><th>维度</th><th>评估</th></tr></thead><tbody><tr><td><strong>UI 迭代速度</strong></td><td>⭐⭐⭐ 结构性优势：CSS 布局 + 过渡动画 + 浏览器 DevTools 实时改</td></tr><tr><td><strong>3D 基础件</strong></td><td>⚠ 要自己写：分块、视锥剔除、LOD、地形流式、拾取（Three.js 是库不是引擎）</td></tr><tr><td><strong>每帧实例</strong></td><td>⚠ 需按 §三 三条解法之一，<strong>必须先压测</strong></td></tr><tr><td><strong>打包分发</strong></td><td>Electron 80–200 MB / Tauri 3–10 MB 但本机缺 SDK</td></tr><tr><td><strong>额外红利</strong></td><td>① 以后能出<strong>网页试玩版</strong>（itch.io），对独立开发者是实打实的分发优势&lt;br&gt;② sim 与渲染解耦 ⇒ 存档/回放/无头 CI 更容易&lt;br&gt;③ UI 能用现成字体/图标（SVG）体系，不用再折腾 emoji 回退</td></tr><tr><td><strong>额外代价</strong></td><td>① <code>11-scale</code> 那 30 多个实测数字<strong>全部作废</strong>（它们测的是 Godot）&lt;br&gt;② 60 张视觉基线截图作废&lt;br&gt;③ 两套语言（C# + TS）两套调试器</td></tr><tr><td><strong>工期（转过去）</strong></td><td>sim 服务化 1–2 周 + Three.js 骨架 3–4 周 + UI 2 周 + 壳 1 周 ≈ <strong>7–9 周</strong></td></tr></tbody></table></div>
+<h3 id="方案-c-保持-godot-现状">方案 C：保持 Godot（现状）</h3>
+<div class="tw"><table><thead><tr><th>维度</th><th>评估</th></tr></thead><tbody><tr><td><strong>UI 迭代速度</strong></td><td>⚠ 慢：手写坐标 + Tween；每改一次要重新渲染截图比对（我们现在就是这么干的）</td></tr><tr><td><strong>3D 基础件</strong></td><td>⭐ 现成：MultiMesh、视锥剔除、地形、着色器、后处理都有</td></tr><tr><td><strong>每帧实例</strong></td><td>✅ 已实测：C# 写 25 万实例 <strong>13.7 ms</strong>（<code>11-scale</code> §6.4）</td></tr><tr><td><strong>打包分发</strong></td><td>✅ 单 exe 100 MB，无依赖</td></tr><tr><td><strong>额外红利</strong></td><td>已有 138 条断言 + 30 多个性能数字 + 全部文档都是按 Godot 写的</td></tr><tr><td><strong>额外代价</strong></td><td><strong>UI 这一关你可能一直不满意</strong>，而这是玩家第一眼看到的东西</td></tr><tr><td><strong>工期（做完 view）</strong></td><td>相机/地形/建筑/车流/UI 骨架 ≈ <strong>5–6 周</strong>（UI 仍会反复）</td></tr></tbody></table></div>
+<p><strong>净差：A 比 C 多花约 1–3 周，换来 UI 迭代速度与网页版分发。</strong> 是否值得，取决于两件事：<strong>UI 到底会不会反复</strong>（你说了算）、<strong>spike 能不能过</strong>（实测说了算）。</p>
+<hr>
+<h2 id="五-建议-先做-spike-半天-不动主工程">五、⭐ 建议：先做 spike（半天，不动主工程）</h2>
+<p><strong>不动 <code>scripts/</code></strong>，在 <code>bench/web_spike/</code> 里做一次性压测，用真实数量级跑：</p>
+<div class="tw"><table><thead><tr><th>测什么</th><th>怎么造</th></tr></thead><tbody><tr><td>5 万栋建筑</td><td><code>InstancedMesh</code>，按 2km 瓦片拆成 100 个子 mesh，静态矩阵</td></tr><tr><td>2 万辆车</td><td>每帧改矩阵（最坏情况）；再来一组用"顶点着色器插值"做对照</td></tr><tr><td>100 万格地形</td><td>50m 网格，按瓦片分块，只加载视锥内 30 块</td></tr><tr><td>UI 层</td><td>一组 DOM 面板（模拟左侧信息 + 底栏），验证 CSS 动画手感</td></tr></tbody></table></div>
+<h3 id="判定指标-写死-避免-感觉还行">判定指标（写死，避免"感觉还行"）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>指标</th><th>门槛</th></tr></thead><tbody><tr><td>1</td><td>1080p 平均帧率（WebGPU，视锥内 2 万车 + 5 万栋）</td><td><strong>≥ 30 fps</strong>，目标 60</td></tr><tr><td>2</td><td><strong>主线程单帧耗时</strong>（矩阵更新 + 场景更新，不含 GPU 等待）</td><td><strong>≤ 8 ms</strong></td></tr><tr><td>3</td><td>内存（任务管理器，Edge 单标签）</td><td><strong>≤ 1.5 GB</strong></td></tr><tr><td>4</td><td>进场景首帧</td><td><strong>≤ 5 s</strong></td></tr></tbody></table></div>
+<p><strong>停止条件</strong>：任一指标超 2 倍，且两天内优化不下来 ⇒ <strong>放弃方案 A，回 Godot</strong>。 这条要写进 <code>decisions.md</code>（见 §七），因为"感觉还行"是最容易骗自己的判断。</p>
+<hr>
+<h2 id="六-如果决定转-b1-之后要怎么改-不是重来">六、如果决定转，B1 之后要怎么改（不是重来）</h2>
+<div class="tw"><table><thead><tr><th>现在</th><th>转 Web 后</th><th>改多少</th></tr></thead><tbody><tr><td><code>core/</code> 5 个 <code>.cs</code></td><td>原样</td><td><strong>0 改动</strong>（零引擎引用）</td></tr><tr><td><code>sim/</code> 24 个 <code>.cs</code></td><td>原样</td><td><strong>0 改动</strong></td></tr><tr><td><code>bench/coretest</code> 138 条断言</td><td>原样</td><td><strong>0 改动</strong></td></tr><tr><td><code>config/sim/*.json</code></td><td>原样</td><td><strong>0 改动</strong></td></tr><tr><td><code>config/ui/*.json</code>（theme/layout/panels）</td><td>变成前端配置</td><td>结构保留，字段微调</td></tr><tr><td><code>scripts/ui/*.gd</code>（1366 行）</td><td>重写成 HTML/CSS/TS</td><td><strong>全废</strong>（但你不满意，等于提前止损）</td></tr><tr><td><code>scripts/view/*.gd</code>（5 个占位）</td><td>Three.js</td><td><strong>本来就没写，无损失</strong></td></tr><tr><td><code>11-scale</code> 的 30 个实测数字</td><td>作废重测</td><td>文档要大改</td></tr><tr><td><code>B1-4</code>（改 theme token 变色）</td><td>仍然成立，而且更容易</td><td>—</td></tr></tbody></table></div>
+<p><strong>净结论：模拟层和所有数据契约（占 B0 的全部产出）100% 保得住。要重写的只有"看得见的那层"。</strong></p>
+<hr>
+<h2 id="七-要你拍的三件事-拍完我才动手">七、要你拍的三件事（拍完我才动手）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>待定</th><th>我的建议</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>做不做 spike</td><td><strong>做</strong>。半天成本，能把"感觉"换成数字，且不污染主工程</td></tr><tr><td><strong>2</strong></td><td>spike 过了转不转</td><td><strong>转</strong>（方案 A）。理由是 UI 是你的痛点且属结构性问题；网页试玩版对独立开发者价值大</td></tr><tr><td><strong>3</strong></td><td>壳选哪个</td><td><strong>开发期 Edge 直开本地页面</strong>（0 成本、随时刷新）；<strong>发行期优先 Tauri</strong>（3–10 MB，你已经在 QzoneArchive 上跑通过，经验可复用）；Electron 作为退路（80–200 MB 但一致）。⚠ 用 Tauri 前先把本机环境修好：① MSVC bin 前置 PATH ② 补回 Windows SDK 的 <code>Lib/Include</code>。这两条只影响打包，不影响方向</td></tr></tbody></table></div>
+<p>⚠ 如果你更在意"别再折腾、尽快看到能玩的东西"，那<strong>保持 Godot</strong>也完全正当 —— 那就把 UI 的验收改成 "先用截图回归把布局磨到你能接受"，我会把每次改动都出前后对比图，用图说话而不是用文字说。</p>
+<hr>
+<h2 id="八-这条提案在文档体系里怎么落">八、这条提案在文档体系里怎么落</h2>
+<ul><li>若采纳：记 <strong>R33（渲染层改 Web）</strong>，并连带影响 <strong>R19（语言分工）</strong>、<strong>R32（Rust 只做局部下沉）</strong>、</li></ul>
+<p>  <code>11-scale</code>（整篇性能数据）、<code>10-presentation</code>（UI 规范载体从 Godot Control 换到 CSS）、<code>plan.md</code>（B1 之后的批次）。</p>
+<ul><li>若否决：记 <strong>R33（否决）</strong> 并写清"理由是 spike 四项指标未过 / 迭代成本可接受" ——</li></ul>
+<p>  <strong>否决也要留痕</strong>，否则半年后又会有人来问同样的问题。</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-22（三）</strong>：开发者指出 QzoneArchive 就是 Rust + Tauri。查证 <code>D:\project\QzoneArchive-main</code>：</li></ul>
+<p>  本机路径的 <code>.d</code> 文件 + <code>.pdb</code> 产物 + 14 个 tauri crate ⇒ <strong>确实在本机成功构建过</strong>。   但同时实测到"现在构建不了"的两条：<code>/usr/bin/link.exe</code> 遮蔽（报 coreutils 的 <code>link --help</code>）、   Windows SDK 只剩 <code>Catalogs/</code>（<code>LNK1181 advapi32.lib</code>）。<strong>结论：Tauri 可行，当前只是环境缺失。</strong></p>
+<ul><li><strong>2026-11-22（二）</strong>：<strong>更正工具链结论</strong> —— 开发者指出"MSVC 有的，但和 MSYS2 冲突"。复核确认：</li></ul>
+<p>  MSVC 编译器 14.44 / 14.51 两套都在；真正缺的是 <strong>Windows SDK 导入库</strong>（全盘无 <code>kernel32.lib</code>），   且 <code>link.exe</code> 在 MSYS2 shell 里被 <code>/usr/bin/link.exe</code>（coreutils）遮蔽。壳的选择因此从"Tauri 暂缓"   改为"Tauri 作后续优化，不卡方向"。</p>
+<ul><li><strong>2026-11-22</strong>：首版。拆解命题、核实本机工具链（Node ✓ / Rust ✓ / <strong>Windows SDK ✗</strong>）、</li></ul>
+<p>  查证 Three.js 实例化边界（1 万–10 万，每帧 JS 写矩阵是瓶颈，单体 InstancedMesh 无视锥剔除）、   给出 spike 四项硬指标与停止条件、列出转栈后的资产损益（模拟层与全部数据契约 0 改动）。</p><div class="pager"><a href="reports-2026-11-22-台账收口.html">← 台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a><a href="reports-2026-11-22-语言策略.html">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#〇-先说结论">〇、先说结论</a><a class="l2" href="#一-先把你这个想法拆成可检验的命题">一、先把你这个想法拆成可检验的命题</a><a class="l2" href="#二-已核实的本机事实-2026-11-22">二、已核实的本机事实（2026-11-22）</a><a class="l3" href="#2-0-tauri-在本机被证明可行-开发者指出后复核">2.0 ⭐ Tauri 在本机被证明可行（开发者指出后复核）</a><a class="l3" href="#2-0-1-但现在构建不了-两个原因都实测到了具体报错">2.0.1 但现在构建不了 —— 两个原因都实测到了具体报错</a><a class="l3" href="#2-1-实测定论-编译过-链接死-2026-11-22">2.1 实测定论：编译过、链接死（2026-11-22）</a><a class="l2" href="#三-three-js-的真实边界-查证-换算到本项目">三、Three.js 的真实边界（查证 + 换算到本项目）</a><a class="l2" href="#四-两个方案的正面对比">四、两个方案的正面对比</a><a class="l3" href="#方案-a-整栈-web-c-模拟服务-three-js-客户端">方案 A：整栈 Web（C# 模拟服务 + Three.js 客户端）</a><a class="l3" href="#方案-c-保持-godot-现状">方案 C：保持 Godot（现状）</a><a class="l2" href="#五-建议-先做-spike-半天-不动主工程">五、⭐ 建议：先做 spike（半天，不动主工程）</a><a class="l3" href="#判定指标-写死-避免-感觉还行">判定指标（写死，避免"感觉还行"）</a><a class="l2" href="#六-如果决定转-b1-之后要怎么改-不是重来">六、如果决定转，B1 之后要怎么改（不是重来）</a><a class="l2" href="#七-要你拍的三件事-拍完我才动手">七、要你拍的三件事（拍完我才动手）</a><a class="l2" href="#八-这条提案在文档体系里怎么落">八、这条提案在文档体系里怎么落</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

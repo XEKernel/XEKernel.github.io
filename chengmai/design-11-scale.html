@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>11 · 规模架构（Megacity Scale） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" class="on" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 规模与特色</div><h1 id="11-规模架构-megacity-scale">11 · 规模架构（Megacity Scale）</h1>
+<blockquote><strong>本篇不是"一个系统"，是横切全部 8 个系统的架构约束。</strong>（8 系统见 <code>system-boundaries.md</code>，<code>decisions.md</code> R15）<br>它回答一个问题：<strong>2500 km² / 1000 万人口的城，凭什么能在单机上 30 fps 跑起来。</strong><br>定位依据（用户 2026-11-15 明确）：<br>- 地图 <strong>50 km × 50 km = 2500 km²</strong><br>- 可玩版目标 <strong>人口 ≥ 100 万</strong>；打磨年挑战 <strong>1000 万</strong><br>- 车辆 / 行人 agent <strong>必须突破 CS1 的 65,536 上限</strong><br>⚠ 本篇一旦定稿，<code>02</code>–<code>10</code> 全部受其约束。<strong>先读本篇，再读系统篇。</strong><br>⭐ <strong>有效性（R33，2026-11-22）</strong>：曾评估把渲染层换成 WebUI / Three.js，<strong>已否决，继续 Godot</strong>。<br>⇒ <strong>本篇所有实测数字继续有效，不需要重测。</strong> 换栈才会让它们作废。<br>与宪法冲突时以宪法为准；本篇只细化宪法 §三（Tick）、§四（模拟层不认识引擎）。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一先算账目标成立但逐人寻路是硬墙">一、先算账：目标成立，但"逐人寻路"是硬墙</a></li><li><a href="#二空间分层地块由道路生成栅格只是索引">二、空间分层：地块由道路生成，栅格只是索引</a></li><li><a href="#三人口分层全量存储分层计算">三、人口分层：全量存储，分层计算</a></li><li><a href="#四出行三层模型这是千万人口能跑的唯一办法">四、出行：三层模型（这是千万人口能跑的唯一办法）</a></li><li><a href="#五突破-65536到底突破了什么">五、「突破 65536」到底突破了什么</a></li><li><a href="#六预算表宪法级的硬数字">六、预算表（宪法级的硬数字）</a></li><li><a href="#六三全系统预算总账2026-11-16-新增">六·三、全系统预算总账（2026-11-16 新增）</a></li><li><a href="#六四实测数据2026-11-17本机跑出来的不是推算">六·四、实测数据（2026-11-17，本机跑出来的，不是推算）</a></li><li><a href="#六五1000-万到底现实吗把三件事分开算">六·五、1000 万到底现实吗？（把三件事分开算）</a></li><li><a href="#七对既有设计的连带影响必须同步改否则-b4-会崩">七、对既有设计的连带影响（必须同步改，否则 B4 会崩）</a></li><li><a href="#八分阶段目标不许一次冲到底-2026-11-18-依实测重写">八、分阶段目标（不许一次冲到底）⚠ 2026-11-18 依实测重写</a></li><li><a href="#八五内存总账2026-11-18-新增扫描发现的空白">八·五、内存总账（2026-11-18 新增，扫描发现的空白）</a></li><li><a href="#八六性能开关的合法性边界2026-11-20-新增">八·六、性能开关的合法性边界（2026-11-20 新增）</a></li><li><a href="#九已定与待定">九、已定与待定</a></li><li><a href="#十渲染与资产相机驱动什么不驱动什么">十、渲染与资产：相机驱动什么，不驱动什么</a></li></ul>
+<hr>
+<h2 id="一-先算账-目标成立-但-逐人寻路-是硬墙">一、先算账：目标成立，但"逐人寻路"是硬墙</h2>
+<h3 id="1-1-密度核对-好消息">1.1 密度核对（好消息）</h3>
+<div class="tw"><table><thead><tr><th>目标</th><th>2500 km² 下密度</th><th>对照</th></tr></thead><tbody><tr><td>100 万</td><td><strong>400 人/km²</strong></td><td>偏稀疏，建成区约占地图 5–8%</td></tr><tr><td>1000 万</td><td><strong>4,000 人/km²</strong></td><td>≈ 上海全域 3,900/km²，合理</td></tr></tbody></table></div>
+<p>⇒ <strong>50×50 km 正是中国特大城市的真实尺度</strong>（北京六环直径约 50 km）。这个目标数学上站得住。</p>
+<h3 id="1-2-逐人寻路-不可能-坏消息-但可绕开">1.2 逐人寻路：不可能（坏消息，但可绕开）</h3>
+<p>1000 万人，人均 2 次出行/日 = <strong>2000 万次出行/日</strong>。</p>
+<div class="tw"><table><thead><tr><th>1 游戏日 =</th><th>需寻路次数/秒</th><th>每次 3 μs</th><th>每次 20 μs</th></tr></thead><tbody><tr><td>3 s</td><td>667 万</td><td><strong>2000 %</strong></td><td>13333 %</td></tr><tr><td>10 s</td><td>200 万</td><td><strong>600 %</strong></td><td>4000 %</td></tr><tr><td>30 s</td><td>67 万</td><td><strong>200 %</strong></td><td>1333 %</td></tr><tr><td>60 s</td><td>33 万</td><td><strong>100 %</strong></td><td>667 %</td></tr></tbody></table></div>
+<p>（占用率相对单核；每次 3 μs 是分层路网的水平，20 μs 是普通 A* 的水平。）</p>
+<p>⇒ <strong>即使把 1 游戏日拉长到 60 秒，纯寻路就要吃满 1–7 个核。换任何语言都救不回来</strong> —— 这是复杂度问题，不是实现效率问题。</p>
+<p><strong>结论：人口可以全量，出行必须聚合。</strong> 见 §三。</p>
+<hr>
+<h2 id="二-空间分层-地块由道路生成-栅格只是索引">二、空间分层：地块由道路生成，栅格只是索引</h2>
+<blockquote><strong>2026-11-15 重写（依据 <code>decisions.md</code> R6）。</strong> 原方案用固定的 20 m 用地格作空间真值，<br>已被证伪：村庄里一栋带前后院的农房就有 15–25 m 宽，小区整片又是另一种尺度，<br><strong>用地单元的形状与大小本就由道路与规范决定，不该是一个固定网格。</strong></blockquote>
+<h3 id="2-1-三层-真值-派生">2.1 三层（真值 + 派生）</h3>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>数量级</th><th>性质</th><th>用途</th></tr></thead><tbody><tr><td><strong>L-A 路网</strong></td><td>节点 / 路段 / 车道 + <strong>围合面</strong></td><td>15 万段 / 2 万–6 万个面</td><td><strong>真值</strong></td><td>一切形态的来源</td></tr><tr><td><strong>L-B 地块</strong> <code>parcel</code></td><td>由面按<strong>沿街面宽</strong>细分出的多边形</td><td>50 万–200 万</td><td><strong>真值</strong></td><td>容积率、用途、建筑、退线、前后院</td></tr><tr><td><strong>L-C 瓦片</strong> <code>tile</code></td><td>1 km × 1 km</td><td>2,500</td><td>管理单元</td><td>激活/休眠、存档分块、流式加载</td></tr><tr><td><strong>L-D 栅格</strong></td><td><strong>50 m × 50 m</strong></td><td>1,000 × 1,000 = <strong>1,000,000</strong></td><td><strong>派生索引</strong></td><td>地价扩散、服务覆盖、拥堵热力、可达性场</td></tr></tbody></table></div>
+<h3 id="2-2-为什么真值是多边形而不是格">2.2 为什么真值是多边形而不是格</h3>
+<ol><li><strong>村庄起步装不下网格</strong>：单栋农房 + 前后院 ≈ 15–25 m 宽、20–30 m 深（约 200–400 m²）。</li></ol>
+<p>   用 20 m 格强行吸附，院落与巷道全部消失，出来的东西就不像中国村子。</p>
+<ol><li><strong>中国老城与村庄的肌理本来就是不规则的</strong>。CS 的方格网是北美郊区，</li></ol>
+<p>   贴合方格反而会做出一个"美国农村"。</p>
+<ol><li><strong>同一套代码自然支持尺度跨越</strong>：村庄的独院、老城的窄长条、新区的整片超大街区，</li></ol>
+<p>   都只是<strong>同一个 parcel 结构的不同细分结果</strong>，不需要为每种尺度写一套。</p>
+<h3 id="2-3-生成链-02-road-md-必须实现的部分">2.3 生成链（02-road.md 必须实现的部分）</h3>
+<pre class="code"><code>玩家画路
+   ↓ 路网拓扑（节点/路段/车道）
+平面图求面（半边结构 / DCEL）→ block face
+   ↓ 按沿街面宽 + 规范（退线、最小面宽）细分
+parcel（多边形 + 面积 + 沿街长度 + 朝向）
+   ↓ 按用途 + 规范年代（R4）+ 容积率
+建筑（带前后院 / 退线 / 日照间距）</code></pre>
+<p>⚠ <strong>这一步决定 <code>02-road.md</code> 不是"只能画线"的系统</strong>：它必须输出<strong>围合面</strong>， 否则 <code>03-zoning.md</code> 根本没有对象可分区。这是 R6 带来的最大结构改动。</p>
+<h3 id="2-4-栅格为什么还能留-且降到-50-m">2.4 栅格为什么还能留（且降到 50 m）</h3>
+<p>地价扩散、服务覆盖、可达性场这类计算需要"邻近快速查询"，多边形做这个很贵。 所以保留一张<strong>派生栅格</strong>：50 m 一格，2500 km² = <strong>100 万格 / 约 15 MB</strong>， 比原方案的 625 万格 / 95 MB <strong>省 80 MB</strong>，而且它<strong>可以随时从多边形重算</strong>，不是真值。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>原方案（固定 20 m 格）</th><th>现方案（多边形 + 50 m 索引）</th></tr></thead><tbody><tr><td>空间真值</td><td>6,250,000 格</td><td>50–200 万 parcel（多边形）</td></tr><tr><td>栅格内存</td><td>95 MB</td><td><strong>15 MB</strong></td></tr><tr><td>村庄能否还原</td><td>❌ 院落/巷道被格吃掉</td><td>✅ 15–25 m 独院可保留</td></tr><tr><td>老城不规则肌理</td><td>❌ 强行正交</td><td>✅ 天然支持</td></tr><tr><td>代价</td><td>简单</td><td>需面提取 + 多边形存档 + 稳定 ID</td></tr></tbody></table></div>
+<h3 id="2-5-瓦片层-不变-仍是全篇最关键的机制">2.5 瓦片层（不变，仍是全篇最关键的机制）</h3>
+<p>2500 km² 不可能全部细粒度常驻。瓦片是<strong>唯一可被挂起/恢复的单位</strong>： 休眠瓦片只保留汇总值（人口、岗位、税收、parcel 汇总），不保留个体、多边形细节与建筑实例。</p>
+<div class="tw"><table><thead><tr><th>瓦片状态</th><th>保留什么</th><th>数量上限</th></tr></thead><tbody><tr><td><strong>激活</strong></td><td>个体、parcel 完整多边形、建筑实例、路段微观状态</td><td>由性能预算决定，目标 ≤ 120 片（120 km²）</td></tr><tr><td><strong>半休眠</strong></td><td>汇总 + 路网拓扑 + parcel 简化轮廓</td><td>全部</td></tr><tr><td><strong>休眠</strong></td><td>只留汇总标量</td><td>全部</td></tr></tbody></table></div>
+<p>⚠ <strong>这一条是全篇最关键的机制</strong>：不做瓦片分层，2500 km² 与 1000 万人口的组合直接不成立。</p>
+<h3 id="2-6-渲染坐标必须用-浮动原点-e3-2026-11-22-补">2.6 ⚠ 渲染坐标必须用"浮动原点"（E3，2026-11-22 补）</h3>
+<p><strong>问题</strong>：地图 50 km 见方。<code>float32</code> 在 5×10⁴ m 处的分辨率约 <strong>4 mm</strong>—— 静态大体量（楼体、桥墩）无感，但<strong>薄片会闪</strong>：雨棚、桥面铺装、车道线、栏杆、行道树叶片、 以及所有靠 <code>depth</code> 排序的半透明物（玻璃幕墙、招牌）。</p>
+<div class="tw"><table><thead><tr><th>做法</th><th>结果</th></tr></thead><tbody><tr><td>❌ 全图用世界绝对坐标渲染</td><td>远景 z-fighting、阴影抖动、薄片"沸腾"</td></tr><tr><td>✅ <strong>渲染层以"当前激活瓦片中心"为原点</strong>（每帧平移一次世界根节点，或按瓦片分块各自为原点）</td><td>相机附近坐标始终在 ±2 km 内，精度 ≈ 1 mm 以上，问题消失</td></tr></tbody></table></div>
+<p><strong>分工（不许混）</strong>：</p>
+<div class="tw"><table><thead><tr><th>层</th><th>坐标</th><th>说明</th></tr></thead><tbody><tr><td><code>sim/</code></td><td><strong>绝对分米（<code>int32</code>）</strong></td><td>权威、可存档、可重建（宪法 §四）</td></tr><tr><td><code>view/</code></td><td><strong>相对当前瓦片中心的 <code>float</code></strong></td><td>纯表现，每帧重算，<strong>不进存档</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>这是"R2 相机边界"的延伸</strong>：坐标平移只影响画面，不改变任何数值。 ⚠ <strong>不许把浮动原点做进 <code>sim/</code></strong>：否则同一栋楼在两个相机位置下有不同坐标，存档不可复现。</p>
+<p><strong>验收建议</strong>：站到地图角上（离原点 35 km 以上），截图检查<strong>车道线不闪、桥面不跳、阴影不抖</strong>。</p>
+<hr>
+<h2 id="三-人口分层-全量存储-分层计算">三、人口分层：全量存储，分层计算</h2>
+<div class="tw"><table><thead><tr><th>层</th><th>数量（1000 万时）</th><th>字段</th><th>内存</th><th>更新频率</th></tr></thead><tbody><tr><td><strong>个人</strong> <code>citizen</code></td><td>10,000,000</td><td>年龄/工作/通勤 OD/满意度/学区</td><td>153 MB @16 B</td><td><strong>月</strong></td></tr><tr><td><strong>家庭</strong> <code>household</code></td><td>3,571,429</td><td>住宅格/收入/成员数/车位数</td><td>82 MB @24 B</td><td><strong>月</strong></td></tr><tr><td><strong>街区</strong> <code>district</code></td><td>2,500（= L2 瓦片）</td><td>人口/岗位/平均地价/满意度</td><td>&lt; 1 MB</td><td>月→汇总</td></tr></tbody></table></div>
+<p><strong>关键判断：个人可以全量存在，因为它们是"月更的数组"，不是"日更的 agent"。</strong></p>
+<p>1000 万 × 每月一次更新，在 native 里约 <strong>0.2–0.5 s</strong>，摊到一游戏月的真实时间（约 30 s）是 <strong>1–2 % CPU</strong>。 同样的 1000 万如果每天跑一次行为，就是 30 倍的量，直接超预算。</p>
+<p>⇒ <strong><code>04-population.md</code> 的数据契约必须这么定</strong>：个人是 SoA 数组，不是对象； 个人身上<strong>不存路径</strong>，只存 <code>home_ta</code> / <code>work_ta</code>（交通小区编号），路径由 §四 的流模型提供。</p>
+<hr>
+<h2 id="四-出行-三层模型-这是千万人口能跑的唯一办法">四、出行：三层模型（这是千万人口能跑的唯一办法）</h2>
+<pre class="code"><code>① 需求层   TA 级 OD 矩阵        2,500 个交通小区 → 625 万对（非零约 50–80 万）
+              ↓ 月边界一次（R30），增量分配，目标 ≤ 200 ms
+② 流量层   分层路网流量分配     高速/快速路网 + 主干 + 支路 三层
+              ↓ 输出：每条路段的饱和度、速度、行程时间
+③ 表现层   代表性 agent        车辆 ≤ 20 万、行人 ≤ 5 万（从流量里抽样生成）</code></pre>
+<h3 id="4-1-为什么是-ta-交通小区-而不是-每个人算一次路">4.1 为什么是 TA（交通小区）而不是"每个人算一次路"</h3>
+<div class="tw"><table><thead><tr><th>做法</th><th>1000 万时的成本</th><th>可行性</th></tr></thead><tbody><tr><td>每人每次出行算路径</td><td>2000 万次/日 → 见 §1.2</td><td>❌ 不可能</td></tr><tr><td><strong>按 TA 对算路径，再按人数分布</strong></td><td>非零 OD 对 50–80 万个，<strong>每个只需算一次</strong></td><td>✅ 可行</td></tr></tbody></table></div>
+<p><strong>同一对 OD 的 1000 个人走同一条路</strong> —— 这不是偷懒，这就是真实城市的交通流形态， 也是所有交通规划软件（TransCAD / EMME）六十年来的标准做法。 CS1 之所以只需要 65,536 个 agent，正是因为它也没做全量出行。</p>
+<h3 id="4-2-分层路网-分层寻路的前提">4.2 分层路网（分层寻路的前提）</h3>
+<div class="tw"><table><thead><tr><th>层</th><th>内容</th><th>节点数（2500 km² 估计）</th></tr></thead><tbody><tr><td><strong>H 层</strong></td><td>快速路 / 环线 / 高速</td><td>2,000–5,000</td></tr><tr><td><strong>M 层</strong></td><td>主干 / 次干</td><td>20,000–50,000</td></tr><tr><td><strong>L 层</strong></td><td>支路</td><td>50,000–150,000</td></tr></tbody></table></div>
+<p>长距离出行 = <code>L 入口 → M → H → M → L 出口</code>。这是把 A* 的搜索空间从 15 万节点压到几千节点的关键， 也是 <code>02-road.md</code> 必须先定义<strong>道路等级</strong>（而 v2 现在只有支路/次干/主干三级，<strong>缺快速路</strong>）的原因。</p>
+<h3 id="4-3-代表性-agent-的三条铁律">4.3 代表性 agent 的三条铁律</h3>
+<ol><li><strong>agent 是"流"的表现，不是"流"的来源。</strong> 删掉一个 agent 不改变任何数值，只改变画面。</li><li><strong>只激活视锥内的 agent。</strong> 视锥外的路段只显示流量热力，不生成个体。</li><li><strong>agent 不做独立寻路</strong>，沿所属 OD 对的路径按速度插值推进。</li></ol>
+<p>⇒ 这三条同时解决了两个问题：性能，以及"1000 万人做同一件事"时画面不该有 1000 万个一模一样的模型。</p>
+<hr>
+<h2 id="五-突破-65536-到底突破了什么">五、「突破 65536」到底突破了什么</h2>
+<p>CS1 的 65,536 来自 <strong>16 位索引</strong>。但"上限"其实是四个不同的上限，必须分开说：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>上限类型</th><th>CS1</th><th>v2 目标</th><th>手段</th><th>难度</th></tr></thead><tbody><tr><td><strong>U1</strong></td><td><strong>索引位宽</strong></td><td>2¹⁶ = 65,536</td><td><strong>2³² = 42.9 亿</strong></td><td>全部索引改 <code>u32</code>，禁止 <code>u16</code> 句柄</td><td>低（设计约束）</td></tr><tr><td><strong>U2</strong></td><td><strong>在册人口</strong></td><td>~100 万（靠抽象藏）</td><td><strong>1,000 万</strong></td><td>SoA 打包数组 + native 月更</td><td>中</td></tr><tr><td><strong>U3</strong></td><td><strong>同时活跃 agent</strong>（真在跑行为）</td><td>65,536</td><td><strong>8 万基线 / 15 万上限</strong>（R26）· 终局 50 万（需 GPU）</td><td>LOD + 瓦片激活 + 视锥裁剪</td><td><strong>高（真正瓶颈）</strong></td></tr><tr><td><strong>U4</strong></td><td><strong>同屏渲染实例</strong></td><td>65,536</td><td><strong>20 万车 + 5 万行人</strong></td><td>MultiMesh + GPU 实例化</td><td>中</td></tr></tbody></table></div>
+<h3 id="u3-为什么只能到-15-50-万-诚实估算">U3 为什么只能到 15–50 万（诚实估算）</h3>
+<p>v1 实测：<strong>7 万实体 = 5.70 ms</strong>（Rust 整体赋值版）。线性外推：</p>
+<div class="tw"><table><thead><tr><th>活跃 agent</th><th>预估耗时</th><th>30 fps 下</th></tr></thead><tbody><tr><td>7 万（v1 实测）</td><td>5.7 ms</td><td>✅ 余量充足</td></tr><tr><td><strong>15 万</strong></td><td><strong>≈ 12 ms</strong></td><td>⚠️ 接近 16.6 ms 预算上限</td></tr><tr><td>30 万</td><td>≈ 24 ms</td><td>❌ 超预算，必须靠分摊/裁剪压下</td></tr><tr><td>50 万</td><td>≈ 40 ms</td><td>❌ 必须 GPU 计算着色器接管（v1 设计过、未实现）</td></tr></tbody></table></div>
+<p>⇒ <strong>"突破 65536" 的现实答案是 15 万–30 万（2.3–4.6 倍），配 GPU 卸载才谈 50 万。</strong> 任何声称"千万 agent 实时"的方案都是把 U2 和 U3 混为一谈。<strong>这一条必须写进验收，不许含糊。</strong></p>
+<hr>
+<h2 id="六-预算表-宪法级的硬数字">六、预算表（宪法级的硬数字）</h2>
+<h3 id="6-1-内存-1000-万人口-2500-km²">6.1 内存（1000 万人口 / 2500 km²）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>估算</th></tr></thead><tbody><tr><td><strong>L-B parcel 50–200 万 × 48 B（含顶点索引）</strong></td><td><strong>24–96 MB</strong></td></tr><tr><td><strong>L-D 派生栅格 1 M × 16 B（50 m）</strong></td><td><strong>15 MB</strong></td></tr><tr><td>家庭 3.57 M × 24 B</td><td>82 MB</td></tr><tr><td>个人 10 M × 16 B</td><td>153 MB</td></tr><tr><td>建筑 <strong>5 万–15 万栋</strong> × 32 B</td><td>2–5 MB</td></tr><tr><td>路网 15 万段 × 64 B</td><td>9 MB</td></tr><tr><td>车辆 agent 20 万 × 32 B</td><td>6 MB</td></tr><tr><td>路网图 + 路径缓存 + OD 矩阵</td><td>150–250 MB</td></tr><tr><td><strong>合计（不含引擎与贴图）</strong></td><td><strong>≈ 480–620 MB</strong></td></tr></tbody></table></div>
+<blockquote><strong>建筑数量换算（2026-11-15 修正，原稿「150 万栋」是错的）</strong>：<br>3.57 M 户 ÷ 户均 120 户/栋 ≈ <strong>3 万栋住宅</strong>，加商业/办公/工业/公共，全图约 <strong>5 万–15 万栋</strong>。<br><strong>parcel 数量取上限 200 万时最坏情况</strong>：村庄/老城细分最密时单块面积小、块数多，<br>若实测超过 200 万，先降 parcel 细分粒度（合并相邻同用途块），不要动人口。</blockquote>
+<p>⚠ 本机 32 GB DDR3，余量充足。<strong>真正的大头是显存贴图</strong>（见 §十 10.6），不是主存。 激活瓦片的<strong>实例容器</strong>（MultiMesh）要按瓦片整体释放，避免碎片化。</p>
+<h3 id="6-2-单帧预算-16-6-ms-60-fps-33-ms-30-fps">6.2 单帧预算（16.6 ms @ 60 fps / 33 ms @ 30 fps）</h3>
+<blockquote>📌 <strong>所有"性能和现实"的取舍集中登记在 <code>19-tradeoffs.md</code></strong>（A 性能 / B 复杂度 / C 效果存疑 / D 已推迟）。<br>本节只提供<strong>预算数字</strong>，不决定"砍什么"。<br>⬜ <strong>待实测（B2 之后补）</strong>：<code>corridor</code> 多 band 会让<strong>节点数最多 ×3</strong>（<code>02</code> §3.10.6），<br>需要实测"15 万段 ×3 band"的节点内存与遍历耗时，再决定是否要合并 band。</blockquote>
+<blockquote>⚠ <strong>2026-11-21 标注</strong>：本表与 §6.3.4 都是<strong>实测之前</strong>的目标预算。<br>2026-11-17 实测（§6.4）后，<code>agent 推进</code>与<code>变换填充</code>两项偏乐观 2–7 倍，<br><strong>以 §6.4.9 的修正表为准</strong>；本表只保留"总量怎么分配"的思路。</blockquote>
+<div class="tw"><table><thead><tr><th>阶段</th><th>60 fps 预算</th><th>30 fps 预算</th></tr></thead><tbody><tr><td>模拟（native，分摊后）</td><td>4.0 ms</td><td>8.0 ms</td></tr><tr><td>车辆/行人变换填充</td><td>2.0 ms</td><td>4.0 ms</td></tr><tr><td>渲染提交（Godot）</td><td>7.0 ms</td><td>14.0 ms</td></tr><tr><td>UI + 其他</td><td>1.5 ms</td><td>3.0 ms</td></tr><tr><td><strong>余量</strong></td><td><strong>2.1 ms</strong></td><td><strong>4.0 ms</strong></td></tr></tbody></table></div>
+<p>⚠ 余量低于 1 ms 时<strong>先降并发不降画质</strong> —— 画质是卖点，模拟是命。</p>
+<hr>
+<h2 id="六-三-全系统预算总账-2026-11-16-新增">六·三、全系统预算总账（2026-11-16 新增）</h2>
+<blockquote>用户：「更细节的暂时不模拟，光目前要模拟的内容可能就要对设备有很大要求了。」<br><strong>所以这里把全账算一遍</strong>：现在登记的东西到底吃多少设备。结论是**总量扛得住，<br>但有一条必须遵守的工程前提**。</blockquote>
+<h3 id="6-3-1-月度工作的总量-1000-万人口-2500-km²-满图">6.3.1 月度工作的总量（1000 万人口 / 2500 km² / 满图）</h3>
+<div class="tw"><table><thead><tr><th>系统</th><th>月度工作量</th><th><strong>一次性耗时</strong></th><th>摊到 30 天后每日</th></tr></thead><tbody><tr><td><code>population</code></td><td>1000 万 SoA 月结</td><td>400 ms</td><td>13.3 ms</td></tr><tr><td><code>employment</code></td><td>5.5 万工业 + 5000 资源点</td><td>250 ms</td><td>8.3 ms</td></tr><tr><td><code>traffic</code> OD 矩阵</td><td>80 万非零对</td><td>200 ms</td><td>6.7 ms</td></tr><tr><td><code>traffic</code> 4 时段分配</td><td>4 次分配</td><td>800 ms</td><td>26.7 ms</td></tr><tr><td><code>utility</code></td><td>覆盖 + 老化 + 峰值</td><td>120 ms</td><td>4.0 ms</td></tr><tr><td><code>zoning</code></td><td>200 万 parcel 汇总</td><td>100 ms</td><td>3.3 ms</td></tr><tr><td><code>finance</code></td><td>地价重估 + 结算</td><td>80 ms</td><td>2.7 ms</td></tr><tr><td><code>services</code></td><td>100 万格覆盖重算</td><td>50 ms</td><td>1.7 ms</td></tr><tr><td><strong>合计</strong></td><td>—</td><td><strong>2.0 s</strong></td><td><strong>66 ms / 日</strong></td></tr></tbody></table></div>
+<h3 id="6-3-2-唯一的硬前提-月度工作必须摊到-30-天">6.3.2 ⚠ 唯一的硬前提：月度工作必须摊到 30 天</h3>
+<div class="tw"><table><thead><tr><th>做法</th><th>后果</th></tr></thead><tbody><tr><td>❌ 月初一次做完</td><td><strong>2.0 秒卡顿</strong>，玩家会以为游戏卡死</td></tr><tr><td>✅ 摊到 30 天（每天 1/30）</td><td>每日 66 ms，在日的 3 秒（180 帧）里摊开 = <strong>0.37 ms/帧</strong></td></tr></tbody></table></div>
+<p><strong>规则：所有月度系统必须实现 <code>step_monthwork(day_in_month)</code>，每天做 1/30。</strong> 不允许任何系统在月边界"一次算完"。</p>
+<p>⚠ 3x 速度下 1 日 = 1 秒 = 60 帧 → 66 ms ÷ 60 = <strong>1.1 ms/帧</strong>，仍然可忽略。 ⚠ 这是<strong>架构级约定，不是优化技巧</strong>。到 B4 才发现就来不及了。</p>
+<h3 id="6-3-3-日级工作-必须增量-不能全扫">6.3.3 日级工作：必须增量，不能全扫</h3>
+<div class="tw"><table><thead><tr><th>工作</th><th>全扫成本</th><th>做法</th></tr></thead><tbody><tr><td><code>zoning</code> growth（200 万 parcel）</td><td>一次全扫 <strong>数百 ms</strong></td><td><strong>dirty flag</strong>：只处理"需求变化 / 地价跳变 / 新建成"的 parcel</td></tr><tr><td><code>traffic</code> 拥堵日汇总</td><td>15 万段</td><td>全扫可接受（约 2 ms）</td></tr></tbody></table></div>
+<p>⚠ <strong><code>zoning</code> 是唯一必须做增量的日级系统</strong>：200 万 parcel × 每天 = 打死。 维护 <code>dirty_parcels</code> 列表，每帧处理有限个（预算 0.5 ms）。</p>
+<h3 id="6-3-4-每帧的常驻成本-这才是真瓶颈">6.3.4 每帧的常驻成本（这才是真瓶颈）</h3>
+<blockquote>⚠ <strong>2026-11-21 标注</strong>：下表"变换填充 2 ms"是实测前的估算，<strong>实测 25 万 ≈ 13.7 ms</strong><br>（§6.4.9）。结论不变（真瓶颈是 agent），但数字以 §6.4.9 为准。</blockquote>
+<div class="tw"><table><thead><tr><th>项</th><th>60 fps</th><th>30 fps</th></tr></thead><tbody><tr><td><code>traffic</code> 15 万 agent 推进</td><td>4 ms</td><td>8 ms</td></tr><tr><td>变换填充（20 万车 + 5 万人）</td><td>2 ms</td><td>4 ms</td></tr><tr><td>渲染提交（MultiMesh 按 archetype × 区块）</td><td>4 ms</td><td>8 ms</td></tr><tr><td>UI</td><td>1 ms</td><td>2 ms</td></tr><tr><td><strong>余量</strong></td><td><strong>5.6 ms</strong></td><td><strong>11 ms</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>真瓶颈永远是 <code>traffic</code> agent，不是月度结算。</strong> 所以 R5 的「15 万签收」才是关键指标，而不是"能不能算 1000 万人口"。</p>
+<h3 id="6-3-5-内存与显存-1000-万时">6.3.5 内存与显存（1000 万时）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>估算</th></tr></thead><tbody><tr><td>主存（§6.1）</td><td>≈ 480–620 MB</td></tr><tr><td>图集（2 张 4096²，BC7 压缩）</td><td>32–64 MB</td></tr><tr><td>模块化建筑 mesh（21 模块 × 4 LOD）</td><td>40–80 MB</td></tr><tr><td>引擎与缓冲区</td><td>200–300 MB</td></tr><tr><td><strong>合计</strong></td><td><strong>≈ 0.8–1.1 GB</strong></td></tr></tbody></table></div>
+<p>⚠ 本机 32 GB + 12 GB 显存余量充足，但<strong>下限目标应该是 8 GB 内存的玩家</strong>—— 这正是 R5 要做硬件档位的原因。</p>
+<h3 id="6-3-6-一句话结论">6.3.6 一句话结论</h3>
+<p><strong>现在登记的内容，设备扛得住。代价是三条工程纪律：</strong></p>
+<ol><li>月度工作摊到 30 天（不许一次算完）</li><li><code>zoning</code> 日级必须增量（dirty flag）</li><li>每帧只跑 <code>traffic</code> + 渲染，其他都不许进 <code>_process</code></li></ol>
+<hr>
+<h2 id="六-四-实测数据-2026-11-17-本机跑出来的-不是推算">六·四、实测数据（2026-11-17，本机跑出来的，不是推算）</h2>
+<blockquote>用户：「先跑一些测试来完善文档数据为后续开发做参考，<br>比如模拟几十万、几千万个实体在不同语言下，以及是否使用 GPU 加速的情况下的模拟速度。」</blockquote>
+<p>⚠ <strong>测试机</strong>：<code>E5-2667 v2 @3.3GHz</code> + <strong>DDR3 32 GB</strong> + <code>RTX 3060 12 GB</code> + <code>Godot 4.7.1 mono</code> + <code>.NET 8</code>。 <strong>DDR3 是这个配置的短板</strong>（实测带宽仅 8.8 GB/s）， ⇒ <strong>下列 CPU 数字应视为"下限参考"，现代 DDR5 平台会明显更快。</strong> ✅ <strong>GDScript 已实测</strong>（Godot 4.7.1 mono，<code>--headless</code>，代码在 <code>bench/gd/</code>）。 ✅ <strong>MSVC 工具链可用</strong>（此前记录的"缺 Windows SDK"是误判——实为 <code>link.exe</code> 被 MSYS2/Git 的同名程序抢占，用 <code>vcvars64</code> + 显式 PATH 前置即可）。 ⚠ 另：<code>native</code> 只有在 C# 也不够时才需要，见 §6.4.1 结论修正。</p>
+<p>基准代码见仓库 <code>bench/</code>（<code>bench.rs</code> / <code>bench2.rs</code> / <code>bench.py</code>，可复跑）。</p>
+<h3 id="6-4-1-soa-实体更新-模拟-population-月结的形状-这张表决定了架构">6.4.1 SoA 实体更新（模拟 population 月结的形状）⭐ 这张表决定了架构</h3>
+<p>每次迭代：读 5 个字段 → 带分支算满意度 → 写回 2 个字段。</p>
+<div class="tw"><table><thead><tr><th>实现</th><th><strong>ns / 实体</strong></th><th><strong>1000 万</strong></th><th>1 亿</th><th>相对 GDScript</th></tr></thead><tbody><tr><td><strong>Rust 8 线程</strong>（MSVC）</td><td><strong>1.7</strong></td><td><strong>17 ms</strong></td><td>170 ms</td><td><strong>182×</strong></td></tr><tr><td><strong>Rust 单线程</strong>（MSVC）</td><td>2.8</td><td>28 ms</td><td>287 ms</td><td>111×</td></tr><tr><td><strong>C# (.NET 8, Release)</strong></td><td><strong>7.1</strong></td><td><strong>71 ms</strong></td><td>707 ms</td><td><strong>44×</strong></td></tr><tr><td>numpy（向量化）</td><td>29</td><td>296 ms</td><td>2.97 s</td><td>11×</td></tr><tr><td><strong>GDScript（Godot 4.7 实测）</strong></td><td><strong>310</strong></td><td><strong>3.1 s</strong></td><td>31 s</td><td>1×</td></tr><tr><td>Python 纯循环</td><td>832</td><td>8.3 s</td><td>83 s</td><td>0.37×</td></tr></tbody></table></div>
+<h4 id="结论修正-不需要-native-c-就够">⭐⭐ 结论修正：<strong>不需要 native，C# 就够</strong></h4>
+<p>原判断是"1000 万人口必须上 <code>native/sim_core</code>"。实测后要改：</p>
+<div class="tw"><table><thead><tr><th>方案</th><th>1000 万月结</th><th>对 400 ms 预算</th></tr></thead><tbody><tr><td>GDScript</td><td><strong>3.1 s</strong></td><td>❌ <strong>超标 7.8 倍</strong></td></tr><tr><td><strong>C#</strong></td><td><strong>71 ms</strong></td><td>✅ <strong>宽松 5.6 倍</strong></td></tr><tr><td>Rust</td><td>28 ms</td><td>✅ 宽松 14 倍</td></tr></tbody></table></div>
+<p>⇒ <strong><code>population</code> 月结换用 C#，就不需要 GDExtension / C++ / Rust。</strong>    ⚠ <strong>2026-11-22 定案（R32）</strong>：Rust 仅在三条门槛全过时<strong>局部</strong>下沉，且禁进每帧路径。    在动 Rust 之前先做两件事：<strong>并行</strong>（OD 分配 2500 起点 ≈ 4×）→ <strong>降频率</strong>（只跑早晚高峰）。 这把 B4 的技术风险与工期大幅压下来。</p>
+<p>⚠ <strong>为什么 C# 能行得通，恰恰因为宪法 §四</strong>： <code>sim/</code> 层<strong>不碰任何引擎 API</strong>（只做数组与整数运算）， ⇒ <strong>没有 interop 开销</strong>，JIT 能把它优化到接近原生。 如果 sim 层要每帧调 <code>Node3D</code>，C# 的 marshal 开销会把它拖回 GDScript 量级。</p>
+<p>⭐ <strong>这条是本轮最有价值的发现</strong>：<strong>"模拟层不认识引擎"这条铁律， 顺手把"用 C# 就够"这个便宜也赚到了。</strong></p>
+<p>⚠ <strong>C# 的两个代价</strong>（不是免费午餐）：</p>
+<ol><li><strong>GC</strong>：必须用 <code>List</code>/数组池 + <code>struct</code>，<strong>不许在月结里 <code>new</code> 对象</strong></li><li><strong>AOT/裁剪</strong>：Steam 分发建议 IL2CPP/AOT，导出流程比 GDScript 复杂</li></ol>
+<p>⚠ <strong><code>native/sim_core</code> 从"必需"降为"应急"</strong>： 只有当某一块（如 OD 分配）实测超预算时，才<strong>局部</strong>下沉到 native。 <strong>不要一开始就写 GDExtension。</strong></p>
+<h3 id="6-4-2-8-线程只快-1-55-倍-说明瓶颈是内存带宽">6.4.2 ⚠ 8 线程只快 1.55 倍 —— 说明瓶颈是内存带宽</h3>
+<div class="tw"><table><thead><tr><th>线程数</th><th>内存带宽</th></tr></thead><tbody><tr><td>1</td><td><strong>6.6 GB/s</strong></td></tr><tr><td>4</td><td>8.6 GB/s</td></tr><tr><td><strong>8</strong></td><td><strong>8.8 GB/s（已饱和）</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>8.8 GB/s 就是这台机器的天花板。</strong> ⇒ <strong>多线程优化在 8 线程之后就无意义了</strong>；真正有效的优化是：</p>
+<ol><li><strong>减数据量</strong>（<code>u8</code>/<code>u16</code> 而不是 <code>f32</code>/<code>f64</code>）</li><li><strong>提局部性</strong>（SoA + 连续遍历，不要随机跳）</li><li><strong>降频率</strong>（月结而不是每帧）—— 我们已经这么做了</li></ol>
+<p>⚠ <strong>不要以为"多开线程就能快"</strong>：这台机器 4 线程就到顶了。 ⚠ 这也解释了 §6.3.4 的结论——<strong>真瓶颈是 agent 而不是月结</strong>，因为 agent 是每帧跑的。</p>
+<h3 id="6-4-3-栅格扩散-地价-覆盖-拥堵热力的形状">6.4.3 栅格扩散（地价/覆盖/拥堵热力的形状）</h3>
+<p>1000×1000（= 2500 km² 的 50 m 栅格）× 5×5 邻域均值：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>实测</th></tr></thead><tbody><tr><td>单次</td><td><strong>2.4 ms</strong></td></tr><tr><td>内存</td><td>2 张 <code>u16</code> × 100 万 = <strong>4 MB</strong></td></tr></tbody></table></div>
+<p>⇒ <strong>每帧跑都行</strong>（2.4 ms 在 16 ms 预算内），但<strong>月度跑一次更省</strong>（我们本来就按月）。</p>
+<h3 id="6-4-4-gpu-加速-结论是-不值得-理由和直觉相反">6.4.4 ⭐ GPU 加速：结论是"不值得"，理由和直觉相反</h3>
+<p><strong>没有装 CUDA 绑定，未实测</strong>，但可以推：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>CPU（本机）</th><th>RTX 3060</th></tr></thead><tbody><tr><td>内存带宽</td><td><strong>8.8 GB/s</strong></td><td><strong>360 GB/s（41 倍）</strong></td></tr><tr><td>算力</td><td>—</td><td>远高</td></tr></tbody></table></div>
+<p>看起来 GPU 有 41 倍带宽优势。<strong>但对我们的场景没用</strong>：</p>
+<div class="tw"><table><thead><tr><th>工作</th><th>适合 GPU 吗</th><th>为什么</th></tr></thead><tbody><tr><td><code>population</code> 月结</td><td>❌</td><td><strong>分支密集</strong>（找工作、判迁移），GPU 最怕分支发散</td></tr><tr><td><code>traffic</code> agent</td><td>❌</td><td>逻辑复杂、要写回、状态依赖</td></tr><tr><td><strong>栅格扩散</strong></td><td>✅ 适合</td><td>规整并行</td></tr><tr><td><strong>渲染</strong></td><td>✅ 本来就在 GPU</td><td>—</td></tr></tbody></table></div>
+<p>⚠ <strong>更关键的是"频率"</strong>： 栅格扩散是<strong>月度</strong>跑一次（§6.3.1），单次 2.4 ms。 GPU 的<strong>启动开销 + PCIe 传输</strong>（几 MB 数据来回拷）本身就 1–3 ms， <strong>盖掉了全部收益</strong>。</p>
+<p>⇒ <strong>结论：GPU 加速模拟不划算</strong>（除非数据常驻显存且每帧都算，而我们不是）。</p>
+<p>⚠ <strong>这条要写下来防止以后被"GPU 更快"的说法带偏</strong>： <strong>我们是"低频 + 分支密集"，那是 CPU 的地盘，不是 GPU 的。</strong></p>
+<h3 id="6-4-5-godot-项目内实测-模拟-呈现的完整链路">6.4.5 ⭐⭐ Godot 项目内实测：模拟 + 呈现的完整链路</h3>
+<blockquote>用户：「创建一个测试 Godot 项目，然后模拟几万直至一千万个实体（人物，车辆等），<br>这个在后台模拟肯定快啊……但是要花很长时间才会打印到控制台上。」</blockquote>
+<p><strong>这个比喻非常准</strong>：算得快不代表呈现得快。所以测了四件事—— <strong>纯模拟 / 写实例数据（两种方式）/ 实际渲染</strong>。</p>
+<blockquote>⚠⚠ <strong>读这张表之前先记住一条（2026-11-22 明确）</strong>：<br><strong><code>--headless</code> 跑出来的"帧率"一律无效。</strong> headless 不建渲染器、不提交 draw call、不等待 GPU，<br>它只能证明<strong>逻辑</strong>跑得动。本表里所有 FPS 都必须来自<strong>开窗运行</strong>（表头"渲染（窗口−headless）"就是这个意思：<br>用开窗帧时减去 headless 帧时，剩下的才是真正的渲染成本）。<br>⇒ <strong>B1-1 的"帧率 ≥ 60"只能窗口测</strong>，且<strong>在 B3 有地形与建筑之后才有意义</strong>——空场景的 60 fps 不证明任何事。<br>代码在 <code>bench/sim/</code>（Godot 4.7.1，<code>MultiMesh</code>，BoxMesh 6×12×6）。</blockquote>
+<div class="tw"><table><thead><tr><th>N</th><th>① 纯模拟</th><th>② 写实例 <code>api</code></th><th>② 写实例 <code>buffer</code></th><th>③ 渲染（窗口−headless）</th></tr></thead><tbody><tr><td>1 万</td><td>0.58 ms</td><td><strong>0.98 ms</strong></td><td>5.04 ms</td><td>—</td></tr><tr><td><strong>10 万</strong></td><td>5.79 ms</td><td><strong>9.40 ms</strong></td><td>50.26 ms</td><td><strong>≈ 7.6 ms</strong></td></tr><tr><td><strong>50 万</strong></td><td>29.91 ms</td><td><strong>47.23 ms</strong></td><td>255.74 ms</td><td><strong>≈ 35 ms</strong></td></tr><tr><td>100 万</td><td>58.83 ms</td><td>—</td><td>—</td><td>—</td></tr><tr><td>500 万</td><td>289.88 ms</td><td>—</td><td>—</td><td>—</td></tr><tr><td><strong>1000 万</strong></td><td><strong>581.36 ms</strong></td><td>—</td><td>—</td><td>—</td></tr></tbody></table></div>
+<h4 id="四个反直觉的发现">四个反直觉的发现</h4>
+<p><strong>① 写实例比模拟更贵</strong></p>
+<p>10 万实体：模拟 5.8 ms，写实例 9.4 ms。<strong>呈现的一半成本在"喂数据"，不在"算"。</strong></p>
+<p><strong>② ⚠ <code>MultiMesh.buffer</code> 批量写入反而比逐个 <code>set_instance_transform</code> 慢 5 倍</strong></p>
+<div class="tw"><table><thead><tr><th>方式</th><th>10 万</th><th>50 万</th></tr></thead><tbody><tr><td><code>set_instance_transform</code>（逐个）</td><td>9.4 ms</td><td>47 ms</td></tr><tr><td><code>mm.buffer = buf</code>（批量）</td><td><strong>50 ms</strong></td><td><strong>256 ms</strong></td></tr></tbody></table></div>
+<p>原因：在 <strong>GDScript 里"每条语句都贵"</strong>。批量模式要写 16 个 float（16 条语句/实例）， 逐个模式只有 1 次引擎调用。 ⚠ <strong>这个结论只对 GDScript 成立</strong>：C# 下语句便宜，批量一定更快。 <strong>不要把它当成"buffer 不好"写进代码。</strong></p>
+<p><strong>③ 渲染成本与写实例同量级</strong></p>
+<p>10 万 ≈ 7.6 ms，50 万 ≈ 35 ms。<strong>不是"渲染免费、模拟花钱"，两者一个量级。</strong></p>
+<p><strong>④ 1000 万实体纯模拟 = 581 ms</strong>（GDScript） ⇒ <strong>每秒连 2 次更新都做不到</strong>，更不用说每帧。</p>
+<h4 id="对-6-3-4-每帧预算的修正-15-万-agent">对 §6.3.4 每帧预算的修正（15 万 agent）</h4>
+<p>原表写"15 万 agent 推进 4 ms + 变换填充 2 ms + 渲染 4 ms"。 <strong>按实测线性外推（GDScript）</strong>：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>§6.3.4 预算</th><th><strong>GDScript 实测推算</strong></th><th>结论</th></tr></thead><tbody><tr><td>agent 推进（15 万）</td><td>4 ms</td><td><strong>≈ 8.7 ms</strong></td><td>❌ 超 2.2 倍</td></tr><tr><td>变换填充（25 万）</td><td>2 ms</td><td><strong>≈ 23 ms</strong></td><td>❌ <strong>超 11 倍</strong></td></tr><tr><td>渲染（15 万）</td><td>4 ms</td><td><strong>≈ 11 ms</strong></td><td>❌ 超 2.8 倍</td></tr><tr><td><strong>合计</strong></td><td>10 ms</td><td><strong>≈ 43 ms</strong></td><td>❌ <strong>23 fps</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>GDScript 连"15 万 agent 60fps"都做不到</strong>，不只是 1000 万做不到。</p>
+<p>⇒ <strong>结论加强</strong>：<code>traffic</code> 的 agent 推进与变换填充 <strong>也必须走 C#</strong>（§6.4.1 已证 C# 快 44 倍）。</p>
+<p>⚠ <strong>仍要记住 R2 / §十</strong>：<strong>1000 万是"人口数据"，不是"渲染实例"</strong>。 渲染的只有 15 万 agent。<strong>1000 万人口的压力在月结（C# 71 ms）， 15 万 agent 的压力在每帧（C# 可降到 ~5 ms）。</strong></p>
+<h3 id="6-4-6-gdscript-vs-c-对比-只有用-buffer-才快">6.4.6 ⭐⭐ GDScript vs C# 对比：<strong>只有用 buffer 才快</strong></h3>
+<p>同一套 Godot 项目（<code>bench/sim_cs/</code>，C# 版），同样参数跑一遍：</p>
+<div class="tw"><table><thead><tr><th>N</th><th>语言</th><th>方式</th><th>sim</th><th><strong>fill</strong></th><th>有窗帧时</th><th>FPS</th></tr></thead><tbody><tr><td>10 万</td><td>GDScript</td><td><code>api</code></td><td>5.69</td><td>9.40</td><td>22.67</td><td>44.1</td></tr><tr><td>10 万</td><td>GDScript</td><td><code>buffer</code></td><td>5.78</td><td><strong>50.26</strong></td><td>—</td><td>17.9（h）</td></tr><tr><td>10 万</td><td><strong>C#</strong></td><td><code>api</code></td><td>2.71</td><td><strong>9.79</strong></td><td>—</td><td>80.1（h）</td></tr><tr><td>10 万</td><td><strong>C#</strong></td><td><strong><code>buffer</code></strong></td><td><strong>2.70</strong></td><td><strong>5.49</strong></td><td><strong>16.66</strong></td><td><strong>60.0</strong></td></tr><tr><td>50 万</td><td>GDScript</td><td><code>api</code></td><td>29.29</td><td>47.23</td><td>111.76</td><td>8.9</td></tr><tr><td>50 万</td><td><strong>C#</strong></td><td><strong><code>buffer</code></strong></td><td><strong>13.53</strong></td><td><strong>29.33</strong></td><td><strong>60.19</strong></td><td><strong>16.6</strong></td></tr></tbody></table></div>
+<h4 id="三个必须记住的结论">三个必须记住的结论</h4>
+<p><strong>① ⭐ C# 的优势几乎全部来自 <code>buffer</code>，<code>api</code> 模式白给</strong></p>
+<p>10 万档 <code>api</code>：GDScript <code>9.40 ms</code> vs C# <code>9.79 ms</code> —— <strong>C# 反而略慢</strong>。 50 万档 <code>api</code>：<code>47.23</code> vs <code>47.99</code> —— <strong>一模一样</strong>。</p>
+<p>原因：<strong><code>SetInstanceTransform</code> 每次都跨 C#/C++ 边界，单次约 90 ns</strong>， <strong>这个开销与 GDScript 的调用开销同量级</strong>，换语言救不了。</p>
+<p>⇒ ⚠ <strong>用 C# 时必须批量写 <code>MultiMesh.Buffer</code>，绝不能逐个 <code>SetInstanceTransform</code>。</strong> <code>buffer</code> 只需一次 interop，之后是引擎内部 <code>memcpy</code>：<strong>快 9 倍</strong>（5.49 vs 50.26）。</p>
+<p><strong>② <code>api</code> / <code>buffer</code> 哪个快，完全取决于语言</strong></p>
+<div class="tw"><table><thead><tr><th>语言</th><th>更快的方式</th><th>为什么</th></tr></thead><tbody><tr><td><strong>GDScript</strong></td><td><strong><code>api</code> 逐个</strong></td><td>每条语句都贵，写 16 个 float 比调 1 次 API 贵</td></tr><tr><td><strong>C#</strong></td><td><strong><code>buffer</code> 批量</strong></td><td>语句便宜，interop 才是成本</td></tr></tbody></table></div>
+<p>⚠ <strong>同一个项目换个语言，最优写法就反过来了</strong>——这条要写进 <code>08-traffic</code> 的实现说明。</p>
+<p><strong>③ C# 的 <code>sim</code> 只快 2.1 倍，不是 44 倍</strong></p>
+<div class="tw"><table><thead><tr><th></th><th>GDScript</th><th>C#</th><th>倍数</th></tr></thead><tbody><tr><td>纯数组运算（§6.4.1）</td><td>310 ns</td><td>7.1 ns</td><td><strong>44×</strong></td></tr><tr><td><strong><code>Vector3</code> 运算（本节）</strong></td><td>57 ns</td><td>27 ns</td><td><strong>2.1×</strong></td></tr></tbody></table></div>
+<p>原因：<code>Vector3</code> 加减是<strong>引擎 API</strong>，不是纯数组运算，C# 一样要过 interop。</p>
+<p>⇒ ⚠ <strong><code>sim</code> 层要快，就必须用 <code>float[]</code> / <code>PackedFloat32Array</code> 而不是 <code>Vector3</code>。</strong> <strong>这恰好就是宪法 §四 要求的"空间用整数坐标"，两者一致。</strong></p>
+<h3 id="6-4-7-渲染成本与语言无关-gpu-侧">6.4.7 渲染成本与语言无关（GPU 侧）</h3>
+<div class="tw"><table><thead><tr><th>N</th><th>GDScript（窗口−headless）</th><th>C#（窗口−headless）</th></tr></thead><tbody><tr><td>10 万</td><td>≈ 7.6 ms</td><td>≈ 8.4 ms</td></tr><tr><td>50 万</td><td>≈ 35 ms</td><td>≈ 17 ms</td></tr></tbody></table></div>
+<p>⇒ <strong>渲染走 GPU，换语言不影响</strong>。所以三者成本是三个独立的量： <strong>logic（语言） + fill（语言+interop） + render（GPU）</strong>。</p>
+<h3 id="6-4-8-15-万-agent-能不能-60-fps-用实测外推">6.4.8 ⚠ 15 万 agent 能不能 60 fps？用实测外推</h3>
+<blockquote>⚠ <strong>本节的 ms 与 fps 全部是"开窗"口径</strong>（由 §6.4.6 的有窗帧时外推）。<br><strong><code>--headless</code> 测不出这些数</strong>——它不渲染、不提交 draw call。见 <code>plan.md</code> 批次纪律第 6 条。</blockquote>
+<p>按 C# + <code>buffer</code> 的最佳组合（10 万档实测：sim 2.70 / fill 5.49 / 渲染 8.4）：</p>
+<div class="tw"><table><thead><tr><th>项</th><th>15 万</th><th>25 万</th></tr></thead><tbody><tr><td>sim</td><td>4.1 ms</td><td>6.8 ms</td></tr><tr><td>fill（buffer）</td><td>8.2 ms</td><td>13.7 ms</td></tr><tr><td>渲染</td><td>12.6 ms</td><td>21 ms</td></tr><tr><td><strong>合计</strong></td><td><strong>≈ 25 ms（40 fps）</strong></td><td><strong>≈ 42 ms（24 fps）</strong></td></tr></tbody></table></div>
+<p>⇒ <strong>达不到 60 fps，但过了 B5 的 30 fps 线。</strong></p>
+<p>⚠ <strong>要冲 60 fps，唯一的办法是把"位置计算"搬到 GPU</strong>： agent 若是简单的"匀速直线"，可以在 <strong>vertex shader 里算位置</strong>， CPU 只传<strong>起点 + 速度 + 时间</strong>（每实例 6 个 float，而不是 16 个矩阵元素）， <strong>fill 成本降到 1/3，GPU 顶点计算几乎免费</strong>。</p>
+<p>⭐ <strong>这与 §6.4.4"GPU 不加速模拟"不矛盾</strong>： <strong>模拟（分支密集、低频）留在 CPU，渲染（规整、每帧）本来就该在 GPU。</strong> ⚠ 但<strong>只在 B5 实测不够时才做</strong>——先按普通 MultiMesh 跑，超预算再上 shader。</p>
+<h3 id="6-4-9-实测对-6-3-预算的修正">6.4.9 实测对 §6.3 预算的修正</h3>
+<div class="tw"><table><thead><tr><th>系统</th><th>§6.3 原预算</th><th>实测/推算</th><th>结论</th></tr></thead><tbody><tr><td><code>population</code> 1000 万</td><td>400 ms</td><td><strong>C# 71 ms</strong> / Rust 28 ms / GD <strong>3.1 s</strong></td><td>⚠ <strong>必须换 C#，不必 native</strong></td></tr><tr><td><code>traffic</code> 15 万 agent 推进</td><td>4 ms</td><td><strong>GD ≈ 8.7 ms</strong> / C# <strong>≈ 4.1 ms</strong></td><td>⚠ C#；且<strong>必须用 <code>float[]</code> 不用 <code>Vector3</code></strong></td></tr><tr><td>变换填充 25 万</td><td>2 ms</td><td><strong>GD ≈ 23 ms</strong> / C# <code>buffer</code> <strong>≈ 13.7 ms</strong></td><td>⚠ <strong>C# + <code>buffer</code> 批量，禁用逐个 API</strong></td></tr><tr><td>渲染 15 万</td><td>4 ms</td><td><strong>≈ 12.6 ms</strong>（与语言无关）</td><td>⚠ 预算偏乐观，B5 实测定</td></tr><tr><td>栅格扩散</td><td>50 ms</td><td><strong>2.4 ms</strong></td><td>预算过宽，可下调</td></tr><tr><td>随机访问 15 万段</td><td>未列</td><td><strong>4–6 ns/次</strong></td><td>可忽略</td></tr></tbody></table></div>
+<p>⚠ <strong>§6.3 的整体结论不变</strong>（月度摊平 66 ms/日 → 0.37 ms/帧）， 但现在知道：<strong>只要 <code>population</code> 走 native，这个预算就非常宽松</strong>。</p>
+<h2 id="六-五-1000-万到底现实吗-把三件事分开算">六·五、1000 万到底现实吗？（把三件事分开算）</h2>
+<blockquote>用户：「那 1000 万岂不是根本不现实？」</blockquote>
+<p><strong>会显得不现实，是因为把三件事混成了一件。</strong> 分开算：</p>
+<div class="tw"><table><thead><tr><th>#</th><th>"1000 万"指什么</th><th>现实吗</th><th>依据</th></tr></thead><tbody><tr><td><strong>①</strong></td><td><strong>1000 万条人口数据</strong>（citizen 数组）</td><td>✅ <strong>现实</strong></td><td>160 MB · C# 月结 <strong>71 ms</strong>（§6.4.1 实测）</td></tr><tr><td><strong>②</strong></td><td><strong>1000 万个可动 agent</strong>（每帧更新）</td><td>❌ <strong>不现实</strong></td><td>GDScript <strong>581 ms/帧</strong>、C# <strong>268 ms/帧</strong>（§6.4.5）</td></tr><tr><td><strong>③</strong></td><td><strong>1000 万个可见实体</strong></td><td>❌ <strong>不现实</strong>（但<strong>不需要</strong>）</td><td>见 §6.5.2</td></tr></tbody></table></div>
+<h3 id="6-5-1-关键-agent-数不随人口线性增长">6.5.1 ⭐ 关键：<strong>agent 数不随人口线性增长</strong></h3>
+<p>这点从 R1 就是这样的，只是之前没写明白：</p>
+<div class="tw"><table><thead><tr><th></th><th>首发（100 万人口）</th><th>打磨年（1000 万人口）</th></tr></thead><tbody><tr><td>citizen 数据</td><td>100 万（16 MB）</td><td><strong>1000 万（160 MB）</strong></td></tr><tr><td>月结（C#）</td><td><strong>7 ms</strong></td><td><strong>71 ms</strong></td></tr><tr><td>真 agent</td><td><strong>15 万</strong></td><td><strong>15 万（不增）</strong></td></tr><tr><td>agent / 人口</td><td>15 %</td><td><strong>1.5 %</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>为什么 agent 不需要跟着涨</strong>：<strong>同屏能看清的实体有物理上限</strong>。 玩家视野 2 km × 2 km = 4 km²，按 4000 人/km² 只有 1.6 万人、几千辆车。 <strong>15 万 agent 已经把"近景"填满了。</strong></p>
+<p>⚠ 这也是 R5（活跃 agent 15 万签收）的真正含义： <strong>它约束的是"每帧要动多少东西"，不是"城市有多少人"。</strong></p>
+<h3 id="6-5-2-但-1000-万人口确实会-看起来空-用-impostor-补">6.5.2 ⚠ 但 1000 万人口确实会"看起来空"——用 impostor 补</h3>
+<p><strong>问题</strong>：2500 km² × 4000 人/km²，如果要"全城都能看到真车"，需要约 <strong>100 万个渲染实例</strong>。 15 万不够铺满。</p>
+<p><strong>解法：可见性与可模拟性解耦（LOD）</strong></p>
+<div class="tw"><table><thead><tr><th>距离</th><th>用什么</th><th>CPU 成本</th></tr></thead><tbody><tr><td><strong>近景</strong>（相机 ~500 m 内）</td><td>真 agent（MultiMesh，有逻辑）</td><td>15 万上限</td></tr><tr><td><strong>中景</strong>（500 m – 3 km）</td><td><strong>impostor</strong>（广告牌粒子 + 贴图）</td><td>极低</td></tr><tr><td><strong>远景</strong>（&gt; 3 km）</td><td><strong>impostor + shader 动画</strong>（CPU 完全不参与）</td><td><strong>≈ 0</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>"远景假车流"几乎免费</strong>：在 shader 里用时间 + 噪声算位置， CPU 一帧都不用写——<strong>视觉上"看起来有 100 万辆"，逻辑上只有 15 万辆是真的。</strong></p>
+<p>⚠ <strong>这不是欺骗，是行业标准做法</strong>，CS1 同样用低模/贴图处理远处车辆。 玩家从高处俯瞰时<strong>根本分辨不出</strong>哪辆是真 agent。</p>
+<h3 id="6-5-3-所以-不现实-的是什么">6.5.3 所以"不现实"的是什么</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>判定</th><th>我们做不做</th></tr></thead><tbody><tr><td>1000 万逐人寻路</td><td>❌ 不可能（§一 已算：2000 万次出行/日 → 200 %+ 单核）</td><td><strong>不做，用 OD 聚合</strong></td></tr><tr><td>1000 万 agent 每帧更新</td><td>❌ 268 ms/帧</td><td><strong>不做，锁 15 万</strong></td></tr><tr><td>1000 万可见实体</td><td>❌ 渲染扛不住</td><td><strong>不做，用 impostor</strong></td></tr><tr><td><strong>1000 万人口数据 + 月结</strong></td><td>✅ <strong>71 ms</strong></td><td><strong>做</strong></td></tr><tr><td><strong>1000 万城市的 OD 分配</strong></td><td>✅ 2500 小区聚合，与人口无关</td><td><strong>做</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>一句话：1000 万是"城市有多少人"，不是"屏幕上有多少东西"。</strong></p>
+<h3 id="6-5-4-首发到底要多少">6.5.4 首发到底要多少</h3>
+<p>⚠ <strong>R1 定的是：可玩版 ≥ 100 万，打磨年挑战 1000 万。</strong> <strong>1000 万不是首发要求</strong>，是终局目标。</p>
+<div class="tw"><table><thead><tr><th>阶段</th><th>人口</th><th>月结（C#）</th><th>agent</th><th>状态</th></tr></thead><tbody><tr><td>首发</td><td><strong>100 万</strong></td><td>7 ms</td><td>15 万</td><td>✅ 实测余量巨大</td></tr><tr><td>打磨年</td><td><strong>1000 万</strong></td><td>71 ms</td><td>15 万 + impostor</td><td>✅ 路径清晰</td></tr></tbody></table></div>
+<p>⚠ <strong>别把 1000 万当首发门槛</strong>：那会让 B4 的验收变成"必须跑到 1000 万"， <strong>而它其实只要跑到 100 万就签字</strong>。R5 的"档位"就是为这件事准备的。</p>
+<h2 id="七-对既有设计的连带影响-必须同步改-否则-b4-会崩">七、对既有设计的连带影响（必须同步改，否则 B4 会崩）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>受影响</th><th>现在的写法</th><th>必须改成</th></tr></thead><tbody><tr><td><del><strong>IM1</strong></del></td><td><del><code>native/sim_core</code></del></td><td><del>「B5 超预算才引入」的<strong>可选</strong>组件</del></td><td>⚠ <strong>已作废（R25）</strong>：实测 C# 月结 71 ms / 预算 400 ms ⇒ <strong>B4 不前置 native</strong>，只在某块超预算时局部下沉</td></tr><tr><td><strong>IM2</strong></td><td><code>plan.md</code> B5 验收</td><td>「1000 车 30 fps」</td><td>改为 <strong>两段验收</strong>：① 25 万实例的<strong>变换填充 ≤ 15 ms</strong>（C# + <code>Buffer</code> 实测 ≈ 13.7 ms；原定 4 ms 已废弃）② 视锥裁剪后 30 fps</td></tr><tr><td><strong>IM3</strong></td><td><code>01-playable-definition</code> A8</td><td>「连续游玩 2 小时 fps ≥ 30」</td><td>必须加规模限定：<strong>在 100 万人口下</strong></td></tr><tr><td><strong>IM4</strong></td><td><code>02-road.md</code></td><td>三级路网（支路/次干/主干）</td><td>加<strong>快速路</strong>（H 层），否则分层寻路无 H 层可用</td></tr><tr><td><strong>IM5</strong></td><td><code>04-population.md</code></td><td>未定</td><td>个人 = SoA 数组、不存路径、只存 <code>home_ta</code>/<code>work_ta</code></td></tr><tr><td><strong>IM6</strong></td><td><code>08-traffic.md</code></td><td>未定（且缺双层模型）</td><td>三层模型（OD → 流量 → 代表 agent）</td></tr><tr><td><strong>IM7</strong></td><td><code>10-presentation.md</code> / UI</td><td>未定</td><td>千万人口时玩家不可能逐格操作 → <strong>工具单位从"格"升到"街区/片区"</strong>，必须有区域级视图与批量工具</td></tr><tr><td><strong>IM8</strong></td><td><code>plan.md</code> B3 验收</td><td>「画 20 格住宅区 → 60 日长出建筑」</td><td>该验收本身没错，但<strong>不足以证明规模化</strong>，需加一条 100 km² 批量分区的时间预算</td></tr><tr><td><strong>IM9</strong></td><td><code>02-road.md</code></td><td>「节点/路段/车道三表」</td><td><strong>必须加"围合面"输出</strong>（R6）：没有 block face，<code>03-zoning</code> 无对象可分区</td></tr><tr><td><strong>IM10</strong></td><td><code>03-zoning.md</code></td><td>未定（原以 cell 为单位）</td><td>改为以 <strong><code>parcel</code> 多边形</strong>为单位，并加 <code>code_era</code>（规范年代，R4）</td></tr><tr><td><strong>IM11</strong></td><td><code>09-core-tick.md</code> 存档</td><td>未定</td><td>parcel 多边形不定长，<strong>必须给 parcel 稳定 ID</strong>，不能靠坐标索引</td></tr><tr><td><strong>IM12</strong></td><td><code>10-presentation.md</code> 资产</td><td>「程序化资产风格」</td><td>改为<strong>自建资产管线</strong>（R3）：建模 Agent 交接规范 + LOD + 图集 + 授权记录</td></tr></tbody></table></div>
+<hr>
+<h2 id="八-分阶段目标-不许一次冲到底-2026-11-18-依实测重写">八、分阶段目标（不许一次冲到底）⚠ 2026-11-18 依实测重写</h2>
+<blockquote>⚠ <strong>原表有两处与实测冲突，已改</strong>：<br>① "B7 验收 A1–A11" —— <strong>只有 A1–A10</strong>（<code>01-playable-definition</code> §八）；<br>② <strong>"M2 冲 30–50 万 agent"已作废</strong> —— 实测 C# 下 50 万需 80 ms/帧（12 fps），<br><strong>30–50 万 agent 不可能</strong>。按 §6.5，<strong>人口涨，agent 不涨</strong>。</blockquote>
+<div class="tw"><table><thead><tr><th>阶段</th><th>人口（数据）</th><th><strong>活跃 agent（真）</strong></th><th>可见量手段</th><th>每帧推算</th><th>验收</th></tr></thead><tbody><tr><td><strong>B3 起点（村庄）</strong></td><td>500 – 5,000</td><td>0（无车）</td><td>—</td><td>—</td><td><strong>独院 + 巷道还原</strong>，不是格子房</td></tr><tr><td><strong>B4 / B6</strong></td><td>10 万</td><td>2 万</td><td>MultiMesh</td><td><strong>≈ 5 ms</strong>（60 fps 有余）</td><td>顶栏数字可复核（PP1–PP12）</td></tr><tr><td><strong>B7 可玩版</strong></td><td><strong>100 万</strong></td><td><strong>8 万</strong>（基线）</td><td>MultiMesh</td><td><strong>≈ 13 ms</strong>（≈ 60 fps）</td><td><strong>A1–A10 全绿</strong></td></tr><tr><td><strong>打磨年 M1</strong></td><td>300 万</td><td><strong>15 万</strong></td><td>+ 中景 impostor</td><td><strong>≈ 25 ms（40 fps）</strong></td><td>30 fps 不降</td></tr><tr><td><strong>打磨年 M2</strong></td><td><strong>1000 万</strong></td><td><strong>15 万（不涨）</strong></td><td>+ 远景 shader impostor</td><td>同上</td><td>30 fps + 内存 &lt; 1.5 GB</td></tr></tbody></table></div>
+<p>⚠ <strong>每上一个台阶必须重新跑同一组验收</strong>，不许"上次过了这次也能过"。</p>
+<p>⚠ <strong>2026-11-21 依 R26 定口径</strong>：本表 B7 = <strong>8 万 = 首发基线</strong>；<code>R5</code> 的 <strong>15 万 = 能力上限</strong>（≈25 ms / 40 fps）。 两者不冲突，<strong>签收写「在指定硬件档位下 ≥8 万且稳定 30 fps；掉档必须能解释」</strong>。 ⚠ 验收必须写明档位（<code>08-traffic</code> §七 已要求）。</p>
+<p>⚠ <strong>村庄阶段是 R6 的试金石</strong>：如果 500 人的村子做出来还是一排格子房、没有院墙和巷道， 说明多边形地块没落实，<strong>此时必须回退重做，不许往上盖</strong>。</p>
+<h3 id="8-1-每阶段必跑的三条-缺一条不算过">8.1 每阶段必跑的三条（缺一条不算过）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>跑什么</th><th>判据</th></tr></thead><tbody><tr><td>1</td><td><strong>同一组功能验收</strong>（A1–A10 / PP1–PP12 / TR1–TR10 …）</td><td>全绿</td></tr><tr><td>2</td><td><strong><code>probe_tick</code> 打印真实耗时</strong></td><td>不超该阶段预算（见上表）</td></tr><tr><td>3</td><td><strong><code>13-player-loop</code> §八 的 K1–K3 平衡回归</strong></td><td>不崩、A6 仍成立、村庄能到镇</td></tr></tbody></table></div>
+<p>⚠ <strong>第 2 条不许"估计"</strong>：必须打印数字。<strong>实测过的和推算的是两回事</strong>—— §6.4 就是靠这个才发现"GDScript 连 15 万都不够"。</p>
+<h3 id="8-2-上台阶的判断标准-不是-能不能跑">8.2 ⚠ 上台阶的判断标准（不是"能不能跑"）</h3>
+<div class="tw"><table><thead><tr><th>现象</th><th>判断</th></tr></thead><tbody><tr><td>当前阶段 60 fps 有余量</td><td>✅ 可以上台阶</td></tr><tr><td>当前阶段 30–60 fps</td><td>⚠ 先优化再上，不要带病扩张</td></tr><tr><td>当前阶段 &lt; 30 fps</td><td>❌ <strong>不许上台阶</strong>，先解决瓶颈</td></tr></tbody></table></div>
+<p>⚠ <strong>"能跑但要降分辨率"不算过</strong>。降分辨率是掩盖，不是解决。</p>
+<hr>
+<h2 id="八-五-内存总账-2026-11-18-新增-扫描发现的空白">八·五、内存总账（2026-11-18 新增，扫描发现的空白）</h2>
+<blockquote>⚠ 之前只有一句"内存 &lt; 1.5 GB"，<strong>从来没逐项算过</strong>。这里补上。</blockquote>
+<h3 id="8-5-1-逐项估算-打磨年-1000-万人口档">8.5.1 逐项估算（打磨年 1000 万人口档）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规模</th><th>单条</th><th>小计</th></tr></thead><tbody><tr><td><code>citizen</code>（SoA）</td><td>1000 万</td><td>16 B</td><td><strong>160 MB</strong></td></tr><tr><td><code>household</code></td><td>400 万</td><td>24 B</td><td><strong>96 MB</strong></td></tr><tr><td><code>district</code></td><td>2500</td><td>64 B</td><td>0.2 MB</td></tr><tr><td><code>parcel</code></td><td>200 万</td><td>40 B</td><td><strong>80 MB</strong></td></tr><tr><td><code>block_face</code> 顶点</td><td>6 万面 × 20 顶点 × 8 B</td><td>—</td><td><strong>10 MB</strong></td></tr><tr><td><code>compound</code></td><td>1 万</td><td>32 B</td><td>0.3 MB</td></tr><tr><td><code>building</code></td><td>15 万</td><td>32 B</td><td><strong>4.8 MB</strong></td></tr><tr><td><strong><code>link</code> + 流量表</strong></td><td>15 万 × 4 时段 × 2 B</td><td>—</td><td><strong>1.2 MB</strong></td></tr><tr><td><code>od_matrix</code></td><td>80 万非零 × 4 B</td><td>—</td><td><strong>3.2 MB</strong></td></tr><tr><td><strong>agent 状态</strong></td><td>15 万</td><td>64 B</td><td><strong>9.6 MB</strong></td></tr><tr><td><strong>栅格 × 4</strong></td><td>100 万格 × 2 B × 4 张</td><td>—</td><td><strong>8 MB</strong></td></tr><tr><td><strong>多路径结果</strong>（K=3 中间态）</td><td>15 万段 × 3 路径 × 2 B</td><td>—</td><td><strong>0.9 MB</strong></td></tr><tr><td>地形高度图</td><td>36 万格 × 2 B</td><td>—</td><td><strong>0.7 MB</strong></td></tr><tr><td><strong>小计（CPU 侧）</strong></td><td></td><td></td><td><strong>≈ 375 MB</strong></td></tr></tbody></table></div>
+<div class="tw"><table><thead><tr><th>显存侧</th><th></th><th></th></tr></thead><tbody><tr><td>MultiMesh 实例 buffer</td><td>15 万 × 48 B（3×4 矩阵）</td><td><strong>7.2 MB</strong></td></tr><tr><td>图集</td><td>2 × 4096² BC7</td><td><strong>32 MB</strong></td></tr><tr><td>建筑模块 mesh</td><td>21 模块 × 4 LOD × ~1 MB</td><td><strong>84 MB</strong></td></tr></tbody></table></div>
+<h3 id="8-5-2-总账">8.5.2 总账</h3>
+<div class="tw"><table><thead><tr><th>侧</th><th>合计</th></tr></thead><tbody><tr><td><strong>CPU 内存</strong></td><td><strong>≈ 375 MB</strong></td></tr><tr><td><strong>显存</strong></td><td><strong>≈ 125 MB</strong>（12 GB 卡绰绰有余）</td></tr><tr><td>加上引擎与音频等开销</td><td><strong>CPU 约 600–700 MB</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>目标 1.5 GB 是宽松的</strong>：实际大头是 <code>citizen</code>（160 MB）与 <code>parcel</code>（80 MB）， <strong>两者都是不可避免的数据量</strong>，没有优化空间。</p>
+<p>⚠ <strong>真正要盯的不是总量，是"峰值"</strong>： 多路径分配时 K=3 的中间态 + 月结临时数组会让峰值翻倍。 <strong>月度摊平（§6.3.2）就是为了削峰</strong>。</p>
+<h3 id="8-5-3-什么会让内存失控-三条红线">8.5.3 ⚠ 什么会让内存失控（三条红线）</h3>
+<div class="tw"><table><thead><tr><th>红线</th><th>后果</th></tr></thead><tbody><tr><td><strong>存派生量</strong>（<code>accessibility</code> / <code>coverage</code> / <code>land_value</code> 栅格进存档）</td><td>存档膨胀 10 倍</td></tr><tr><td><strong><code>citizen</code> 用类而不是 <code>struct</code>/数组</strong></td><td>每个对象额外 16–24 B 头 + GC 压力</td></tr><tr><td><strong>路径存进 agent</strong>（每条路径存完整节点序列）</td><td>15 万 × 平均 50 节点 × 4 B = 30 MB，且不可复用</td></tr></tbody></table></div>
+<p>⚠ <strong>第三条最容易犯</strong>：正确做法是<strong>存"路径 ID"</strong>，路径本身在全局表里共享。</p>
+<h3 id="8-5-4-验收点">8.5.4 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>M1</strong></td><td>1000 万人口档 CPU 内存 <strong>&lt; 1 GB</strong>（不含引擎）</td></tr><tr><td><strong>M2</strong></td><td><strong>月结峰值不超过稳态的 1.8 倍</strong>（摊平生效）</td></tr><tr><td><strong>M3</strong></td><td>存档<strong>不含任何派生量栅格</strong>（<code>accessibility</code>/<code>coverage</code>/<code>land_value</code>）</td></tr><tr><td><strong>M4</strong></td><td>agent <strong>不存路径节点序列</strong>，只存路径 ID</td></tr></tbody></table></div>
+<h2 id="八-六-性能开关的合法性边界-2026-11-20-新增">八·六、性能开关的合法性边界（2026-11-20 新增）</h2>
+<blockquote>用户：「模拟细节放入设置项，玩家选择不需要模拟的内容以释放性能。」</blockquote>
+<p><strong>方向对，但有一条线不能越：</strong></p>
+<blockquote>### ⭐ 性能设置只能关"表现"，不能关"模拟"。</blockquote>
+<h3 id="8-6-1-为什么这条线不能越">8.6.1 为什么这条线不能越</h3>
+<div class="tw"><table><thead><tr><th>关掉模拟的后果</th><th>说明</th></tr></thead><tbody><tr><td><strong>断言全部失效</strong></td><td>383 条验收与 D 判据全建立在"数值可复现"上</td></tr><tr><td><strong>存档不可比</strong></td><td>同一个存档在两台机器上跑出两座城市</td></tr><tr><td><strong>不公平</strong></td><td>低配玩家靠"关沉陷"少花一大笔钱——<strong>那是作弊，不是优化</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>而且它根本不必要</strong>：§6.4 实测表明<strong>瓶颈在 agent 与渲染，不在模拟</strong>。 <code>population</code> 月结 C# 只要 <strong>71 ms</strong>（且是月度的），关它省不了几帧； 而 15 万 agent 的推进 + 填充 + 渲染就占掉 <strong>≈ 25 ms</strong>。</p>
+<h3 id="8-6-2-a-类-可以关的-数值影响必须为-0">8.6.2 A 类：可以关的（⚠ 数值影响必须为 0）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>高</th><th>中</th><th>低</th><th>数值影响</th></tr></thead><tbody><tr><td><strong>车辆 agent</strong></td><td>15 万</td><td>8 万</td><td>3 万</td><td><strong>0</strong>（TR3 已证：删光 agent 拥堵度不变）</td></tr><tr><td><strong>行人 agent</strong></td><td>5 万</td><td>2 万</td><td>0</td><td><strong>0</strong></td></tr><tr><td><strong>建筑 props</strong>（晾衣杆 / 空调 / 塔吊）</td><td>全开</td><td>减半</td><td>关</td><td><strong>0</strong></td></tr><tr><td><strong>补课学生 / 放学摊贩</strong></td><td>开</td><td>开</td><td>关</td><td><strong>0</strong>（<code>07-services</code> §3.6，本来就在 view 层）</td></tr><tr><td><strong>阴影</strong></td><td>开</td><td>开</td><td>关</td><td><strong>0</strong></td></tr><tr><td><strong>面板磨砂模糊</strong></td><td>开</td><td>开</td><td>关（降纯色）</td><td><strong>0</strong></td></tr><tr><td><strong>远景 impostor 层数</strong></td><td>三层</td><td>两层</td><td>一层</td><td><strong>0</strong></td></tr><tr><td>3D 音源数量</td><td>32</td><td>16</td><td>8</td><td><strong>0</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>"数值影响为 0"不是估算，是断言</strong>：每一项都要有一条 V 断言守着（见 §8.6.7）。</p>
+<p>⚠ <strong>A 类能关的前提是宪法 §四</strong>：<code>sim/</code> 不读任何 <code>view/</code> 的东西， 所以砍掉整个表现层，数值一分不变。<strong>这条铁律在这里第三次收利息</strong>。</p>
+<h3 id="8-6-3-b-类-不许关的-关了就改规则">8.6.3 B 类：不许关的（关了就改规则）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>为什么不能关</th></tr></thead><tbody><tr><td><code>population</code> 月结</td><td>关了人口不变，城市不长</td></tr><tr><td><code>traffic</code> 流量分配</td><td>关了没有拥堵，<strong>规划玩法直接消失</strong></td></tr><tr><td><strong>铁路区间占用</strong></td><td>关了"堵火车"没了，可达性也变了</td></tr><tr><td><strong>港口吞吐</strong></td><td>关了重工业成本失真</td></tr><tr><td>老龄化 / 迁移</td><td>关了人口结构锁死</td></tr><tr><td>沉陷 / 污染</td><td>关了少花一大笔钱（<strong>作弊</strong>）</td></tr></tbody></table></div>
+<p>⭐ <strong>想关这些的玩家，要的是"沙盒"，不是"性能"。</strong> 那是 <code>sandbox_flags</code>（<code>config/difficulty/modes.json</code>）：<strong>存档打标记、不记成就、不进城市史</strong>。 <strong>两件事绝不能塞进同一个开关</strong>——否则玩家会为了性能关掉规则，然后发现城市不长。</p>
+<h3 id="8-6-4-三档预设-自定义">8.6.4 三档预设（+ 自定义）</h3>
+<div class="tw"><table><thead><tr><th>档</th><th>目标机</th><th>15 万 agent 帧时（§6.4 推算）</th></tr></thead><tbody><tr><td><strong>高</strong></td><td>独显 / 2020 年后</td><td><strong>≈ 25 ms（40 fps）</strong></td></tr><tr><td><strong>中</strong></td><td>入门独显 / 核显</td><td><strong>≈ 15 ms（60 fps）</strong></td></tr><tr><td><strong>低</strong></td><td>老机器 / 轻薄本</td><td><strong>≈ 8 ms</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>首次启动按硬件自动选一次</strong>，然后允许玩家改。 <strong>不要让玩家第一次进游戏就面对一堆滑块</strong>——那是把自己当引擎而不是当游戏。</p>
+<h3 id="8-6-5-降档之后-看起来不能空">8.6.5 ⚠ 降档之后"看起来不能空"</h3>
+<p><strong>这是降档最容易翻车的地方。</strong> agent 从 15 万降到 3 万，如果什么都不补，<strong>路上会明显变空</strong>，玩家会以为城市死了。</p>
+<p>⇒ <strong>低档必须靠 impostor 补"视觉密度"</strong>（§6.5.2）： 真 agent 少，但远景的假车流照旧。 <strong>视觉密度由 impostor 保证，只有逻辑密度才降。</strong></p>
+<p>⚠ <strong>这条不做到，低配玩家会得到一个"鬼城"</strong>，比卡顿更难接受。</p>
+<h3 id="8-6-6-存档记录什么">8.6.6 存档记录什么</h3>
+<div class="tw"><table><thead><tr><th>存不存</th><th>项</th></tr></thead><tbody><tr><td><strong>存</strong></td><td><code>perf_profile</code>（高/中/低/自定义）+ 具体数值</td></tr><tr><td><strong>不存</strong></td><td>任何由性能设置推导出的<strong>数值</strong>（因为根本不存在）</td></tr></tbody></table></div>
+<p>⚠ <strong>读档时以本机设置为准</strong>：换机器后画面会变，但数值完全相同——<strong>这是对的</strong>。 ⚠ <strong><code>headless</code> 强制"高"</strong>：验收与 <code>probe_tick</code> 不能被玩家设置影响。</p>
+<h3 id="8-6-7-验收点">8.6.7 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>M5</strong></td><td>⭐ <strong>三档下 <code>population</code>/<code>finance</code>/<code>congestion</code> 跑 10 年完全一致</strong>（状态哈希相同）</td><td>探针三支对照</td></tr><tr><td><strong>M6</strong></td><td>低档"路上不空"：车流视觉密度与高档<strong>相差 &lt; 25 %</strong>（impostor 补足）</td><td>截图对比</td></tr><tr><td><strong>M7</strong></td><td><code>headless</code> 强制高档，<strong>玩家设置不影响探针结果</strong></td><td>探针</td></tr><tr><td><strong>M8</strong></td><td>关掉任意 A 类项，<code>probe_tick</code> 的<strong>模拟耗时不变</strong>（证明它真的只是表现）</td><td>探针</td></tr></tbody></table></div>
+<p>⚠ <strong>M5 是本节的地基</strong>：如果三档跑出不同的城市，那就不叫性能设置，叫<strong>隐藏的难度选项</strong>。 ⚠ <strong>M6 是玩家体验的地基</strong>：技术上"少画点车"是对的，但画面上不能变成鬼城。</p>
+<hr>
+<h2 id="九-已定与待定">九、已定与待定</h2>
+<p><strong>已由 <code>decisions.md</code> 裁定</strong>：</p>
+<ul><li><strong>R5</strong>：U3 先按 <strong>15 万</strong> 签收，终局 <strong>50 万</strong>；上限<strong>随硬件可配</strong>（档位 + 自动探测），</li></ul>
+<p>  验收必须绑定硬件档位（→ 需 <code>tools/benchmark.gd</code>）</p>
+<ul><li><strong>R6</strong>：<strong>取消固定用地格</strong>，空间真值改为 parcel 多边形（→ §二 已重写）</li></ul>
+<p><strong>仍待定</strong>：</p>
+<ol><li><strong>激活瓦片上限</strong>：影响画面丰富度与内存峰值，需 B3 用 <code>probe_tick</code> 实测后定</li><li><strong>parcel 细分粒度</strong>：沿街最小面宽、最小面积、合并规则——需 <code>03-zoning.md</code> 定，且受 R4 的规范年代影响</li><li><strong>基准测试的档位划分</strong>：低/中/高/极限各对应多少活跃 agent，需在真机上跑出来后填</li></ol>
+<hr>
+<h2 id="十-渲染与资产-相机驱动什么-不驱动什么">十、渲染与资产：相机驱动什么，不驱动什么</h2>
+<blockquote>来源：用户 2026-11-15 提出的两条优化——「只模拟摄像机视角下的」「同一模型多处使用应重定向到同一份」。<br><strong>方向都对，其中一条正好打在真瓶颈（U3）上。但有一条边界不能越。</strong></blockquote>
+<h3 id="10-1-必须守住的边界-相机决定-看得见什么-不决定-世界上发生什么">10.1 必须守住的边界：相机决定"看得见什么"，不决定"世界上发生什么"</h3>
+<p>U3（活跃 agent）是唯一会吃满 40 ms 的项目，而车辆/行人 agent 是<strong>纯表现</strong> （§4.3 铁律 1：删掉一个 agent 不改变任何数值）。⇒ <strong>视角一拉远，U3 直接归零，这是最有效的一刀。</strong></p>
+<p>但权威数值不能跟着相机走：</p>
+<div class="tw"><table><thead><tr><th>内容</th><th>受相机影响</th><th>不这么做的后果</th></tr></thead><tbody><tr><td>人口 / 家庭 / 收入 / 满意度</td><td>❌ <strong>不受</strong></td><td>玩家一转视角城市就停长，玩家会当成 bug</td></tr><tr><td>建筑生长 / 升级 / 废弃</td><td>❌ <strong>不受</strong></td><td>同上；且存档不可复现（违反宪法 L4）</td></tr><tr><td>路网宏观流量分配</td><td>❌ <strong>不受</strong></td><td>A9 读档一致性过不了</td></tr><tr><td>车辆 / 行人个体 agent</td><td>✅ <strong>受</strong></td><td>无副作用（可随时销毁重建）</td></tr><tr><td>建筑 / 车辆渲染实例</td><td>✅ <strong>受</strong></td><td>无副作用</td></tr><tr><td>瓦片的<strong>计算优先级</strong></td><td>⚠ 可受</td><td>相机能决定"先算哪个、算多细"，<strong>不能决定算不算</strong></td></tr></tbody></table></div>
+<p>⇒ <strong>相机决定"看得见什么"，不决定"世界上发生什么"。</strong></p>
+<p>⚠ 这条边界已登记为 <code>decisions.md</code> <strong>Q10</strong>，待开发者确认。 若确实要做成"只算相机内"，则 A2/A4/A6 三条 headless 断言全部失效，宪法 §四 同步作废——不建议。</p>
+<h3 id="10-2-距离分档-四级-冻结">10.2 距离分档（四级，冻结）</h3>
+<div class="tw"><table><thead><tr><th>距离</th><th>建筑</th><th>车辆</th><th>行人</th><th>替代物</th></tr></thead><tbody><tr><td><strong>0–500 m</strong></td><td>全模型 + 细节</td><td>全模型</td><td>✅</td><td>—</td></tr><tr><td><strong>500 m–2 km</strong></td><td>全模型</td><td>简化盒体</td><td>❌</td><td>—</td></tr><tr><td><strong>2–8 km</strong></td><td>简化体块 + 屋顶</td><td>❌</td><td>❌</td><td>路段流量着色</td></tr><tr><td><strong>&gt; 8 km（最高视角）</strong></td><td><strong>仅体块 + 高度</strong></td><td>❌ <strong>完全不渲染</strong></td><td>❌</td><td><strong>流量热力图 / 密度图</strong></td></tr></tbody></table></div>
+<blockquote>用户判断正确：最高视角下车辆行人不是"估计看不到"，是<strong>像素尺寸小于 1 px</strong>。<br>这一档把 <strong>U3 与 U4 同时归零</strong>，单帧只剩地形 + 体块 + 热力，是最省的一帧。</blockquote>
+<h3 id="10-3-资产去重-引擎已默认做了-要做的是-别破坏它">10.3 资产去重：引擎已默认做了，要做的是"别破坏它"</h3>
+<p>Godot 的 <code>load()</code> / <code>preload()</code> 对同一路径返回<strong>同一个 <code>Resource</code> 实例</strong>（引用计数）， VRAM 只有一份；100 个 <code>MeshInstance3D</code> 指向同一 <code>Mesh</code> 也只占一份。 ⇒ <strong>不需要额外去重机制。需要的是三条纪律：</strong></p>
+<div class="tw"><table><thead><tr><th>禁止</th><th>因为</th></tr></thead><tbody><tr><td><code>mesh.duplicate()</code> / <code>duplicate(true)</code></td><td>每份复制都新建一份 GPU buffer</td></tr><tr><td>每个实例新建 <code>StandardMaterial3D</code></td><td>材质无法合并，draw call 翻倍</td></tr><tr><td>改 <code>mesh</code> 的属性来做差异</td><td>触发写时复制（与 v1 的 PackedArray COW 同源问题）</td></tr></tbody></table></div>
+<p><strong>差异化只允许三个手段</strong>：<code>MultiMesh</code> 的 per-instance <strong>transform</strong>（缩放/旋转/位移）、 per-instance <strong>color</strong>、以及 archetype 的<strong>组合</strong>（楼体 + 裙楼 + 屋顶件）。</p>
+<h3 id="10-4-真正的瓶颈是-draw-call-与节点数-不是显存">10.4 真正的瓶颈是 draw call 与节点数，不是显存</h3>
+<p>5 万–15 万栋建筑若各用一个 <code>MeshInstance3D</code> = 5 万节点 + 5 万次 draw call，必卡。 ⇒ <strong>必须 MultiMesh，按 <code>archetype</code> 分组</strong>：30 种 archetype → 30 次 draw call。</p>
+<p>⚠ 但 <strong>MultiMesh 没有 per-instance 剔除</strong>（只有整体 <code>custom_aabb</code> 参与视锥判定）， 所以必须<strong>按空间分块</strong>：<code>archetype × 2 km 区块</code>。 激活区 120 km² = 30 个区块 × 30 archetype ≈ <strong>900 个 MultiMesh</strong>，其中只有视锥内的会被提交。</p>
+<p><strong>分块粒度由 <code>probe_tick</code> 实测决定，本篇不预设数字。</strong></p>
+<h3 id="10-5-与-docs-agents-md-坑-13-的关系-方向相反-但都要做">10.5 与 docs/agents.md 坑 #13 的关系（方向相反，但都要做）</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>规则</th></tr></thead><tbody><tr><td><code>agents.md</code> 坑 #13</td><td><strong>MultiMesh 资源本身要 <code>duplicate()</code></strong> —— 避免两个主场景共享 <code>instance_count</code> 互相重置</td></tr><tr><td>本节 10.3</td><td><strong><code>Mesh</code> 资源绝不能 <code>duplicate()</code></strong></td></tr></tbody></table></div>
+<p>不冲突：<strong>该复制的是"实例容器"，不能复制的是"网格本体"。</strong></p>
+<h3 id="10-6-纹理图集-b3-就要定规则">10.6 纹理图集（B3 就要定规则）</h3>
+<p>30 种 archetype × 每种一张 2048² 贴图 ≈ 30 × 16 MB = <strong>480 MB 显存</strong>（含 mipmap 更多）。 ⇒ 合并为 <strong>1–2 张 4096² 图集</strong>（建筑 / 车辆 / 路面分区），<strong>材质数压到个位数</strong>。</p>
+<p>⚠ RTX 3060 12 GB 当下够用，但<strong>图集是后续加内容时最容易爆的地方</strong> —— 每加一类建筑就要么进图集、要么单独一张，规则不早定，B5 之后必然爆。</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-22</strong>：新增 <strong>§2.6 渲染坐标必须用浮动原点（E3）</strong>——50 km 处 <code>float32</code> 分辨率约 4 mm，</li></ul>
+<p>  薄片与半透明物会 z-fighting / 阴影抖动。约定：<code>sim/</code> 用绝对分米，<code>view/</code> 以当前瓦片中心为原点。   来源：<code>reports/2026-11-21-引擎选型评估.md</code> §四 E3。</p>
+<ul><li><strong>2026-11-20</strong>：新增 <strong>§八·六 性能开关的合法性边界</strong>。依据用户</li></ul>
+<p>  「模拟细节放入设置项，玩家选择不需要模拟的内容以释放性能」：   ⭐ <strong>定下一条线：性能设置只能关"表现"，不能关"模拟"。</strong>   理由：关了模拟会让 <strong>383 条断言失效 / 存档不可比 / 低配靠"关沉陷"作弊</strong>，   而且<strong>根本不必要</strong>（§6.4 实测瓶颈在 agent 与渲染，不在模拟）。   ① <strong>A 类清单</strong>（agent 数 / props / 阴影 / 磨砂 / impostor / 音源）—— <strong>数值影响必须为 0</strong>；   ⚠ 前提是宪法 §四（<code>sim/</code> 不读 <code>view/</code>），<strong>这条铁律第三次收利息</strong>；   ② <strong>B 类不许关</strong>（人口月结 / 流量分配 / 铁路占用 / 港口 / 老龄化 / 沉陷），   ⚠ <strong>想关这些的玩家要的是"沙盒"不是"性能"</strong>，那是 <code>sandbox_flags</code>，两件事不能混；   ③ 三档预设 + ⚠ <strong>首次启动按硬件自动选</strong>（别让玩家一进来就面对滑块）；   ④ ⚠ <strong>降档必须靠 impostor 补视觉密度</strong>，否则低配玩家得到一座"鬼城"；   ⑤ 存档存 <code>perf_profile</code> 但<strong>不存派生数值</strong>，<code>headless</code> 强制高档。   新增 M5–M8 四条断言，<strong>M5（三档跑 10 年状态哈希相同）是本节地基</strong>。</p>
+<ul><li><strong>2026-11-18（二）</strong>：新增 <strong>§八·五 内存总账</strong>（扫描发现的空白：之前只有一句"内存 &lt; 1.5 GB"，</li></ul>
+<p>  <strong>从未逐项算过</strong>）。逐项估算结果：   <strong>CPU 侧 ≈ 375 MB</strong>（大头是 <code>citizen</code> 160 MB + <code>parcel</code> 80 MB + <code>household</code> 96 MB）、   <strong>显存 ≈ 125 MB</strong>、加引擎开销 <strong>CPU 约 600–700 MB</strong> ⇒ <strong>1.5 GB 目标宽松</strong>。   ⚠ <strong>真正要盯的不是总量而是峰值</strong>：多路径 K=3 中间态会让峰值翻倍，月度摊平就是为削峰。   另列<strong>三条内存红线</strong>：存派生量进存档 / <code>citizen</code> 用类而非数组 / <strong>agent 存路径节点序列而不是路径 ID</strong>   （第三条最容易犯，且会让内存 30 MB 且路径无法复用）。新增 M1–M4 四条断言。</p>
+<ul><li><strong>2026-11-18</strong>：<strong>§八 分阶段目标重写</strong>。原表两处与实测冲突：</li></ul>
+<p>  ① "B7 验收 A1–A11" → <strong>只有 A1–A10</strong>；   ② ⚠ <strong>"M2 冲 30–50 万 agent"作废</strong> —— 实测 C# 下 50 万需 80 ms/帧（12 fps），      <strong>物理上做不到</strong>。改为 <strong>M2 人口涨到 1000 万但 agent 仍锁 15 万</strong>，      靠 <strong>impostor</strong> 扩展可见量（§6.5）。   另新增 §8.1「每阶段必跑三条」与 §8.2「上台阶判断标准」——   ⚠ <strong>必须打印真实耗时，不许估计</strong>（§6.4 正是靠这个才发现"GDScript 连 15 万都不够"）。</p>
+<ul><li><strong>2026-11-17（四）</strong>：新增 <strong>§六·五 1000 万到底现实吗</strong>（用户质疑后必须正面回答）。</li></ul>
+<p>  <strong>把"1000 万"拆成三件事</strong>：① 1000 万条<strong>数据</strong> ✅（C# 月结 71 ms）；   ② 1000 万<strong>可动 agent</strong> ❌（581/268 ms 每帧）；③ 1000 万<strong>可见实体</strong> ❌（但不需要）。   ⭐ 关键：<strong>agent 数不随人口线性增长</strong>——同屏能看清的实体有物理上限，   <strong>15 万已填满近景</strong>（R5 约束的是"每帧动多少东西"，不是"城市有多少人"）。   ⚠ 1000 万会"看起来空" → 用 <strong>impostor（近景真 agent / 中景广告牌 / 远景 shader 动画）</strong>   解耦可见性与可模拟性，<strong>远景假车流 CPU 成本 ≈ 0</strong>。   ⚠ 明确 <strong>R1 是首发 100 万、打磨年 1000 万</strong>，别把 1000 万当 B4 门槛。</p>
+<ul><li><strong>2026-11-17（三）</strong>：新增 <strong>§6.4.6–6.4.8 GDScript vs C# 对比</strong>（<code>bench/sim_cs/</code>，C# 版同参数）。</li></ul>
+<p>  <strong>三条硬结论</strong>：   ① ⭐ <strong>C# 的优势几乎全部来自 <code>buffer</code> 批量写</strong>；<code>api</code> 逐个模式<strong>换语言白给</strong>      （10 万档 9.40 vs 9.79，<strong>C# 反而略慢</strong>；50 万档 47.23 vs 47.99 一模一样）——      因为 <code>SetInstanceTransform</code> 每次跨 C#/C++ 边界约 <strong>90 ns</strong>，与 GDScript 调用开销同量级；      <code>buffer</code> 只需一次 interop，<strong>快 9 倍</strong>（5.49 vs 50.26）；   ② ⚠ <strong><code>api</code>/<code>buffer</code> 哪个快完全取决于语言</strong>：GDScript 用 <code>api</code>、C# 用 <code>buffer</code>——<strong>反过来了</strong>；   ③ ⚠ <strong>C# 的 <code>sim</code> 只快 2.1 倍</strong>（<code>Vector3</code> 是引擎 API，一样过 interop），      而<strong>纯 <code>float[]</code> 运算快 44 倍</strong> ⇒ <strong><code>sim</code> 层必须用 <code>float[]</code> 不用 <code>Vector3</code></strong>      ——<strong>这恰好与宪法 §四 的"空间用整数坐标"一致</strong>。   另：<strong>渲染成本与语言无关</strong>（GPU 侧）；<strong>15 万 agent C#+buffer ≈ 25 ms（40 fps）</strong>，   过 B5 的 30 fps 线但不到 60 fps；冲 60 需把位置计算搬进 vertex shader（B5 实测后再决定）。</p>
+<ul><li><strong>2026-11-17（二）</strong>：新增 <strong>§6.4.5 Godot 项目内实测</strong>（用户要求建真实测试项目，</li></ul>
+<p>不只是裸算法）。用 <code>MultiMesh</code> 测 <strong>1 万→1000 万</strong> 的完整链路（<code>bench/sim/</code>）。 <strong>四个反直觉发现</strong>：   ① <strong>写实例比模拟更贵</strong>（10 万：模拟 5.8 ms vs 写 9.4 ms）——呈现的一半成本在喂数据；   ② ⚠ <strong><code>MultiMesh.buffer</code> 批量写入比逐个 <code>set_instance_transform</code> 慢 5 倍</strong>      （GDScript 里"每条语句都贵"，批量要写 16 个 float/实例）——      ⚠ <strong>此结论只对 GDScript 成立，C# 下批量一定更快，不要当成"buffer 不好"</strong>；   ③ 渲染成本与写实例同量级（10 万 ≈ 7.6 ms，50 万 ≈ 35 ms），不是"渲染免费"；   ④ <strong>1000 万纯模拟 581 ms</strong>（GDScript）——每秒不到 2 次更新。   ⇒ <strong>修正 §6.3.4 每帧预算</strong>：GDScript 跑 15 万 agent 需 <strong>≈43 ms（23 fps）</strong>，   <strong>连 15 万都撑不住，不只是 1000 万</strong> ⇒ <code>traffic</code> 的推进与填充<strong>也必须走 C#</strong>。</p>
+<ul><li><strong>2026-11-17</strong>：新增 <strong>§六·四 实测数据</strong>。用户要求跑测试校准文档——</li></ul>
+<p>  用 Rust(GNU)/Python/numpy 实测 SoA 实体更新、内存带宽、栅格扩散（基准代码在 <code>bench/</code>）。   <strong>关键结论三条</strong>：   ① <strong>Rust 2.6 ns/实体</strong>（1000 万月结 <strong>26 ms</strong>），Python 832 ns（慢 320 倍），      GDScript 估算 300–800 ns → <strong>1000 万月结要 3–8 秒，超标 8–20 倍</strong> ⇒      <strong><code>native/sim_core</code> 从"可选优化"变为"必需项"</strong>（§6.3 的 400 ms 对 native 宽松 15 倍）；   ② <strong>8 线程只快 1.55 倍，实测带宽 8.8 GB/s 已饱和</strong> ⇒ 多线程在 4 线程到顶，      真正有效的是<strong>减数据量/提局部性/降频率</strong>；   ③ ⭐ <strong>GPU 加速不值得</strong>（与直觉相反）：我们是"低频 + 分支密集"，      栅格扩散单次仅 2.4 ms，GPU 启动+PCIe 传输就吃掉全部收益。   ⚠ 测试机是 DDR3（带宽短板），CPU 数字应视为<strong>下限参考</strong>。</p>
+<ul><li><strong>2026-11-16</strong>：新增 <strong>§六·三 全系统预算总账</strong>。按 8 系统逐项算月度工作量：</li></ul>
+<p>  <strong>一次性 2.0 秒 → 摊到 30 天后每日 66 ms → 0.37 ms/帧</strong>。   定下三条工程纪律：① <strong>月度工作摊到 30 天</strong>（不许一次算完，否则卡 2 秒）；   ② <strong><code>zoning</code> 日级必须用 dirty flag 增量</strong>（200 万 parcel 不能全扫）；   ③ 每帧只跑 <code>traffic</code> + 渲染。结论：<strong>真瓶颈是 agent 不是月度结算</strong>，R5 的 15 万才是关键指标。</p>
+<ul><li><strong>2026-11-15（四）</strong>：<strong>§二 整节重写</strong>（依据 <code>decisions.md</code> R6）。空间真值由「固定 20 m 用地格」</li></ul>
+<p>  改为「路网围合面 → parcel 多边形」，栅格降为 50 m 派生索引（625 万格 → <strong>100 万格 / 15 MB</strong>）。   新增 §2.3 生成链、§2.4 新旧对比、§八 村庄阶段试金石。连带新增 IM9–IM12（02 面输出 / 03 按 parcel /   09 parcel 稳定 ID / 10 自建资产管线）。同步 §6.1 内存表。</p>
+<ul><li><strong>2026-11-15（三）</strong>：新增 <strong>§十 渲染与资产</strong>（依据用户当日提出的两条优化）。</li></ul>
+<p>  含：相机驱动边界表（权威模拟不受相机影响）、四级距离分档（&gt;8 km 车辆行人不渲染）、   资产去重三条纪律（Godot <code>load()</code> 天然共享，禁止 <code>duplicate()</code> mesh / 逐实例建材质）、   MultiMesh 按 <code>archetype × 2 km 区块</code> 分块、纹理图集规则。   <strong>修正 §6.1 建筑数量</strong>：原「150 万栋」有误 → <strong>5 万–15 万栋</strong>（3.57 M 户 ÷ 120 户/栋）。</p>
+<ul><li><strong>2026-11-15（二）</strong>：依用户规模目标补充 §五 U3 诚实估算表、§八 分阶段台阶、§九 待定项。</li><li><strong>2026-11-15</strong>：首版（AI 起草，待开发者拍板）。依据用户当日给定的规模目标</li></ul>
+<p>  （2500 km² / 100 万可玩 / 1000 万挑战 / 突破 65,536）建立：   空间三层（20 m 格 / 地块 / 1 km 瓦片）、人口三层（个人 / 家庭 / 街区）、   出行三层（OD 矩阵 / 分层路网 / 代表性 agent）、四个"上限"的区分与诚实估算、内存与单帧预算、   对既有 8 处设计的连带改动清单。</p><div class="pager"><a href="design-13-player-loop.html">← 13 · 玩家循环与游戏逻辑：怎么转起来</a><a href="design-12-china-features.html">12 · 中国特色机制台账（含 DLC 池） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-先算账-目标成立-但-逐人寻路-是硬墙">一、先算账：目标成立，但"逐人寻路"是硬墙</a><a class="l3" href="#1-1-密度核对-好消息">1.1 密度核对（好消息）</a><a class="l3" href="#1-2-逐人寻路-不可能-坏消息-但可绕开">1.2 逐人寻路：不可能（坏消息，但可绕开）</a><a class="l2" href="#二-空间分层-地块由道路生成-栅格只是索引">二、空间分层：地块由道路生成，栅格只是索引</a><a class="l3" href="#2-1-三层-真值-派生">2.1 三层（真值 + 派生）</a><a class="l3" href="#2-2-为什么真值是多边形而不是格">2.2 为什么真值是多边形而不是格</a><a class="l3" href="#2-3-生成链-02-road-md-必须实现的部分">2.3 生成链（02-road.md 必须实现的部分）</a><a class="l3" href="#2-4-栅格为什么还能留-且降到-50-m">2.4 栅格为什么还能留（且降到 50 m）</a><a class="l3" href="#2-5-瓦片层-不变-仍是全篇最关键的机制">2.5 瓦片层（不变，仍是全篇最关键的机制）</a><a class="l3" href="#2-6-渲染坐标必须用-浮动原点-e3-2026-11-22-补">2.6 ⚠ 渲染坐标必须用"浮动原点"（E3，2026-11-22 补）</a><a class="l2" href="#三-人口分层-全量存储-分层计算">三、人口分层：全量存储，分层计算</a><a class="l2" href="#四-出行-三层模型-这是千万人口能跑的唯一办法">四、出行：三层模型（这是千万人口能跑的唯一办法）</a><a class="l3" href="#4-1-为什么是-ta-交通小区-而不是-每个人算一次路">4.1 为什么是 TA（交通小区）而不是"每个人算一次路"</a><a class="l3" href="#4-2-分层路网-分层寻路的前提">4.2 分层路网（分层寻路的前提）</a><a class="l3" href="#4-3-代表性-agent-的三条铁律">4.3 代表性 agent 的三条铁律</a><a class="l2" href="#五-突破-65536-到底突破了什么">五、「突破 65536」到底突破了什么</a><a class="l3" href="#u3-为什么只能到-15-50-万-诚实估算">U3 为什么只能到 15–50 万（诚实估算）</a><a class="l2" href="#六-预算表-宪法级的硬数字">六、预算表（宪法级的硬数字）</a><a class="l3" href="#6-1-内存-1000-万人口-2500-km²">6.1 内存（1000 万人口 / 2500 km²）</a><a class="l3" href="#6-2-单帧预算-16-6-ms-60-fps-33-ms-30-fps">6.2 单帧预算（16.6 ms @ 60 fps / 33 ms @ 30 fps）</a><a class="l2" href="#六-三-全系统预算总账-2026-11-16-新增">六·三、全系统预算总账（2026-11-16 新增）</a><a class="l3" href="#6-3-1-月度工作的总量-1000-万人口-2500-km²-满图">6.3.1 月度工作的总量（1000 万人口 / 2500 km² / 满图）</a><a class="l3" href="#6-3-2-唯一的硬前提-月度工作必须摊到-30-天">6.3.2 ⚠ 唯一的硬前提：月度工作必须摊到 30 天</a><a class="l3" href="#6-3-3-日级工作-必须增量-不能全扫">6.3.3 日级工作：必须增量，不能全扫</a><a class="l3" href="#6-3-4-每帧的常驻成本-这才是真瓶颈">6.3.4 每帧的常驻成本（这才是真瓶颈）</a><a class="l3" href="#6-3-5-内存与显存-1000-万时">6.3.5 内存与显存（1000 万时）</a><a class="l3" href="#6-3-6-一句话结论">6.3.6 一句话结论</a><a class="l2" href="#六-四-实测数据-2026-11-17-本机跑出来的-不是推算">六·四、实测数据（2026-11-17，本机跑出来的，不是推算）</a><a class="l3" href="#6-4-1-soa-实体更新-模拟-population-月结的形状-这张表决定了架构">6.4.1 SoA 实体更新（模拟 population 月结的形状）⭐ 这张表决定了架</a><a class="l4" href="#结论修正-不需要-native-c-就够">⭐⭐ 结论修正：不需要 native，C# 就够</a><a class="l3" href="#6-4-2-8-线程只快-1-55-倍-说明瓶颈是内存带宽">6.4.2 ⚠ 8 线程只快 1.55 倍 —— 说明瓶颈是内存带宽</a><a class="l3" href="#6-4-3-栅格扩散-地价-覆盖-拥堵热力的形状">6.4.3 栅格扩散（地价/覆盖/拥堵热力的形状）</a><a class="l3" href="#6-4-4-gpu-加速-结论是-不值得-理由和直觉相反">6.4.4 ⭐ GPU 加速：结论是"不值得"，理由和直觉相反</a><a class="l3" href="#6-4-5-godot-项目内实测-模拟-呈现的完整链路">6.4.5 ⭐⭐ Godot 项目内实测：模拟 + 呈现的完整链路</a><a class="l4" href="#四个反直觉的发现">四个反直觉的发现</a><a class="l4" href="#对-6-3-4-每帧预算的修正-15-万-agent">对 §6.3.4 每帧预算的修正（15 万 agent）</a><a class="l3" href="#6-4-6-gdscript-vs-c-对比-只有用-buffer-才快">6.4.6 ⭐⭐ GDScript vs C# 对比：只有用 buffer 才快</a><a class="l4" href="#三个必须记住的结论">三个必须记住的结论</a><a class="l3" href="#6-4-7-渲染成本与语言无关-gpu-侧">6.4.7 渲染成本与语言无关（GPU 侧）</a><a class="l3" href="#6-4-8-15-万-agent-能不能-60-fps-用实测外推">6.4.8 ⚠ 15 万 agent 能不能 60 fps？用实测外推</a><a class="l3" href="#6-4-9-实测对-6-3-预算的修正">6.4.9 实测对 §6.3 预算的修正</a><a class="l2" href="#六-五-1000-万到底现实吗-把三件事分开算">六·五、1000 万到底现实吗？（把三件事分开算）</a><a class="l3" href="#6-5-1-关键-agent-数不随人口线性增长">6.5.1 ⭐ 关键：agent 数不随人口线性增长</a><a class="l3" href="#6-5-2-但-1000-万人口确实会-看起来空-用-impostor-补">6.5.2 ⚠ 但 1000 万人口确实会"看起来空"——用 impostor 补</a><a class="l3" href="#6-5-3-所以-不现实-的是什么">6.5.3 所以"不现实"的是什么</a><a class="l3" href="#6-5-4-首发到底要多少">6.5.4 首发到底要多少</a><a class="l2" href="#七-对既有设计的连带影响-必须同步改-否则-b4-会崩">七、对既有设计的连带影响（必须同步改，否则 B4 会崩）</a><a class="l2" href="#八-分阶段目标-不许一次冲到底-2026-11-18-依实测重写">八、分阶段目标（不许一次冲到底）⚠ 2026-11-18 依实测重写</a><a class="l3" href="#8-1-每阶段必跑的三条-缺一条不算过">8.1 每阶段必跑的三条（缺一条不算过）</a><a class="l3" href="#8-2-上台阶的判断标准-不是-能不能跑">8.2 ⚠ 上台阶的判断标准（不是"能不能跑"）</a><a class="l2" href="#八-五-内存总账-2026-11-18-新增-扫描发现的空白">八·五、内存总账（2026-11-18 新增，扫描发现的空白）</a><a class="l3" href="#8-5-1-逐项估算-打磨年-1000-万人口档">8.5.1 逐项估算（打磨年 1000 万人口档）</a><a class="l3" href="#8-5-2-总账">8.5.2 总账</a><a class="l3" href="#8-5-3-什么会让内存失控-三条红线">8.5.3 ⚠ 什么会让内存失控（三条红线）</a><a class="l3" href="#8-5-4-验收点">8.5.4 验收点</a><a class="l2" href="#八-六-性能开关的合法性边界-2026-11-20-新增">八·六、性能开关的合法性边界（2026-11-20 新增）</a><a class="l3" href="#8-6-1-为什么这条线不能越">8.6.1 为什么这条线不能越</a><a class="l3" href="#8-6-2-a-类-可以关的-数值影响必须为-0">8.6.2 A 类：可以关的（⚠ 数值影响必须为 0）</a><a class="l3" href="#8-6-3-b-类-不许关的-关了就改规则">8.6.3 B 类：不许关的（关了就改规则）</a><a class="l3" href="#8-6-4-三档预设-自定义">8.6.4 三档预设（+ 自定义）</a><a class="l3" href="#8-6-5-降档之后-看起来不能空">8.6.5 ⚠ 降档之后"看起来不能空"</a><a class="l3" href="#8-6-6-存档记录什么">8.6.6 存档记录什么</a><a class="l3" href="#8-6-7-验收点">8.6.7 验收点</a><a class="l2" href="#九-已定与待定">九、已定与待定</a><a class="l2" href="#十-渲染与资产-相机驱动什么-不驱动什么">十、渲染与资产：相机驱动什么，不驱动什么</a><a class="l3" href="#10-1-必须守住的边界-相机决定-看得见什么-不决定-世界上发生什么">10.1 必须守住的边界：相机决定"看得见什么"，不决定"世界上发生什么"</a><a class="l3" href="#10-2-距离分档-四级-冻结">10.2 距离分档（四级，冻结）</a><a class="l3" href="#10-3-资产去重-引擎已默认做了-要做的是-别破坏它">10.3 资产去重：引擎已默认做了，要做的是"别破坏它"</a><a class="l3" href="#10-4-真正的瓶颈是-draw-call-与节点数-不是显存">10.4 真正的瓶颈是 draw call 与节点数，不是显存</a><a class="l3" href="#10-5-与-docs-agents-md-坑-13-的关系-方向相反-但都要做">10.5 与 docs/agents.md 坑 #13 的关系（方向相反，但都要做）</a><a class="l3" href="#10-6-纹理图集-b3-就要定规则">10.6 纹理图集（B3 就要定规则）</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UI 现状核对与主题接线（2026-11-22） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" class="on" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 审查与报告</div><h1 id="ui-现状核对与主题接线-2026-11-22">UI 现状核对与主题接线（2026-11-22）</h1>
+<blockquote>起因：开发者指出「本地不是已经构建了 UI 部分吗，在另一个会话干的，但是文件夹还是这个文件夹」。<br>结论先说：<strong>UI 外壳确实是已建成的、而且经过逐轮视觉打磨；但它"数据驱动"是假的</strong> ——<br><code>config/ui/theme.json</code> 从来没有被任何代码读过。这一轮把它接上了，并补了自动守卫。</blockquote>
+<h2 id="〇-定稿画面-2026-11-22-重渲染-hour-21-5-固定天光">〇、定稿画面（2026-11-22 重渲染，--hour=21.5 固定天光）</h2>
+<div class="tw"><table><thead><tr><th>主菜单</th><th>设置</th></tr></thead><tbody><tr><td>!<a href="img/ui-menu-2026-11-22.png">主菜单</a></td><td>!<a href="img/ui-settings-2026-11-22.png">设置</a></td></tr></tbody></table></div>
+<p>关于（片尾滚动中段）：</p>
+<p>!<a href="img/ui-about-2026-11-22.png">关于</a></p>
+<p>⚠ 这三张是<strong>缩小到 1000 px</strong> 的存档副本。原始 1600×900 在 <code>build/shots/</code>，而 <code>build/</code> 在 <code>.gitignore</code> 里 —— <strong>换机器就没了</strong>，所以挑了三张挪进 <code>docs/</code>。</p>
+<hr>
+<hr>
+<h2 id="一-ui-到底建成什么样-实测盘点-不是猜">一、UI 到底建成什么样（实测盘点，不是猜）</h2>
+<div class="tw"><table><thead><tr><th>分类</th><th>文件</th><th>行数</th><th>状态</th></tr></thead><tbody><tr><td>页面</td><td><code>main_menu.gd</code></td><td>94</td><td>✅ 真实现</td></tr><tr><td>页面</td><td><code>settings_page.gd</code></td><td>365</td><td>✅ 真实现（9 个分类、开关/下拉/滑条/语言选择）</td></tr><tr><td>页面</td><td><code>about_page.gd</code></td><td>151</td><td>✅ 真实现（片尾滚动、加速、跳过）</td></tr><tr><td>共用</td><td><code>ui_kit.gd</code></td><td>113</td><td>✅ 控件库</td></tr><tr><td>共用</td><td><code>page_base.gd</code></td><td>111</td><td>✅ 页面基类（含<strong>内置截图自检</strong>）</td></tr><tr><td>共用</td><td><code>menu_button.gd</code></td><td>81</td><td>✅ 三态按钮（Tween 过渡）</td></tr><tr><td>共用</td><td><code>i18n.gd</code></td><td>90</td><td>✅ JSON 语言包 → <code>TranslationServer</code></td></tr><tr><td>共用</td><td><code>city_backdrop.gd</code></td><td>231</td><td>✅ 3D 城市背景（按真实时间算天色，固定种子）</td></tr><tr><td>主题</td><td><code>ui_style.gd</code></td><td><strong>此前 5 行占位 / 现 178 行</strong></td><td>✅ <strong>本轮新实现</strong></td></tr><tr><td>shader</td><td><code>glass_panel</code> / <code>city_buildings</code></td><td>44 / 46</td><td>✅</td></tr><tr><td>占位</td><td><code>hud</code> / <code>toolbar</code> / <code>top_bar</code> / <code>panel_city</code> / <code>panel_finance</code> / <code>panel_school</code> / <code>ui_text</code></td><td>各 5</td><td>❌ <strong>游戏内 HUD 全未写</strong></td></tr></tbody></table></div>
+<p>另有 <code>build/shots/</code> 下 <strong>60+ 张</strong> 2026-11-18～20 的逐轮迭代截图（白天/黄昏/夜里 × 主菜单/设置/关于 × 中英）。</p>
+<p><strong>一句话</strong>：<strong>壳（菜单系统）是成品，芯（游戏内 HUD）是空的。</strong></p>
+<hr>
+<h2 id="二-发现的问题-theme-json-零引用">二、发现的问题：theme.json 零引用</h2>
+<pre class="code"><code>$ grep -rn "theme.json" scripts/ tools/
+（无输出）
+$ grep -c "Color(" scripts/ui/*.gd
+about_page 13 / city_backdrop 20 / main_menu 3 / menu_button 5 / settings_page 15 / ui_kit 13</code></pre>
+<p>而 <code>config/ui/theme.json</code> 的表头写着：</p>
+<blockquote><code>"_note": "UI 主题。数据驱动：改这个文件就换肤，不用改代码（Mod 深合并覆盖）。"</code></blockquote>
+<p><strong>这条是假的。</strong> 而且直接关系到 <code>plan.md</code> 的 <strong>B1-4 验收</strong>：</p>
+<blockquote>B1-4：改 <code>ui/theme.json</code> 的任一色 token，界面颜色跟着变（证明 UI 是数据驱动的，不是硬编码）</blockquote>
+<p>按原状去测，<strong>必然不过</strong>。这是"文档声称 vs 代码现实"最典型的一种漂移： 文件存在、格式正确、注释漂亮，但没有任何一行代码读它。</p>
+<p>同一批还发现三套几乎一样的"近白"：<code>(0.94,0.93,0.91)</code> / <code>(0.97,0.95,0.91)</code> / <code>(0.97,0.96,0.94)</code> —— 正是没有 token 体系的必然产物。</p>
+<hr>
+<h2 id="三-做了什么">三、做了什么</h2>
+<h3 id="3-1-新建-scripts-ui-ui_style-gd-主题加载器">3.1 新建 scripts/ui/ui_style.gd（主题加载器）</h3>
+<ul><li>读 <code>config/ui/theme.json</code>，缓存；<code>reload()</code> 供调试</li><li><code>color("accent")</code> / <code>color_alpha("accent", 0.5)</code> / <code>num("interaction.states.hover.duration_ms")</code> / <code>radius("button")</code> / <code>panel_tint(solidity)</code></li><li>解析 <code>#rrggbb</code> 与 <code>rgba(r,g,b,a)</code>（<strong>rgb 是 0–255、a 是 0–1</strong>，和 CSS 不同，注释里写清了）</li><li>缺 token → <code>push_warning</code> + 用调用方给的 fallback（不静默）</li></ul>
+<p>⚠ 踩到一个坑：内部取值函数一开始叫 <code>_get()</code> —— <strong>那是 <code>Object</code> 的虚函数</strong>，签名不匹配会让 <strong>整个脚本编译失败并连带三个页面全挂</strong>。改名 <code>_lookup()</code> 并把这个坑写在注释里。</p>
+<h3 id="3-2-把-69-处硬编码颜色接到-token">3.2 把 69 处硬编码颜色接到 token</h3>
+<div class="tw"><table><thead><tr><th>文件</th><th>改动</th></tr></thead><tbody><tr><td><code>ui_kit.gd</code></td><td>删掉 <code>const RED / TEXT / TEXT_SUB / TEXT_FAINT / BTN_BG</code>，全改 <code>Style.*</code>；<code>glass_panel</code> 三个 shader 参数走 <code>theme.material.panel.shader</code></td></tr><tr><td><code>menu_button.gd</code></td><td>三态色（normal/hover/press/border）+ hover/press 时长都读主题</td></tr><tr><td><code>main_menu.gd</code></td><td>标题/副标题/提示/版本号</td></tr><tr><td><code>settings_page.gd</code></td><td>导航条、分隔线、分类选中态、开关、提示行、行标签、徽标</td></tr><tr><td><code>about_page.gd</code></td><td>压暗层（scrim）、标题、职务行、人名、页脚</td></tr></tbody></table></div>
+<p><code>theme.json</code> 同步补齐 token（值 = 2026-11-20 视觉定稿的实际值，接完线画面不变）， 并新增 <strong><code>_wired</code> 字段</strong>逐块标注「真接线 / 只是登记值」——避免下次又出现"注释说能换肤、其实不能"。</p>
+<h3 id="3-3-顺手修的两处">3.3 顺手修的两处</h3>
+<ol><li><strong>按钮"按下下沉 1px"在主菜单里是失效的</strong>：<code>_ready()</code> 里抓 <code>position.y</code>，但按钮在 <code>VBoxContainer</code> 里，</li></ol>
+<p>   容器是加入之后才排版，抓到的永远是 0。改成 <code>_on_down</code> 里现抓。</p>
+<ol><li><strong>字体加载</strong>：原来只按 <code>C:/Windows/Fonts/msyh.ttc</code> 绝对路径找（导出包/别的系统必挂）。</li></ol>
+<p>   改成「先按已知路径找（保持字形与定稿一致）→ 找不到再用 <code>SystemFont</code> 按字族名解析」。    ⚠ 试过把 <code>SystemFont</code> 放第一位，结果<strong>整个界面的字形都变了</strong>（<code>Microsoft YaHei UI</code> ≠ <code>Microsoft YaHei</code>），    所以顺序不能反。</p>
+<hr>
+<h2 id="四-验证-三条都可复跑">四、验证（三条都可复跑）</h2>
+<h3 id="4-1-结构-三页都能渲染-无脚本错误">4.1 结构：三页都能渲染，无脚本错误</h3>
+<pre class="code" data-lang="bash"><code>godot --path . res://scenes/ui/main_menu.tscn -- --shot=build/shots/a.png --shot-frame=24 --hour=21.5
+godot --path . res://scenes/ui/settings.tscn  -- --shot=build/shots/b.png --shot-frame=30 --hour=21.5 --locale=zh_CN
+godot --path . res://scenes/ui/about.tscn     -- --shot=build/shots/c.png --shot-frame=30 --hour=21.5 --credits-at=0.35</code></pre>
+<p>改前第一次跑直接炸（<code>_get</code> 撞虚函数），修完三页全部 <code>[shot] ... 1600x900</code>、零 <code>SCRIPT ERROR</code>。</p>
+<h3 id="4-2-b1-4-实测-改-token-界面真的变">4.2 ⭐ B1-4 实测：改 token，界面真的变</h3>
+<p>把 <code>color.accent</code> 从 <code>#d2382c</code>（红）改成 <code>#1e8449</code>（绿），<strong>同一 <code>--hour</code> 同一帧</strong>重渲染，逐像素对比：</p>
+<pre class="code"><code>diffpx 66      变化区域 x 115–147, y 333–334      ← 正好是标题下那根短横
+原色 (200, 54, 43) → 新色 (29, 126, 70)</code></pre>
+<p><strong>66 个像素、全部落在该落的地方、其余零变化</strong> —— 这就是"数据驱动"该有的样子。</p>
+<h3 id="4-3-截图可复现-这条是意外收获">4.3 截图可复现（这条是意外收获）</h3>
+<p>同一 <code>--hour</code> 连渲两次：<strong>max diff = 0（逐像素完全一致）</strong>。 之前拿 09:04 和 09:12 两张图对比，差异上万像素——不是代码问题，是<strong>背景按真实时钟算天色</strong>。 ⇒ 规矩：<strong>任何 UI 前后对比必须带 <code>--hour=</code></strong>，已写进 <code>10-presentation</code> §6.1.1 与 <code>handoff.md</code>。</p>
+<hr>
+<h2 id="五-加了自动守卫-否则一个月后又会漂">五、加了自动守卫（否则一个月后又会漂）</h2>
+<p><code>bench/lint_docs.py</code> 新增第 8 组：</p>
+<div class="tw"><table><thead><tr><th>检查</th><th>违规示例</th></tr></thead><tbody><tr><td><strong><code>scripts/ui/</code> 里不许有硬编码 <code>Color(...)</code></strong>（阴影与全透明除外）</td><td><code>Color(0.5,0.5,0.5,1.0)</code></td></tr><tr><td><strong><code>Style.color("x")</code> 的 key 必须真的在 <code>theme.json</code> 里</strong></td><td><code>Style.color("nope_token")</code></td></tr><tr><td>允许 <code>Style.color("x", Color(...))</code> 的第二参数（fallback）</td><td>—</td></tr></tbody></table></div>
+<p>并且<strong>实测验证过它真的会报</strong>：注入上面两行 → 两条都报出来；删掉 → <code>OK 未发现矛盾</code>。</p>
+<pre class="code"><code>$ python bench/lint_docs.py
+OK 未发现矛盾
+检查文件数：53</code></pre>
+<hr>
+<h2 id="六-诚实的更正-那个-右下被切-的提示-其实没被切">六、诚实的更正：那个"右下被切"的提示，其实没被切</h2>
+<p>过程里我一度以为主菜单底部提示文字被裁掉一半，于是加了显式 <code>size</code> 并上移 10px。 <strong>6 倍放大后发现字形是完整的</strong>——"被切"是我自己裁剪截图时把字裁掉了。</p>
+<p>改动保留（<code>position</code> + 显式 <code>size</code> + 居中：原实现只给 position，Label 的 rect 是 0， 文本变长时有被自身 rect 约束的风险），但<strong>不声称是"修复了一个裁切 bug"</strong>。</p>
+<hr>
+<h2 id="七-还剩什么-b1-里-ui-相关">七、还剩什么（B1 里 UI 相关）</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>事项</th><th>状态</th></tr></thead><tbody><tr><td>1</td><td><code>layout.json</code> / <code>panels.json</code> 接线</td><td>✅ <strong>已完成（见 §八）</strong></td></tr><tr><td>2</td><td>游戏内 HUD / 工具栏 / 顶栏 / 三面板</td><td>✅ <strong>骨架已出（见 §八）</strong>；数值待 B4/B6 接 bus key</td></tr><tr><td>3</td><td><code>font_size</code> / <code>spacing</code> / <code>credits</code> 三块 token</td><td>⚠ 只是登记值，未接线（<code>_wired</code> 已标注）</td></tr><tr><td>4</td><td><code>build/shots/</code> 的 60 张截图</td><td>⚠ 在 <code>.gitignore</code> 里（<code>build/</code>），<strong>换机器就没了</strong>。要留证据的话得挑几张挪进 <code>docs/</code></td></tr><tr><td>5</td><td><code>user://locale.txt</code> = <code>en</code></td><td>⚠ 上一会话测试残留，导致本机启动是英文界面。删掉即回中文（属于用户数据，没有擅自删）</td></tr></tbody></table></div>
+<hr>
+<h2 id="八-追加-layout-json-panels-json-也接上了-hud-骨架">八、追加：layout.json / panels.json 也接上了（HUD 骨架）</h2>
+<p>上一节说"还剩 <code>layout.json</code> / <code>panels.json</code> 没接"，这一轮把它做完了 —— 同一个病： <strong>文件在、格式对、注释漂亮，但没有任何代码读它们</strong>，HUD 五个脚本全是 5 行占位。</p>
+<p>!<a href="img/ui-hud-2026-11-22.png">HUD 骨架</a></p>
+<p>现在 <code>scripts/ui/ui_layout.gd</code> 读两个 json，<code>hud.gd</code> 据此生成：</p>
+<div class="tw"><table><thead><tr><th>数据</th><th>决定什么</th></tr></thead><tbody><tr><td><code>layout.top_bar.items</code></td><td>顶栏 4 项（人口 / 财政 / 收支 / 日期，<strong>日期不含时:分</strong>）</td></tr><tr><td><code>layout.left_toolbar.groups</code></td><td>左侧 5 组刷子（道路 / 分区 / 市政 / 服务 / 产业）</td></tr><tr><td><code>layout.right_panels.list</code> + <code>panels.json</code></td><td>右侧 3 张面板的标签与顺序</td></tr><tr><td><code>layout.right_panels.default_open</code></td><td>默认打开哪张</td></tr><tr><td><code>layout.bottom_bar.*</code></td><td>底栏两块提示是否显示</td></tr><tr><td><code>panels.json</code> 的 <code>title</code> / <code>answers</code></td><td>面板标题与"这张面板回答什么问题"（i18n 优先，json 兜底）</td></tr></tbody></table></div>
+<p><strong>加一张面板 = 改 <code>panels.json</code> + <code>layout.right_panels.list</code>，不用改代码。</strong></p>
+<p>三张面板骨架都已出（数值全是 <code>—</code>，等 B4/B6 接 bus key）：</p>
+<ul><li><strong>城市</strong>：人口 / 住房容量 / 就业率 / 平均通勤</li><li><strong>财政</strong>：月收入 / 月支出 / 结余 / <strong>卖地占收入</strong>（按 <code>panels.json</code> 的 <code>_must_show</code> 用 accent 色单独高亮</li></ul>
+<p>  —— 不做这个显示，玩家感知不到 R1 的土地财政）</p>
+<ul><li><strong>学校</strong>：学区评分 / 覆盖率 / 学位缺口（按 R3 只做三行，行数一多就是又膨胀了）</li></ul>
+<p><strong>验证（都是改数据、不点鼠标）</strong></p>
+<div class="tw"><table><thead><tr><th>验证</th><th>做法</th><th>结果</th></tr></thead><tbody><tr><td>配置真的驱动</td><td><code>default_open</code> 依次改成 <code>city</code> / <code>finance</code> / <code>school</code> 后重渲染</td><td>三张面板各自正确显示</td></tr><tr><td>中英都能用</td><td><code>--locale=en</code> 重渲染</td><td><code>Population / Treasury / ...</code> 全对，无截断</td></tr><tr><td>加守卫</td><td><code>lint_docs.py</code> 第 9 组：面板注册 / <code>default_open</code> / 顶栏 4 项 / 中英键一致 / 代码里用到的 key 都存在</td><td>注入 <code>"ghost"</code> 面板 + 删一个 en 键 → <strong>三条都报出来</strong>；还原后 OK</td></tr></tbody></table></div>
+<p>⚠ 中途踩到一个坐标系 bug：面板副标题用<strong>画布坐标</strong>加到父节点上，结果跑到屏幕左上角。 <code>panel_frame</code> 内部的坐标是面板局部的，混用就错位 —— 已改成全部走面板内部的 VBox 流式布局。</p>
+<p>⚠ 静态查不了的东西：拼接出来的 i18n key（<code>"panel." + ID + ".title"</code>）没法在 linter 里验证， 靠运行期 <code>I18n.t</code> 的 <code>push_warning</code> 兜底。</p>
+<h2 id="九-布局重排-2026-11-22-开发者给的具体要求">九、⭐ 布局重排（2026-11-22 开发者给的具体要求）</h2>
+<p>!<a href="img/ui-hud-2026-11-22b.png">新布局</a></p>
+<p>开发者原话（要点）：</p>
+<blockquote>窗口要固定比例，不能任意缩放；<strong>顶部</strong>现实时间、目前收入、人口、温度等基本信息；<br><strong>底部</strong>为工具栏，道路修建、区域划分、建筑摆放等，凡"建"和"规划"全部放底部；<br><strong>左侧</strong>是各种信息面板（人口分布、年龄结构、噪音、污染、区划、道路、公共交通…）；<strong>右侧待定</strong>。<br>另外我只提到了部分，你也要扩充内容。</blockquote>
+<h3 id="9-1-结构从-左工具栏-右面板-整个翻过来">9.1 结构从"左工具栏 / 右面板"整个翻过来</h3>
+<div class="tw"><table><thead><tr><th>区域</th><th>之前</th><th>现在</th></tr></thead><tbody><tr><td>顶部</td><td>人口 / 财政 / 收支 / 日期</td><td><strong>日期 / 收入 / 人口 / 温度</strong>（只放"随时要瞄一眼"的数）</td></tr><tr><td>底部</td><td>无（工具栏在最左）</td><td><strong>建造工具栏</strong>：8 组 × 子工具，两行</td></tr><tr><td>左侧</td><td>建造工具栏（5 组）</td><td><strong>12 个信息视图</strong>（竖条选 + 展开面板）</td></tr><tr><td>右侧</td><td>3 张面板</td><td><strong>留空待定</strong>（<code>right_panels.list</code> 为空 ⇒ 整块不生成）</td></tr></tbody></table></div>
+<h3 id="9-2-按-扩充内容-补出来的清单-不是只做点到的几个">9.2 按"扩充内容"补出来的清单（不是只做点到的几个）</h3>
+<p><strong>左侧 12 个信息视图</strong>，按 8 个系统 + 中国特色台账铺开：</p>
+<p><code>city</code> 城市总览 · <code>population</code> 人口 · <code>age</code> 年龄结构 · <code>employment</code> 就业 · <code>finance</code> 财政 · <code>land</code> 土地 · <code>zoning</code> 区划 · <code>road</code> 道路 · <code>transit</code> 公共交通 · <code>utility</code> 市政 · <code>service</code> 公共服务 · <code>environment</code> 环境</p>
+<p>⚠ 刻意把<strong>年龄结构</strong>单列（中国式老龄化的观察口：60+ 占比与抚养比）， 把<strong>土地</strong>从财政里拆出来（地价 / 容积率 / 开发强度 = 财政与天际线的同一件事）， <strong>环境</strong>先留面板但注明污染与季节是 DLC1、本体数值恒 0。</p>
+<p><strong>底部 8 个工具组 + 25 个子工具</strong>：</p>
+<div class="tw"><table><thead><tr><th>组</th><th>子工具</th></tr></thead><tbody><tr><td>道路</td><td>直路 / 曲线 / 高架 / 跨江桥 / 人行横道 / 单行</td></tr><tr><td>区划</td><td>住宅 / 商业 / 工业 / 办公 / 农业</td></tr><tr><td>建筑</td><td>地标 / 公共建筑 / 自建</td></tr><tr><td>市政</td><td>电力 / 供水 / 污水 / 燃气 / 垃圾</td></tr><tr><td>服务</td><td>学校 / 医院 / 公园 / 菜市场 / 公交站 / 地铁站</td></tr><tr><td>产业</td><td>工业园 / 开发区 / 资源点</td></tr><tr><td>地形</td><td>平整 / 填挖 / 水域</td></tr><tr><td>拆除</td><td>推平</td></tr></tbody></table></div>
+<p>点组 → 上面那行换成该组的子工具（已实测：把 <code>default_group</code> 改成 <code>service</code>， 子工具行就变成 学校/医院/公园/菜市场/公交站/地铁站）。</p>
+<h3 id="9-3-窗口固定比例">9.3 窗口固定比例</h3>
+<p><code>project.godot</code> 加 <code>window/size/resizable=false</code>（关掉拖边框拉伸）+ <code>stretch/aspect="keep"</code> （即使被系统或多显示器改了尺寸也保 16:9、加黑边）。设计画布仍是 1920×1080，窗口 1600×900。</p>
+<h3 id="9-4-代码上真正简化的地方">9.4 代码上真正简化的地方</h3>
+<p>之前 3 个面板 3 个脚本；现在<strong>12 个面板共用一个 <code>panel_info.gd</code></strong> —— 它们的差别只是文案和顺序，那是数据不是逻辑。<code>panel_city/finance/school.gd</code> 已删除。 专属脚本只留给"有专属交互"的面板（以后的地价热力图、年龄金字塔）。</p>
+<h3 id="9-5-这轮踩的两个坑">9.5 这轮踩的两个坑</h3>
+<ol><li><strong>两次渲染面板高度差 200px</strong>：用 <code>get_combined_minimum_size()</code> 量内容高度不可靠</li></ol>
+<p>   （依赖当前布局宽度与字体加载时机）。改成<strong>确定性公式</strong>：<code>54 + 副标题22 + 26×行数 + 20 + 12</code>。</p>
+<ol><li><strong>假的"文字重影"</strong>：夜里看见"未选中任何对象"像是画了两遍，白天渲染只有一份</li></ol>
+<p>   —— 是楼窗亮点从 0.94 alpha 的底板下透上来。顺手把 HUD 底板 alpha 从 0.88 提到 0.94，    并把这句的亮度从 faint 提到 sub。</p>
+<h3 id="9-6-仍然粗糙-等开发者指方向">9.6 仍然粗糙（等开发者指方向）</h3>
+<div class="tw"><table><thead><tr><th>问题</th><th>现状</th></tr></thead><tbody><tr><td>背景是菜单的假城</td><td>相机与地形属 B1 的 <code>view/</code>，还没做</td></tr><tr><td>所有数字 <code>—</code></td><td>等 B4/B6 接 bus key；温度要等 <code>climate_zone</code> 落地</td></tr><tr><td>工具点了只打印</td><td>刷子属 B2/B3</td></tr><tr><td>没有图标，全是文字</td><td><code>assets/ui/</code> 空；接图标时只换按钮内容不动布局</td></tr><tr><td>右侧空着</td><td>按"待定"留白，加 id 就自动生成面板区</td></tr></tbody></table></div>
+<h2 id="十-图标化-2026-11-22-下午">十、图标化（2026-11-22 下午）</h2>
+<p>!<a href="img/ui-hud-icon-2026-11-22.png">图标化后的 HUD</a></p>
+<p>开发者要求：<strong>不要文字（太占空间），所有可点的东西改成图标（先占位/emoji），悬停时显示文字与描述； 顶栏还要显示当前存档的城市名。</strong></p>
+<h3 id="10-1-改了什么">10.1 改了什么</h3>
+<div class="tw"><table><thead><tr><th>位置</th><th>之前</th><th>现在</th></tr></thead><tbody><tr><td>顶栏</td><td>标签 + 数值两行文字</td><td><strong>城市名 + 图标+数值</strong>（<code>📅 2026-01-01</code>），标签进悬停</td></tr><tr><td>底部工具组</td><td>文字按钮（道路/区划…）</td><td><strong>纯图标方钮</strong>，悬停显示"组名 + 该组有哪些子工具"</td></tr><tr><td>底部子工具</td><td>文字按钮（直路/曲线…）</td><td><strong>纯图标</strong>，悬停显示子工具名</td></tr><tr><td>左侧竖条</td><td>两字标签（城市/人口…）</td><td><strong>纯图标</strong>，悬停显示"面板名 + 这张面板回答什么问题"</td></tr><tr><td>右侧</td><td>待定</td><td>待定（不变）</td></tr></tbody></table></div>
+<p>图标全部放在数据里：<code>layout.json</code> 的 <code>top_bar.icons</code> / <code>bottom_toolbar.icons</code> / <code>tool_icons</code>， <code>panels.json</code> 每条记录的 <code>icon</code>。<strong>换真图标时只改 json，代码不用动。</strong></p>
+<h3 id="10-2-两个必须先验证的点-都写了探针-验完即删">10.2 两个必须先验证的点（都写了探针，验完即删）</h3>
+<ol><li><strong>emoji 能不能渲染</strong> —— 能。Godot 的 TextServer 对缺失字形逐字回退到系统 emoji 字体，</li></ol>
+<p>   直接出彩色字形（截图见下）。</p>
+<ol><li><strong>悬停提示里的中文会不会变方框</strong> —— 这一步才是关键，因为图标化之后 tooltip 是<strong>唯一</strong>信息源。</li></ol>
+<p>   结论：<strong>必须把 <code>ThemeDB.fallback_font</code> 设成中文字体</strong>，否则就是一片方框。    探针实测输出：<code>道路 / 修路：直路 / 曲线 / 高架 / 跨江桥</code>，两行、中文正常。</p>
+<ol><li><strong>底栏贴着屏幕下沿时提示会不会被裁</strong> —— 不会，Godot 会把它翻到按钮上方。也实测过。</li></ol>
+<h3 id="10-3-取舍-面板内部保留文字">10.3 取舍：面板内部保留文字</h3>
+<p>竖条上只有图标，但<strong>面板展开后的标题与行名保留文字</strong> —— 面板是"内容"不是"按钮"， 行名去掉只剩一排 <code>—</code>，没法读。顶栏同理：数值必须有图标配着，但城市名是标题级信息，保留文字。</p>
+<h3 id="10-4-守卫">10.4 守卫</h3>
+<p><code>lint_docs.py</code> 第 10 组：<strong>每个可点元素都必须有图标</strong>（顶栏项 / 工具组 / 每个子工具 / 每个面板）， 并且每个顶栏项都要有 <code>hud.top.&amp;lt;item&amp;gt;.tip</code> 悬停说明。注入两处空图标实测会报。</p>
+<h2 id="十一-把-实际城市有很多东西-补进信息架构-2026-11-22-夜">十一、把"实际城市有很多东西"补进信息架构（2026-11-22 夜）</h2>
+<p>!<a href="img/ui-hud-taxonomy-2026-11-22.png">扩充后的 HUD</a></p>
+<p>开发者原话：「我提到的功能只是我想到的，实际的城市有很多东西。」</p>
+<h3 id="11-1-视图-12-27-分-8-组">11.1 视图 12 → 27，分 8 组</h3>
+<p>一列竖条放不下，而且 20+ 图标平铺也找不到东西 ⇒ 竖条改<strong>两级</strong>：<strong>先选组，再选视图</strong>。</p>
+<div class="tw"><table><thead><tr><th>组</th><th>视图数</th><th>组</th><th>视图数</th></tr></thead><tbody><tr><td>🧭 总览</td><td>2</td><td>🚌 交通</td><td>3</td></tr><tr><td>👥 人口</td><td>4</td><td>⚡ 市政</td><td>3</td></tr><tr><td>💼 经济</td><td>4</td><td>🌿 环境</td><td>4</td></tr><tr><td>🗺️ 土地</td><td>3</td><td>🏛️ 民生</td><td>4</td></tr></tbody></table></div>
+<p><strong>四个刻意单列的</strong>（塞进别的面板就没人看得到）：</p>
+<div class="tw"><table><thead><tr><th>视图</th><th>理由</th></tr></thead><tbody><tr><td><code>housing</code> 住房</td><td>房价/租金/空置率/保障房占比 —— 住房是中国城市第一议题</td></tr><tr><td><code>migration</code> 人口流动</td><td>外来人口/落户/流动人口/净流入 —— 户籍与流动是中国特色，与"总人口"是两件事</td></tr><tr><td><code>renewal</code> 城市更新</td><td>老旧建筑/城中村/已拆迁/<strong>保留文保</strong> —— 拆迁 vs 文保必须并排看</td></tr><tr><td><code>heating</code> 供热</td><td>只对北方显示（<code>climate_zone</code>）；覆盖率/管网年龄/投诉/供暖季</td></tr></tbody></table></div>
+<h3 id="11-2-工具组-8-13-50-个子工具">11.2 工具组 8 → 13（50 个子工具）</h3>
+<p>新增：交通设施（含<strong>非机动车道</strong>）、能源（含<strong>充电桩</strong>）、绿化、水利、更新（<strong>老旧小区改造 / 城中村整治</strong>）。</p>
+<p>⚠ 这四个常被通用城市模拟漏掉的工具，共同点是<strong>它们不对应"新建"，对应"存量改造"</strong>： 非机动车道（电动自行车）、充电桩、老旧小区改造（不是拆迁）、城中村整治（不是推平）。</p>
+<h3 id="11-3-候选池-想得到但现在不做">11.3 候选池：想得到但现在不做</h3>
+<p>货运物流 / 出租网约 / 托育养老 / 体育文化存量 / 旅游 / 开发区与 TOD / 地下管廊 / 5G 与智慧灯杆 / 公厕环卫 / 消防站覆盖 / 殡葬 / 市集摊贩 / 学校细分 / 医院分级</p>
+<p>写进 <code>13-player-loop</code> §14.3 的「候选池」：<strong>"没想到"不等于"不需要"，但也不该先做一堆没人看的空面板</strong>。 加一个视图的成本 = 一次 json 编辑（<code>panels.json</code> 加一条 + <code>layout.json</code> 分组里加个 id）。</p>
+<h3 id="11-4-守卫也跟上了">11.4 守卫也跟上了</h3>
+<p><code>lint_docs.py</code> 新增分组校验：组必须有 id/图标/文案、引用的面板必须注册、 <strong>一个面板不能出现在两个组里</strong>、<strong>每个注册的面板都必须被某个组引用</strong>（否则它永远不会出现在左侧）。 注入"把 flood 从环境组移出"实测会报 <code>面板没被任何组引用</code>。</p>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-22（五）</strong>：追加 §十一 —— 视图 12→<strong>27 个 / 8 组</strong>（两级竖条），</li></ul>
+<p>  工具组 8→<strong>13 组 / 50 子工具</strong>，新增"候选池"登记 14 类暂不实现的城市维度。</p>
+<ul><li><strong>2026-11-22（四）</strong>：追加 §十 —— 图标化（顶栏/工具组/子工具/左侧竖条全部只显示图标，</li></ul>
+<p>  文字进 tooltip）；顶栏加存档城市名；探针验证 emoji 渲染 / tooltip 中文 / 底边自动上翻。</p>
+<ul><li><strong>2026-11-22（三）</strong>：追加 §九 —— 按开发者要求<strong>重排布局</strong>（顶数据/底建造/左信息/右待定），</li></ul>
+<p>  窗口锁 16:9；左侧扩到 12 个信息视图、底部 8 组 25 个子工具，全部 json 驱动；   面板统一为 <code>panel_info.gd</code>；修面板高度不确定性 + 底板透明度。</p>
+<ul><li><strong>2026-11-22（二）</strong>：追加 §八 —— <code>layout.json</code> / <code>panels.json</code> 接线，HUD 骨架（顶栏/左栏/三面板/底栏）</li></ul>
+<p>  由 json 驱动；<code>lint_docs.py</code> 第 9 组守卫；坐标空间 bug 修复。</p>
+<ul><li><strong>2026-11-22</strong>：首版。UI 现状盘点（外壳成品 1366 行 / HUD 空）、<code>theme.json</code> 零引用问题、</li></ul>
+<p>  <code>ui_style.gd</code> 接线 69 处颜色、B1-4 实测（accent 红→绿，66 px）、截图确定性（<code>--hour</code>）、   <code>lint_docs.py</code> 第 8 组守卫、按钮下沉失效与字体加载两处顺手修、以及「提示被切」的自我更正。</p><div class="pager"><a href="reports-2026-11-22-B1开场.html">← B1 开场记录 · core/ 五文件（2026-11-22）</a><a href="reports-2026-11-22-台账收口.html">台账收口：111 条特色里，本体到底能装多少（2026-11-22） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#〇-定稿画面-2026-11-22-重渲染-hour-21-5-固定天光">〇、定稿画面（2026-11-22 重渲染，--hour=21.5 固定天光）</a><a class="l2" href="#一-ui-到底建成什么样-实测盘点-不是猜">一、UI 到底建成什么样（实测盘点，不是猜）</a><a class="l2" href="#二-发现的问题-theme-json-零引用">二、发现的问题：theme.json 零引用</a><a class="l2" href="#三-做了什么">三、做了什么</a><a class="l3" href="#3-1-新建-scripts-ui-ui_style-gd-主题加载器">3.1 新建 scripts/ui/ui_style.gd（主题加载器）</a><a class="l3" href="#3-2-把-69-处硬编码颜色接到-token">3.2 把 69 处硬编码颜色接到 token</a><a class="l3" href="#3-3-顺手修的两处">3.3 顺手修的两处</a><a class="l2" href="#四-验证-三条都可复跑">四、验证（三条都可复跑）</a><a class="l3" href="#4-1-结构-三页都能渲染-无脚本错误">4.1 结构：三页都能渲染，无脚本错误</a><a class="l3" href="#4-2-b1-4-实测-改-token-界面真的变">4.2 ⭐ B1-4 实测：改 token，界面真的变</a><a class="l3" href="#4-3-截图可复现-这条是意外收获">4.3 截图可复现（这条是意外收获）</a><a class="l2" href="#五-加了自动守卫-否则一个月后又会漂">五、加了自动守卫（否则一个月后又会漂）</a><a class="l2" href="#六-诚实的更正-那个-右下被切-的提示-其实没被切">六、诚实的更正：那个"右下被切"的提示，其实没被切</a><a class="l2" href="#七-还剩什么-b1-里-ui-相关">七、还剩什么（B1 里 UI 相关）</a><a class="l2" href="#八-追加-layout-json-panels-json-也接上了-hud-骨架">八、追加：layout.json / panels.json 也接上了（HUD 骨架）</a><a class="l2" href="#九-布局重排-2026-11-22-开发者给的具体要求">九、⭐ 布局重排（2026-11-22 开发者给的具体要求）</a><a class="l3" href="#9-1-结构从-左工具栏-右面板-整个翻过来">9.1 结构从"左工具栏 / 右面板"整个翻过来</a><a class="l3" href="#9-2-按-扩充内容-补出来的清单-不是只做点到的几个">9.2 按"扩充内容"补出来的清单（不是只做点到的几个）</a><a class="l3" href="#9-3-窗口固定比例">9.3 窗口固定比例</a><a class="l3" href="#9-4-代码上真正简化的地方">9.4 代码上真正简化的地方</a><a class="l3" href="#9-5-这轮踩的两个坑">9.5 这轮踩的两个坑</a><a class="l3" href="#9-6-仍然粗糙-等开发者指方向">9.6 仍然粗糙（等开发者指方向）</a><a class="l2" href="#十-图标化-2026-11-22-下午">十、图标化（2026-11-22 下午）</a><a class="l3" href="#10-1-改了什么">10.1 改了什么</a><a class="l3" href="#10-2-两个必须先验证的点-都写了探针-验完即删">10.2 两个必须先验证的点（都写了探针，验完即删）</a><a class="l3" href="#10-3-取舍-面板内部保留文字">10.3 取舍：面板内部保留文字</a><a class="l3" href="#10-4-守卫">10.4 守卫</a><a class="l2" href="#十一-把-实际城市有很多东西-补进信息架构-2026-11-22-夜">十一、把"实际城市有很多东西"补进信息架构（2026-11-22 夜）</a><a class="l3" href="#11-1-视图-12-27-分-8-组">11.1 视图 12 → 27，分 8 组</a><a class="l3" href="#11-2-工具组-8-13-50-个子工具">11.2 工具组 8 → 13（50 个子工具）</a><a class="l3" href="#11-3-候选池-想得到但现在不做">11.3 候选池：想得到但现在不做</a><a class="l3" href="#11-4-守卫也跟上了">11.4 守卫也跟上了</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

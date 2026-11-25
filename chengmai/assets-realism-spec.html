@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>写实基线（R-Spec）— 什么是"写实"，怎么验收 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" class="on" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 资产与建模</div><h1 id="写实基线-r-spec-什么是-写实-怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</h1>
+<blockquote>建立于 2026-11-24，起因：第一批 8 个模型通过全部技术准入（槽名/单体/降级），<br>但<strong>观感像动画片</strong>，与开发者要求的"几乎跟现实一样"不符。<br>本文件是<strong>第二批及之后所有资产的硬约束</strong>，也是<strong>第一批返修的验收标准</strong>。<br>与 <code>14-model-prompts.md</code> 的关系：那里讲"建什么、怎么变化"，这里讲"<strong>看起来必须像真的</strong>"。</blockquote>
+<hr>
+<h2 id="一-先纠正一个归因-否则会白做一轮">一、先纠正一个归因（否则会白做一轮）</h2>
+<blockquote>🔴 <strong>2026-11-25 追加警告：写实 ≠ 破败。</strong><br>本文第一版只强调"要有污渍、要有锈、要有雨痕"，<strong>没有给上限</strong>。<br>开发者看到返修方向后指出：「有一种废土风，倒不写实了，有一种人类灭绝很多年被侵袭的样子。」<br><strong>这是一次方向性的过度修正</strong>：从"太干净像动画片"直接跳到"太脏像废墟"，而真实城市在两者之间。<br>所以本文新增 <strong>§5.4 脏污强度分级 D0–D3</strong>，并把"废弃态"明确列为<strong>禁止</strong>。<br>⚠ <strong>没有 D 级标注的污渍要求，一律视为无效要求</strong>——因为它无法约束强度。</blockquote>
+<p>开发者原话："我要的是写实风，几乎要跟现实的一样，但是这个看起来和动画片里面的一样。"</p>
+<p>拿到第一批交付后我做了硬检查，结论是：<strong>模型几何基本没问题，问题 70% 在材质与光照。</strong></p>
+<div class="tw"><table><thead><tr><th>检查项</th><th>实测（第一批 8 个）</th><th>判定</th></tr></thead><tbody><tr><td>材质槽名</td><td><code>body/roof/base/glass/metal/sign</code> 全对</td><td>✅</td></tr><tr><td>贴图张数</td><td>2 张（surf 图集 + sign 图集）</td><td>✅</td></tr><tr><td><strong>baseColor 贴图</strong></td><td>6/6 材质都有</td><td>✅</td></tr><tr><td><strong>normal 贴图</strong></td><td><strong>0 张</strong></td><td>❌ <strong>头号问题</strong></td></tr><tr><td><strong>roughness 贴图</strong></td><td><strong>0 张</strong></td><td>❌</td></tr><tr><td><strong>AO 贴图</strong></td><td><strong>0 张</strong></td><td>❌</td></tr><tr><td><strong>PBR 参数是否按材料区分</strong></td><td><strong>8 个模型的 6 个材质参数完全相同</strong></td><td>❌ 模板套的</td></tr><tr><td>玻璃</td><td><code>metal=0, rough=0.18</code>，无环境反射</td><td>❌ 是"蓝纸片"</td></tr><tr><td>模型面数</td><td>708–12,426（预算 3 万）</td><td>🟡 余量充足</td></tr></tbody></table></div>
+<p><strong>为什么这会导致"动画片感"，机理是清楚的：</strong></p>
+<ol><li><strong>没有法线贴图</strong> ⇒ 砖缝、石材颗粒、卷帘门波纹只存在于"颜色"里，表面在光照下<strong>是完全平的</strong>。</li></ol>
+<p>   人眼判断"真假"靠的是高光沿着微观起伏破碎——没有起伏，就是塑料。</p>
+<ol><li><strong>没有粗糙度贴图</strong> ⇒ 整面墙一个反光值。真实墙面有补漆、积灰、雨痕，反射率逐块不同。</li><li><strong>材质参数全类共用</strong> ⇒ 混凝土和彩钢板用同一个 <code>rough=0.78</code>，两者真实差别是 0.85 vs 0.45。</li><li><strong>玻璃没有环境反射</strong> ⇒ 玻璃不是"蓝色的东西"，是"反射环境的东西"。没有反射就是贴纸。</li><li><strong>光照</strong>：交付图是均匀环境光 + 极弱软阴影，没有方向光对比、没有 AO 遮蔽。<strong>这一条单独就贡献了"玩具感"的一大半。</strong></li></ol>
+<p>⇒ <strong>结论：第一批不需要重做几何，需要重做材质 + 重做渲染配置 + 补 L3 细节。</strong> 这条很重要——如果照"模型不像、重做模型"去干，会废掉 8 个已经合格的模型。</p>
+<hr>
+<h2 id="二-写实的三根支柱-缺一根就只能是动画片">二、写实的三根支柱（缺一根就只能是动画片）</h2>
+<div class="tw"><table><thead><tr><th>支柱</th><th>内容</th><th>缺了会怎样</th></tr></thead><tbody><tr><td><strong>L1 渲染</strong></td><td>方向光（太阳）+ 天空 HDRI + AO + 阴影 + 色调映射</td><td>无对比、无遮蔽，像塑料模型</td></tr><tr><td><strong>L2 材质</strong></td><td>albedo + <strong>normal</strong> + <strong>roughness</strong> + AO 四图；按材料分参数</td><td>表面全平、反光一致，像贴纸</td></tr><tr><td><strong>L3 内容</strong></td><td><strong>不规则</strong>（错位、微偏、加建）+ <strong>时间痕迹</strong>（雨痕、泛碱、锈、褪色）+ <strong>人的痕迹</strong>（空调、防盗窗、晾衣杆、杂物）</td><td>太干净、太整齐，像未启用的样板</td></tr></tbody></table></div>
+<p>⚠ 铁律：<strong>L3 是"写实"与"精致动画"的分界线。</strong> 一个模型可以又精致又假——因为真实世界的本质是<strong>不整齐</strong>。 所以：<strong>没有 L3 细节的模型，无论 L1/L2 多好，都不许判"写实通过"。</strong></p>
+<hr>
+<h2 id="三-l1-渲染基线-引擎侧-预览图侧都要满足">三、L1 渲染基线（引擎侧 + 预览图侧都要满足）</h2>
+<p>预览图（<code>checks/*.png</code>）必须用同一套光照，否则<strong>无法跨批次比较</strong>。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>要求</th><th>为什么</th></tr></thead><tbody><tr><td>主光</td><td><strong>1 盏方向光（太阳），仰角 35–45°，方位固定（建议 −X+Y 侧上方）</strong></td><td>低角度出长阴影，暴露体量关系</td></tr><tr><td>强度</td><td>太阳 ~3.0，天空 ~0.3（比例约 10:1）</td><td>比例错了要么死白要么死黑</td></tr><tr><td>环境</td><td><strong>HDRI 天空</strong>（不是纯色背景），强度 0.3</td><td>提供真实的天空反射与补光</td></tr><tr><td>AO</td><td><strong>开启，距离 0.5–1.5 m，强度 0.5</strong></td><td>墙角/檐下/窗洞的暗部是"真"的关键</td></tr><tr><td>阴影</td><td>软阴影，<code>soft shadow angle</code> 2–3°</td><td>硬阴影是 CG 感来源</td></tr><tr><td>色调映射</td><td>Filmic / ACES，<strong>不要 Linear</strong></td><td>Linear 会让高光爆、颜色发艳</td></tr><tr><td>背景</td><td><strong>中性灰 #9a9a9a</strong>（不是浅蓝、不是白）</td><td>灰色背景才看得出来 albedo 是否偏色</td></tr><tr><td>相机</td><td>与现有 <code>checks</code> 一致（三维斜俯视），<strong>焦距 50mm 等效</strong></td><td>广角会拉变形，显得像玩具</td></tr></tbody></table></div>
+<p>⚠ <strong>渲染预览图 ≠ 游戏内实际光照</strong>。预览图只用于<strong>资产验收</strong>； 游戏内是 24 分钟昼夜循环（R13），但那不改变资产的写实要求——<strong>贴图与法线在任何光照下都成立</strong>。</p>
+<hr>
+<h2 id="四-l2-材质基线-硬指标-可脚本检查">四、L2 材质基线（硬指标，可脚本检查）</h2>
+<h3 id="4-1-每个材质必须有四张图-不是一张">4.1 每个材质必须有四张图（不是一张）</h3>
+<div class="tw"><table><thead><tr><th>图</th><th>通道</th><th>尺寸</th><th>说明</th></tr></thead><tbody><tr><td><strong>albedo</strong></td><td>RGB</td><td>与 surf 图集同</td><td>颜色。<strong>必须去饱和</strong>，见 §4.3</td></tr><tr><td><strong>normal</strong></td><td>RGB（OpenGL 约定，Y+）</td><td>同 albedo</td><td>微观起伏。<strong>这是"写实"最便宜的一张</strong></td></tr><tr><td><strong>roughness</strong></td><td>G 通道（glTF 用 ORM 打包：R=AO, G=rough, B=metal）</td><td>可 1/2 分辨率</td><td>逐块反光差异</td></tr><tr><td><strong>AO</strong></td><td>R 通道（同上打包）</td><td>可 1/2 分辨率</td><td>遮蔽暗部</td></tr></tbody></table></div>
+<p>⚠ <strong>glTF 标准做法是 ORM 三合一贴图</strong>（<code>occlusionTexture</code> + <code>metallicRoughnessTexture</code> 指向同一张）。 <strong>第一批一张都没有，这是要补的核心。</strong></p>
+<p>⚠ 若为节省体积：<strong>normal 与 ORM 可以合并进 surf 图集的 alpha 或第二张图集</strong>， 但<strong>必须在 <code>SOURCE.md</code> 写清楚打包方式</strong>，不然引擎侧会接错。</p>
+<h3 id="4-2-按材料给真实参数-不许再用一套参数打天下">4.2 按材料给真实参数（不许再用一套参数打天下）</h3>
+<div class="tw"><table><thead><tr><th>槽</th><th>材料</th><th>metal</th><th>rough</th><th>normal 强度</th><th>备注</th></tr></thead><tbody><tr><td><code>body</code></td><td>外墙涂料（水泥砂浆+涂料）</td><td>0.0</td><td><strong>0.75–0.90</strong></td><td>0.3</td><td>真实外墙<strong>粗糙且不均匀</strong></td></tr><tr><td><code>body</code></td><td>面砖/石材幕墙</td><td>0.0</td><td><strong>0.45–0.65</strong></td><td>0.6</td><td>砖缝必须有法线</td></tr><tr><td><code>body</code></td><td>彩钢板（厂房）</td><td><strong>0.15–0.25</strong></td><td><strong>0.35–0.50</strong></td><td>0.4</td><td>有金属感但粗糙；肋条要有法线</td></tr><tr><td><code>roof</code></td><td>SBS 防水卷材</td><td>0.0</td><td><strong>0.80–0.92</strong></td><td>0.3</td><td>卷材接缝是真实特征</td></tr><tr><td><code>roof</code></td><td>瓦屋面</td><td>0.0</td><td>0.70–0.85</td><td>0.8</td><td>瓦楞方向必须对</td></tr><tr><td><code>base</code></td><td>花岗岩/水磨石</td><td>0.0</td><td><strong>0.35–0.55</strong></td><td>0.5</td><td>磨光石材会反光</td></tr><tr><td><code>base</code></td><td>水泥台阶/散水</td><td>0.0</td><td>0.85</td><td>0.3</td><td></td></tr><tr><td><code>glass</code></td><td>普通白玻</td><td><strong>0.0</strong></td><td><strong>0.03–0.12</strong></td><td>0.0</td><td>⭐ <strong>必须配环境反射，否则是纸片</strong></td></tr><tr><td><code>glass</code></td><td>镀膜/Low-E</td><td>0.0</td><td>0.05–0.10</td><td>0.0</td><td>偏冷色反光</td></tr><tr><td><code>metal</code></td><td>铝合金窗框</td><td><strong>0.85–0.95</strong></td><td><strong>0.35–0.50</strong></td><td>0.0</td><td>第一批写 0.22，<strong>差一个数量级</strong></td></tr><tr><td><code>metal</code></td><td>不锈钢/镀锌</td><td>0.90</td><td>0.25–0.40</td><td>0.0</td><td></td></tr><tr><td><code>metal</code></td><td>生锈铁件</td><td>0.0–0.2</td><td><strong>0.75–0.90</strong></td><td>0.5</td><td>锈是"坏掉的金属"，不是金属</td></tr><tr><td><code>sign</code></td><td>喷绘布/亚克力灯箱</td><td>0.0</td><td>0.35–0.55</td><td>0.1</td><td>灯箱夜间自发光（<code>emissive</code>）</td></tr></tbody></table></div>
+<p>⚠ <strong>最常见错误</strong>：把"金属"一律写 <code>metal=0.22</code>。真实铝框是 0.85+，差一个数量级就变成"灰塑料"。</p>
+<h3 id="4-3-颜色-必须比现在降饱和-加色差">4.3 颜色：必须比现在<strong>降饱和、加色差</strong></h3>
+<p>第一批的墙面是"均匀的米色"，这是动画片的配色方式。真实墙面：</p>
+<div class="tw"><table><thead><tr><th>要求</th><th>量化</th></tr></thead><tbody><tr><td><strong>饱和度上限</strong></td><td>albedo 平均 HSV 的 S <strong>≤ 0.25</strong>（涂料墙）、≤ 0.35（彩钢板/招牌）</td></tr><tr><td><strong>亮度分布</strong></td><td>同一材质的 albedo 明度<strong>标准差 ≥ 0.04</strong>（不能是纯平色）</td></tr><tr><td><strong>色相偏移</strong></td><td>同一面墙允许 ±5° 色相漂移（分次施工/补漆）</td></tr><tr><td><strong>脏污覆盖率</strong></td><td>墙面 albedo 中<strong>明显脏污面积 ≥ 8%</strong>（雨痕、灰、溅泥）</td></tr><tr><td><strong>底部污染</strong></td><td><strong>距地 0.8 m 内明显更深</strong>（雨水溅泥 + 手摸）</td></tr></tbody></table></div>
+<p>⚠ 中文提示词里必须写出这一条，否则 AI 一定给你均匀色块：</p>
+<blockquote>"墙面颜色<strong>不均匀</strong>，有分次施工的色差、补漆痕迹、雨水冲刷的竖向痕、墙根溅泥发暗。"</blockquote>
+<h3 id="4-4-贴图物理尺度-第一批的问题之一">4.4 贴图物理尺度（第一批的问题之一）</h3>
+<p>贴图是 2048²，但<strong>一块石材看起来有 1 m 宽</strong>——因为 UV 是按整面墙拉伸的。</p>
+<div class="tw"><table><thead><tr><th>材质</th><th>一个 tile 应覆盖的真实尺寸</th></tr></thead><tbody><tr><td>面砖</td><td><strong>0.3 × 0.3 m</strong>（或 0.6×0.3 错缝）</td></tr><tr><td>石材板</td><td>0.6 × 0.3 m 或 0.8×0.8</td></tr><tr><td>涂料墙</td><td>2 × 2 m（涂料本身无图案，靠污渍噪声）</td></tr><tr><td>彩钢板肋条</td><td>肋距 <strong>0.2–0.3 m</strong></td></tr><tr><td>卷帘门</td><td>帘片高 <strong>0.08–0.12 m</strong></td></tr><tr><td>沥青路面</td><td>4 × 4 m</td></tr></tbody></table></div>
+<p>⚠ <strong>验收方法</strong>：预览图里放一个 1.8 m 高的人形参照（或标注尺寸线）， <strong>数一数一个"砖"能放下几个人的脚</strong>。放不下 2 只脚就是尺度错了。</p>
+<hr>
+<h2 id="五-l3-内容基线-不整齐-清单">五、L3 内容基线（"不整齐"清单）</h2>
+<h3 id="5-1-几何不规则-每类至少做-3-条">5.1 几何不规则（每类至少做 3 条）</h3>
+<div class="tw"><table><thead><tr><th>类型</th><th>具体做法</th></tr></thead><tbody><tr><td><strong>墙体微偏</strong></td><td>立面沿法线 ±2–5 cm 随机偏移（真实墙面不是绝对平）</td></tr><tr><td><strong>开窗错位</strong></td><td>同一立面窗洞 <strong>±3–8 cm 随机偏移</strong>，不要严格网格对齐</td></tr><tr><td><strong>女儿墙高低</strong></td><td>同一屋顶女儿墙高度差 5–15 cm</td></tr><tr><td><strong>檐口出挑不一</strong></td><td>同排建筑出挑差 5–20 cm</td></tr><tr><td><strong>加建痕迹</strong></td><td>局部增补的体块（顶层加建、外墙电梯、封闭阳台），<strong>新旧材质色差可见</strong></td></tr><tr><td><strong>雨棚/招牌不平</strong></td><td>同一排店面的雨棚高差 10–30 cm、倾斜 1–3°</td></tr></tbody></table></div>
+<p>⚠ 这些偏移<strong>不能影响碰撞/占地数据</strong>——只改视觉网格，<code>footprint</code> 仍用规整值。</p>
+<h3 id="5-2-时间痕迹-贴图里做-不占几何">5.2 时间痕迹（贴图里做，不占几何）</h3>
+<div class="tw"><table><thead><tr><th>痕迹</th><th>位置</th><th>强度</th></tr></thead><tbody><tr><td><strong>竖向雨痕</strong></td><td>从檐口、窗台、女儿墙压顶往下流</td><td>檐下 1–3 m 内最明显</td></tr><tr><td><strong>泛碱（白色析出）</strong></td><td>墙根、砖缝</td><td>距地 0–1.5 m</td></tr><tr><td><strong>溅泥</strong></td><td>墙根 0–0.8 m</td><td>下部明显深</td></tr><tr><td><strong>水渍/积水边</strong></td><td>屋顶、雨棚顶</td><td>深色不规则边</td></tr><tr><td><strong>锈迹</strong></td><td>金属件下沿、螺栓、卷帘门导轨</td><td>顺水流方向拉长</td></tr><tr><td><strong>褪色</strong></td><td>朝南面（日照多）比朝北面浅</td><td>差 5–10% 明度</td></tr><tr><td><strong>贴纸/广告残胶</strong></td><td>卷帘门、玻璃、电线杆</td><td>撕掉一半的样子</td></tr></tbody></table></div>
+<h3 id="5-3-人的痕迹-这是-有人在住-的关键">5.3 人的痕迹（这是"有人在住"的关键）</h3>
+<div class="tw"><table><thead><tr><th>物件</th><th>出现位置</th><th>建模方式</th></tr></thead><tbody><tr><td><strong>空调外机</strong></td><td>住宅外墙，<strong>乱挂、位置不齐</strong></td><td>小方块 + 支架 + 冷凝水管（细管，可省）</td></tr><tr><td><strong>防盗窗/晾衣架</strong></td><td>老住宅 1–6 层</td><td><strong>程序化</strong>（沿窗洞生成栅格），不进单体模型</td></tr><tr><td><strong>封闭阳台</strong></td><td>老住宅</td><td>玻璃+铝框，<strong>新旧不一</strong></td></tr><tr><td><strong>店门口杂物</strong></td><td>沿街商铺</td><td>纸箱、塑料筐、拖把、立式广告牌</td></tr><tr><td><strong>招牌叠挂</strong></td><td>沿街商铺</td><td>主招牌 + 侧挂小牌 + 横幅，<strong>层层叠加</strong></td></tr><tr><td><strong>屋顶设备</strong></td><td>平屋顶</td><td>水箱、太阳能热水器、风机、天线</td></tr><tr><td><strong>电线</strong></td><td>老城区</td><td>贴图/程序化（<strong>不进模型</strong>，见 15 篇 §四）</td></tr></tbody></table></div>
+<p>⚠ <strong>空调外机是中国住宅立面的第一识别特征</strong>。第一批 <code>city_slab</code> 有少量空调机位，但<strong>数量与随机性不足</strong>。 真实一栋 11 层板楼，正面能数出 <strong>30–60 台</strong>，且位置毫无规律。</p>
+<hr>
+<h3 id="5-4-脏污强度分级-d0-d3-没有这一级-就会做成废土">5.4 ⭐ 脏污强度分级（D0–D3）——没有这一级，就会做成废土</h3>
+<blockquote>开发者 2026-11-25：「有一种废土风，倒不写实了，有一种人类灭绝很多年被侵袭的样子。」</blockquote>
+<p><strong>这是最容易犯的错</strong>：把"要有时间痕迹"理解成"越旧越好"。 真实城市里，<strong>大多数建筑是"有点旧但还在用"</strong>，不是废墟。</p>
+<h4 id="5-4-1-四级-每个模型必须标一级">5.4.1 四级（每个模型必须标一级）</h4>
+<div class="tw"><table><thead><tr><th>级</th><th>对应建筑</th><th>脏污面积</th><th>允许的痕迹</th><th><strong>禁止</strong></th></tr></thead><tbody><tr><td><strong>D0 新建</strong>（0–5 年）</td><td>新区住宅、刚交付、翻新过</td><td><strong>≤ 5%</strong></td><td>轻微雨痕（浅灰，不深）、玻璃干净、无锈</td><td>泛碱、锈迹、空鼓、修补色差</td></tr><tr><td><strong>D1 正常</strong>（5–20 年）★<strong>默认</strong></td><td><strong>绝大多数</strong></td><td><strong>8–15%</strong></td><td>窗下雨痕、墙根溅泥 0.5 m、轻微褪色、少量锈点</td><td>大面积污渍、涂层剥落、苔藓</td></tr><tr><td><strong>D2 老旧</strong>（20–40 年）</td><td>老城区、老小区</td><td><strong>15–25%</strong></td><td>明显雨痕、修补色差、局部锈、少量空鼓、玻璃有脏污</td><td>结构破损、大面积苔藓、植物入侵</td></tr><tr><td><strong>D3 老旧未整治</strong>（40 年+）</td><td>城中村、老厂、待拆</td><td><strong>25–35%</strong></td><td>大面积污渍、锈蚀、涂层剥落、招牌残缺</td><td><strong>同上，仍然不许结构破损</strong></td></tr><tr><td>❌ <strong>废弃（禁止）</strong></td><td>—</td><td><strong>&gt; 35%</strong></td><td>—</td><td>⛔ <strong>苔藓覆盖、结构裂缝、玻璃全碎、杂草丛生、坍塌、锈穿</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>D3 之上没有 D4。</strong> 再脏就是"废弃"，而本项目<strong>不模拟废弃城市</strong>（除 DLC 的衰落机制外）。 ⚠ <strong>结构破损永远不许</strong>——一栋楼可以旧，但不能塌。塌了就成了末日题材。</p>
+<h4 id="5-4-2-中国城市的真实感-新旧并存于同一栋楼">5.4.2 中国城市的真实感：<strong>新旧并存于同一栋楼</strong></h4>
+<p>这是最有价值的一条，也是"这是中国城市"的证据：</p>
+<div class="tw"><table><thead><tr><th>现象</th><th>怎么建模</th></tr></thead><tbody><tr><td><strong>外立面整治只刷临街面</strong></td><td>临街面 D0/D1，背面与侧墙 D2/D3。<strong>同一栋楼两级</strong></td></tr><tr><td><strong>一楼商铺重新装修过</strong></td><td>一层 D0（新招牌新门头），二层以上 D2</td></tr><tr><td><strong>老小区只换窗不刷墙</strong></td><td>窗是新的（白框），墙是旧的（D2 雨痕）</td></tr><tr><td><strong>阳台自行封闭，新旧不一</strong></td><td>同一立面 1/3 封闭、2/3 敞开，封闭的铝框新旧不同</td></tr><tr><td><strong>屋顶加建彩钢棚</strong></td><td>主体 D2，加建部分 D1（较新，但工艺糙）</td></tr></tbody></table></div>
+<p>⚠ <strong>"同一栋楼两个脏污级"是本项目必须实现的表现</strong>，不是可选细节。 它比"整体做旧"更能表达"这楼被不同年代的人改过"。</p>
+<h4 id="5-4-3-各模型的目标脏污级-第一批-8-个">5.4.3 各模型的目标脏污级（第一批 8 个）</h4>
+<div class="tw"><table><thead><tr><th>模型</th><th>目标级</th><th>理由</th></tr></thead><tbody><tr><td><code>vlg_court</code> 独院农房</td><td><strong>D2</strong>（正面可 D1，背阴面 D3）</td><td>农村自建房普遍不维护，但住着人</td></tr><tr><td><code>city_slab</code> 板楼</td><td><strong>D2</strong> + 临街面 <strong>D1</strong></td><td>00s 老小区，临街整治过</td></tr><tr><td><code>shop_street</code> 沿街商铺</td><td><strong>D2</strong>，一层门面 <strong>D1</strong></td><td>店主会翻新门面，楼上不管</td></tr><tr><td><code>factory</code> 厂房</td><td><strong>D2</strong>（彩钢板锈是常态，但不许锈穿）</td><td>工业建筑耗损快</td></tr><tr><td><code>bus_stop</code> 站台</td><td><strong>D1</strong></td><td>市政设施有人清扫</td></tr><tr><td><code>gas_station</code> 加油站</td><td><strong>D1</strong>（地面有油渍但整体干净）</td><td>商业设施必须整洁，否则没人来加油</td></tr><tr><td><code>adm_fire</code> 消防站</td><td><strong>D1</strong></td><td>准军事管理，内务严格</td></tr><tr><td><code>construction</code> 工地</td><td><strong>D1</strong>（混凝土是新浇的，但工地本身乱）</td><td>在建 = 新，脏的是泥不是老</td></tr></tbody></table></div>
+<p>⚠ <strong>注意 <code>gas_station</code> 和 <code>adm_fire</code> 是 D1</strong>——这两个如果做成 D2，看起来就像"废弃加油站/废弃消防站"。 <strong>商业与公共设施比住宅干净</strong>，这是常识，也是分级的意义。</p>
+<h4 id="5-4-4-提示词里怎么表达-替换旧写法">5.4.4 提示词里怎么表达（替换旧写法）</h4>
+<div class="tw"><table><thead><tr><th>❌ 旧（无上限，会做废）</th><th>✅ 新（带 D 级）</th></tr></thead><tbody><tr><td>"墙面有竖向流锈、青苔、泛碱、空鼓脱落"</td><td>"<strong>D2 级</strong>：窗下浅色雨痕（不深）、墙根 0.5 m 内溅泥发深、局部 2–3 处修补色差；<strong>不要锈穿、不要苔藓、不要剥落</strong>"</td></tr><tr><td>"金属件锈迹"</td><td>"<strong>D2 级</strong>：螺栓位置有锈点（直径 ≤3 cm）；<strong>不要整片锈红</strong>"</td></tr></tbody></table></div>
+<p>⚠ 规律：<strong>写"哪里有、多深、多大"，同时写"不要什么"。</strong> 只写前者会被做到极端。</p>
+<hr>
+<h2 id="六-可直接复制的提示词-给生成-ai-给脚本作者看">六、可直接复制的提示词（给生成 AI / 给脚本作者看）</h2>
+<h3 id="6-1-通用写实前缀-每条提示词都要带">6.1 通用写实前缀（每条提示词都要带）</h3>
+<pre class="code"><code>写实风格，照片级材质，真实建筑摄影质感。
+表面必须有可见的微观起伏：砖缝、石材颗粒、混凝土气孔、卷帘门波纹、涂料的橘皮纹。
+表面必须有时间痕迹，但按【脏污等级 D?】控制强度（见 §5.4）：
+  D0 新建 = 几乎无痕；D1 = 轻微雨痕；D2 = 明显雨痕+局部修补；D3 = 大面积污渍
+  ⛔ 任何级别都不许：苔藓覆盖、结构裂缝、玻璃全碎、杂草丛生、锈穿、坍塌
+颜色不均匀：分次施工色差、补漆、局部脏污，不要均匀色块（同一栋楼允许"临街面新、背面旧"）。
+几何不完全规整：窗洞有轻微错位，女儿墙高度不一，雨棚歪斜。
+日常使用痕迹：空调外机凌乱外挂、防盗窗、屋顶水箱、店门口杂物。
+光照：晴日上午侧光，明显阴影与墙角暗部。
+建筑是**在用**的，不是废弃的：门窗完好、有生活气息、无植物入侵。</code></pre>
+<p>⚠ <strong>最后一行是本版新增的，也是最容易被忽略的</strong>： 不写"建筑在用"，AI 会顺着"污渍/风化/锈"的线索一路做到废墟。 这是 2026-11-25「废土风」那次的直接教训。</p>
+<h3 id="6-2-通用负向-写在每条的-negative-里">6.2 通用负向（写在每条的 negative 里）</h3>
+<pre class="code"><code>不要：卡通、动画片、低多边形感、塑料质感、均匀纯色、过于干净、
+      完美对称、严格网格对齐、玩具比例、饱和度过高、无阴影、
+      无纹理平涂、赛博朋克霓虹、欧美郊区住宅、日式风格</code></pre>
+<h3 id="6-3-提示词里必须出现的三个-反动画片-关键词">6.3 提示词里必须出现的三个"反动画片"关键词</h3>
+<p>按重要性排序，<strong>少一个就退化成动画片</strong>：</p>
+<ol><li><strong><code>法线细节 / surface relief</code></strong> —— 直接对应 normal map</li><li><strong><code>污渍与风化 / weathering, grime, streaks</code></strong> —— 对应 albedo 脏污层</li><li><strong><code>不规整 / irregular, misaligned</code></strong> —— 对应几何微偏</li></ol>
+<p>⚠ 光写"写实风格 photorealistic"是<strong>没用的</strong>——那是风格词，不改变材质与几何。 必须写<strong>物理事实</strong>（有什么污渍、什么起伏、哪里不齐）。</p>
+<hr>
+<h2 id="七-诚实说明-能到哪一档">七、诚实说明：能到哪一档</h2>
+<p>开发者要"几乎跟现实一样"。我必须说清楚边界，否则会一直返工：</p>
+<div class="tw"><table><thead><tr><th>档位</th><th>特征</th><th>本项目的可行性</th></tr></thead><tbody><tr><td><strong>A 照片级</strong>（实拍/扫描）</td><td>分辨不出是渲染</td><td>❌ 238 类不可能；只能给 3–5 个地标（高铁站、寺庙）用扫描或照片重建</td></tr><tr><td><strong>B 写实游戏资产</strong>（CS2 / Anno 1800 / 微软模拟飞行地面）</td><td>一眼知道是游戏，但"像真的"</td><td>✅ <strong>目标档位</strong>，靠本文件的 L1+L2+L3 可达</td></tr><tr><td><strong>C 精致动画</strong>（现在第一批）</td><td>干净、整齐、饱和度偏高</td><td>❌ 现状</td></tr><tr><td><strong>D 低多边形/卡通</strong></td><td>明显风格化</td><td>❌ 更差</td></tr></tbody></table></div>
+<p>⚠ <strong>"B 档"的含义</strong>：玩家不会说"这是照片"，但会说"这城市看着像真的"。 这也是 CS1/CS2 的实际水平——<strong>它们也不是照片级</strong>，它们的写实感来自 L3（不整齐 + 生活痕迹）而不是贴图精度。</p>
+<p>⚠ 一个反直觉但重要的判断：<strong>在俯视视角下，L3 比 L2 更重要。</strong> 玩家离建筑 100 m 时看不清砖缝，但<strong>一眼能看出"这排楼太整齐了"</strong>。 所以如果只能先做一件事，<strong>先做 L3，再做 L2</strong>。</p>
+<hr>
+<h2 id="八-验收-每批交付必查">八、验收（每批交付必查）</h2>
+<h3 id="8-1-脚本可查-bench-check_realism-py-已实现-r-1-r-8">8.1 脚本可查（bench/check_realism.py，已实现 R-1~R-8）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>检查</th><th>判据</th><th>脚本</th></tr></thead><tbody><tr><td>R-1</td><td>每个材质有 baseColor 贴图</td><td>必须</td><td>✅ 已实现</td></tr><tr><td>R-2</td><td><strong>至少 1 个材质有 normal 贴图</strong>（body/roof/base 三个最需要）</td><td>必须</td><td>✅ 已实现</td></tr><tr><td>R-3</td><td><strong>至少 1 个材质有 ORM 贴图</strong></td><td>必须</td><td>✅ 已实现</td></tr><tr><td>R-4</td><td>⭐ 材质参数<strong>不得与同批 ≥3 个模型完全相同</strong></td><td>必须（这条专抓"一套参数打天下"）</td><td>✅ 已实现</td></tr><tr><td>R-5</td><td>glass 的 rough ≤ 0.15 且配环境反射</td><td>必须</td><td>✅ 已实现</td></tr><tr><td>R-6</td><td>metal 槽（铝/钢件）metal ≥ 0.70</td><td>必须</td><td>✅ 已实现</td></tr><tr><td>R-7</td><td><code>checks/</code> 有 **<code>*_real.png</code>**（§三 光照 + 1.8 m 人形参照）</td><td>必须</td><td>✅ 已实现</td></tr><tr><td>R-8</td><td><code>SOURCE.md</code> 声明了 normal/ORM 的打包方式</td><td>必须</td><td>✅ 已实现</td></tr><tr><td>R-9</td><td>albedo 平均饱和度 ≤ 0.35</td><td>必须</td><td>⬜ 待 SA-4（需读内嵌贴图）</td></tr><tr><td>R-10</td><td>albedo 明度标准差 ≥ 0.04</td><td>必须</td><td>⬜ 待 SA-4</td></tr></tbody></table></div>
+<pre class="code" data-lang="bash"><code>python bench/check_realism.py assets/models/buildings   # R-1~R-8</code></pre>
+<p>⚠ <strong>R-9/R-10 需要把 glb 内嵌贴图解出来才能算</strong>，脚本尚未实现，先靠人眼 V-6（缩到 25% 看还像不像建筑）代替。 <strong>不许因为脚本没实现就当这条不存在</strong>——饱和度与明度分布是"动画片感"的第二大来源。</p>
+<p>⚠ <strong>第一批的实测结果：R-1 全过（8/8），R-2~R-8 全 FAIL，共 49 条。</strong> 这些 FAIL 全部在<strong>材质层</strong>，几何是合格的 —— 所以返修不是重做模型，见 <code>batch-01-fix.md</code>。</p>
+<h3 id="8-2-必须人眼-脚本查不了">8.2 必须人眼（脚本查不了）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>检查</th><th>不过的表现</th></tr></thead><tbody><tr><td>V-1</td><td><strong>1.8 m 人形参照下，砖/肋条尺度对不对</strong></td><td>砖有 1 m 大</td></tr><tr><td>V-2</td><td><strong>墙根是否比上部暗</strong></td><td>上下一样干净</td></tr><tr><td>V-3</td><td><strong>朝南/朝北是否有褪色差</strong></td><td>四面同色</td></tr><tr><td>V-4</td><td><strong>能否数出 ≥20 台空调外机</strong>（住宅类）</td><td>立面无生活痕迹</td></tr><tr><td>V-5</td><td><strong>玻璃里有没有反射到天空/对面楼</strong></td><td>玻璃是纯蓝平面</td></tr><tr><td>V-6</td><td><strong>把图缩小到 25% 再看</strong>：还像建筑吗</td><td>糊成一团色块 = albedo 对比不足</td></tr><tr><td><strong>V-7</strong></td><td>⭐ <strong>这栋楼看着像"在用"还是"废弃"</strong></td><td>像废墟 / 末日 / 无人区 / 人走楼空 → <strong>脏污过头了，降一个 D 级</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>V-6 是最省时间的判据</strong>：缩小后还认得出材质差异，说明色彩层次够； 缩小后全是一个色，说明是"平涂"。</p>
+<p>⚠ <strong>V-7 是 2026-11-25 新增的</strong>。它和 V-1~V-6 的方向相反： 前六条防"太干净"，第七条防"太脏"。<strong>写实是在两个极端之间</strong>，不是往任一端推到底。</p>
+<hr>
+<h2 id="九-与既有规范的关系-不许冲突">九、与既有规范的关系（不许冲突）</h2>
+<div class="tw"><table><thead><tr><th>既有约束</th><th>本文件是否改动</th></tr></thead><tbody><tr><td>六个固定材质槽 <code>body/roof/base/glass/metal/sign</code></td><td>❌ 不改（T3 降级靠它）</td></tr><tr><td>一面/一栋一个 glb、米、朝 −Z、轴心底面中心</td><td>❌ 不改</td></tr><tr><td>图集 ≤ 2 张 4096²</td><td>⚠ <strong>放宽</strong>：ORM/normal 可占第三、四张，<strong>但必须 2048 或以半分辨率</strong>；见 §4.1</td></tr><tr><td>T0–T5 六档降级（<code>15</code> §5.2）</td><td>❌ 不改。<strong>写实化只影响 T0–T2，T3/T4/T5 仍是纯色/白模</strong></td></tr><tr><td>"几何承担结构、贴图只做质感"</td><td>⭐ <strong>强化为强制</strong>：normal 贴图<strong>不许</strong>用来表现窗洞/门洞，只能表现砖缝/颗粒</td></tr></tbody></table></div>
+<p>⚠ 特别注意：<strong>写实化不能让 T3 变难看</strong>。所以规则是： <strong>污渍、褪色、锈迹可以进贴图；但所有的体量、开洞、轮廓必须是几何。</strong> 这样 T3 掉贴图后，剩下的仍然是"一栋正确的建筑"，只是"新装修的"。</p>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-24（二）</strong>：<strong>编号与脚本对齐</strong> —— R-1~R-8 已由 <code>bench/check_realism.py</code> 实现</li></ul>
+<p>  （R-4 专抓"一套参数打天下"，是这次事故的直接对应项）；R-9/R-10（饱和度/明度分布）需读内嵌贴图，   留给 SA-4，暂以人眼 V-6 代替。补上第一批的实测结果：R-1 全过、R-2~R-8 全 FAIL（49 条，全在材质层）。</p>
+<ul><li><strong>2026-11-24</strong>：首版。起因是第一批 8 个模型技术准入全过但"像动画片"。</li></ul>
+<p>  实测定位根因：<strong>0 张 normal/roughness/AO、8 个模型 PBR 参数完全相同、玻璃无反射、预览图无方向光与 AO</strong>。   定三根支柱（L1 渲染 / L2 材质 / L3 内容）、按材料给真实参数表、提示词三关键词、R-1~R-10 与 V-1~V-6 验收。   <strong>明确判断：第一批不需重做几何，需重做材质 + 渲染配置 + 补 L3。</strong>   明确边界：目标档位是"写实游戏资产（B 档）"，不是照片扫描；且<strong>俯视视角下 L3 比 L2 更重要</strong>。</p><div class="pager"><a href="design-18-signage.html">← 18 · 标志与路名：自动生成、可改、动态渲染</a><a href="assets-modeling-brief.html">建模组工作总纲（2026-11-24 重写） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-先纠正一个归因-否则会白做一轮">一、先纠正一个归因（否则会白做一轮）</a><a class="l2" href="#二-写实的三根支柱-缺一根就只能是动画片">二、写实的三根支柱（缺一根就只能是动画片）</a><a class="l2" href="#三-l1-渲染基线-引擎侧-预览图侧都要满足">三、L1 渲染基线（引擎侧 + 预览图侧都要满足）</a><a class="l2" href="#四-l2-材质基线-硬指标-可脚本检查">四、L2 材质基线（硬指标，可脚本检查）</a><a class="l3" href="#4-1-每个材质必须有四张图-不是一张">4.1 每个材质必须有四张图（不是一张）</a><a class="l3" href="#4-2-按材料给真实参数-不许再用一套参数打天下">4.2 按材料给真实参数（不许再用一套参数打天下）</a><a class="l3" href="#4-3-颜色-必须比现在降饱和-加色差">4.3 颜色：必须比现在降饱和、加色差</a><a class="l3" href="#4-4-贴图物理尺度-第一批的问题之一">4.4 贴图物理尺度（第一批的问题之一）</a><a class="l2" href="#五-l3-内容基线-不整齐-清单">五、L3 内容基线（"不整齐"清单）</a><a class="l3" href="#5-1-几何不规则-每类至少做-3-条">5.1 几何不规则（每类至少做 3 条）</a><a class="l3" href="#5-2-时间痕迹-贴图里做-不占几何">5.2 时间痕迹（贴图里做，不占几何）</a><a class="l3" href="#5-3-人的痕迹-这是-有人在住-的关键">5.3 人的痕迹（这是"有人在住"的关键）</a><a class="l3" href="#5-4-脏污强度分级-d0-d3-没有这一级-就会做成废土">5.4 ⭐ 脏污强度分级（D0–D3）——没有这一级，就会做成废土</a><a class="l4" href="#5-4-1-四级-每个模型必须标一级">5.4.1 四级（每个模型必须标一级）</a><a class="l4" href="#5-4-2-中国城市的真实感-新旧并存于同一栋楼">5.4.2 中国城市的真实感：新旧并存于同一栋楼</a><a class="l4" href="#5-4-3-各模型的目标脏污级-第一批-8-个">5.4.3 各模型的目标脏污级（第一批 8 个）</a><a class="l4" href="#5-4-4-提示词里怎么表达-替换旧写法">5.4.4 提示词里怎么表达（替换旧写法）</a><a class="l2" href="#六-可直接复制的提示词-给生成-ai-给脚本作者看">六、可直接复制的提示词（给生成 AI / 给脚本作者看）</a><a class="l3" href="#6-1-通用写实前缀-每条提示词都要带">6.1 通用写实前缀（每条提示词都要带）</a><a class="l3" href="#6-2-通用负向-写在每条的-negative-里">6.2 通用负向（写在每条的 negative 里）</a><a class="l3" href="#6-3-提示词里必须出现的三个-反动画片-关键词">6.3 提示词里必须出现的三个"反动画片"关键词</a><a class="l2" href="#七-诚实说明-能到哪一档">七、诚实说明：能到哪一档</a><a class="l2" href="#八-验收-每批交付必查">八、验收（每批交付必查）</a><a class="l3" href="#8-1-脚本可查-bench-check_realism-py-已实现-r-1-r-8">8.1 脚本可查（bench/check_realism.py，已实现 R-1R-8）</a><a class="l3" href="#8-2-必须人眼-脚本查不了">8.2 必须人眼（脚本查不了）</a><a class="l2" href="#九-与既有规范的关系-不许冲突">九、与既有规范的关系（不许冲突）</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" class="on" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="07-公共服务与市政-学区-r3-水电气网络-容量法">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</h1>
+<blockquote>依据：<code>decisions.md</code> <strong>R7</strong>（R3 学区用最小实现）/ <strong>R9</strong>（7 系统）/<strong>R4</strong>（规范年代）/<strong>R12</strong>（DLC）。<br>⚠ <strong>基础设施已拆出本系统</strong>（<code>decisions.md</code> <strong>R15</strong>，2026-11-15）。<br>电 / 水 / 污水 / 雨水 / 通信 / 燃气 / 垃圾 全部归新的第 8 个系统 <strong><code>utility</code></strong>。<br>本系统只做<strong>半径型公共服务</strong>：学校 / 菜市场 / 公园。<br>⚠ 本文件 §四 仍保留基础设施的设计内容（因为写在这里时还没拆），<br><strong>但实现落点是 <code>scripts/sim/utility/</code>，不是本目录</strong>。</blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#二两类服务两种算法这是本篇最关键的区分">二、两类服务，两种算法（这是本篇最关键的区分）</a></li><li><a href="#三教育服务r3-的载体最小实现">三、教育服务（R3 的载体，最小实现）</a></li><li><a href="#三五教育阶梯与技能产出普职分流决定产业上限2026-11-18-新增">三·五、教育阶梯与技能产出：普职分流决定产业上限（2026-11-18 新增）</a></li><li><a href="#三六补习班与放学小吃摊中国街头最真实的两种非正式设施2026-11-18">三·六、补习班与放学小吃摊：中国街头最真实的两种"非正式设施"（2026-11-18）</a></li><li><a href="#四市政基础设施按看不看得见分两类">四、市政基础设施：按"看不看得见"分两类</a></li><li><a href="#五数据契约">五、数据契约</a></li><li><a href="#六验收点">六、验收点</a></li><li><a href="#七待定">七、待定</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td><strong>教育服务</strong>：学校评分（R3）、学位容量、覆盖</td><td>学区对地价的影响（在 <code>06-finance-land</code>，A5）</td></tr><tr><td><strong>电力网络</strong>：杆塔（四级）+ 链路 + 容量衰减（<strong>F52</strong>）</td><td>水/气/通信的管网几何（埋地，不画）</td></tr><tr><td><strong>水 / 燃气 / 通信</strong>：容量 + 覆盖半径（F52）</td><td>医院、文化、体育（推 DLC / 打磨年）</td></tr><tr><td>容量不足的后果（建筑无法生长 / 降级）</td><td>污染（DLC1，<code>zoning.pollution</code> 预留；R27）</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-两类服务-两种算法-这是本篇最关键的区分">二、两类服务，两种算法（这是本篇最关键的区分）</h2>
+<div class="tw"><table><thead><tr><th>类型</th><th>代表</th><th>覆盖方式</th><th>计算</th></tr></thead><tbody><tr><td><strong>半径型</strong></td><td>学校、医院、菜市场</td><td>以设施为圆心，半径衰减</td><td><code>coverage = Σ f(dist)</code>，与容量无关</td></tr><tr><td><strong>网络型</strong></td><td>水、电、燃气、网络</td><td><strong>容量 + 覆盖半径</strong></td><td><code>需求 ≤ 容量</code> 且 <code>距离 ≤ 半径</code></td></tr></tbody></table></div>
+<p>⚠ <strong>这两类不能混成一个"服务水平"数字</strong>。半径型不够是"不方便"，网络型不够是<strong>"楼长不出来 / 直接荒废"</strong>。 后者是硬门槛，前者是软影响。</p>
+<hr>
+<h2 id="三-教育服务-r3-的载体-最小实现">三、教育服务（R3 的载体，最小实现）</h2>
+<h3 id="3-1-学校评分-一个标量-不建三本账">3.1 学校评分（一个标量，不建三本账）</h3>
+<pre class="code"><code>school_score = 投入水平 × exp(-dist / 500m) × 学位余量系数</code></pre>
+<div class="tw"><table><thead><tr><th>因子</th><th>来源</th></tr></thead><tbody><tr><td>投入水平</td><td>财政拨款 / 学生数（<code>finance</code> 给）</td></tr><tr><td>距离衰减</td><td><strong>500 m 半径</strong>，<code>exp</code> 衰减（A5 断言的判据就是这个）</td></tr><tr><td>学位余量</td><td><code>(容量 − 在校生) / 容量</code>，为负则挤爆</td></tr></tbody></table></div>
+<p>⚠ <strong>v1 的教训</strong>：<code>services</code> 曾写成「教师-生源-设施」三本账，11 个文件，最后没人算得清。 <strong>本项目只允许这一个标量公式</strong>。谁想加第二个因子，先来 <code>decisions.md</code> 提一条。</p>
+<h3 id="3-2-自我强化-r3-的正反馈">3.2 自我强化（R3 的正反馈）</h3>
+<pre class="code"><code>school_score ↑ → 周边地价 ↑ → 生源家庭收入 ↑ → 财政拨款 ↑ → school_score ↑</code></pre>
+<p>⚠ 这个正反馈必须有<strong>上限与衰减</strong>，否则会指数爆炸（好学区吃满全城）。 建议：<code>投入水平</code> 取对数，或对 <code>school_score</code> 设顶格。</p>
+<h3 id="3-3-寒暑假-f25-2026-11-18-修正-不清零">3.3 寒暑假（F25）⚠ 2026-11-18 修正：<strong>不清零</strong></h3>
+<blockquote>⚠ 原写"寒暑假学生通勤 OD <strong>归零</strong>"。<strong>这是错的。</strong><br>用户指出：「假期时间还是能看到学生背书包去补课等。」</blockquote>
+<div class="tw"><table><thead><tr><th></th><th>学期内</th><th>寒暑假</th></tr></thead><tbody><tr><td><code>purpose=school</code>（上下学）</td><td>正常</td><td><strong>归零</strong> ✅</td></tr><tr><td><strong><code>purpose=tutoring</code>（补习）</strong></td><td>傍晚 + 周末</td><td>⭐ <strong>不归零，约为学期的 15–25 %</strong></td></tr><tr><td>学校服务计分</td><td>正常</td><td>服务<strong>暂停</strong>（评分值保留）</td></tr></tbody></table></div>
+<p>⭐ <strong>修正的意义</strong>：如果寒暑假学生 OD 全清，<strong>假期街道上就没有背书包的孩子</strong>—— <strong>这在中国的城市里是不可能的</strong>。补习班把"假期"变成了"另一种学期"。</p>
+<p>⚠ <strong>A5 断言（学区 12 月内周边地价 +10%）必须在学期内测</strong>，否则测不出通勤变化。</p>
+<hr>
+<h2 id="三-五-教育阶梯与技能产出-普职分流决定产业上限-2026-11-18-新增">三·五、教育阶梯与技能产出：普职分流决定产业上限（2026-11-18 新增）</h2>
+<blockquote>用户：「教育这方面我国现在是幼儿园，小学，初中，<strong>高中（或者没考上高中上职业学校，或直接打工）</strong>，<br>大学（或没考上走大专或者毕业直接工作），这样从这些出来的学校的人可以去不同的产业等级。」</blockquote>
+<p><strong>这是"技能人口从哪来"的完整答案</strong>，也是 <code>05-employment</code> §4.5.2 五条升级条件里第 1 条的来源。</p>
+<h3 id="3-5-1-四段阶梯-不是六段">3.5.1 四段阶梯（不是六段）</h3>
+<div class="tw"><table><thead><tr><th>段</th><th>年龄</th><th>学制</th><th>学校</th><th>出口</th></tr></thead><tbody><tr><td><strong>学前</strong></td><td>3–5</td><td>3 年</td><td>幼儿园</td><td>—</td></tr><tr><td><strong>义务</strong></td><td>6–14</td><td>6 + 3 年</td><td>小学 + 初中</td><td>⭐ <strong>中考分流</strong></td></tr><tr><td><strong>高中段</strong></td><td>15–17</td><td>3 年</td><td><strong>普通高中 / 职业学校</strong></td><td>高考 / 直接就业</td></tr><tr><td><strong>高等</strong></td><td>18–21</td><td>3–4 年</td><td><strong>本科 / 大专（高职）</strong></td><td>就业</td></tr></tbody></table></div>
+<p>⚠ <strong>义务段是强制的</strong>：小学 + 初中<strong>必须有足够学位</strong>，否则计入<strong>满意度惩罚</strong>（这是硬约束， 不是"可选设施"）。现实中"入学难"是家长最敏感的事。</p>
+<h3 id="3-5-2-中考普职分流-中国最独特的机制">3.5.2 ⭐ 中考普职分流：中国最独特的机制</h3>
+<p><strong>这是整个教育系统的分水岭，也是产业结构的决定因素。</strong></p>
+<pre class="code"><code>初中毕业（约 14 岁）
+   ├─ 约 50 %  → 普通高中 → 高考
+   └─ 约 50 %  → 职业学校（中专/技校/职高）→ 技术工人</code></pre>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td><strong>普职比</strong>（普高 : 职校）</td><td><strong>默认 5 : 5</strong>（政策目标，可配置）</td></tr><tr><td>现实差异</td><td>各地 4:6 到 6:4 不等</td></tr></tbody></table></div>
+<p>⚠ <strong>为什么这条重要</strong>：<strong>技术工人（low-mid 技能）是制造业的脊梁</strong>， 而普职分流是技工的<strong>唯一来源</strong>。</p>
+<h3 id="3-5-3-五条路径-四档技能">3.5.3 五条路径 → 四档技能</h3>
+<div class="tw"><table><thead><tr><th>路径</th><th>同龄人占比</th><th><strong>技能档</strong></th><th>主要去向</th></tr></thead><tbody><tr><td>初中及以下（辍学务工）</td><td>低</td><td><code>low</code></td><td>M0 / M1 / M2</td></tr><tr><td><strong>职业学校</strong></td><td><strong>~40–50 %</strong></td><td><strong><code>low-mid</code>（技工）</strong></td><td>⭐ <strong>M2 / M3 主力</strong></td></tr><tr><td>高中毕业未升学</td><td>少</td><td><code>mid-low</code></td><td>服务业 / M2</td></tr><tr><td><strong>大专 / 高职</strong></td><td>~15 %</td><td><code>mid</code></td><td>M1b / M3 / 服务</td></tr><tr><td><strong>本科及以上</strong></td><td><strong>~12 %</strong></td><td><code>high</code></td><td>M3h / CBD / 研发</td></tr></tbody></table></div>
+<p>⚠ <strong>本科率只有 12 % 左右</strong>（按同龄人算），这是中国的真实水平。 <strong>如果玩家把本科率调到 50 %，技工就会严重短缺</strong>——这不是数值问题，是结构问题。</p>
+<h3 id="3-5-4-玩家的决策-普职比-一个真实的两难">3.5.4 ⭐ 玩家的决策：普职比，一个真实的两难</h3>
+<p><strong>这是本节最重要的机制</strong>：<code>vocational_ratio</code> 可以调，但两头都有代价。</p>
+<div class="tw"><table><thead><tr><th>玩家调向</th><th>短期</th><th>长期</th></tr></thead><tbody><tr><td><strong>提高普高率</strong>（更多大学生）</td><td>✅ 家长满意度↑</td><td>❌ <strong>技工短缺 → 制造业招不到人</strong></td></tr><tr><td><strong>提高职校率</strong>（更多技工）</td><td>❌ <strong>家长满意度↓</strong>（现实中的"普职分流焦虑"）</td><td>✅ 制造业有充足技工</td></tr></tbody></table></div>
+<p>⭐ <strong>这正是中国真实的政策困境</strong>：普职分流被家长抵触，但制造业需要技工。 <strong>玩家必须在"民意"和"产业"之间选</strong>。</p>
+<p>⚠ <strong>满意度影响要真实但不能过重</strong>：普职比从 5:5 调到 3:7，满意度下降约 3–5 个百分点 （不足以触发崩盘，但会持续拖累迁移）。</p>
+<h3 id="3-5-5-关键简化-不跟踪个体教育路径">3.5.5 ⚠ 关键简化：不跟踪个体教育路径</h3>
+<p><strong>如果跟踪每个学生的 15 年路径</strong>（1000 万人口 × 15 年），开销不可接受。</p>
+<p><strong>用"流动模型"代替</strong>：</p>
+<pre class="code"><code>每级学位容量 = Σ(该级所有学校的容量)
+入学率 = min(1, 学位容量 / 适龄人口)
+升学率 = 按普职比 / 高考录取率分配
+产出 = 每年毕业生 × 各档比例 → 累加到技能人口池</code></pre>
+<p>⚠ <strong>只算"池子的流入流出"，不算每个人的经历</strong>。 这与 <code>04-population</code> 的三层结构一致（<code>citizen</code> 只存当前技能档，不存学历历史）。</p>
+<h3 id="3-5-6-学校的两种-配建-vs-重点">3.5.6 ⭐ 学校的两种：配建 vs 重点</h3>
+<p><strong>1000 万人口需要 600+ 所小学</strong>（少儿 170 万 ÷ 6 年学制，按 24 班 × 45 人算）。 <strong>不可能让玩家手动放 600 所。</strong></p>
+<div class="tw"><table><thead><tr><th>类型</th><th>谁建</th><th>作用</th></tr></thead><tbody><tr><td><strong>配建学校</strong></td><td><strong>住宅小区自动配建</strong>（中国规定：小区必须配建小学）</td><td>提供基础学位，<strong>无学区溢价</strong></td></tr><tr><td><strong>重点学校</strong></td><td><strong>玩家手动点放</strong></td><td>有名字、有评分、<strong>产生学区房溢价</strong></td></tr></tbody></table></div>
+<p>⭐ <strong>这个划分解决了三个问题</strong>： ① 玩家不必手动放 600 所学校； ② <strong>学区房只来自少数重点学校</strong>，符合现实（不是所有小学都涨房价）； ③ <strong>A5 断言（学区 12 月地价 +10%）有明确的载体</strong>——只对重点学校成立。</p>
+<p>⚠ <strong>配建学校也占用地</strong>：小区规划时要留出教育用地，否则<strong>该小区不能交付</strong>。</p>
+<h3 id="3-5-7-验收点">3.5.7 验收点</h3>
+<p>本节断言并入 <strong>§六 主验收表</strong>（SV15–SV19）。 ⚠ <strong>SV17 是本节的核心</strong>：它证明"教育结构决定产业可能"，而不是"教育越多越好"。</p>
+<h2 id="三-六-补习班与放学小吃摊-中国街头最真实的两种-非正式设施-2026-11-18">三·六、补习班与放学小吃摊：中国街头最真实的两种"非正式设施"（2026-11-18）</h2>
+<blockquote>用户：「<strong>假期时间还是能看到学生背书包去补课</strong>等，当然不是所有的学生，<br>补课班地点<strong>有的在小区里面，有的是租的门面，有的就是专门的机构</strong>，<br>以及<strong>放学时学校门口必有小吃摊</strong>。」</blockquote>
+<p>这两样都是<strong>不占正规用地、但有真实人流</strong>的东西。它们的存在让城市"像真的"。</p>
+<h3 id="3-6-1-补习班-三种形态-正好对应三种用地">3.6.1 补习班：三种形态，正好对应三种用地</h3>
+<div class="tw"><table><thead><tr><th>形态</th><th>用地</th><th>特征</th><th>合规性</th></tr></thead><tbody><tr><td><strong>小区内"住改商"</strong></td><td><code>R</code>（住宅）</td><td><strong>无招牌、隐蔽、家长口碑传播</strong></td><td>⚠ <strong>违规</strong>（改住宅用途）</td></tr><tr><td><strong>租门面</strong></td><td><code>B1</code>（商业）</td><td>临街、有招牌、小班</td><td>✅ 合规（需办学许可）</td></tr><tr><td><strong>专门机构</strong></td><td><code>B3</code>（教育科研）</td><td>独立体量、大班、连锁</td><td>✅ 合规</td></tr></tbody></table></div>
+<p>⭐ <strong>这个映射是自然的</strong>：<strong>补习班不需要新的用地类型，它就是"住宅/商业里的一类租户"。</strong></p>
+<p>⚠ <strong>不做单独的 <code>building</code> 实体</strong>：补习班不是一个建筑，是<strong>建筑里的一个占用</strong>。 用 <code>parcel.tenant</code> 上的一个标志位即可（<code>has_tutoring</code>）。</p>
+<h3 id="3-6-2-补习班产生的三件事">3.6.2 补习班产生的三件事</h3>
+<div class="tw"><table><thead><tr><th>产出</th><th>说明</th></tr></thead><tbody><tr><td><strong>学生 OD</strong>（<code>purpose=tutoring</code>）</td><td>⭐ 傍晚（17–21 点）+ 周末全天 + <strong>寒暑假</strong></td></tr><tr><td>住宅区轻微人流与噪音</td><td>集中在放学后与周末</td></tr><tr><td>⚠ <strong>"住改商"违规</strong></td><td>影响轻微"市容/秩序"指标，<strong>不是硬失败</strong></td></tr></tbody></table></div>
+<p>⚠ <strong><code>purpose=tutoring</code> 的时段分布与 <code>school</code> 完全不同</strong>：</p>
+<ul><li><code>school</code>：早高峰（去）+ 下午（回）</li><li><strong><code>tutoring</code>：傍晚（去）+ 夜间（回）+ 周末高峰</strong></li></ul>
+<p>⇒ <strong>需要单列一类 purpose</strong>，不能并进 <code>school</code>（否则时段特征会被平均掉）。</p>
+<h3 id="3-6-3-一个真实的社会张力-可选机制">3.6.3 ⭐ 一个真实的社会张力（可选机制）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>说明</th></tr></thead><tbody><tr><td>家长对补习的需求</td><td>与"学校评分"负相关（学校差 → 补习多）</td></tr><tr><td>"双减"政策</td><td>玩家可开关：关闭补习 → 满意度短期上升，但<strong>长期学区房溢价更高</strong>（因为只剩重点校一条路）</td></tr></tbody></table></div>
+<p>⚠ <strong>这条推打磨年</strong>：机制有价值，但不是闭环必需。 ⚠ <strong>但视觉上必须保留</strong>：即使政策关闭，<strong>小区里偷偷补课的小孩</strong>是中国街头的真实风景。</p>
+<h3 id="3-6-4-放学小吃摊-纯视觉-但必须有">3.6.4 放学小吃摊：纯视觉，但必须有</h3>
+<p><strong>放学的学校门口必有小吃摊。</strong> 这是中国城市最强烈的日常符号之一。</p>
+<div class="tw"><table><thead><tr><th>项</th><th>处理</th></tr></thead><tbody><tr><td>sim 状态</td><td><strong>不需要</strong>（摊贩是临时的，不占永久用地）</td></tr><tr><td>出现条件</td><td><code>view</code> 层判断：<strong>附近 300 m 内有学校 + 当前时段 = 放学（15:30–18:00）</strong></td></tr><tr><td>表现</td><td>3–8 个小摊位沿人行道排开（<code>props</code>，非建筑）</td></tr><tr><td>交通影响</td><td>⚠ <strong>占道，通行能力 −5 %</strong>（轻微，与 F41 占道停车同类）</td></tr><tr><td>雨天</td><td>减少或消失</td></tr></tbody></table></div>
+<p>⭐ <strong>用 <code>view</code> 层做，不进 <code>sim</code></strong>：因为它是纯表现，且"是否出现"可由已有数据推导 （学校位置 + 时段），<strong>不需要额外状态</strong>。</p>
+<p>⚠ <strong>这也是宪法 L2 的正面例子</strong>：表现层可以读 <code>sim</code> 的公开数据自己决定画什么， <strong>但不许写回去</strong>。</p>
+<h3 id="3-6-5-验收点">3.6.5 验收点</h3>
+<p>本节断言并入 <strong>§六 主验收表</strong>（SV20–SV23）。 ⚠ <strong>SV23 是宪法 L2 的守门断言</strong>：摊贩若出现在 <code>sim</code> 里，说明表现层越界了。</p>
+<h2 id="四-市政基础设施-按-看不看得见-分两类">四、市政基础设施：按"看不看得见"分两类</h2>
+<blockquote>⚠ <strong>2026-11-15 修正。</strong> 我原先的方案是"全部用容量法、不建管网"，<br>用户当场指出：**「水路管路也是重要的东西，尤其是电网，中国电网的电塔有多种，<br>并且能够承载不同的容量（老城区常见）」**。<br>这个反馈推翻了一半：<strong>问题在于我把它当成一类东西，而它们不是。</strong></blockquote>
+<h3 id="4-0-分界线-可见的才值得画">4.0 分界线：可见的才值得画</h3>
+<div class="tw"><table><thead><tr><th>设施</th><th>玩家看得见吗</th><th>做法</th><th>理由</th></tr></thead><tbody><tr><td><strong>电力</strong></td><td>✅ <strong>看得见</strong>（电线杆、铁塔、变压器、架空线）</td><td><strong>真实网络</strong>：杆塔 + 连线 + 分层容量</td><td>中国县城与老城区的"蜘蛛网"是极强识别符号，<strong>画出来就是景观</strong></td></tr><tr><td>供水</td><td>❌ 埋地下</td><td>容量法</td><td>画了也看不见，只有烦</td></tr><tr><td>燃气</td><td>❌ 埋地下</td><td>容量法</td><td>同上</td></tr><tr><td>通信</td><td>❌ 埋地下（基站在楼顶）</td><td>容量法</td><td>同上</td></tr></tbody></table></div>
+<p>⚠ <strong>这条原则比"简化"更重要</strong>：管网的价值不取决于它多真实，而取决于<strong>玩家能不能看见自己在做什么</strong>。 CS1 的水管被玩家讨厌，不是因为它复杂，是因为<strong>它埋在地下，玩家画完就再也看不见了</strong>。</p>
+<h3 id="4-1-电力网络-本篇最重的一块">4.1 电力网络（本篇最重的一块）</h3>
+<h4 id="四级杆塔-对应不同容量与时代">四级杆塔（对应不同容量与时代）</h4>
+<div class="tw"><table><thead><tr><th>等级</th><th>形态</th><th>容量</th><th>占地</th><th>出现年代</th><th>视觉</th></tr></thead><tbody><tr><td><strong>0 低压杆</strong></td><td>水泥杆 / 木杆</td><td>小（一户到一栋）</td><td>极小</td><td>老城区、村庄</td><td>密集、杂乱、<strong>"蜘蛛网"</strong></td></tr><tr><td><strong>1 中压杆</strong></td><td>水泥杆 + 变压器台</td><td>中（一个街区）</td><td>小</td><td>县城老城</td><td>一根杆挂一个变压器箱</td></tr><tr><td><strong>2 高压铁塔</strong></td><td>角钢塔</td><td>大（一个片区）</td><td>中（需走廊）</td><td>城市边缘</td><td>高、醒目，<strong>天际线识别物</strong></td></tr><tr><td><strong>3 超高压</strong></td><td>大型铁塔</td><td>极大（全城）</td><td>大（需保护走廊）</td><td>城外</td><td>一般不进城</td></tr></tbody></table></div>
+<p>⚠ <strong>等级 0 与 1 是"老城区常见"的那两种</strong>（用户原话）。它们的特点是<strong>低矮、密集、沿街挂</strong>， 所以在老城画面里会形成明显的"电线网"层理，跟新区的地埋电缆形成对比。</p>
+<h4 id="网络规则-三条">网络规则（三条）</h4>
+<div class="tw"><table><thead><tr><th>#</th><th>规则</th></tr></thead><tbody><tr><td>1</td><td><strong>杆塔必须连成网</strong>：每个杆塔沿道路布点，与相邻杆塔连线；孤立杆塔不供电</td></tr><tr><td>2</td><td><strong>容量沿链路衰减</strong>：从变电站（源头）向外，每级杆塔的可用容量递减；超出即 <code>shortage</code></td></tr><tr><td>3</td><td><strong>老城区可"降级改造"</strong>：把等级 0/1 换成地埋电缆（等级提升、视觉变干净），但<strong>要花钱且施工期扰民</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>规则 3 是一个很好的决策点</strong>：老城电网改造 = 花钱 + 施工期拥堵，换来"地价涨 + 视觉变好"。 这是真实的城市更新题材，而"画水管"永远给不了这个。</p>
+<h3 id="4-2-供水-一条链-不是一滴水">4.2 供水：一条链，不是一滴水</h3>
+<blockquote>⚠ <strong>2026-11-15 二次修正。</strong> 用户补了一句：<strong>「水要建抽水站、泵房等，还有污水处理厂」</strong>。<br>我原来写"水厂 + 3 km 半径"，把它当成一个点——<strong>这是错的</strong>：供水有地理约束和级联依赖。</blockquote>
+<pre class="code"><code>抽水站（必须临水体）→ 净水厂 → 泵房（远距离加压）→ 覆盖区</code></pre>
+<div class="tw"><table><thead><tr><th>环节</th><th>约束</th><th>缺失后果</th></tr></thead><tbody><tr><td><strong>抽水站</strong></td><td><strong>必须临水体</strong>（河 / 湖 / 水库），且不能在水体下游污染区</td><td>无取水点 → 全城无水</td></tr><tr><td><strong>净水厂</strong></td><td>需 <code>U</code> 类用地，容量决定全城上限</td><td>处理能力不足 → 按缺口限供</td></tr><tr><td><strong>泵房</strong></td><td>离净水厂 &gt; 2 km 时必须建，否则远端水压不足</td><td>远端地块 <code>power_ok</code> 之外的第二个门槛</td></tr></tbody></table></div>
+<p>⚠ <strong>这条链的意义</strong>：城市不能"随便哪里建个水厂就通水"，<strong>必须先有水源</strong>。 这让地图上的水体从"装饰"变成<strong>战略资源</strong>——也解释了为什么中国城市几乎都临水而建。</p>
+<h3 id="4-3-污水-必须在下游">4.3 污水：必须在下游</h3>
+<pre class="code"><code>污水收集（简化：按覆盖计）→ 污水处理厂（必须临水体下游）→ 排放</code></pre>
+<div class="tw"><table><thead><tr><th>规则</th><th>后果</th></tr></thead><tbody><tr><td>污水厂必须在水体<strong>下游</strong>（用流向判定）</td><td>上游建厂 → 下游污染 → 扣地价</td></tr><tr><td>处理率 = 处理能力 / 污水产生量</td><td>处理率 &lt; 100% → <strong>水体污染值上升</strong>（数值在 DLC1，基础版只扣地价；R27）</td></tr></tbody></table></div>
+<p>⚠ <strong>基础版不做污染扩散</strong>（DLC1，R27），只把"处理率不足"折算成河岸地块的地价扣减。 这样一个数字就能表达"污染"，不必先做扩散模型。</p>
+<h3 id="4-4-通信-基站是可见的">4.4 通信：基站是可见的</h3>
+<blockquote>用户原话：「通信需要建通信基站等」。<strong>基站看得见</strong>，所以它跟电线杆一样，不能只做容量法。</blockquote>
+<pre class="code"><code>机房（`U` 类，一个片区一个）→ 基站 → 覆盖</code></pre>
+<div class="tw"><table><thead><tr><th>基站类型</th><th>覆盖</th><th>出现位置</th><th>可见性</th></tr></thead><tbody><tr><td><strong>楼顶站</strong></td><td>300–500 m</td><td>高层楼顶</td><td>小天线，远景几乎不可见</td></tr><tr><td><strong>地面塔</strong></td><td>800–1200 m</td><td>空地、路边</td><td><strong>可见，是天际线元素</strong></td></tr><tr><td><strong>微站</strong></td><td>100–200 m</td><td>商圈、密集区</td><td>灯杆/墙面小盒</td></tr></tbody></table></div>
+<p>⚠ <strong>基础版的简化</strong>：只做"机房 + 覆盖半径"，把基站当作<strong>机房的视觉表现</strong>（自动沿覆盖区布点， 玩家不逐个摆）。这样保留视觉，不增加操作量。</p>
+<p>⚠ <strong>燃气</strong>仍用容量法（埋地，不可见），不升级成链。</p>
+<h3 id="4-5-为什么电力不能也简化成容量法">4.5 为什么电力不能也简化成容量法</h3>
+<p>因为<strong>电塔是城市天际线的一部分</strong>。老城区一根水泥杆挂着三个变压器、电线横过窄巷—— 这是中国县城最有辨识度的画面之一，跟"招牌 + 空调外机 + 晾衣杆"是同一层的东西。</p>
+<p>而水厂只是一个点（<code>utility_plant</code> 原型），它不需要网络。</p>
+<hr>
+<h2 id="五-数据契约">五、数据契约</h2>
+<h3 id="5-1-结构">5.1 结构</h3>
+<div class="tw"><table><thead><tr><th>结构</th><th>字段</th><th>上限</th></tr></thead><tbody><tr><td><code>school</code></td><td><code>id, parcel_id, capacity, enrolled, funding, score(u8x10)</code></td><td>≤ 5,000</td></tr><tr><td><code>power_tower</code></td><td><code>id, cell_x, cell_y, level(u8), capacity, used</code></td><td>≤ 50,000</td></tr><tr><td><code>power_link</code></td><td><code>from_id, to_id, capacity</code></td><td>≤ 100,000</td></tr><tr><td><code>utility</code>（水/气/通信）</td><td><code>id, parcel_id, kind(u8)（水0/气1/网2）, capacity, used, radius_m</code></td><td>≤ 2,000</td></tr><tr><td><code>coverage_grid</code></td><td>50 m 派生栅格，<code>school_score(u8)</code> + <code>power_ok</code> + 3 个 <code>utility_ok(bit)</code></td><td>100 万格</td></tr></tbody></table></div>
+<p>⚠ <strong>电力是图结构</strong>（杆塔 + 链路），水/气/通信是点结构（厂站 + 半径）。 两者数据结构完全不同，<strong>这是电力必须单独一个文件的根本原因</strong>（见 §六 文件数说明）。</p>
+<p>⚠ <code>coverage_grid</code> 是<strong>派生量，可随时重算</strong>，不进存档（<code>11-scale.md</code> §2.4）； 但 <code>power_tower</code> / <code>power_link</code> 是<strong>真值，必须存档</strong>。</p>
+<h3 id="5-2-bus-key">5.2 bus key</h3>
+<div class="tw"><table><thead><tr><th>key</th><th>方向</th><th>内容</th></tr></thead><tbody><tr><td><code>services.school_score</code></td><td>写</td><td>栅格化的学区评分，供 <code>finance</code> 算地价</td></tr><tr><td><code>services.power_ok</code></td><td>写</td><td>电力覆盖与余量（按杆塔链路算出的可达容量）</td></tr><tr><td><code>services.utility_ok</code></td><td>写</td><td>水 / 气 / 通信三项的覆盖与余量</td></tr><tr><td><code>services.shortage</code></td><td>写</td><td>缺口区域标记（玩家提示用）</td></tr><tr><td><code>clock.is_vacation</code></td><td>读</td><td>寒暑假开关（<code>09-core-tick</code>）</td></tr><tr><td><code>finance.budget</code></td><td>读</td><td>拨款水平</td></tr></tbody></table></div>
+<h3 id="5-3-config-config-sim-services-json">5.3 config（config/sim/services.json）</h3>
+<pre class="code" data-lang="json"><code>{
+  "school_radius_m": 500,
+  "school_decay": "exp",
+  "school_capacity_per_student": 1.0,
+  "power": {
+    "levels": [
+      { "name": "低压杆",  "capacity": 50,   "need_corridor": false, "era_max": 2000 },
+      { "name": "中压杆",  "capacity": 300,  "need_corridor": false, "era_max": 2015 },
+      { "name": "高压塔",  "capacity": 2000, "need_corridor": true,  "era_max": 9999 },
+      { "name": "超高压塔","capacity": 8000, "need_corridor": true,  "era_max": 9999 }
+    ],
+    "link_max_span_m": 120,
+    "loss_per_hop": 0.05
+  },
+  "utility": {
+    "water": { "radius_m": 3000, "capacity_per_plant": 10 },
+    "gas":   { "radius_m": 3000, "capacity_per_plant": 8 },
+    "net":   { "radius_m": 2000, "capacity_per_plant": 5 }
+  },
+  "shortage_policy": "nearest_first"
+}</code></pre>
+<p>⚠ 数值全部是<strong>初始手感值</strong>，必须跑出来调。 ⚠ <code>link_max_span_m: 120</code> 决定杆塔密度——<strong>这个数字直接决定"老城区电线网有多密"</strong>，需按画面实测调。</p>
+<hr>
+<h2 id="六-验收点">六、验收点</h2>
+<blockquote>⚠ <strong>编号说明</strong>：<code>SV13</code> / <code>SV14</code> 是空号（早期版本用过、内容已并入 <code>SV1</code>–<code>SV12</code> 与 <code>SV24</code>–<code>SV27</code>）。<br>空号<strong>不回收</strong>，避免与历史报告里的引用冲突。</blockquote>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>SV15</strong></td><td>义务教育学位不足 → <strong>该片区满意度明显下降</strong>（不是硬失败）</td><td>探针</td></tr><tr><td><strong>SV16</strong></td><td>普职比 5:5→3:7，满意度降 3–5 pp，<strong>技工供给上升</strong></td><td>探针两支</td></tr><tr><td><strong>SV17</strong></td><td>本科率调到 50 % → <strong>M2/M3 招不满人</strong>（技工短缺）</td><td>探针</td></tr><tr><td><strong>SV18</strong></td><td><strong>配建学校不产生学区溢价</strong>，只有重点学校产生</td><td>探针两组</td></tr><tr><td><strong>SV19</strong></td><td>小区未预留教育用地 → <strong>不能交付</strong></td><td>手动</td></tr><tr><td><strong>SV20</strong></td><td>寒暑假 <code>school</code> 归零，但 <strong><code>tutoring</code> 仍有 15–25 %</strong></td><td>探针</td></tr><tr><td><strong>SV21</strong></td><td><code>tutoring</code> 时段分布与 <code>school</code> <strong>明显不同</strong>（傍晚/周末）</td><td>探针</td></tr><tr><td><strong>SV22</strong></td><td>放学时段（15:30–18:00）学校门口<strong>有小吃摊</strong>，雨天减少</td><td>截图</td></tr><tr><td><strong>SV23</strong></td><td>小吃摊<strong>不在 <code>sim</code> 状态里</strong>（只在 view 层）</td><td><code>check_contract</code></td></tr></tbody></table></div>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>SV1</strong></td><td>建一所学校，500 m 内 <code>school_score</code> &gt; 0，1000 m 外 ≈ 0</td><td>探针打印距离-评分曲线</td></tr><tr><td><strong>SV2</strong></td><td><strong>A5</strong>：建成 12 游戏月内，周边 500 m 地价上升 &gt; 10%（<strong>学期内</strong>）</td><td>探针两次采样</td></tr><tr><td><strong>SV3</strong></td><td>暑假期间学生通勤 OD = 0，但 <code>school_score</code> 不归零</td><td>探针断言</td></tr><tr><td><strong>SV4</strong></td><td>无市政覆盖的 parcel <strong>无法生长</strong>（<code>demand &amp;gt; 0</code> 但不出建筑）</td><td>探针断言</td></tr><tr><td><strong>SV5</strong></td><td>容量不足时，缺口区 <code>shortage = true</code>，且有通知</td><td>探针 + 截图</td></tr><tr><td><strong>SV6</strong></td><td>容量分配符合"最近优先"：近的满额后才给远的</td><td>探针打印分配结果</td></tr><tr><td><strong>SV7</strong></td><td><code>coverage_grid</code> 重算一次 ≤ 50 ms（全图 100 万格）</td><td><code>probe_tick</code></td></tr><tr><td><strong>SV8</strong></td><td>存档不包含 <code>coverage_grid</code>，读档后重算结果一致</td><td>探针比对两次</td></tr><tr><td><strong>SV9</strong></td><td><strong>电力网络连通性</strong>：断开任一 <code>power_link</code>，下游杆塔的 <code>capacity</code> 归零</td><td>探针断线后打印</td></tr><tr><td><strong>SV10</strong></td><td><strong>容量沿链路衰减</strong>：距变电站越远，可用容量越小，且 <code>loss_per_hop</code> 生效</td><td>探针打印链路容量序列</td></tr><tr><td><strong>SV11</strong></td><td><strong>老城改造</strong>：等级 0 → 地埋电缆后 <code>power_ok</code> 不变但视觉层变化（塔杆消失）</td><td>截图前后对比</td></tr><tr><td><strong>SV12</strong></td><td>5 万基杆塔 + 10 万条链路下，电力重算 ≤ 30 ms</td><td><code>probe_tick</code></td></tr><tr><td><strong>SV24</strong></td><td><strong>设施老化（F94）</strong>：<code>age</code> 超 80 % <code>design_life</code> → 故障率上升，且维护成本显著上升</td><td>探针两支对照</td></tr><tr><td><strong>SV25</strong></td><td><strong>邻避（F97）</strong>：垃圾焚烧厂周边 500 m <strong>地价 −30 %</strong>，且触发抗议事件（<code>13-player-loop</code> §十二 通知）</td><td>探针 + 通知</td></tr><tr><td><strong>SV26</strong></td><td><strong>内涝（F95）</strong>：暴雨超过雨水管网设计标准 → 积水，路段通行能力下降</td><td>探针两支对照</td></tr><tr><td><strong>SV27</strong></td><td><strong>峰值负荷（F98）</strong>：夏季峰值超容量 → 限电，部分建筑停产</td><td>探针两支对照</td></tr></tbody></table></div>
+<p>⚠ <strong>SV4 是基础设施存在的唯一理由</strong>：如果没水没电也能长楼，那 §四 就是白做。 ⚠ <strong>SV9 是"电是真网络而非容量法"的唯一证据</strong>：断一根线，下游必须黑掉。做不到就说明退化成了点结构。 ⚠ <strong>SV12 决定电力网络能不能放进 B6</strong>：超过 100 ms 就得考虑把重算做成月频而非日频。 ⚠ <strong>SV24–SV27 是 B6b 的四条主验收</strong>（<code>plan.md</code> B6b），分别对应 F94 / F97 / F95 / F98； 它们此前只在 <code>plan</code> 里被引用、本文件没有定义，2026-11-21 补齐。</p>
+<h3 id="6-1-文件数说明-已定拆系统-r15">6.1 文件数说明：已定拆系统（R15）</h3>
+<blockquote>⚠ <strong>2026-11-21 修订</strong>：本节原来的「<code>services/</code> 需要 7 个文件」是 <strong>R15 之前</strong>的论证过程，不是结论。<br><strong>结论已由 R15 落地</strong>（基础设施拆成第 8 个系统 <code>utility</code>），下面两张表分别是「当时的论证」与「现在的落点」。<br><strong>派活以第二张表为准</strong>（同时见 <code>system-boundaries.md</code> §六 文件预算核对）。</blockquote>
+<p><strong>① 当时的论证（保留作依据，不是现状）</strong></p>
+<p>按 R15 之前的边界算，<code>services/</code> 会需要 7 个文件： <code>service_system</code> / <code>school</code> / <code>power_grid</code> / <code>water_chain</code> / <code>sewage</code> / <code>comm_tower</code> / <code>utility</code>（燃气）。</p>
+<p>⚠ <strong>DG5 上限是 3 个文件。7 个不是"破例"，是"这个边界画错了"。</strong> 三种结构（图 / 链 / 点）没有多少共享代码，硬塞进一个系统会变成"基础设施大杂烩"—— <strong>这正是 v1 的 <code>ui/</code> 有 27 个文件、<code>services/</code> 11 个文件的成因。</strong></p>
+<p>⇒ <strong>把基础设施拆成第 8 个系统 <code>utility</code></strong>，<code>services</code> 回归"公共服务"本职 （学校 / 医院 / 公园 / 菜市场）。见 <code>decisions.md</code> <strong>R15</strong>。 这已推翻 R9（7 系统）→ <strong>R15 定为 8 系统</strong>：旧边界本来就画错了，改正错误边界 ≠ 想加功能。</p>
+<p><strong>② 现在的落点（R15 + R19，3 文件 <code>.cs</code>）</strong></p>
+<div class="tw"><table><thead><tr><th>系统</th><th>文件（≤3，<strong>C#</strong>）</th><th>职责</th></tr></thead><tbody><tr><td><code>services</code></td><td><code>service_system.cs</code></td><td>框架：覆盖栅格、缺口分配、绿地服务</td></tr><tr><td></td><td><code>school.cs</code></td><td>学区评分（R3，一个标量公式 + 半径衰减）</td></tr><tr><td></td><td><code>coverage.cs</code></td><td>菜市场 / 公园等半径型服务的覆盖与缺口</td></tr><tr><td><code>utility</code></td><td><code>utility_system.cs</code></td><td>框架：覆盖、缺口分配、老化与故障</td></tr><tr><td></td><td><code>power_grid.cs</code></td><td>电力网络（四级杆塔 + 链路 + 峰值）——<strong>图</strong></td></tr><tr><td></td><td><code>utility_chain.cs</code></td><td>供水链 / 污水 / 雨水 / 通信 / 燃气 / 垃圾——<strong>链与点</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>电力单独一个文件，其余全部共用链式框架</strong>——这是"7 个塞不下、3 个正好"的原因 （详见 <code>system-boundaries.md</code> §三·2）。<strong>两套系统都不许加第 4 个文件</strong>，要加先提裁定。</p>
+<hr>
+<h2 id="七-待定">七、待定</h2>
+<ol><li><del>基础设施是否拆系统</del> → <strong>已定：拆（R15）</strong>。</li></ol>
+<p>   ⚠ <strong>2026-11-22：结构定义已落地</strong>——<code>utility/</code> 三个文件（<code>utility_system</code> / <code>power_grid</code> / <code>utility_chain</code>）    与 <code>system-boundaries</code> §三·2 已写清电力（图）/ 其余（链与点）的划分；本文件 §四 只保留设计思路。</p>
+<ol><li><strong>医疗</strong>：可玩版只做学校（R3）。医院是否进本体，取决于 B6 工期余量</li><li><strong><code>utility_plant</code> 的外观</strong>：水厂 / 变电站 / 燃气站 / 污水厂 / 基站，五个外观共用一套还是各做一套</li></ol>
+<p>   —— 影响图集（≤2 张 4096²），建议<strong>做 2 套</strong>（"厂房型"与"塔架型"）</p>
+<ol><li><strong>泵房是否需要玩家手放</strong> —— 会显著增加操作量，建议<strong>自动生成</strong>（按距离自动布点）</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-18（二）</strong>：⚠ <strong>§3.3 修正</strong>——原写"寒暑假学生 OD <strong>归零</strong>"是<strong>错的</strong>。</li></ul>
+<p>  用户指出「假期还是能看到学生背书包去补课」：改为 <strong><code>school</code> 归零、<code>tutoring</code> 保留 15–25 %</strong>。   ⭐ 若全清，<strong>假期街上就没有背书包的孩子</strong>，这在中国城市是不可能的。   新增 <strong>§三·六 补习班与放学小吃摊</strong>：   ① <strong>补习班三种形态</strong>（小区"住改商"⚠违规 / 租门面 B1 / 专门机构 B3），   ⚠ <strong>不需要新用地类型，它是建筑里的一类租户</strong>（<code>parcel.has_tutoring</code> 标志位）；   ② <strong><code>purpose=tutoring</code> 必须单列</strong>：时段是<strong>傍晚 + 周末 + 寒暑假</strong>，   与 <code>school</code> 的早高峰完全不同，并进去会被平均掉；   ③ <strong>放学小吃摊纯视觉</strong>：<code>view</code> 层按「附近 300 m 有学校 + 15:30–18:00」生成，   <strong>不进 <code>sim</code></strong>，占道 −5 % 通行能力，雨天减少 —— <strong>宪法 L2 的正面例子</strong>。   新增 SV20–SV23。</p>
+<ul><li><strong>2026-11-18</strong>：新增 <strong>§三·五 教育阶梯与技能产出</strong>。依据用户描述的中国教育路径</li></ul>
+<p>  （幼儿园→小学→初中→<strong>中考分流（普高/职校/直接打工）</strong>→高中→<strong>高考（本科/大专/就业）</strong>）：   ① <strong>四段阶梯</strong>（学前/义务/高中段/高等），<strong>义务段是强制</strong>（学位不足计满意度惩罚）；   ② ⭐ <strong>中考普职分流</strong>（默认 5:5）—— <strong>技工的唯一来源，也是产业结构的决定因素</strong>；   ③ <strong>五条路径 → 四档技能</strong>（本科率仅 ~12%，是真实水平）；   ④ ⭐ <strong>玩家的两难</strong>：提高普高率→家长满意但<strong>技工短缺</strong>；提高职校率→技工足但<strong>满意度下降</strong>   —— 这正是中国真实的政策困境；   ⑤ <strong>不跟踪个体教育路径</strong>，用流动模型（只算池子的流入流出）；   ⑥ ⭐ <strong>学校分两种</strong>：<strong>配建</strong>（小区自动建，无学区溢价）+ <strong>重点</strong>（玩家手放，产生溢价）   —— 解决"1000 万人口要 600+ 所小学不可能手动放"，且让 A5 断言有明确载体。   新增 SV15–SV19 五条断言。</p>
+<ul><li><strong>2026-11-16</strong>：补一条<strong>跨篇提示</strong>。本系统（公共服务）之后，<code>utility</code> 又扩了五个子领域：</li></ul>
+<p>  <strong>雨水排放</strong>、<strong>垃圾处理</strong>、<strong>设施老化与故障</strong>、<strong>峰值负荷</strong>、<strong>邻避效应</strong>   （<code>12-china-features</code> §二·十六 F94–F98）。它们的结构细节写进 <code>utility</code> 独立篇时补，   但<strong>老化字段（<code>age</code> / <code>design_life</code>）必须在 B6 就进每一个设施结构</strong> —— 后补要动所有存档。</p>
+<ul><li><strong>2026-11-15（三）</strong>：<strong>§4.2–4.4 重写</strong>。依据用户「通信需要建通信基站等，水要建抽水站、泵房等，</li></ul>
+<p>  还有污水处理厂」：   ① 供水从"水厂 + 半径"改为<strong>链</strong>（抽水站必须临水体 → 净水厂 → 泵房 → 覆盖）；   ② 新增<strong>污水处理</strong>（必须在水体下游，处理率不足扣地价）；   ③ 通信改为<strong>机房 → 基站</strong>（楼顶站 / 地面塔 / 微站；基础版把基站作为机房的视觉表现）。   <strong>结论：<code>services/</code> 需要 7 个文件，DG5 已不是"破例"而是"边界画错了"</strong> → <strong>R15 裁定拆第 8 个系统 <code>utility</code></strong>。</p>
+<ul><li><strong>2026-11-15（二）</strong>：<strong>§四 重写</strong>。依据用户「水路管路也是重要的东西，尤其是电网，</li></ul>
+<p>  中国电网的电塔有多种，并且能够承载不同的容量（老城区常见）」——   我原方案"全部容量法、不建管网"错在<strong>把基础设施当成一类东西</strong>。   改为按<strong>可见性</strong>分：<strong>电力做真实网络</strong>（四级杆塔 + 链路 + 容量衰减 + 老城改造），   水/气/通信仍用容量法。新增 SV9–SV12 四条断言、<code>power_grid</code> 文件（后由 <strong>R15</strong> 定案为独立系统 <code>utility</code>，现为 <code>utility/power_grid.cs</code>）。</p>
+<ul><li><strong>2026-11-15</strong>：首版（AI 起草，待开发者拍板）。按 R10 补齐「数据契约 + 验收点」两节。</li></ul>
+<p>  依据 R7（R3 最小实现）/ R9（7 系统）建立：   <strong>半径型 vs 网络型两类服务</strong>的区分、学区单一标量公式与上限、   <strong>市政用"容量法 + 覆盖半径"替代管网</strong>（含"最近优先"制造决策）、8 条验收断言。   同轮标记 Q13（基础设施归属是否成立）—— 后由 <strong>R15</strong> 裁定为独立系统 <code>utility</code>。</p><div class="pager"><a href="design-06-finance-land.html">← 06 · 财政与土地：地价、收储出让、税、债务</a><a href="design-08-traffic.html">08 · 交通流：三层模型、时段系数、分层路网、LOD →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#二-两类服务-两种算法-这是本篇最关键的区分">二、两类服务，两种算法（这是本篇最关键的区分）</a><a class="l2" href="#三-教育服务-r3-的载体-最小实现">三、教育服务（R3 的载体，最小实现）</a><a class="l3" href="#3-1-学校评分-一个标量-不建三本账">3.1 学校评分（一个标量，不建三本账）</a><a class="l3" href="#3-2-自我强化-r3-的正反馈">3.2 自我强化（R3 的正反馈）</a><a class="l3" href="#3-3-寒暑假-f25-2026-11-18-修正-不清零">3.3 寒暑假（F25）⚠ 2026-11-18 修正：不清零</a><a class="l2" href="#三-五-教育阶梯与技能产出-普职分流决定产业上限-2026-11-18-新增">三·五、教育阶梯与技能产出：普职分流决定产业上限（2026-11-18 新增）</a><a class="l3" href="#3-5-1-四段阶梯-不是六段">3.5.1 四段阶梯（不是六段）</a><a class="l3" href="#3-5-2-中考普职分流-中国最独特的机制">3.5.2 ⭐ 中考普职分流：中国最独特的机制</a><a class="l3" href="#3-5-3-五条路径-四档技能">3.5.3 五条路径 → 四档技能</a><a class="l3" href="#3-5-4-玩家的决策-普职比-一个真实的两难">3.5.4 ⭐ 玩家的决策：普职比，一个真实的两难</a><a class="l3" href="#3-5-5-关键简化-不跟踪个体教育路径">3.5.5 ⚠ 关键简化：不跟踪个体教育路径</a><a class="l3" href="#3-5-6-学校的两种-配建-vs-重点">3.5.6 ⭐ 学校的两种：配建 vs 重点</a><a class="l3" href="#3-5-7-验收点">3.5.7 验收点</a><a class="l2" href="#三-六-补习班与放学小吃摊-中国街头最真实的两种-非正式设施-2026-11-18">三·六、补习班与放学小吃摊：中国街头最真实的两种"非正式设施"（2026-11-18）</a><a class="l3" href="#3-6-1-补习班-三种形态-正好对应三种用地">3.6.1 补习班：三种形态，正好对应三种用地</a><a class="l3" href="#3-6-2-补习班产生的三件事">3.6.2 补习班产生的三件事</a><a class="l3" href="#3-6-3-一个真实的社会张力-可选机制">3.6.3 ⭐ 一个真实的社会张力（可选机制）</a><a class="l3" href="#3-6-4-放学小吃摊-纯视觉-但必须有">3.6.4 放学小吃摊：纯视觉，但必须有</a><a class="l3" href="#3-6-5-验收点">3.6.5 验收点</a><a class="l2" href="#四-市政基础设施-按-看不看得见-分两类">四、市政基础设施：按"看不看得见"分两类</a><a class="l3" href="#4-0-分界线-可见的才值得画">4.0 分界线：可见的才值得画</a><a class="l3" href="#4-1-电力网络-本篇最重的一块">4.1 电力网络（本篇最重的一块）</a><a class="l4" href="#四级杆塔-对应不同容量与时代">四级杆塔（对应不同容量与时代）</a><a class="l4" href="#网络规则-三条">网络规则（三条）</a><a class="l3" href="#4-2-供水-一条链-不是一滴水">4.2 供水：一条链，不是一滴水</a><a class="l3" href="#4-3-污水-必须在下游">4.3 污水：必须在下游</a><a class="l3" href="#4-4-通信-基站是可见的">4.4 通信：基站是可见的</a><a class="l3" href="#4-5-为什么电力不能也简化成容量法">4.5 为什么电力不能也简化成容量法</a><a class="l2" href="#五-数据契约">五、数据契约</a><a class="l3" href="#5-1-结构">5.1 结构</a><a class="l3" href="#5-2-bus-key">5.2 bus key</a><a class="l3" href="#5-3-config-config-sim-services-json">5.3 config（config/sim/services.json）</a><a class="l2" href="#六-验收点">六、验收点</a><a class="l3" href="#6-1-文件数说明-已定拆系统-r15">6.1 文件数说明：已定拆系统（R15）</a><a class="l2" href="#七-待定">七、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

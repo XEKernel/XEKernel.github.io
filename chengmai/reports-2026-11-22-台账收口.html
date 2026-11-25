@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>台账收口：111 条特色里，本体到底能装多少（2026-11-22） — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" class="on" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 审查与报告</div><h1 id="台账收口-111-条特色里-本体到底能装多少-2026-11-22">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</h1>
+<blockquote>触发：<code>12-china-features.md</code> 的 §二·八 还写着「54 条里 32 条标 ✅」，<strong>实际已经是 111 条、60 条标 ✅</strong>。<br>台账是"登记制"（没登记 = 范围外），但它自己已经<strong>没有刹车</strong>了：本体条目比三个月前翻了一倍，工期没变。<br>本文给一次<strong>清点 + 收口方案</strong>。⚠ <strong>范围变更要裁定</strong>（宪法 §五），所以下面的"下沉/合并"是提案，不是已定。</blockquote>
+<hr>
+<h2 id="一-现状-条数与批次负载-脚本统计-2026-11-22">一、现状：条数与批次负载（脚本统计，2026-11-22）</h2>
+<div class="tw"><table><thead><tr><th>状态</th><th>条数</th></tr></thead><tbody><tr><td><strong>✅ 本体</strong></td><td><strong>72</strong>（标准 <code>✅</code> + <code>✅*</code> + "✅ 本体"变体）</td></tr><tr><td>⏳ 打磨年 / 后置</td><td>21</td></tr><tr><td>🎁 DLC</td><td>10</td></tr><tr><td>付费 DLC / 免费更新（5 列格式的表）</td><td>8</td></tr><tr><td><strong>合计</strong></td><td><strong>111</strong></td></tr></tbody></table></div>
+<p>按批次摊（只看 ✅）：</p>
+<div class="tw"><table><thead><tr><th>批次</th><th>✅ 条数</th><th>本批自己的工作</th><th>判断</th></tr></thead><tbody><tr><td>B1</td><td>1（F71 资源点）</td><td>地形契约 + core</td><td>✅</td></tr><tr><td>B2</td><td>2（F19 快速路、F116 跨江大桥）</td><td>三表 + 曲线 + 围合面</td><td>✅</td></tr><tr><td><strong>B3</strong></td><td><strong>21</strong></td><td>parcel 细分 + 生长 + 建筑视图</td><td>❌ <strong>爆了 3 倍</strong></td></tr><tr><td>B4</td><td>10</td><td>人口 + 就业 + 财政 + 顶栏</td><td>⚠ 偏重</td></tr><tr><td><strong>B5</strong></td><td><strong>9</strong></td><td>OD 三层 + 多路径 + 地铁 + 铁路 + 水运</td><td>❌ <strong>爆了 2 倍</strong></td></tr><tr><td><strong>B6</strong></td><td><strong>25</strong>（a 16 / b 9）</td><td>地价 + 学区 + 市政 3 文件 + 覆盖率</td><td>❌ <strong>爆了 2 倍</strong></td></tr><tr><td>B7</td><td>4（F16 限购、F21 春运、F27 流动人口、F33 骑手）</td><td>引导 + 反馈 + 音效</td><td>✅</td></tr></tbody></table></div>
+<blockquote>统计口径：按"批次列"归一（<code>B3 资产 + B6 机制</code>算 B3、<code>B5 之后</code>算 B7、<code>本体 B2/B3/B5/B6b</code> 归回各自批次）。<br>1 + 2 + 21 + 10 + 9 + 25 + 4 = <strong>72</strong>。</blockquote>
+<p>⚠ <strong>§二·八 的旧结论"32 条已经偏多"是对的，但数字过期了</strong>：现在是 <strong>72 条，翻了一倍多</strong>。</p>
+<hr>
+<h2 id="二-先分清两件事-形态-core-与-额外机制">二、先分清两件事：「形态 core」与「额外机制」</h2>
+<p>§二·八 里已经有一条正确的判断（规则 ②），这次把它扩大成全场通用：</p>
+<div class="tw"><table><thead><tr><th>类别</th><th>定义</th><th>怎么算工期</th></tr></thead><tbody><tr><td><strong>形态 core</strong></td><td>这个系统<strong>本来就要做的事</strong>，登记进来只是"别忘"</td><td><strong>不额外占工期</strong>（算在本批主交付里）</td></tr><tr><td><strong>额外机制</strong></td><td>需要新增字段/规则/验收/资产的<strong>新东西</strong></td><td><strong>真占工期</strong>，每批 ≤3–4 条</td></tr></tbody></table></div>
+<p>按这个口径重算，问题才看得清：</p>
+<div class="tw"><table><thead><tr><th>批次</th><th>形态 core（不额外算）</th><th><strong>额外机制（真占工期）</strong></th></tr></thead><tbody><tr><td>B3</td><td>F1 F2 F3 F4 F6 F10 F51 F53 F54（9 条）</td><td>F7+F61（施工，合并算 1）· <strong>F39 红线</strong> · <strong>F42 开发区</strong> · F59 工业四类 · F63 商场 · F72 开采场 · F77 农业 · F79 作坊 · F91 建筑技术 = <strong>9</strong></td></tr><tr><td>B4</td><td>F15 层级 · F78 汇款 · F87 开局引爆</td><td><strong>F24 节假日</strong> · <strong>F26 农历</strong> · F37 高考 · F38 调休 · F85 转移支付 · F80 赶集 · F88 科技演进 = <strong>7</strong></td></tr><tr><td>B5</td><td>F23 地铁公交 · F118/F119 铁路 · F121 水运</td><td>F27 流动人口 · F33 外卖骑手 · F34 出租车 · F40 共享单车 · F41 停车 · F112 山地轨道 · F113 P+R = <strong>7</strong></td></tr><tr><td>B6a</td><td>F11 土地财政（含 F13 溢价）· F12 学区 · F86 第一桶金</td><td>F14 拆迁 · F81 征地 · F43 城投 · F44 招商 = <strong>4</strong></td></tr><tr><td>B6b</td><td>F52 市政 · F56 供水 · F57 污水 · F58 通信</td><td>F62 菜市场 · F60 建材链 · F73 枯竭沉陷 · F90 技改 · F92 数据中心 · F117 补习/小吃摊 = <strong>6</strong></td></tr><tr><td>B7</td><td>F16 限购 · F21 春运</td><td>— = <strong>0</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>形态 core 不算工期不是"白干"</strong>：它意味着"zoning 本来就要算 FAR、本来就要求围合面"—— 但<strong>它照样要写代码</strong>，只是不该记成"额外功能"。真正的刹车是右列。</p>
+<hr>
+<h2 id="三-收口方案-已执行-72-58">三、收口方案（已执行，72 → 58）</h2>
+<p><strong>目标</strong>：每批额外机制 <strong>≤3–4</strong>；本体 72 → <strong>58</strong>（下沉 11 + 合并 4；<code>72 − 11 − 4 = 57</code>，加 1 条免费更新 = 58）。 <strong>理由</strong>：<code>01-playable-definition</code> P5 要求"每 30 秒一个决策"，而<strong>额外机制越多，每一条都做浅</strong>—— v1 就是这么死的（14 条愿景 0 条落地）。</p>
+<h3 id="3-1-下沉到打磨年-11-条">3.1 下沉到打磨年（11 条）</h3>
+<div class="tw"><table><thead><tr><th>条目</th><th>为什么下沉</th><th>什么时候回来</th></tr></thead><tbody><tr><td>F33 外卖骑手</td><td>纯视觉 + 一行通行折减；不影响任何决策</td><td>打磨年</td></tr><tr><td>F34 出租车</td><td>只是背景车流（旧方案已建议降级）</td><td>打磨年</td></tr><tr><td>F40 共享单车</td><td>只在校园/地铁口有意义，等地铁成熟</td><td>打磨年</td></tr><tr><td>F41 停车难</td><td>依赖 P+R（F113）与地块尺寸实测</td><td>打磨年</td></tr><tr><td>F63 商场 / 综合体</td><td>商业 archetype 已有，娱乐性可后加</td><td>打磨年</td></tr><tr><td>F72 开采场</td><td>资源点（F71）先落地，开采场是表现</td><td>B6 之后再定</td></tr><tr><td>F77 农业</td><td>村庄阶段可先用"农田贴图 + 产出标量"占位</td><td>打磨年</td></tr><tr><td>F80 赶集</td><td>周期性集市，需要独立日程系统</td><td>打磨年</td></tr><tr><td>F90 减燃料增化工</td><td>需要化工产业链成熟（F60 之后）</td><td>打磨年</td></tr><tr><td>F92 数据中心</td><td>属于"算力城市"主题，非核心循环</td><td>打磨年 / DLC4 主题包</td></tr><tr><td>F117 补习班 + 小吃摊</td><td>学校配套的<strong>表现层</strong>，<code>sim</code> 只需 <code>tutoring</code> 一类 OD</td><td>打磨年（保留 OD 类别）</td></tr></tbody></table></div>
+<h3 id="3-2-并入其他条目-不单独计数-3-组">3.2 并入其他条目（不单独计数，3 组）</h3>
+<div class="tw"><table><thead><tr><th>合并</th><th>并入</th><th>理由</th></tr></thead><tbody><tr><td>F7 施工中的城市（塔吊）</td><td><strong>F61 施工周期</strong></td><td>同一件事的"机制 + 表现"，拆两条是重复计数</td></tr><tr><td>F53 街坊式小区</td><td><strong>F1 超大街区</strong></td><td>F1 讲尺度、F53 讲围合方式，同属 block 生成规则</td></tr><tr><td>F54 办公/商务用地</td><td><strong>F51 用地分类（6 类）</strong></td><td>6 类里本来就有 B 类，不是新机制</td></tr><tr><td>F13 土拍溢价率</td><td><strong>F11 土地财政</strong></td><td>§二·八 已判定"不是独立机制"</td></tr></tbody></table></div>
+<h3 id="3-3-降级为-最简版-做-但砍到一行公式-4-条">3.3 降级为"最简版"（做，但砍到一行公式，4 条）</h3>
+<div class="tw"><table><thead><tr><th>条目</th><th>最简版</th><th>完整版去哪</th></tr></thead><tbody><tr><td>F39 耕地红线</td><td><strong>一个总量配额 + 越线拒绝</strong>（不做地块级图斑）</td><td>打磨年做图斑</td></tr><tr><td>F42 开发区</td><td><strong>一片 M 类用地 + 税收优惠乘子</strong></td><td>打磨年做"管委会/审批"</td></tr><tr><td>F88 科技演进总则</td><td><strong>按年份切换规范与产能系数</strong>（一张表）</td><td>打磨年做技术树</td></tr><tr><td>F73 枯竭与沉陷</td><td><strong>储量递减 + 地价下降</strong>（不做地面沉陷网格）</td><td>打磨年做沉陷地形（F73 的物理表现）</td></tr></tbody></table></div>
+<h3 id="3-4-收口后">3.4 收口后</h3>
+<div class="tw"><table><thead><tr><th>批次</th><th>额外机制（收口后）</th><th>形态 core</th></tr></thead><tbody><tr><td>B3</td><td>3（施工、红线、开发区）+ 4 条最简</td><td>9</td></tr><tr><td>B4</td><td>4（节假日、农历、高考、调休）+ 转移支付</td><td>3</td></tr><tr><td>B5</td><td>3（流动人口、铁路、水运）</td><td>4</td></tr><tr><td>B6a</td><td>4（拆迁、征地、城投、招商→或降 B7）</td><td>3</td></tr><tr><td>B6b</td><td>4（菜市场、建材链、数据中心→或下沉、邻避/内涝已在 <code>SV24–SV27</code>）</td><td>4</td></tr><tr><td>B7</td><td>2（限购、春运）</td><td>0</td></tr></tbody></table></div>
+<hr>
+<h2 id="四-这件事必须你拍板的三点">四、这件事必须你拍板的三点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>待定</th><th>建议</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><strong>12 条下沉是否同意</strong></td><td>同意。它们全都不影响"R1+R2+R3 闭环"，下沉不破坏本体完整性（R12 反向红线）</td></tr><tr><td><strong>2</strong></td><td><strong>F43 城投 / F44 招商</strong> 是留 B6a 还是推 B7</td><td>推 <strong>B7</strong>：它们都是"政策旋钮"，与 F16 限购同类，一起做才划算</td></tr><tr><td><strong>3</strong></td><td><strong>F73 沉陷</strong> 做最简还是整条下沉</td><td>做<strong>最简</strong>（储量递减 + 地价），因为"资源诅咒"是 R1 的一部分；沉陷地形推打磨年</td></tr></tbody></table></div>
+<p>⚠ <strong>一旦拍板</strong>，我会：</p>
+<ol><li>把台账 111 行的"批次 / 状态"两列按收口结果改写（含把 5 列格式的 14 行补齐两列）</li><li>在 §二 顶部加一句「<strong>收口以 §四·七 为准</strong>」，并把 §二·八 的旧数字（54/32）改成 111/60 并指向本报告</li><li>同步 <code>plan.md</code> 每批的"承接特色"数量</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-22（二）</strong>：三点裁定通过并<strong>已执行</strong>：台账「批次 / 状态」两列规范化（新增 <code>✅◆</code> 最简、<code>✅→Fn</code> 已并入两种标记），</li></ul>
+<p>  本体 72 → <strong>58</strong>（下沉 11 / 合并 4）。</p>
+<ul><li><strong>2026-11-22</strong>：首版。现状 111 条 / 本体 <strong>72</strong>；B3 21、B6 25 严重超载；提案 72 → 58。</li></ul><div class="pager"><a href="reports-2026-11-22-UI现状与主题接线.html">← UI 现状核对与主题接线（2026-11-22）</a><a href="reports-2026-11-22-渲染层选型-WebUI评估.html">渲染层选型：要不要把渲染换成 WebUI（Three.js） →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#一-现状-条数与批次负载-脚本统计-2026-11-22">一、现状：条数与批次负载（脚本统计，2026-11-22）</a><a class="l2" href="#二-先分清两件事-形态-core-与-额外机制">二、先分清两件事：「形态 core」与「额外机制」</a><a class="l2" href="#三-收口方案-已执行-72-58">三、收口方案（已执行，72 → 58）</a><a class="l3" href="#3-1-下沉到打磨年-11-条">3.1 下沉到打磨年（11 条）</a><a class="l3" href="#3-2-并入其他条目-不单独计数-3-组">3.2 并入其他条目（不单独计数，3 组）</a><a class="l3" href="#3-3-降级为-最简版-做-但砍到一行公式-4-条">3.3 降级为"最简版"（做，但砍到一行公式，4 条）</a><a class="l3" href="#3-4-收口后">3.4 收口后</a><a class="l2" href="#四-这件事必须你拍板的三点">四、这件事必须你拍板的三点</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>

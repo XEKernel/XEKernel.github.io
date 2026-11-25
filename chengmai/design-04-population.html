@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04 · 人口与家庭：三层、迁徙、流动人口与外出务工 — 城脉文档</title>
+<meta name="theme-color" content="#12161c">
+<link rel="stylesheet" href="docs.css">
+</head><body>
+<div class="top">
+  <a class="brand" href="index.html"><em></em>城脉 · 文档</a>
+  <span class="sub">City Veins / 中国城市模拟 · 设计文档</span>
+  <div class="right">
+    <a href="../index.html">← 返回主页</a>
+    <a href="https://github.com/XEKernel/City-Veins" target="_blank" rel="noopener">源码</a>
+  </div>
+</div>
+<div class="shell">
+  <nav class="nav"><div class="grp">入门</div>
+<a href="NEXT.html" title="NEXT · 新会话开工指南（V0 村庄）">NEXT · 新会话开工指南（V0 村庄）</a>
+<a href="INDEX.html" title="INDEX · 按任务查（加功能前先看这一页）">INDEX · 按任务查（加功能前先看这一页）</a>
+<a href="DOCS.html" title="文档地图（按分类）">文档地图（按分类）</a>
+<div class="grp">立法与裁定</div>
+<a href="design-00-constitution.html" title="00 · v2 宪法">00 · v2 宪法</a>
+<a href="decisions.html" title="v2 裁定记录">v2 裁定记录</a>
+<a href="design-system-boundaries.html" title="8 系统边界表（B0 核心交付物）">8 系统边界表（B0 核心交付物）</a>
+<div class="grp">系统设计</div>
+<a href="design-01-playable-definition.html" title="[迁移] 来源说明">[迁移] 来源说明</a>
+<a href="design-02-road.html" title="02 · 路网与地块：三表、围合面、可达性">02 · 路网与地块：三表、围合面、可达性</a>
+<a href="design-03-zoning.html" title="03 · 分区与生长：用地分类、小区、容积率、生长与废弃">03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a>
+<a href="design-04-population.html" class="on" title="04 · 人口与家庭：三层、迁徙、流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</a>
+<a href="design-05-employment.html" title="05 · 就业与产能：岗位匹配、建材供应链、资源与技改">05 · 就业与产能：岗位匹配、建材供应链、资源与技改</a>
+<a href="design-06-finance-land.html" title="06 · 财政与土地：地价、收储出让、税、债务">06 · 财政与土地：地价、收储出让、税、债务</a>
+<a href="design-07-services.html" title="07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）">07 · 公共服务与市政：学区（R3）+ 水电气网络（容量法）</a>
+<a href="design-08-traffic.html" title="08 · 交通流：三层模型、时段系数、分层路网、LOD">08 · 交通流：三层模型、时段系数、分层路网、LOD</a>
+<a href="design-09-core-tick.html" title="09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约">09 · 时钟与装配：时间尺度、日历、日内时段、Tick 顺序、存档契约</a>
+<a href="design-10-presentation.html" title="10 · 表现层：视觉基准、资产管线、UI 与音效">10 · 表现层：视觉基准、资产管线、UI 与音效</a>
+<a href="design-13-player-loop.html" title="13 · 玩家循环与游戏逻辑：怎么转起来">13 · 玩家循环与游戏逻辑：怎么转起来</a>
+<div class="grp">规模与特色</div>
+<a href="design-11-scale.html" title="11 · 规模架构（Megacity Scale）">11 · 规模架构（Megacity Scale）</a>
+<a href="design-12-china-features.html" title="12 · 中国特色机制台账（含 DLC 池）">12 · 中国特色机制台账（含 DLC 池）</a>
+<div class="grp">资产与建模</div>
+<a href="design-15-model-inventory.html" title="15 · 资产全集：要建什么、多少、什么顺序">15 · 资产全集：要建什么、多少、什么顺序</a>
+<a href="design-14-model-prompts.html" title="14 · AI 建模提示词规范（中国建筑）">14 · AI 建模提示词规范（中国建筑）</a>
+<a href="design-17-asset-layers.html" title="17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化">17 · 资产分层：本体 / 模块 / 摆件 / 贴花 / 程序化</a>
+<a href="design-18-signage.html" title="18 · 标志与路名：自动生成、可改、动态渲染">18 · 标志与路名：自动生成、可改、动态渲染</a>
+<a href="assets-realism-spec.html" title="写实基线（R-Spec）— 什么是"写实"，怎么验收">写实基线（R-Spec）— 什么是"写实"，怎么验收</a>
+<a href="assets-modeling-brief.html" title="建模组工作总纲（2026-11-24 重写）">建模组工作总纲（2026-11-24 重写）</a>
+<a href="assets-batch-01.html" title="第一批模型清单与提示词（交付给建模组）">第一批模型清单与提示词（交付给建模组）</a>
+<a href="assets-batch-01-fix.html" title="第一批返修单（8 个模型）">第一批返修单（8 个模型）</a>
+<a href="assets-batch-02.html" title="第二批模型清单与提示词（道路 / 车辆 / 标识）">第二批模型清单与提示词（道路 / 车辆 / 标识）</a>
+<div class="grp">计划与纪律</div>
+<a href="design-16-progressive-play.html" title="16 · 渐进可玩：按城市等级切片，边做边玩">16 · 渐进可玩：按城市等级切片，边做边玩</a>
+<a href="design-19-tradeoffs.html" title="19 · 取舍登记册：性能 vs 现实 vs 效果">19 · 取舍登记册：性能 vs 现实 vs 效果</a>
+<a href="plan.html" title="v2 推进规划 · 按批次">v2 推进规划 · 按批次</a>
+<a href="handoff.html" title="交接单（HANDOFF）">交接单（HANDOFF）</a>
+<a href="agents.html" title="v2 子代理协作规范">v2 子代理协作规范</a>
+<a href="glossary.html" title="术语表">术语表</a>
+<div class="grp">数据契约卡</div>
+<a href="contracts-employment.html" title="契约卡 · 岗位与产能（employment）">契约卡 · 岗位与产能（employment）</a>
+<a href="contracts-finance.html" title="契约卡 · 财政与土地（finance）">契约卡 · 财政与土地（finance）</a>
+<a href="contracts-index.html" title="契约卡（docs/contracts/）">契约卡（docs/contracts/）</a>
+<a href="contracts-population.html" title="契约卡 · 人口与家庭（population）">契约卡 · 人口与家庭（population）</a>
+<a href="contracts-road.html" title="契约卡 · 路网（road）">契约卡 · 路网（road）</a>
+<a href="contracts-services.html" title="契约卡 · 公共服务（services）">契约卡 · 公共服务（services）</a>
+<a href="contracts-traffic.html" title="契约卡 · 交通流（traffic）">契约卡 · 交通流（traffic）</a>
+<a href="contracts-utility.html" title="契约卡 · 市政（utility）">契约卡 · 市政（utility）</a>
+<a href="contracts-zoning.html" title="契约卡 · 分区与生长（zoning）">契约卡 · 分区与生长（zoning）</a>
+<div class="grp">审查与报告</div>
+<a href="reports-2026-11-15-缺口审查.html" title="2026-11-15 · v2 缺口审查报告">2026-11-15 · v2 缺口审查报告</a>
+<a href="reports-2026-11-21-引擎选型评估.html" title="2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？">2026-11-21 引擎选型评估：Godot 能否胜任？要不要考虑 Unity / 虚幻？</a>
+<a href="reports-2026-11-21-文档复查.html" title="2026-11-21 文档复查：冲突 / 疏漏 / 不合理">2026-11-21 文档复查：冲突 / 疏漏 / 不合理</a>
+<a href="reports-2026-11-22-B1开场.html" title="B1 开场记录 · core/ 五文件（2026-11-22）">B1 开场记录 · core/ 五文件（2026-11-22）</a>
+<a href="reports-2026-11-22-UI现状与主题接线.html" title="UI 现状核对与主题接线（2026-11-22）">UI 现状核对与主题接线（2026-11-22）</a>
+<a href="reports-2026-11-22-台账收口.html" title="台账收口：111 条特色里，本体到底能装多少（2026-11-22）">台账收口：111 条特色里，本体到底能装多少（2026-11-22）</a>
+<a href="reports-2026-11-22-渲染层选型-WebUI评估.html" title="渲染层选型：要不要把渲染换成 WebUI（Three.js）">渲染层选型：要不要把渲染换成 WebUI（Three.js）</a>
+<a href="reports-2026-11-22-语言策略.html" title="语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）">语言策略：C# 够不够？要不要 Rust / 混合？（2026-11-22）</a>
+<a href="reports-2026-11-23-第一批模型验收.html" title="第一批模型验收（2026-11-23）">第一批模型验收（2026-11-23）</a>
+<a href="reports-index.html" title="报告索引">报告索引</a>
+<div class="grp">参考资料</div>
+<a href="reference-gb-standards.html" title="中国规范参考 · 建筑形态相关（只读）">中国规范参考 · 建筑形态相关（只读）</a></nav>
+  <main><div class="docwrap"><article><div class="crumb"><a href="index.html">文档总览</a> / 系统设计</div><h1 id="04-人口与家庭-三层-迁徙-流动人口与外出务工">04 · 人口与家庭：三层、迁徙、流动人口与外出务工</h1>
+<blockquote>依据：<code>decisions.md</code> <strong>R1</strong>（1000 万）/ <strong>R14</strong>（时间尺度）/ <strong>R7</strong>（R3 学区）。<br>规模约束见 <code>11-scale.md</code> §三：<strong>个人可以全量存，因为它们是"月更的数组"，不是"日更的 agent"。</strong></blockquote>
+<hr>
+<h2 id="目录">目录</h2>
+<ul><li><a href="#一范围">一、范围</a></li><li><a href="#二三层结构">二、三层结构</a></li><li><a href="#三迁徙模型这是人口系统唯一的动力学">三、迁徙模型（这是人口系统唯一的"动力学"）</a></li><li><a href="#三五住房选择与通勤配对2026-11-17-补">三·五、住房选择与通勤配对（2026-11-17 补）</a></li><li><a href="#三六年龄结构老龄化怎么处理2026-11-18-定原为待定">三·六、年龄结构：老龄化怎么处理（2026-11-18 定，原为待定）</a></li><li><a href="#四需求产出给-zoning">四、需求产出（给 <code>zoning</code>）</a></li><li><a href="#五数据契约">五、数据契约</a></li><li><a href="#六验收点">六、验收点</a></li><li><a href="#七待定">七、待定</a></li></ul>
+<hr>
+<h2 id="一-范围">一、范围</h2>
+<div class="tw"><table><thead><tr><th>负责</th><th>不负责</th></tr></thead><tbody><tr><td>个人 / 家庭 / 街区三层数据</td><td>岗位匹配（在 <code>employment</code>）</td></tr><tr><td><strong>迁入迁出</strong>（拉力与推力）</td><td>通勤路径（在 <code>traffic</code>，本系统只给 <code>home_ta</code>/<code>work_ta</code>）</td></tr><tr><td><strong>流动人口</strong>（非户籍常住，春运返乡）</td><td>学校评分（在 <code>services</code>）</td></tr><tr><td><strong>外出务工</strong>（村庄阶段的净流出与汇款）</td><td>住房建造（在 <code>zoning</code>）</td></tr><tr><td>各用途的用地需求 <code>demand</code></td><td>税收（在 <code>finance</code>）</td></tr></tbody></table></div>
+<hr>
+<h2 id="二-三层结构">二、三层结构</h2>
+<div class="tw"><table><thead><tr><th>层</th><th>数量（1000 万时）</th><th>字段</th><th>内存</th><th>更新</th></tr></thead><tbody><tr><td><strong>个人</strong> <code>citizen</code></td><td>10,000,000</td><td>年龄/工作/<code>home_ta</code>/<code>work_ta</code>/满意度/学位占用</td><td>153 MB @16 B</td><td><strong>月</strong></td></tr><tr><td><strong>家庭</strong> <code>household</code></td><td>3,571,429</td><td>住宅 <code>parcel_id</code>/收入/成员数/车位数</td><td>82 MB @24 B</td><td><strong>月</strong></td></tr><tr><td><strong>街区</strong> <code>district</code></td><td>2,500（= 1 km 瓦片）</td><td>人口/岗位/平均地价/满意度/净迁移</td><td>&lt; 1 MB</td><td>月 → 汇总</td></tr></tbody></table></div>
+<p>⚠ <strong>个人是 SoA 数组，不是对象</strong>（宪法 L4 + <code>11-scale.md</code> §三）。 ⚠ <strong>个人身上不存路径</strong>，只存两个交通小区编号。路径由 <code>traffic</code> 的 OD 模型提供。</p>
+<hr>
+<h2 id="三-迁徙模型-这是人口系统唯一的-动力学">三、迁徙模型（这是人口系统唯一的"动力学"）</h2>
+<h3 id="3-1-净迁移-拉力-推力">3.1 净迁移 = 拉力 − 推力</h3>
+<div class="tw"><table><thead><tr><th>拉力（越大越来人）</th><th>推力（越大越走人）</th></tr></thead><tbody><tr><td>岗位数（<code>employment.jobs</code>）</td><td>平均通勤时间（<code>traffic.avg_commute_s</code>）</td></tr><tr><td>服务覆盖（<code>services.coverage</code>）</td><td>房价 / 租金（<code>finance.land_value</code>）</td></tr><tr><td>住房空置（<code>zoning.buildings</code>）</td><td>空置率过低（住不下）</td></tr><tr><td>工资水平（岗位档次）</td><td>失业率</td></tr></tbody></table></div>
+<pre class="code"><code>net_migration(district) =
+      w1·(岗位空缺 / 劳动力) + w2·(服务覆盖) + w3·(住房空置)
+    − w4·(通勤时间归一化) − w5·(租金 / 收入比)</code></pre>
+<p>⚠ <strong>权重全部进 <code>config/sim/population.json</code></strong>（宪法 L5），不许写死在公式里。</p>
+<p>⚠ <strong>这条公式必须能产出"负迁移"</strong>：如果城市哪项都差，人会走。 否则失败条件（人口净流出 &gt; 5 % 连续 6 月）永远不会触发。</p>
+<h3 id="3-2-流动人口-f27-春运依赖它">3.2 流动人口（F27，春运依赖它）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>定义</td><td><strong>常住但非户籍</strong>人口。不享学区（推打磨年，F17），但计入常住人口与消费</td></tr><tr><td>占比</td><td>由"岗位吸引力 − 本地劳动力供给"决定；上限约常住人口的 40 %</td></tr><tr><td>春运行为</td><td>节前 15 天 <strong>40–60 % 离城</strong>，节后 25 天陆续回来（<code>12-china-features</code> §3.5）</td></tr><tr><td>数据</td><td>单独一个计数 <code>floating</code>，不参与个人数组（避免春运时数组增删）</td></tr></tbody></table></div>
+<p>⚠ <strong>用"计数"而不是"删数组"</strong>：春运期间人口 −20 %，如果真去删 200 万个个人， 月结会崩、存档会乱。<strong>只改一个乘子。</strong></p>
+<h3 id="3-3-外出务工-f78-村庄阶段的核心">3.3 外出务工（F78，村庄阶段的核心）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>规则</th></tr></thead><tbody><tr><td>触发</td><td><strong>本地岗位不足</strong>时，青壮年（18–55 岁）按缺口比例外出</td></tr><tr><td>后果 1</td><td>常住人口下降（但不从数组删除，只标记 <code>out_migrant</code>）</td></tr><tr><td>后果 2</td><td><strong>每月汇回一笔收入</strong>（<code>population.remittance</code>），按外出人数 × 平均工资 × 汇回率</td></tr><tr><td>后果 3</td><td><strong>春节全部回来</strong>（与流动人口合并计算春运峰值）</td></tr><tr><td>回流条件</td><td>本地岗位足够时，外出者按年逐步回流</td></tr></tbody></table></div>
+<p>⚠ <strong>这是村庄阶段唯一的"钱进来的方式"</strong>（F78）。没有它，村庄开局必死。</p>
+<hr>
+<h2 id="三-五-住房选择与通勤配对-2026-11-17-补">三·五、住房选择与通勤配对（2026-11-17 补）</h2>
+<blockquote>系统间接合的空白：<strong>人怎么决定住哪、去哪上班</strong>。不写这段，人口与交通接不上。</blockquote>
+<h3 id="3-5-1-住房选择-三步-按顺序淘汰">3.5.1 住房选择：三步，按顺序淘汰</h3>
+<pre class="code"><code>① 候选集：全城所有「有空房 + 预算够」的 household 空位
+   ↓
+② 打分：score = w1·(通勤时间) + w2·(学区) + w3·(租金/收入) + w4·(服务覆盖)
+   ↓
+③ 选最高分（前 10 % 里随机，避免所有新移民挤同一栋楼）</code></pre>
+<p>⚠ <strong>第 ③ 步的"前 10 % 随机"很重要</strong>：如果所有人都选最优解，会出现 "某一栋楼瞬间住满、隔壁空着"的诡异画面。</p>
+<p>⚠ <strong>预算约束</strong>：租金/收入 &gt; 50 % 的房子<strong>直接出局</strong>，不进打分。这是硬约束。</p>
+<h3 id="3-5-2-通勤配对-住在哪-在哪上班">3.5.2 通勤配对：住在哪 → 在哪上班</h3>
+<div class="tw"><table><thead><tr><th>步骤</th><th>规则</th></tr></thead><tbody><tr><td>1</td><td>就近搜索：先看 <strong>1 个交通小区</strong>内有没有匹配岗位</td></tr><tr><td>2</td><td>扩大范围：逐步扩到 <strong>3 / 9 / 27 个小区</strong>（类似涟漪）</td></tr><tr><td>3</td><td>仍无匹配 → <strong>失业</strong>（计入满意度惩罚）</td></tr><tr><td>4</td><td>有匹配 → 写入 <code>work_ta</code>（<strong>只存 TA 编号，不存路径</strong>）</td></tr></tbody></table></div>
+<p>⚠ <strong>技能档必须匹配</strong>：高薪岗位只招高技能人口，低技能人口<strong>不能</strong>顶替。 否则"建一堆研发楼就能解决就业"会变成真的。</p>
+<p>⚠ <strong>搜索范围上限 27 个小区</strong>（约 27 km²）：再远就视为"不值得通勤"， 玩家需要靠<strong>交通改善</strong>或<strong>就近建厂</strong>来解决，而不是无限扩大搜索。</p>
+<h3 id="3-5-3-失业与通勤的负反馈">3.5.3 失业与通勤的负反馈</h3>
+<div class="tw"><table><thead><tr><th>情况</th><th>后果</th></tr></thead><tbody><tr><td>失业率上升</td><td>净迁移转负（<code>03</code> §3.1 的推力）</td></tr><tr><td>通勤时间上升</td><td>满意度下降 → 净迁移转负</td></tr><tr><td>两者持续</td><td><strong>失败条件"人口空城"</strong>（<code>13-player-loop</code> §五）</td></tr></tbody></table></div>
+<p>⚠ <strong>这条闭环是"城市为什么会衰败"的唯一来源</strong>：不是某个数值掉了， 而是"<strong>人找不到工作、或者上班太远，所以走了</strong>"。</p>
+<h2 id="三-六-年龄结构-老龄化怎么处理-2026-11-18-定-原为待定">三·六、年龄结构：老龄化怎么处理（2026-11-18 定，原为待定）</h2>
+<blockquote>⚠ 原 §七 待定第 1 条「年龄结构（F28）是否进本体」。<strong>现定：进本体，但只用三个比例。</strong></blockquote>
+<h3 id="3-6-1-只做三档比例-不做人口学模型">3.6.1 只做三档比例，不做人口学模型</h3>
+<div class="tw"><table><thead><tr><th>档</th><th>占比（2026 初始）</th><th>影响</th></tr></thead><tbody><tr><td><strong>少儿</strong> 0–14</td><td>17 %</td><td><strong>学位需求</strong>（→ <code>services</code> 学校容量）</td></tr><tr><td><strong>劳动</strong> 15–59</td><td>63 %</td><td><strong>劳动力供给</strong>（→ <code>employment</code> 岗位匹配）</td></tr><tr><td><strong>老年</strong> 60+</td><td>20 %</td><td><strong>医疗需求 + 财政支出</strong>（养老金/医保）</td></tr></tbody></table></div>
+<p>⚠ <strong>不做</strong>生育率、死亡率、分年龄迁移的完整模型——那是人口学的活，不是游戏需要。 <strong>只让三个比例随时间缓慢变化。</strong></p>
+<h3 id="3-6-2-变化速率与平衡态">3.6.2 变化速率与平衡态</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>老龄化速率</td><td>老年占比每年 +0.15 pp（可配置）</td></tr><tr><td><strong>平衡上限</strong></td><td><strong>老年占比 ≤ 35 %</strong></td></tr><tr><td>少儿占比</td><td>与"学位充足度"正相关（学校够 → 生育意愿略高）</td></tr></tbody></table></div>
+<p>⚠ <strong>必须有上限</strong>：中国的老龄化速度如果照搬，<strong>100 年后老年占 40 %+</strong>， 游戏会变成"越玩越难"，400 年档根本玩不下去。</p>
+<p>⭐ <strong>35 % 是"很难但不绝望"的平衡点</strong>：劳动力紧张、财政压力大， 但还没到城市停摆。<strong>玩家能感觉到"这是个问题"，但不至于放弃存档。</strong></p>
+<h3 id="3-6-3-三条对冲手段-玩家能做的事">3.6.3 三条对冲手段（玩家能做的事）</h3>
+<div class="tw"><table><thead><tr><th>手段</th><th>机制</th></tr></thead><tbody><tr><td><strong>建学校</strong></td><td>提高少儿占比 + 20 年后转为劳动力</td></tr><tr><td><strong>引进年轻移民</strong></td><td><code>migration</code> 的年龄分布偏向 15–40 岁（需要岗位与住房）</td></tr><tr><td><strong>产业自动化</strong></td><td><code>M3h</code> / <code>M1b</code> 单位产值岗位少 ⇒ <strong>同样产出需要更少劳动力</strong></td></tr></tbody></table></div>
+<p>⚠ <strong>第三条是真实的出路</strong>：老龄化社会的解法是提高生产率，不是"多生孩子"。 <strong>这也让"产业升级"多了一层动机</strong>（不只是税收，还有"没人干活"）。</p>
+<h3 id="3-6-4-老龄化必须能归因">3.6.4 ⚠ 老龄化必须能归因</h3>
+<div class="tw"><table><thead><tr><th>现象</th><th>玩家应该能想到什么</th></tr></thead><tbody><tr><td>岗位招不满</td><td>「劳动力不足」→ 引进年轻移民 / 自动化</td></tr><tr><td>学位不够</td><td>「少儿多」→ 建学校</td></tr><tr><td>财政吃紧</td><td>「养老支出太高」→ 提产业 / 引移民</td></tr></tbody></table></div>
+<p>⚠ <strong>这三条提示要能直接点开对应工具</strong>（<code>13-player-loop</code> §11.2 的诊断系统）。</p>
+<h3 id="3-6-5-验收点">3.6.5 验收点</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th></tr></thead><tbody><tr><td><strong>PP13</strong></td><td>老年占比<strong>永不超过 35 %</strong>（长跑 400 年验证）</td></tr><tr><td><strong>PP14</strong></td><td>建学校 → 10 年内少儿占比上升 → 20 年后劳动人口上升</td></tr><tr><td><strong>PP15</strong></td><td>自动化产业（<code>M3h</code>）<strong>单位产值岗位数</strong>低于 <code>M2</code>（同产出用工更少）</td></tr></tbody></table></div>
+<h2 id="四-需求产出-给-zoning">四、需求产出（给 zoning）</h2>
+<div class="tw"><table><thead><tr><th>用途</th><th>需求来源</th></tr></thead><tbody><tr><td><code>R</code> 居住</td><td>缺房家庭数 × 户均面积</td></tr><tr><td><code>B</code> 商业</td><td>人均消费支出 ÷ 单位面积营业额</td></tr><tr><td><code>M</code> 工业</td><td>由 <code>employment</code> 反推（本系统不产出工业需求）</td></tr><tr><td><code>A</code> 公共</td><td>学位缺口（小学 / 中学）</td></tr><tr><td><code>U</code> 市政</td><td>由 <code>utility</code> 自己算</td></tr></tbody></table></div>
+<p>⚠ <strong>只有 R / B / A 由 <code>population</code> 产出</strong>。<code>M</code> 归 <code>employment</code>，<code>U</code> 归 <code>utility</code>。 这条要在边界表里守住，否则会出现"两个系统都在算工业需求"。</p>
+<hr>
+<h2 id="五-数据契约">五、数据契约</h2>
+<h3 id="5-1-结构">5.1 结构</h3>
+<div class="tw"><table><thead><tr><th>结构</th><th>字段</th><th>上限</th></tr></thead><tbody><tr><td><code>citizen</code>（SoA）</td><td><code>age(u8)</code> <code>job_id(u32)</code> <code>home_parcel(u32)</code> <code>home_ta(u16)</code> <code>work_ta(u16)</code> <code>satisfaction(u8)</code> <code>flags(u8)</code>（含 <code>out_migrant</code>）</td><td>1000 万</td></tr><tr><td><code>household</code></td><td><code>parcel_id(u32)</code> <code>income(u32)</code> <code>members(u8)</code> <code>cars(u8)</code></td><td>357 万</td></tr><tr><td><code>district</code></td><td><code>pop</code> <code>jobs</code> <code>avg_land_value</code> <code>satisfaction</code> <code>net_migration</code> <code>floating</code></td><td>2500</td></tr></tbody></table></div>
+<p>⚠ <code>flags</code> 里放 <code>out_migrant</code>，<strong>不删数组元素</strong>（见 §3.3）。</p>
+<h3 id="5-2-bus-key">5.2 bus key</h3>
+<div class="tw"><table><thead><tr><th>key</th><th>方向</th><th>内容</th></tr></thead><tbody><tr><td><code>population.demand</code></td><td>写</td><td>各用途需求（R/B/A）</td></tr><tr><td><code>population.labor</code></td><td>写</td><td>劳动力（按技能档）</td></tr><tr><td><code>population.remittance</code></td><td>写</td><td>外出务工汇款（每月流入）</td></tr><tr><td><code>population.outflow</code></td><td>写</td><td>净迁移率（供失败条件判定）</td></tr><tr><td><code>population.floating</code></td><td>写</td><td>流动人口数（春运用）</td></tr><tr><td><code>employment.jobs</code></td><td>读</td><td>岗位空缺</td></tr><tr><td><code>traffic.avg_commute_s</code></td><td>读</td><td>通勤时间</td></tr><tr><td><code>services.coverage</code></td><td>读</td><td>服务覆盖</td></tr><tr><td><code>finance.land_value</code></td><td>读</td><td>房价/租金</td></tr><tr><td><code>clock.is_vacation</code></td><td>读</td><td>寒暑假（学生 OD 归零，但<strong>人口不变</strong>）</td></tr></tbody></table></div>
+<h3 id="5-3-config-config-sim-population-json">5.3 config（config/sim/population.json）</h3>
+<pre class="code" data-lang="json"><code>{
+  "work_age": [18, 55],
+  "avg_household_size": 2.8,
+  "migration_weights": { "jobs": 0.35, "service": 0.20, "vacancy": 0.20,
+                         "commute": 0.15, "rent_ratio": 0.10 },
+  "floating_max_ratio": 0.40,
+  "chunyun_out_ratio": [0.40, 0.60],
+  "remit_rate": 0.60
+}</code></pre>
+<hr>
+<h2 id="六-验收点">六、验收点</h2>
+<div class="tw"><table><thead><tr><th>#</th><th>断言</th><th>怎么测</th></tr></thead><tbody><tr><td><strong>PP1</strong></td><td>1000 万人月结 <strong>≤ 500 ms</strong>（<code>11-scale.md</code> §六预算）</td><td><code>probe_tick</code></td></tr><tr><td><strong>PP2</strong></td><td><code>citizen</code> 结构里<strong>没有路径字段</strong>；<code>grep -r "path" scripts/sim/population/</code> 无命中</td><td><code>check_contract</code></td></tr><tr><td><strong>PP3</strong></td><td>岗位增加 → 净迁移由负转正；岗位减少 → 转负</td><td>探针对照两组</td></tr><tr><td><strong>PP4</strong></td><td>暑假期间学生 OD = 0，但 <strong><code>population</code> 数字一分不变</strong></td><td>探针断言</td></tr><tr><td><strong>PP5</strong></td><td>春运期间 <code>floating</code> 生效导致人口 −10~20 %，<strong>个人数组长度不变</strong></td><td>探针断言</td></tr><tr><td><strong>PP6</strong></td><td>村庄开局：本地岗位为 0 时，外出务工比例 &gt; 50 %，且 <code>remittance</code> &gt; 0</td><td>探针断言</td></tr><tr><td><strong>PP7</strong></td><td>本地岗位足够后，外出者 5 年内回流 &gt; 50 %</td><td>探针快进 5 年</td></tr><tr><td><strong>PP8</strong></td><td>存档 → 读档后 <code>citizen</code> 的 <code>home_ta</code>/<code>work_ta</code> 完全一致</td><td>探针比对</td></tr><tr><td><strong>PP9</strong></td><td>1 个 citizen 平均占用 <strong>≤ 16 B</strong>（10 M ≤ 160 MB）</td><td>探针统计内存</td></tr><tr><td><strong>PP10</strong></td><td>1000 个新移民<strong>不会全住进同一栋楼</strong>（前 10 % 随机生效）</td><td>探针分布检验</td></tr><tr><td><strong>PP11</strong></td><td><strong>低技能人口不能顶替高薪岗位</strong>（技能档不跨档）</td><td>探针</td></tr><tr><td><strong>PP12</strong></td><td>通勤搜索<strong>不超过 27 个小区</strong>，超出即失业</td><td>探针断言</td></tr></tbody></table></div>
+<p>⚠ <strong>PP4 + PP5 合起来是"人口与出行解耦"的证据</strong>：寒暑假与春运改变的是<strong>行为乘子</strong>， 不是<strong>人口数据</strong>。做不到就说明有人在春运时删数组。 ⚠ <strong>PP6 是村庄开局能不能活的唯一证据</strong>：没有汇款，玩家在村里必破产。</p>
+<hr>
+<h2 id="七-待定">七、待定</h2>
+<ol><li><del>年龄结构（F28）是否进本体</del> → <strong>已定：进本体，只用三个比例，上限 35 %</strong>（§3.6）</li><li><strong>户籍</strong>（F17）是否分档 —— 影响流动人口能否享学区，推打磨年建议</li><li><strong>家庭的收入怎么来</strong> —— 工资（<code>employment</code>）还是含汇款（本系统）？现在两者都算，需定主次</li></ol>
+<hr>
+<h2 id="变更记录">变更记录</h2>
+<ul><li><strong>2026-11-18</strong>：新增 <strong>§3.6 年龄结构</strong>（原待定第 1 条结案）。</li></ul>
+<p>  <strong>只用三档比例</strong>（少儿 17 % / 劳动 63 % / 老年 20 %），<strong>不做生育率死亡率模型</strong>。   ⚠ <strong>老年占比上限 35 %</strong> —— 照搬中国速度的话 100 年后会到 40 %+，   <strong>400 年档会越玩越难、直接弃档</strong>；35 % 是"很难但不绝望"的平衡点。   <strong>三条对冲</strong>：建学校（长期）、引年轻移民（中期）、<strong>产业自动化</strong>（真实出路）。   ⚠ 自动化让"产业升级"多了一层动机：<strong>不只是税收，还有"没人干活"</strong>。   新增 PP13–PP15 三条断言。</p>
+<ul><li><strong>2026-11-17</strong>：新增 <strong>§三·五 住房选择与通勤配对</strong>（补系统间接合的空白）：</li></ul>
+<p>  住房三步筛选（候选 → 打分 → <strong>前 10 % 随机</strong>避免全挤一栋楼）、预算硬约束（租金/收入 &gt; 50 % 出局）、   通勤涟漪搜索（1 → 3 → 9 → <strong>27 个小区上限</strong>）、<strong>技能档不许跨档顶替</strong>、   失业与通勤的负反馈闭环（<strong>这是"城市为什么会衰败"的唯一来源</strong>）。</p>
+<ul><li><strong>2026-11-16</strong>：首版（B0 交付项之四，AI 起草）。按 R1/R14/R7 建立：</li></ul>
+<p>  三层结构、<strong>净迁移公式</strong>（拉力−推力，必须能出负值）、   <strong>流动人口用计数不用删数组</strong>、<strong>外出务工汇款</strong>（村庄唯一活路）、   需求产出职责划分（本系统只产 R/B/A）、9 条验收断言。</p><div class="pager"><a href="design-03-zoning.html">← 03 · 分区与生长：用地分类、小区、容积率、生长与废弃</a><a href="design-05-employment.html">05 · 就业与产能：岗位匹配、建材供应链、资源与技改 →</a></div></article><div class="toc"><b>本页目录</b><a class="l2" href="#目录">目录</a><a class="l2" href="#一-范围">一、范围</a><a class="l2" href="#二-三层结构">二、三层结构</a><a class="l2" href="#三-迁徙模型-这是人口系统唯一的-动力学">三、迁徙模型（这是人口系统唯一的"动力学"）</a><a class="l3" href="#3-1-净迁移-拉力-推力">3.1 净迁移 = 拉力 − 推力</a><a class="l3" href="#3-2-流动人口-f27-春运依赖它">3.2 流动人口（F27，春运依赖它）</a><a class="l3" href="#3-3-外出务工-f78-村庄阶段的核心">3.3 外出务工（F78，村庄阶段的核心）</a><a class="l2" href="#三-五-住房选择与通勤配对-2026-11-17-补">三·五、住房选择与通勤配对（2026-11-17 补）</a><a class="l3" href="#3-5-1-住房选择-三步-按顺序淘汰">3.5.1 住房选择：三步，按顺序淘汰</a><a class="l3" href="#3-5-2-通勤配对-住在哪-在哪上班">3.5.2 通勤配对：住在哪 → 在哪上班</a><a class="l3" href="#3-5-3-失业与通勤的负反馈">3.5.3 失业与通勤的负反馈</a><a class="l2" href="#三-六-年龄结构-老龄化怎么处理-2026-11-18-定-原为待定">三·六、年龄结构：老龄化怎么处理（2026-11-18 定，原为待定）</a><a class="l3" href="#3-6-1-只做三档比例-不做人口学模型">3.6.1 只做三档比例，不做人口学模型</a><a class="l3" href="#3-6-2-变化速率与平衡态">3.6.2 变化速率与平衡态</a><a class="l3" href="#3-6-3-三条对冲手段-玩家能做的事">3.6.3 三条对冲手段（玩家能做的事）</a><a class="l3" href="#3-6-4-老龄化必须能归因">3.6.4 ⚠ 老龄化必须能归因</a><a class="l3" href="#3-6-5-验收点">3.6.5 验收点</a><a class="l2" href="#四-需求产出-给-zoning">四、需求产出（给 zoning）</a><a class="l2" href="#五-数据契约">五、数据契约</a><a class="l3" href="#5-1-结构">5.1 结构</a><a class="l3" href="#5-2-bus-key">5.2 bus key</a><a class="l3" href="#5-3-config-config-sim-population-json">5.3 config（config/sim/population.json）</a><a class="l2" href="#六-验收点">六、验收点</a><a class="l2" href="#七-待定">七、待定</a><a class="l2" href="#变更记录">变更记录</a></div></div></main>
+</div>
+<footer>城脉 v2 · 设计文档 · 由 <code>tools/build_docs_site.py</code> 从仓库 Markdown 生成</footer>
+</body></html>
